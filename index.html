@@ -101,11 +101,11 @@
                 <!-- Seletor de Abas Principais -->
                 <div id="auth-tabs" class="grid grid-cols-2 gap-1 bg-slate-100 p-1 rounded-xl mb-6">
                     <button type="button" id="tab-login" onclick="switchAuthTab('login')"
-                        class="py-2.5 text-xs sm:text-sm font-semibold rounded-lg bg-white text-aab-navy shadow-sm transition">
+                        class="py-2.5 text-xs sm:text-sm font-semibold rounded-lg bg-white text-aab-navy shadow-sm transition cursor-pointer">
                         Acesso do Associado
                     </button>
                     <button type="button" id="tab-register" onclick="switchAuthTab('register')"
-                        class="py-2.5 text-xs sm:text-sm font-semibold rounded-lg text-slate-600 hover:text-aab-navy transition">
+                        class="py-2.5 text-xs sm:text-sm font-semibold rounded-lg text-slate-600 hover:text-aab-navy transition cursor-pointer">
                         Primeiro Acesso
                     </button>
                 </div>
@@ -145,7 +145,7 @@
                         <div>
                             <div class="flex items-center justify-between mb-1.5">
                                 <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600">Senha de Acesso</label>
-                                <button type="button" onclick="handlePasswordReset()" class="text-xs font-medium text-amber-700 hover:text-amber-800">
+                                <button type="button" onclick="handlePasswordReset()" class="text-xs font-medium text-amber-700 hover:text-amber-800 cursor-pointer">
                                     Esqueceu a senha?
                                 </button>
                             </div>
@@ -473,11 +473,8 @@
             <!-- Conteúdo das Seções -->
             <main class="flex-1 p-4 sm:p-8 max-w-7xl w-full mx-auto space-y-6">
 
-                <!-- ========================================================= -->
-                <!-- 1. VISÃO GERAL                                            -->
-                <!-- ========================================================= -->
+                <!-- 1. VISÃO GERAL -->
                 <section id="view-overview" class="view-section space-y-6">
-                    <!-- KPI Cards Clicáveis -->
                     <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
                         <div onclick="navigateTo('cases')" class="bg-white p-5 rounded-2xl border border-slate-200/80 hover:border-amber-400 hover:shadow-md transition cursor-pointer group">
                             <div class="flex items-center justify-between mb-3">
@@ -524,7 +521,6 @@
                         </div>
                     </div>
 
-                    <!-- Prazos Fatais + Intimações -->
                     <div class="grid grid-cols-1 xl:grid-cols-12 gap-6">
                         <div class="xl:col-span-7 bg-white rounded-2xl border border-slate-200/80 p-6">
                             <div class="flex items-center justify-between mb-4">
@@ -579,7 +575,6 @@
                         </div>
                     </div>
 
-                    <!-- Mural Institucional da AAB -->
                     <div class="bg-white rounded-2xl border border-slate-200/80 p-6">
                         <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
                             <div class="flex items-center gap-2.5">
@@ -600,9 +595,7 @@
                     </div>
                 </section>
 
-                <!-- ========================================================= -->
-                <!-- 2. GESTÃO DE PROCESSOS                                    -->
-                <!-- ========================================================= -->
+                <!-- 2. GESTÃO DE PROCESSOS -->
                 <section id="view-cases" class="view-section hidden space-y-5">
                     <div class="bg-white p-5 rounded-2xl border border-slate-200/80 flex flex-col md:flex-row md:items-center justify-between gap-4">
                         <div class="flex flex-wrap items-center gap-2">
@@ -643,9 +636,7 @@
                     </div>
                 </section>
 
-                <!-- ========================================================= -->
-                <!-- 3. CLIENTES & CRM                                         -->
-                <!-- ========================================================= -->
+                <!-- 3. CLIENTES & CRM -->
                 <section id="view-clients" class="view-section hidden space-y-5">
                     <div class="bg-white p-5 rounded-2xl border border-slate-200/80 flex flex-wrap items-center justify-between gap-4">
                         <div class="relative flex-1 min-w-[220px] max-w-md">
@@ -661,9 +652,7 @@
                     <div id="clients-grid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4"></div>
                 </section>
 
-                <!-- ========================================================= -->
-                <!-- 4. PRAZOS & AGENDA                                        -->
-                <!-- ========================================================= -->
+                <!-- 4. PRAZOS & AGENDA -->
                 <section id="view-deadlines" class="view-section hidden space-y-5">
                     <div class="bg-white p-5 rounded-2xl border border-slate-200/80 flex flex-wrap items-center justify-between gap-4">
                         <div class="flex flex-wrap items-center gap-2">
@@ -679,9 +668,7 @@
                     <div id="deadlines-full-list" class="space-y-3"></div>
                 </section>
 
-                <!-- ========================================================= -->
-                <!-- 5. FINANCEIRO & HONORÁRIOS                                -->
-                <!-- ========================================================= -->
+                <!-- 5. FINANCEIRO & HONORÁRIOS -->
                 <section id="view-finance" class="view-section hidden space-y-5">
                     <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
                         <div class="bg-white p-5 rounded-2xl border border-slate-200/80">
@@ -721,12 +708,9 @@
                     </div>
                 </section>
 
-                <!-- ========================================================= -->
-                <!-- 6. BENEFÍCIOS & CARTEIRA DIGITAL AAB                      -->
-                <!-- ========================================================= -->
+                <!-- 6. BENEFÍCIOS & CARTEIRA DIGITAL AAB -->
                 <section id="view-benefits" class="view-section hidden space-y-6">
                     <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-                        <!-- Carteira Digital -->
                         <div class="lg:col-span-5 bg-gradient-to-br from-aab-navy via-aab-navyLight to-slate-900 text-white rounded-2xl p-6 shadow-lg flex flex-col justify-between min-h-[240px]">
                             <div class="flex items-start justify-between">
                                 <div>
@@ -756,7 +740,6 @@
                             </div>
                         </div>
 
-                        <!-- Cards de Benefícios -->
                         <div class="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div class="bg-white p-5 rounded-2xl border border-slate-200/80 flex flex-col justify-between">
                                 <div>
@@ -812,7 +795,6 @@
                         </div>
                     </div>
 
-                    <!-- Reservas Ativas de Salas -->
                     <div class="bg-white rounded-2xl border border-slate-200/80 p-6">
                         <div class="flex items-center justify-between mb-4">
                             <h3 class="font-juridica text-lg font-bold text-aab-navy">Minhas Reservas de Salas & Coworking</h3>
@@ -822,11 +804,8 @@
                     </div>
                 </section>
 
-                <!-- ========================================================= -->
-                <!-- 7. PAINEL DO RESPONSÁVEL AAB (ADMINISTRAÇÃO)              -->
-                <!-- ========================================================= -->
+                <!-- 7. PAINEL DO RESPONSÁVEL AAB (ADMINISTRAÇÃO) -->
                 <section id="view-admin" class="view-section hidden space-y-6">
-                    <!-- KPIs Administrativos -->
                     <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
                         <div class="bg-white p-5 rounded-2xl border border-slate-200/80">
                             <span class="text-xs font-semibold uppercase tracking-wider text-slate-500">Total de Associados</span>
@@ -850,7 +829,6 @@
                         </div>
                     </div>
 
-                    <!-- Publicar no Mural + Gerenciar Publicações -->
                     <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
                         <div class="lg:col-span-5 bg-white rounded-2xl border border-slate-200/80 p-6">
                             <h2 id="pub-form-heading" class="font-juridica text-lg font-bold text-aab-navy mb-1">Publicar no Portal AAB</h2>
@@ -906,7 +884,6 @@
                         </div>
                     </div>
 
-                    <!-- Autorizar Novos E-mails para Primeiro Acesso / Responsáveis -->
                     <div class="bg-white rounded-2xl border border-slate-200/80 p-6">
                         <div class="mb-4">
                             <h2 class="font-juridica text-lg font-bold text-aab-navy">Autorizar E-mails para Primeiro Acesso</h2>
@@ -934,7 +911,6 @@
                         <div id="authorized-emails-list" class="flex flex-wrap gap-2"></div>
                     </div>
 
-                    <!-- Associados, Sites, Presença e Permissões -->
                     <div class="bg-white rounded-2xl border border-slate-200/80 p-6">
                         <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
                             <div>
@@ -1052,7 +1028,7 @@
         </div>
     </div>
 
-    <!-- Modal: Novo Processo -->
+    <!-- Modal: Novo / Editar Processo -->
     <div id="modal-case" class="fixed inset-0 z-50 hidden bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl max-w-lg w-full shadow-2xl border border-slate-100">
             <div class="px-6 py-4 border-b border-slate-100 flex items-center justify-between">
@@ -1091,6 +1067,8 @@
                     <select id="case-status" class="w-full px-3.5 py-2 rounded-xl border border-slate-200 text-sm bg-white">
                         <option value="Em andamento">Em andamento</option>
                         <option value="Aguardando Prazo">Aguardando Prazo</option>
+                        <option value="Aguardando Julgamento">Aguardando Julgamento</option>
+                        <option value="Recursal">Recursal</option>
                         <option value="Concluído">Concluído</option>
                     </select>
                 </div>
@@ -1102,7 +1080,7 @@
         </div>
     </div>
 
-    <!-- Modal: Novo Cliente -->
+    <!-- Modal: Novo / Editar Cliente -->
     <div id="modal-client" class="fixed inset-0 z-50 hidden bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl max-w-md w-full shadow-2xl border border-slate-100">
             <div class="px-6 py-4 border-b border-slate-100 flex items-center justify-between">
@@ -1147,7 +1125,7 @@
         </div>
     </div>
 
-    <!-- Modal: Novo Prazo / Audiência -->
+    <!-- Modal: Novo / Editar Prazo -->
     <div id="modal-deadline" class="fixed inset-0 z-50 hidden bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl max-w-md w-full shadow-2xl border border-slate-100">
             <div class="px-6 py-4 border-b border-slate-100 flex items-center justify-between">
@@ -1188,7 +1166,7 @@
         </div>
     </div>
 
-    <!-- Modal: Novo Honorário -->
+    <!-- Modal: Novo / Editar Honorário -->
     <div id="modal-finance" class="fixed inset-0 z-50 hidden bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
         <div class="bg-white rounded-2xl max-w-md w-full shadow-2xl border border-slate-100">
             <div class="px-6 py-4 border-b border-slate-100 flex items-center justify-between">
@@ -1216,6 +1194,7 @@
                     <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1">Status</label>
                     <select id="finance-status" class="w-full px-3.5 py-2 rounded-xl border border-slate-200 text-sm bg-white">
                         <option value="Pendente">Pendente</option>
+                        <option value="Atrasado">Atrasado</option>
                         <option value="Pago">Pago</option>
                     </select>
                 </div>
@@ -1266,7 +1245,6 @@
             serverTimestamp
         } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-firestore.js";
 
-        // Configuração Firebase do projeto advocacia-6864f
         const firebaseConfig = {
             apiKey: "AIzaSyB3ZZaOmW-RtLhcfNRiS52PgEGtTVLXMtQ",
             authDomain: "advocacia-6864f.firebaseapp.com",
@@ -1282,7 +1260,6 @@
         const auth = getAuth(app);
         const db = getFirestore(app);
 
-        // E-mail Master permanente como Responsável AAB
         const MASTER_ADMIN_EMAIL = 'willbrasilia@gmail.com';
         const LOCAL_STORAGE_KEY = 'aab_portal_dados_v1';
 
@@ -1293,7 +1270,6 @@
             canUseBenefits: true
         };
 
-        // Estado em memória
         let currentUser = null;
         let isDemoFallbackMode = false;
         let casesList = [];
@@ -1307,28 +1283,29 @@
         let currentCaseFilter = 'Todos';
         let currentDeadlineFilter = 'Todos';
         let editingPublicationId = null;
+        let editingCaseId = null;
+        let editingClientId = null;
+        let editingDeadlineId = null;
+        let editingFinanceId = null;
         let draftProfilePhoto = '';
         let firestoreUnsubscribers = [];
         let heartbeatIntervalId = null;
+        let authTransitionInProgress = false;
 
-        // Helpers
+        function normalizeEmail(email) {
+            return String(email || '').trim().toLowerCase();
+        }
+
         function isMasterAdminEmail(email) {
-            return String(email || '').trim().toLowerCase() === MASTER_ADMIN_EMAIL;
+            return normalizeEmail(email) === MASTER_ADMIN_EMAIL;
         }
 
-        function sanitizeDocId(email) {
-            return 'auth_' + String(email || '').trim().toLowerCase().replace(/[^a-z0-9]/g, '_');
-        }
-
-        function hasResponsibleAccess(userObj = currentUser) {
-            if (!userObj) return false;
-            if (isMasterAdminEmail(userObj.email)) return true;
-            return userObj.role === 'responsavel_aab' && Boolean(userObj.promotedByAdmin);
+        function sanitizeAuthDocId(email) {
+            return 'auth_' + normalizeEmail(email).replace(/[^a-z0-9]/g, '_');
         }
 
         function formatCurrency(val) {
-            const num = Number(val || 0);
-            return num.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+            return Number(val || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
         }
 
         function formatDateBR(dateStr) {
@@ -1339,33 +1316,40 @@
         }
 
         function getInitials(name) {
-            const words = String(name || 'AA').trim().split(/\s+/).filter(Boolean);
-            if (words.length === 0) return 'AA';
-            if (words.length === 1) return words[0].slice(0, 2).toUpperCase();
-            return (words[0][0] + words[words.length - 1][0]).toUpperCase();
+            const parts = String(name || 'AA').trim().split(/\s+/).filter(Boolean);
+            if (parts.length === 0) return 'AA';
+            if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
+            return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
         }
 
         function showToast(message, type = 'success') {
             const container = document.getElementById('toast-container');
             if (!container) return;
             const toast = document.createElement('div');
-            const bgClass = type === 'info' ? 'bg-aab-navy text-amber-200 border-amber-400/30' : 'bg-slate-900 text-white border-emerald-400/40';
-            toast.className = `px-4 py-3 rounded-xl border shadow-lg text-xs sm:text-sm font-medium flex items-center gap-2.5 ${bgClass}`;
-            toast.innerHTML = `<i data-lucide="${type === 'info' ? 'info' : 'check-circle-2'}" class="w-4 h-4 shrink-0 text-amber-400"></i><span>${message}</span>`;
+            const palette = {
+                success: 'bg-aab-navy text-white border-amber-400/50',
+                error: 'bg-rose-700 text-white border-rose-400/50',
+                info: 'bg-slate-800 text-slate-100 border-slate-600'
+            };
+            toast.className = `px-4 py-3 rounded-xl border shadow-lg text-xs sm:text-sm font-medium flex items-center gap-2.5 transition-all duration-300 pointer-events-auto ${palette[type] || palette.info}`;
+            toast.innerHTML = `<span>${message}</span>`;
             container.appendChild(toast);
-            lucide.createIcons();
             setTimeout(() => {
                 toast.style.opacity = '0';
-                toast.style.transition = 'opacity 250ms ease';
-                setTimeout(() => toast.remove(), 260);
+                toast.style.transform = 'translateY(8px)';
+                setTimeout(() => toast.remove(), 250);
             }, 3400);
         }
 
-        function updateHeaderDate() {
-            const el = document.getElementById('header-subtitle');
-            if (!el) return;
-            const now = new Date();
-            el.textContent = now.toLocaleDateString('pt-BR', { weekday: 'long', day: '2-digit', month: 'long', year: 'numeric' });
+        function openModal(id) {
+            const el = document.getElementById(id);
+            if (el) el.classList.remove('hidden');
+            lucide.createIcons();
+        }
+
+        function closeModal(id) {
+            const el = document.getElementById(id);
+            if (el) el.classList.add('hidden');
         }
 
         function toggleMobileSidebar(show) {
@@ -1381,50 +1365,39 @@
             }
         }
 
-        function openModal(id) {
-            const el = document.getElementById(id);
-            if (el) {
-                el.classList.remove('hidden');
-                lucide.createIcons();
-            }
-        }
-
-        function closeModal(id) {
-            const el = document.getElementById(id);
-            if (el) el.classList.add('hidden');
-        }
-
-        // =====================================================================
-        // AUTENTICAÇÃO E AUTORIZAÇÃO
-        // =====================================================================
         function switchAuthTab(tab) {
-            document.getElementById('form-login-container').classList.add('hidden');
-            document.getElementById('form-register-container').classList.add('hidden');
-            document.getElementById('form-admin-login-container').classList.add('hidden');
-
             const tabLogin = document.getElementById('tab-login');
             const tabRegister = document.getElementById('tab-register');
-            tabLogin.className = 'py-2.5 text-xs sm:text-sm font-semibold rounded-lg text-slate-600 hover:text-aab-navy transition cursor-pointer';
-            tabRegister.className = 'py-2.5 text-xs sm:text-sm font-semibold rounded-lg text-slate-600 hover:text-aab-navy transition cursor-pointer';
+            const authTabs = document.getElementById('auth-tabs');
+            const formLogin = document.getElementById('form-login-container');
+            const formRegister = document.getElementById('form-register-container');
+            const formAdmin = document.getElementById('form-admin-login-container');
+
+            authTabs.classList.remove('hidden');
+            formAdmin.classList.add('hidden');
 
             if (tab === 'login') {
-                document.getElementById('form-login-container').classList.remove('hidden');
                 tabLogin.className = 'py-2.5 text-xs sm:text-sm font-semibold rounded-lg bg-white text-aab-navy shadow-sm transition cursor-pointer';
-            } else if (tab === 'register') {
-                document.getElementById('form-register-container').classList.remove('hidden');
+                tabRegister.className = 'py-2.5 text-xs sm:text-sm font-semibold rounded-lg text-slate-600 hover:text-aab-navy transition cursor-pointer';
+                formLogin.classList.remove('hidden');
+                formRegister.classList.add('hidden');
+            } else {
                 tabRegister.className = 'py-2.5 text-xs sm:text-sm font-semibold rounded-lg bg-white text-aab-navy shadow-sm transition cursor-pointer';
+                tabLogin.className = 'py-2.5 text-xs sm:text-sm font-semibold rounded-lg text-slate-600 hover:text-aab-navy transition cursor-pointer';
+                formRegister.classList.remove('hidden');
+                formLogin.classList.add('hidden');
             }
         }
 
         function openAdminLoginForm() {
+            document.getElementById('auth-tabs').classList.add('hidden');
             document.getElementById('form-login-container').classList.add('hidden');
             document.getElementById('form-register-container').classList.add('hidden');
             document.getElementById('form-admin-login-container').classList.remove('hidden');
-            const prefill = (document.getElementById('login-email')?.value || '').trim();
-            if (prefill) {
-                document.getElementById('admin-login-email').value = prefill;
+            const emailInput = document.getElementById('admin-login-email');
+            if (emailInput && !emailInput.value) {
+                emailInput.value = MASTER_ADMIN_EMAIL;
             }
-            lucide.createIcons();
         }
 
         function backToAssociateLogin() {
@@ -1432,224 +1405,248 @@
         }
 
         function goToFirstAccessWithEmail() {
-            const adminEmail = (document.getElementById('admin-login-email')?.value || '').trim();
+            const adminEmail = normalizeEmail(document.getElementById('admin-login-email')?.value);
             switchAuthTab('register');
-            if (adminEmail) {
-                document.getElementById('reg-email').value = adminEmail;
+            const regEmail = document.getElementById('reg-email');
+            if (regEmail && adminEmail) {
+                regEmail.value = adminEmail;
             }
         }
 
         async function checkEmailAuthorization(email) {
-            const normalized = String(email || '').trim().toLowerCase();
-            if (!normalized) return { authorized: false, data: null };
-            if (isMasterAdminEmail(normalized)) {
+            const norm = normalizeEmail(email);
+            if (!norm) return { authorized: false, role: 'associado', data: null };
+
+            if (isMasterAdminEmail(norm)) {
                 return {
                     authorized: true,
-                    data: { email: normalized, role: 'responsavel_aab', name: 'Responsável Master AAB', active: true }
+                    role: 'responsavel_aab',
+                    data: { email: norm, role: 'responsavel_aab', name: 'Responsável Master AAB', active: true }
                 };
             }
+
+            const localMatch = authorizedEmailsList.find(item => normalizeEmail(item.email) === norm && item.active !== false);
+            if (localMatch) {
+                return {
+                    authorized: true,
+                    role: localMatch.role === 'responsavel_aab' ? 'responsavel_aab' : 'associado',
+                    data: localMatch
+                };
+            }
+
             try {
-                const snap = await getDoc(doc(db, 'responsaveis_autorizados', sanitizeDocId(normalized)));
-                if (snap.exists() && snap.data()?.active !== false) {
-                    return { authorized: true, data: snap.data() };
+                const snap = await getDoc(doc(db, 'responsaveis_autorizados', sanitizeAuthDocId(norm)));
+                if (snap.exists() && snap.data().active !== false) {
+                    const d = snap.data();
+                    return {
+                        authorized: true,
+                        role: d.role === 'responsavel_aab' ? 'responsavel_aab' : 'associado',
+                        data: d
+                    };
                 }
-                const qSnap = await getDocs(collection(db, 'responsaveis_autorizados'));
-                let matched = null;
-                qSnap.forEach(d => {
-                    const item = d.data() || {};
-                    if (String(item.email || '').trim().toLowerCase() === normalized && item.active !== false) {
-                        matched = item;
+            } catch (err) {
+                console.warn('Falha ao consultar autorizações no Firestore:', err);
+            }
+
+            return { authorized: false, role: 'associado', data: null };
+        }
+
+        function hasResponsibleAccess(userObj = currentUser) {
+            if (!userObj) return false;
+            if (isMasterAdminEmail(userObj.email)) return true;
+            return userObj.role === 'responsavel_aab' && Boolean(userObj.promotedByAdmin);
+        }
+
+        async function resolveEmailByOab(oabInput) {
+            const cleanedOab = String(oabInput || '').trim().toLowerCase();
+            if (!cleanedOab) return null;
+            try {
+                const snap = await getDocs(collection(db, 'usuarios'));
+                let matchedEmail = null;
+                snap.forEach(d => {
+                    const data = d.data() || {};
+                    const userOab = String(data.oab || '').trim().toLowerCase();
+                    if (userOab && userOab === cleanedOab && data.email) {
+                        matchedEmail = normalizeEmail(data.email);
                     }
                 });
-                if (matched) return { authorized: true, data: matched };
-                return { authorized: false, data: null };
+                return matchedEmail;
             } catch (err) {
-                console.warn('Falha ao consultar responsaveis_autorizados:', err);
-                return { authorized: false, data: null };
+                console.warn('Erro ao buscar e-mail pela OAB:', err);
+                return null;
             }
         }
 
         async function handleLogin(event) {
             event.preventDefault();
-            const oabInput = (document.getElementById('login-oab').value || '').trim();
-            let email = (document.getElementById('login-email').value || '').trim().toLowerCase();
+            const oabInput = document.getElementById('login-oab').value.trim();
+            let email = normalizeEmail(document.getElementById('login-email').value);
             const password = document.getElementById('login-password').value;
 
             if (!password) {
-                showToast('Informe sua senha de acesso.', 'info');
+                showToast('Informe a senha de acesso.', 'info');
                 return;
             }
+
             if (!email && !oabInput) {
-                showToast('Informe seu e-mail ou sua inscrição OAB para entrar.', 'info');
+                showToast('Informe seu e-mail ou sua inscrição OAB.', 'info');
                 return;
             }
 
             if (!email && oabInput) {
-                try {
-                    const normOab = oabInput.toLowerCase();
-                    let foundEmail = '';
-                    const usersSnap = await getDocs(collection(db, 'usuarios'));
-                    usersSnap.forEach(d => {
-                        const u = d.data() || {};
-                        if (String(u.oab || '').trim().toLowerCase() === normOab && u.email) {
-                            foundEmail = String(u.email).trim().toLowerCase();
-                        }
-                    });
-                    if (!foundEmail) {
-                        const authSnap = await getDocs(collection(db, 'responsaveis_autorizados'));
-                        authSnap.forEach(d => {
-                            const a = d.data() || {};
-                            if (String(a.oab || '').trim().toLowerCase() === normOab && a.email) {
-                                foundEmail = String(a.email).trim().toLowerCase();
-                            }
-                        });
-                    }
-                    if (!foundEmail) {
-                        showToast('Nenhuma conta encontrada para esta OAB. Informe seu e-mail e senha.', 'info');
-                        return;
-                    }
-                    email = foundEmail;
-                    document.getElementById('login-email').value = email;
-                } catch (err) {
-                    console.error('Erro ao buscar OAB:', err);
-                    showToast('Erro ao consultar OAB. Informe seu e-mail e senha.', 'info');
+                const foundEmail = await resolveEmailByOab(oabInput);
+                if (!foundEmail) {
+                    showToast('Nenhuma conta encontrada para esta OAB. Informe seu e-mail e senha.', 'info');
                     return;
                 }
+                email = foundEmail;
             }
 
             const btn = document.getElementById('btn-login-submit');
             btn.disabled = true;
+            authTransitionInProgress = true;
+
             try {
                 await signInWithEmailAndPassword(auth, email, password);
-                if (oabInput) sessionStorage.setItem('aab_login_oab_hint', oabInput);
-                else sessionStorage.removeItem('aab_login_oab_hint');
                 showToast('Acesso realizado com sucesso!');
-            } catch (error) {
-                console.error('Erro no login:', error);
-                showToast('Credenciais inválidas. Verifique seu e-mail/OAB e senha.', 'info');
+            } catch (err) {
+                let msg = 'E-mail/OAB ou senha inválidos.';
+                if (err.code === 'auth/user-not-found' || err.code === 'auth/invalid-credential') {
+                    msg = 'Credenciais inválidas. Verifique seus dados ou faça o Primeiro Acesso.';
+                } else if (err.code === 'auth/too-many-requests') {
+                    msg = 'Muitas tentativas. Aguarde alguns instantes e tente novamente.';
+                }
+                showToast(msg, 'error');
             } finally {
                 btn.disabled = false;
+                authTransitionInProgress = false;
             }
         }
 
         async function handleAdminLogin(event) {
             event.preventDefault();
-            const email = (document.getElementById('admin-login-email').value || '').trim().toLowerCase();
+            const email = normalizeEmail(document.getElementById('admin-login-email').value);
             const password = document.getElementById('admin-login-password').value;
 
-            const authCheck = await checkEmailAuthorization(email);
-            const isAuthorizedAdmin = isMasterAdminEmail(email) || (authCheck.authorized && authCheck.data?.role === 'responsavel_aab');
+            if (!email || !password) {
+                showToast('Informe e-mail e senha do Responsável AAB.', 'info');
+                return;
+            }
 
-            if (!isAuthorizedAdmin) {
-                showToast('Acesso negado: este e-mail não possui autorização de Responsável AAB.', 'info');
+            const authCheck = await checkEmailAuthorization(email);
+            if (!authCheck.authorized || authCheck.role !== 'responsavel_aab') {
+                showToast('Este e-mail não possui permissão de Responsável AAB.', 'error');
                 return;
             }
 
             const btn = document.getElementById('btn-admin-login-submit');
             btn.disabled = true;
+            authTransitionInProgress = true;
+
             try {
-                const cred = await signInWithEmailAndPassword(auth, email, password);
-                await setDoc(doc(db, 'usuarios', cred.user.uid), {
-                    email,
-                    role: 'responsavel_aab',
-                    promotedByAdmin: true,
-                    accountStatus: 'Ativo',
-                    permissions: {
-                        portalAccess: true,
-                        canBookRooms: true,
-                        canUseBenefits: true,
-                        canPublish: true
-                    }
-                }, { merge: true });
-                showToast('Autenticado como Responsável AAB!');
+                await signInWithEmailAndPassword(auth, email, password);
+                showToast('Autenticação do Responsável AAB confirmada!');
             } catch (err) {
-                console.error('Erro no login administrativo:', err);
-                showToast('E-mail ou senha inválidos para Responsável AAB.', 'info');
+                showToast('Falha na autenticação. Verifique e-mail, senha ou faça o Primeiro Acesso.', 'error');
             } finally {
                 btn.disabled = false;
+                authTransitionInProgress = false;
             }
         }
 
         async function handleRegister(event) {
             event.preventDefault();
-            const name = (document.getElementById('reg-name').value || '').trim();
-            const oab = (document.getElementById('reg-oab').value || '').trim();
-            const firm = (document.getElementById('reg-firm').value || '').trim() || 'Sociedade Individual de Advocacia';
-            const email = (document.getElementById('reg-email').value || '').trim().toLowerCase();
+            const name = document.getElementById('reg-name').value.trim();
+            const oab = document.getElementById('reg-oab').value.trim();
+            const firm = document.getElementById('reg-firm').value.trim();
+            const email = normalizeEmail(document.getElementById('reg-email').value);
             const password = document.getElementById('reg-password').value;
 
             const authCheck = await checkEmailAuthorization(email);
             if (!authCheck.authorized) {
-                showToast('Cadastro bloqueado: seu e-mail ainda não foi autorizado por willbrasilia@gmail.com.', 'info');
+                showToast('Cadastro bloqueado: este e-mail ainda não foi autorizado por willbrasilia@gmail.com.', 'error');
                 return;
             }
 
             const btn = document.getElementById('btn-register-submit');
             btn.disabled = true;
+            authTransitionInProgress = true;
+
             try {
                 const cred = await createUserWithEmailAndPassword(auth, email, password);
-                const isAdminRole = isMasterAdminEmail(email) || authCheck.data?.role === 'responsavel_aab';
-                await setDoc(doc(db, 'usuarios', cred.user.uid), {
-                    name: name || authCheck.data?.name || email.split('@')[0],
-                    oab: oab || authCheck.data?.oab || 'Pendente',
-                    firm,
+                const isResponsible = isMasterAdminEmail(email) || authCheck.role === 'responsavel_aab';
+                const profileDoc = {
+                    uid: cred.user.uid,
+                    name: name || authCheck.data?.name || 'Advogado(a) Associado(a)',
+                    oab: oab || authCheck.data?.oab || '',
+                    firm: firm || (isResponsible ? 'Administração AAB' : 'Escritório Associado'),
                     email,
-                    role: isAdminRole ? 'responsavel_aab' : 'associado',
-                    promotedByAdmin: isAdminRole,
+                    role: isResponsible ? 'responsavel_aab' : 'associado',
+                    promotedByAdmin: isResponsible,
                     accountStatus: 'Ativo',
                     permissions: {
-                        portalAccess: true,
-                        canBookRooms: true,
-                        canUseBenefits: true,
-                        canPublish: isAdminRole
+                        ...defaultPermissions,
+                        canPublish: isResponsible
                     },
                     createdAt: serverTimestamp(),
                     lastSeen: Date.now()
-                }, { merge: true });
-                showToast('Conta criada com sucesso! Bem-vindo ao Portal AAB.');
+                };
+                await setDoc(doc(db, 'usuarios', cred.user.uid), profileDoc, { merge: true });
+                showToast('Cadastro autorizado concluído com sucesso!');
             } catch (err) {
-                console.error('Erro no primeiro acesso:', err);
-                const msg = err.code === 'auth/email-already-in-use'
-                    ? 'Este e-mail já possui senha cadastrada. Faça login na aba Acesso do Associado.'
-                    : 'Não foi possível concluir o cadastro. Verifique os dados informados.';
-                showToast(msg, 'info');
+                let msg = 'Não foi possível concluir o cadastro.';
+                if (err.code === 'auth/email-already-in-use') {
+                    msg = 'Este e-mail já possui senha cadastrada. Faça login na aba Acesso do Associado.';
+                } else if (err.code === 'auth/weak-password') {
+                    msg = 'A senha deve ter no mínimo 6 caracteres.';
+                }
+                showToast(msg, 'error');
             } finally {
                 btn.disabled = false;
+                authTransitionInProgress = false;
             }
         }
 
         async function handlePasswordReset() {
-            const email = (document.getElementById('login-email').value || '').trim().toLowerCase();
+            const email = normalizeEmail(document.getElementById('login-email').value);
             if (!email) {
-                showToast('Digite seu e-mail no campo E-mail Institucional para redefinir a senha.', 'info');
+                showToast('Digite seu e-mail institucional no campo de e-mail para redefinir a senha.', 'info');
                 return;
             }
             try {
                 await sendPasswordResetEmail(auth, email);
-                showToast(`E-mail de redefinição enviado para ${email}.`);
+                showToast('E-mail de recuperação de senha enviado!', 'success');
             } catch (err) {
-                console.error('Erro ao enviar redefinição:', err);
-                showToast('Não foi possível enviar o e-mail de redefinição.', 'info');
+                showToast('Não foi possível enviar o e-mail de recuperação.', 'error');
             }
         }
 
         function enterDemoMode() {
+            cleanupListeners();
             isDemoFallbackMode = true;
             currentUser = {
-                uid: 'demo-user',
-                name: 'Dr(a). Willbrasilia',
-                oab: '248.910/DF',
-                firm: 'Sociedade Individual de Advocacia',
+                uid: 'demo_master_aab',
+                name: 'Responsável Master AAB',
+                oab: 'OAB 1234',
+                firm: 'Associação dos Advogados do Brasil',
                 email: MASTER_ADMIN_EMAIL,
                 role: 'responsavel_aab',
                 promotedByAdmin: true,
                 accountStatus: 'Ativo',
-                permissions: { portalAccess: true, canPublish: true, canBookRooms: true, canUseBenefits: true }
+                permissions: {
+                    portalAccess: true,
+                    canPublish: true,
+                    canBookRooms: true,
+                    canUseBenefits: true
+                }
             };
-            document.getElementById('storage-mode-badge').textContent = 'Demonstração';
-            seedDemoCollections();
+
+            seedSampleState();
             showAppShell();
-            showToast('Modo demonstração ativado.');
+            applyUserProfileUI();
+            renderAllViews();
+            navigateTo('overview');
+            showToast('Modo Demonstração Local ativado.', 'info');
         }
 
         async function handleLogout() {
@@ -1662,11 +1659,12 @@
             document.getElementById('app-shell').classList.add('hidden');
             document.getElementById('auth-screen').classList.remove('hidden');
             switchAuthTab('login');
+            showToast('Você saiu do portal.', 'info');
         }
 
         function cleanupListeners() {
-            firestoreUnsubscribers.forEach(fn => {
-                try { fn(); } catch (_) {}
+            firestoreUnsubscribers.forEach(unsub => {
+                try { if (typeof unsub === 'function') unsub(); } catch (_) {}
             });
             firestoreUnsubscribers = [];
             if (heartbeatIntervalId) {
@@ -1675,259 +1673,47 @@
             }
         }
 
-        // =====================================================================
-        // SINCRONIZAÇÃO FIRESTORE EM TEMPO REAL
-        // =====================================================================
-        onAuthStateChanged(auth, async (firebaseUser) => {
-            if (isDemoFallbackMode) return;
-            cleanupListeners();
-
-            if (!firebaseUser) {
-                currentUser = null;
-                document.getElementById('app-shell').classList.add('hidden');
-                document.getElementById('auth-screen').classList.remove('hidden');
-                return;
-            }
-
-            const uid = firebaseUser.uid;
-            const email = (firebaseUser.email || '').trim().toLowerCase();
-            const userDocRef = doc(db, 'usuarios', uid);
-            const snap = await getDoc(userDocRef);
-            const existingData = snap.exists() ? snap.data() : {};
-
-            const isMaster = isMasterAdminEmail(email || existingData.email);
-            const authCheck = await checkEmailAuthorization(email || existingData.email);
-
-            if (!isMaster && !authCheck.authorized && !snap.exists()) {
-                showToast('Acesso não autorizado: solicite liberação a willbrasilia@gmail.com.', 'info');
-                await signOut(auth);
-                return;
-            }
-
-            const isAdmin = isMaster || (existingData.role === 'responsavel_aab' && Boolean(existingData.promotedByAdmin)) || (authCheck.authorized && authCheck.data?.role === 'responsavel_aab');
-            const strictRole = isAdmin ? 'responsavel_aab' : 'associado';
-            const oabHint = sessionStorage.getItem('aab_login_oab_hint') || '';
-
-            const initialProfile = {
-                name: existingData.name || authCheck.data?.name || email.split('@')[0] || 'Advogado(a)',
-                oab: existingData.oab || authCheck.data?.oab || oabHint || 'OAB / AAB',
-                firm: existingData.firm || 'Sociedade Individual de Advocacia',
-                email: email || existingData.email || '',
-                role: strictRole,
-                promotedByAdmin: isAdmin,
-                accountStatus: isMaster ? 'Ativo' : (existingData.accountStatus || 'Ativo'),
-                photo: existingData.photo || '',
-                seccional: existingData.seccional || '',
-                phone: existingData.phone || '',
-                website: existingData.website || '',
-                address: existingData.address || '',
-                bio: existingData.bio || '',
-                permissions: {
-                    ...defaultPermissions,
-                    ...(existingData.permissions || {}),
-                    portalAccess: true,
-                    canBookRooms: true,
-                    canUseBenefits: true,
-                    canPublish: strictRole === 'responsavel_aab'
-                }
-            };
-
-            if (initialProfile.accountStatus === 'Suspenso' && !isMaster) {
-                showToast('Sua conta encontra-se suspensa. Procure a administração da AAB.', 'info');
-                await signOut(auth);
-                return;
-            }
-
-            await setDoc(userDocRef, {
-                ...initialProfile,
-                lastSeen: Date.now(),
-                updatedAt: serverTimestamp()
-            }, { merge: true });
-
-            currentUser = { uid, ...initialProfile };
-            document.getElementById('storage-mode-badge').textContent = 'Firestore';
-            checkLocalStorageMigrationButton();
-            showAppShell();
-            attachRealtimeListeners(uid);
-        });
-
-        function attachRealtimeListeners(uid) {
-            const unsubSelf = onSnapshot(doc(db, 'usuarios', uid), (snap) => {
-                if (!snap.exists() || !currentUser) return;
-                const data = snap.data();
-                const effEmail = (data.email || currentUser.email || '').toLowerCase();
-                const isMaster = isMasterAdminEmail(effEmail);
-                const strictRole = (isMaster || (data.role === 'responsavel_aab' && Boolean(data.promotedByAdmin)))
-                    ? 'responsavel_aab'
-                    : 'associado';
-
-                if (!isMaster && data.accountStatus === 'Suspenso') {
-                    showToast('Sua conta foi suspensa pela administração.', 'info');
-                    handleLogout();
-                    return;
-                }
-
-                currentUser = {
-                    ...currentUser,
-                    ...data,
-                    uid,
-                    email: effEmail,
-                    role: strictRole,
-                    accountStatus: isMaster ? 'Ativo' : (data.accountStatus || 'Ativo'),
-                    permissions: {
-                        ...defaultPermissions,
-                        ...(data.permissions || {}),
-                        portalAccess: true,
-                        canBookRooms: true,
-                        canUseBenefits: true,
-                        canPublish: strictRole === 'responsavel_aab'
-                    }
-                };
-                applyUserProfileUI();
-
-                const adminView = document.getElementById('view-admin');
-                if (strictRole !== 'responsavel_aab' && adminView && !adminView.classList.contains('hidden')) {
-                    navigateTo('overview');
-                }
-            });
-            firestoreUnsubscribers.push(unsubSelf);
-
-            const collectionsMap = [
-                { name: 'processos', setter: arr => { casesList = arr; renderCasesTable(); updateOverviewKPIs(); } },
-                { name: 'clientes', setter: arr => { clientsList = arr; renderClientsGrid(); updateOverviewKPIs(); } },
-                { name: 'prazos', setter: arr => { deadlinesList = arr; renderDeadlinesList(); renderOverviewDeadlines(); updateOverviewKPIs(); } },
-                { name: 'financeiro', setter: arr => { financeList = arr; renderFinanceTable(); updateOverviewKPIs(); } },
-                { name: 'reservas_salas', setter: arr => { bookingsList = arr; renderBookingsList(); } }
-            ];
-
-            collectionsMap.forEach(({ name, setter }) => {
-                const unsub = onSnapshot(collection(db, 'escritorios', uid, name), (snap) => {
-                    const items = [];
-                    snap.forEach(d => items.push({ id: d.id, ...d.data() }));
-                    setter(items);
-                });
-                firestoreUnsubscribers.push(unsub);
-            });
-
-            const unsubPubs = onSnapshot(collection(db, 'publicacoes_aab'), (snap) => {
-                const items = [];
-                snap.forEach(d => items.push({ id: d.id, ...d.data() }));
-                items.sort((a, b) => {
-                    if (Boolean(a.pinned) !== Boolean(b.pinned)) return a.pinned ? -1 : 1;
-                    return (b.createdAtMs || 0) - (a.createdAtMs || 0);
-                });
-                publicationsList = items;
-                renderOverviewPublications();
-                renderAdminPublications();
-                updateAdminKPIs();
-            });
-            firestoreUnsubscribers.push(unsubPubs);
-
-            const unsubMembers = onSnapshot(collection(db, 'usuarios'), (snap) => {
-                const items = [];
-                snap.forEach(d => items.push({ id: d.id, ...d.data() }));
-                adminMembersList = items;
-                renderAdminMembersTable();
-                updateAdminKPIs();
-            });
-            firestoreUnsubscribers.push(unsubMembers);
-
-            const unsubAuthEmails = onSnapshot(collection(db, 'responsaveis_autorizados'), (snap) => {
-                const items = [];
-                snap.forEach(d => items.push({ id: d.id, ...d.data() }));
-                authorizedEmailsList = items;
-                renderAuthorizedEmailsList();
-            });
-            firestoreUnsubscribers.push(unsubAuthEmails);
-
-            heartbeatIntervalId = setInterval(async () => {
-                if (!currentUser || isDemoFallbackMode) return;
-                try {
-                    await setDoc(doc(db, 'usuarios', uid), { lastSeen: Date.now() }, { merge: true });
-                } catch (_) {}
-            }, 60000);
-        }
-
         function showAppShell() {
             document.getElementById('auth-screen').classList.add('hidden');
             document.getElementById('app-shell').classList.remove('hidden');
-            updateHeaderDate();
-            applyUserProfileUI();
-            navigateTo('overview');
-            renderAllViews();
-            lucide.createIcons();
-        }
-
-        function renderAllViews() {
-            updateOverviewKPIs();
-            renderOverviewDeadlines();
-            renderOverviewPublications();
-            renderCasesTable();
-            renderClientsGrid();
-            renderDeadlinesList();
-            renderFinanceTable();
-            renderBookingsList();
-            renderAdminPublications();
-            renderAdminMembersTable();
-            renderAuthorizedEmailsList();
-            updateAdminKPIs();
-        }
-
-        // =====================================================================
-        // NAVEGAÇÃO, PERFIL E KPIS
-        // =====================================================================
-        function navigateTo(viewName) {
-            if (viewName === 'admin' && !hasResponsibleAccess()) {
-                showToast('Acesso restrito aos Responsáveis AAB autorizados.', 'info');
-                viewName = 'overview';
-            }
-
-            document.querySelectorAll('.view-section').forEach(sec => sec.classList.add('hidden'));
-            const target = document.getElementById(`view-${viewName}`);
-            if (target) target.classList.remove('hidden');
-
-            document.querySelectorAll('.nav-item').forEach(btn => {
-                const active = btn.getAttribute('data-nav') === viewName;
-                btn.classList.toggle('bg-amber-600', active);
-                btn.classList.toggle('text-white', active);
-                btn.classList.toggle('font-semibold', active);
-            });
-
-            const titles = {
-                overview: 'Visão Geral do Escritório',
-                cases: 'Gestão de Processos',
-                clients: 'Clientes & CRM',
-                deadlines: 'Prazos & Agenda',
-                finance: 'Financeiro & Honorários',
-                benefits: 'Benefícios & Carteira Digital AAB',
-                admin: 'Painel do Responsável AAB'
-            };
-            document.getElementById('header-title').textContent = titles[viewName] || 'Portal AAB';
-            toggleMobileSidebar(false);
             lucide.createIcons();
         }
 
         function applyUserProfileUI() {
             if (!currentUser) return;
-            const initials = getInitials(currentUser.name);
-            const avatarHtml = currentUser.photo
-                ? `<img src="${currentUser.photo}" alt="${currentUser.name}" class="w-full h-full object-cover" onerror="this.parentElement.innerHTML='${initials}'">`
-                : initials;
-
-            document.getElementById('sidebar-avatar').innerHTML = avatarHtml;
-            document.getElementById('sidebar-user-name').textContent = currentUser.name || 'Advogado(a)';
-            document.getElementById('sidebar-user-oab').textContent = currentUser.oab ? `OAB ${currentUser.oab}` : 'Associado AAB';
-            document.getElementById('sidebar-user-email').textContent = currentUser.email || '';
-            document.getElementById('sidebar-user-firm').textContent = currentUser.firm || 'Escritório Jurídico';
+            const isMaster = isMasterAdminEmail(currentUser.email);
+            if (isMaster) {
+                currentUser.role = 'responsavel_aab';
+                currentUser.promotedByAdmin = true;
+                currentUser.accountStatus = 'Ativo';
+            }
 
             const isAdmin = hasResponsibleAccess(currentUser);
-            const badge = document.getElementById('sidebar-role-badge');
-            if (isAdmin) {
-                badge.textContent = 'Responsável AAB';
-                badge.className = 'px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-400/20 text-amber-300 shrink-0';
-            } else {
-                badge.textContent = 'Associado';
-                badge.className = 'px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-500/20 text-emerald-300 shrink-0';
+            const initials = getInitials(currentUser.name);
+
+            const avatarEl = document.getElementById('sidebar-avatar');
+            if (avatarEl) {
+                if (currentUser.photo) {
+                    avatarEl.innerHTML = `<img src="${currentUser.photo}" alt="Foto" class="w-full h-full object-cover" onerror="this.parentElement.textContent='${initials}'">`;
+                } else {
+                    avatarEl.textContent = initials;
+                }
+            }
+
+            document.getElementById('sidebar-user-name').textContent = currentUser.name || 'Advogado(a)';
+            document.getElementById('sidebar-user-oab').textContent = currentUser.oab || 'OAB / AAB';
+            document.getElementById('sidebar-user-email').textContent = currentUser.email || '';
+            document.getElementById('sidebar-user-firm').textContent = currentUser.firm || 'Escritório Associado';
+
+            const roleBadge = document.getElementById('sidebar-role-badge');
+            if (roleBadge) {
+                if (isAdmin) {
+                    roleBadge.textContent = 'Responsável AAB';
+                    roleBadge.className = 'px-2 py-0.5 rounded-full text-[10px] font-semibold bg-amber-500/20 text-amber-300 shrink-0';
+                } else {
+                    roleBadge.textContent = 'Associado';
+                    roleBadge.className = 'px-2 py-0.5 rounded-full text-[10px] font-semibold bg-emerald-500/20 text-emerald-300 shrink-0';
+                }
             }
 
             const adminNavBtn = document.getElementById('nav-btn-admin');
@@ -1936,646 +1722,168 @@
             const quickPubBtn = document.getElementById('btn-quick-publish-overview');
             if (quickPubBtn) quickPubBtn.classList.toggle('hidden', !isAdmin);
 
-            // Carteira Digital
             document.getElementById('card-holder-name').textContent = currentUser.name || 'Dr(a). Associado';
-            document.getElementById('card-holder-oab').textContent = currentUser.oab ? `Inscrição OAB ${currentUser.oab}` : 'Registro Institucional AAB';
+            document.getElementById('card-holder-oab').textContent = currentUser.oab || 'OAB / AAB';
             document.getElementById('card-holder-firm').textContent = currentUser.firm || 'Sociedade de Advocacia';
             document.getElementById('card-holder-email').textContent = currentUser.email || '';
-        }
 
-        function openProfileModal() {
-            if (!currentUser) return;
-            draftProfilePhoto = currentUser.photo || '';
-            document.getElementById('profile-name').value = currentUser.name || '';
-            document.getElementById('profile-oab').value = currentUser.oab || '';
-            document.getElementById('profile-firm').value = currentUser.firm || '';
-            document.getElementById('profile-seccional').value = currentUser.seccional || '';
-            document.getElementById('profile-phone').value = currentUser.phone || '';
-            document.getElementById('profile-website').value = currentUser.website || '';
-            document.getElementById('profile-address').value = currentUser.address || '';
-            document.getElementById('profile-bio').value = currentUser.bio || '';
-            document.getElementById('profile-photo-url').value = currentUser.photo && currentUser.photo.startsWith('http') ? currentUser.photo : '';
-            renderProfilePhotoPreview();
-            openModal('modal-profile');
-        }
-
-        function renderProfilePhotoPreview() {
-            const preview = document.getElementById('profile-photo-preview');
-            if (!preview) return;
-            const initials = getInitials(document.getElementById('profile-name')?.value || currentUser?.name || 'AA');
-            if (draftProfilePhoto) {
-                preview.innerHTML = `<img src="${draftProfilePhoto}" alt="Foto" class="w-full h-full object-cover" onerror="this.parentElement.innerHTML='${initials}'">`;
-            } else {
-                preview.textContent = initials;
+            document.getElementById('storage-mode-badge').textContent = isDemoFallbackMode ? 'Demo Local' : 'Firestore';
+            const localData = readLocalStorageData();
+            const importBtn = document.getElementById('btn-import-local');
+            if (importBtn) {
+                importBtn.classList.toggle('hidden', isDemoFallbackMode || !localData);
             }
         }
 
-        function handleProfilePhotoUpload(event) {
-            const file = event.target.files?.[0];
-            if (!file) return;
-            const reader = new FileReader();
-            reader.onload = () => {
-                const img = new Image();
-                img.onload = () => {
-                    const canvas = document.createElement('canvas');
-                    const maxSize = 240;
-                    let w = img.width;
-                    let h = img.height;
-                    if (w > h && w > maxSize) { h = (h * maxSize) / w; w = maxSize; }
-                    else if (h > maxSize) { w = (w * maxSize) / h; h = maxSize; }
-                    canvas.width = w;
-                    canvas.height = h;
-                    const ctx = canvas.getContext('2d');
-                    ctx.drawImage(img, 0, 0, w, h);
-                    draftProfilePhoto = canvas.toDataURL('image/jpeg', 0.8);
-                    renderProfilePhotoPreview();
-                };
-                img.src = reader.result;
-            };
-            reader.readAsDataURL(file);
-        }
-
-        function handleProfilePhotoUrlInput() {
-            draftProfilePhoto = (document.getElementById('profile-photo-url').value || '').trim();
-            renderProfilePhotoPreview();
-        }
-
-        function clearProfilePhoto() {
-            draftProfilePhoto = '';
-            document.getElementById('profile-photo-url').value = '';
-            document.getElementById('profile-photo-file').value = '';
-            renderProfilePhotoPreview();
-        }
-
-        async function handleSaveProfile(event) {
-            event.preventDefault();
-            if (!currentUser) return;
-            const updatedFields = {
-                name: document.getElementById('profile-name').value.trim(),
-                oab: document.getElementById('profile-oab').value.trim(),
-                firm: document.getElementById('profile-firm').value.trim(),
-                seccional: document.getElementById('profile-seccional').value.trim(),
-                phone: document.getElementById('profile-phone').value.trim(),
-                website: document.getElementById('profile-website').value.trim(),
-                address: document.getElementById('profile-address').value.trim(),
-                bio: document.getElementById('profile-bio').value.trim(),
-                photo: draftProfilePhoto || '',
-                lastSeen: Date.now()
-            };
-
-            currentUser = { ...currentUser, ...updatedFields };
-            applyUserProfileUI();
-            closeModal('modal-profile');
-
-            if (!isDemoFallbackMode && currentUser.uid) {
-                try {
-                    await setDoc(doc(db, 'usuarios', currentUser.uid), updatedFields, { merge: true });
-                } catch (err) {
-                    console.error('Erro ao salvar perfil:', err);
-                }
+        function navigateTo(viewName) {
+            if (viewName === 'admin' && !hasResponsibleAccess(currentUser)) {
+                showToast('Acesso restrito aos Responsáveis AAB autorizados.', 'error');
+                viewName = 'overview';
             }
-            showToast('Perfil atualizado com sucesso!');
+
+            document.querySelectorAll('.view-section').forEach(sec => sec.classList.add('hidden'));
+            const target = document.getElementById(`view-${viewName}`);
+            if (target) target.classList.remove('hidden');
+
+            document.querySelectorAll('.nav-item').forEach(btn => {
+                const active = btn.dataset.nav === viewName;
+                btn.classList.toggle('bg-white/15', active);
+                btn.classList.toggle('text-white', active);
+            });
+
+            const titles = {
+                overview: ['Visão Geral do Escritório', new Date().toLocaleDateString('pt-BR', { weekday: 'long', day: '2-digit', month: 'long', year: 'numeric' })],
+                cases: ['Gestão de Processos', 'Acompanhamento processual, CNJ, áreas e valores'],
+                clients: ['Clientes & CRM', 'Carteira de clientes pessoas físicas e jurídicas'],
+                deadlines: ['Prazos & Agenda', 'Controle de prazos fatais, audiências e diligências'],
+                finance: ['Financeiro & Honorários', 'Contas a receber, parcelas, êxitos e recebimentos'],
+                benefits: ['Benefícios & Carteira AAB', 'Carteira digital, certificado A3, salas e convênios'],
+                admin: ['Painel do Responsável AAB', 'Mural institucional, autorizações e gestão de associados']
+            };
+
+            const [t, sub] = titles[viewName] || titles.overview;
+            document.getElementById('header-title').textContent = t;
+            document.getElementById('header-subtitle').textContent = sub;
+
+            toggleMobileSidebar(false);
+            lucide.createIcons();
         }
 
         function updateOverviewKPIs() {
             const activeCases = casesList.filter(c => c.status !== 'Concluído').length;
-            const pendingDeadlines = deadlinesList.filter(d => d.status !== 'Concluído').length;
+            const pendingDeadlines = deadlinesList.filter(d => (d.status || 'Pendente') !== 'Concluído').length;
             const pendingFees = financeList
-                .filter(f => f.status !== 'Pago')
+                .filter(f => (f.status || 'Pendente') !== 'Pago')
                 .reduce((acc, f) => acc + Number(f.amount || 0), 0);
-            const activeClients = clientsList.length;
+            const paidFees = financeList
+                .filter(f => f.status === 'Pago')
+                .reduce((acc, f) => acc + Number(f.amount || 0), 0);
 
             document.getElementById('kpi-active-cases').textContent = activeCases;
             document.getElementById('kpi-upcoming-deadlines').textContent = pendingDeadlines;
             document.getElementById('kpi-pending-fees').textContent = formatCurrency(pendingFees);
-            document.getElementById('kpi-active-clients').textContent = activeClients;
+            document.getElementById('kpi-active-clients').textContent = clientsList.length;
 
-            document.getElementById('badge-cases-count').textContent = activeCases;
+            document.getElementById('badge-cases-count').textContent = casesList.length;
             document.getElementById('badge-deadlines-count').textContent = pendingDeadlines;
-        }
 
-        // =====================================================================
-        // PROCESSOS, CLIENTES, PRAZOS, FINANCEIRO E BENEFÍCIOS
-        // =====================================================================
-        async function persistSubcollectionItem(subName, item) {
-            if (isDemoFallbackMode || !currentUser?.uid) return;
-            try {
-                await setDoc(doc(db, 'escritorios', currentUser.uid, subName, item.id), item, { merge: true });
-            } catch (err) {
-                console.error(`Erro ao salvar em ${subName}:`, err);
-            }
-        }
-
-        async function deleteSubcollectionItem(subName, id) {
-            if (isDemoFallbackMode || !currentUser?.uid) return;
-            try {
-                await deleteDoc(doc(db, 'escritorios', currentUser.uid, subName, id));
-            } catch (err) {
-                console.error(`Erro ao excluir de ${subName}:`, err);
-            }
-        }
-
-        function openCaseModal() {
-            document.getElementById('case-form').reset();
-            openModal('modal-case');
-        }
-
-        async function handleSaveCase(event) {
-            event.preventDefault();
-            const item = {
-                id: 'proc_' + Date.now(),
-                cnj: document.getElementById('case-cnj').value.trim(),
-                client: document.getElementById('case-client').value.trim(),
-                area: document.getElementById('case-area').value.trim(),
-                court: document.getElementById('case-court').value.trim(),
-                value: Number(document.getElementById('case-value').value || 0),
-                status: document.getElementById('case-status').value
-            };
-            if (isDemoFallbackMode) {
-                casesList.unshift(item);
-                renderCasesTable();
-                updateOverviewKPIs();
-            } else {
-                await persistSubcollectionItem('processos', item);
-            }
-            closeModal('modal-case');
-            showToast('Processo cadastrado!');
-        }
-
-        function setCaseFilter(filter) {
-            currentCaseFilter = filter;
-            document.querySelectorAll('.case-filter-btn').forEach(btn => {
-                const active = btn.getAttribute('data-case-filter') === filter;
-                btn.className = active
-                    ? 'case-filter-btn px-3 py-1.5 rounded-xl text-xs font-semibold bg-aab-navy text-white cursor-pointer'
-                    : 'case-filter-btn px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 cursor-pointer';
-            });
-            renderCasesTable();
-        }
-
-        function renderCasesTable() {
-            const tbody = document.getElementById('cases-tbody');
-            if (!tbody) return;
-            const search = (document.getElementById('case-search')?.value || '').trim().toLowerCase();
-            const list = casesList.filter(c => {
-                const matchStatus = currentCaseFilter === 'Todos' || c.status === currentCaseFilter;
-                const matchSearch = !search ||
-                    (c.cnj || '').toLowerCase().includes(search) ||
-                    (c.client || '').toLowerCase().includes(search) ||
-                    (c.area || '').toLowerCase().includes(search);
-                return matchStatus && matchSearch;
-            });
-
-            if (list.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="6" class="py-8 text-center text-slate-400 text-xs">Nenhum processo encontrado.</td></tr>`;
-                return;
-            }
-
-            tbody.innerHTML = list.map(c => `
-                <tr class="hover:bg-slate-50/70">
-                    <td class="py-3.5 px-4 font-mono text-xs font-semibold text-aab-navy">${c.cnj}</td>
-                    <td class="py-3.5 px-4 font-medium text-slate-800">${c.client}</td>
-                    <td class="py-3.5 px-4 text-xs text-slate-600">${c.area} • ${c.court}</td>
-                    <td class="py-3.5 px-4">
-                        <span class="px-2.5 py-1 rounded-full text-[11px] font-semibold ${
-                            c.status === 'Concluído' ? 'bg-emerald-50 text-emerald-700' :
-                            c.status === 'Aguardando Prazo' ? 'bg-amber-50 text-amber-800' :
-                            'bg-blue-50 text-blue-700'
-                        }">${c.status}</span>
-                    </td>
-                    <td class="py-3.5 px-4 font-semibold text-slate-700">${formatCurrency(c.value)}</td>
-                    <td class="py-3.5 px-4 text-right">
-                        <button type="button" onclick="removeCase('${c.id}')" class="p-1.5 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50 cursor-pointer" title="Excluir">
-                            <i data-lucide="trash-2" class="w-4 h-4"></i>
-                        </button>
-                    </td>
-                </tr>
-            `).join('');
-            lucide.createIcons();
-        }
-
-        async function removeCase(id) {
-            if (isDemoFallbackMode) {
-                casesList = casesList.filter(c => c.id !== id);
-                renderCasesTable();
-                updateOverviewKPIs();
-            } else {
-                await deleteSubcollectionItem('processos', id);
-            }
-            showToast('Processo removido.');
-        }
-
-        function openClientModal() {
-            document.getElementById('client-form').reset();
-            openModal('modal-client');
-        }
-
-        async function handleSaveClient(event) {
-            event.preventDefault();
-            const item = {
-                id: 'cli_' + Date.now(),
-                name: document.getElementById('client-name').value.trim(),
-                type: document.getElementById('client-type').value,
-                doc: document.getElementById('client-doc').value.trim(),
-                phone: document.getElementById('client-phone').value.trim(),
-                email: document.getElementById('client-email').value.trim()
-            };
-            if (isDemoFallbackMode) {
-                clientsList.unshift(item);
-                renderClientsGrid();
-                updateOverviewKPIs();
-            } else {
-                await persistSubcollectionItem('clientes', item);
-            }
-            closeModal('modal-client');
-            showToast('Cliente adicionado!');
-        }
-
-        function renderClientsGrid() {
-            const grid = document.getElementById('clients-grid');
-            if (!grid) return;
-            const search = (document.getElementById('client-search')?.value || '').trim().toLowerCase();
-            const list = clientsList.filter(cl => !search ||
-                (cl.name || '').toLowerCase().includes(search) ||
-                (cl.doc || '').toLowerCase().includes(search) ||
-                (cl.email || '').toLowerCase().includes(search)
-            );
-
-            if (list.length === 0) {
-                grid.innerHTML = `<div class="col-span-full bg-white p-8 rounded-2xl border border-slate-200/80 text-center text-xs text-slate-400">Nenhum cliente cadastrado.</div>`;
-                return;
-            }
-
-            grid.innerHTML = list.map(cl => `
-                <div class="bg-white p-5 rounded-2xl border border-slate-200/80 flex flex-col justify-between">
-                    <div>
-                        <div class="flex items-center justify-between gap-2 mb-2">
-                            <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-slate-100 text-aab-navy">${cl.type || 'PF'}</span>
-                            <button type="button" onclick="removeClient('${cl.id}')" class="text-slate-400 hover:text-rose-600 cursor-pointer">
-                                <i data-lucide="trash-2" class="w-4 h-4"></i>
-                            </button>
-                        </div>
-                        <h4 class="font-bold text-aab-navy text-base">${cl.name}</h4>
-                        <p class="text-xs text-slate-500 mt-0.5">${cl.doc || '-'}</p>
-                    </div>
-                    <div class="mt-4 pt-3 border-t border-slate-100 text-xs text-slate-600 space-y-1">
-                        <p>${cl.phone || 'Sem telefone'}</p>
-                        <p class="truncate text-slate-500">${cl.email || 'Sem e-mail'}</p>
-                    </div>
-                </div>
-            `).join('');
-            lucide.createIcons();
-        }
-
-        async function removeClient(id) {
-            if (isDemoFallbackMode) {
-                clientsList = clientsList.filter(c => c.id !== id);
-                renderClientsGrid();
-                updateOverviewKPIs();
-            } else {
-                await deleteSubcollectionItem('clientes', id);
-            }
-            showToast('Cliente removido.');
-        }
-
-        function openDeadlineModal() {
-            document.getElementById('deadline-form').reset();
-            openModal('modal-deadline');
-        }
-
-        async function handleSaveDeadline(event) {
-            event.preventDefault();
-            const item = {
-                id: 'prz_' + Date.now(),
-                title: document.getElementById('deadline-title').value.trim(),
-                type: document.getElementById('deadline-type').value,
-                date: document.getElementById('deadline-date').value,
-                caseRef: document.getElementById('deadline-case').value.trim(),
-                status: 'Pendente'
-            };
-            if (isDemoFallbackMode) {
-                deadlinesList.unshift(item);
-                renderDeadlinesList();
-                renderOverviewDeadlines();
-                updateOverviewKPIs();
-            } else {
-                await persistSubcollectionItem('prazos', item);
-            }
-            closeModal('modal-deadline');
-            showToast('Prazo salvo na agenda!');
-        }
-
-        async function markDeadlineDone(id) {
-            const target = deadlinesList.find(d => d.id === id);
-            if (!target) return;
-            const nextStatus = target.status === 'Concluído' ? 'Pendente' : 'Concluído';
-            target.status = nextStatus;
-            if (isDemoFallbackMode) {
-                renderDeadlinesList();
-                renderOverviewDeadlines();
-                updateOverviewKPIs();
-            } else {
-                await persistSubcollectionItem('prazos', target);
-            }
-            showToast(`Prazo marcado como ${nextStatus}.`);
-        }
-
-        function setDeadlineFilter(filter) {
-            currentDeadlineFilter = filter;
-            document.querySelectorAll('.deadline-filter-btn').forEach(btn => {
-                const active = btn.getAttribute('data-deadline-filter') === filter;
-                btn.className = active
-                    ? 'deadline-filter-btn px-3 py-1.5 rounded-xl text-xs font-semibold bg-aab-navy text-white cursor-pointer'
-                    : 'deadline-filter-btn px-3 py-1.5 rounded-xl text-xs font-semibold bg-slate-100 text-slate-600 hover:bg-slate-200 cursor-pointer';
-            });
-            renderDeadlinesList();
+            document.getElementById('fin-pending-total').textContent = formatCurrency(pendingFees);
+            document.getElementById('fin-paid-total').textContent = formatCurrency(paidFees);
+            document.getElementById('fin-count-total').textContent = financeList.length;
         }
 
         function renderOverviewDeadlines() {
-            const container = document.getElementById('overview-deadlines-list');
-            if (!container) return;
-            const pending = deadlinesList.filter(d => d.status !== 'Concluído').slice(0, 4);
-            if (pending.length === 0) {
-                container.innerHTML = `<p class="text-xs text-slate-400 py-6 text-center">Nenhum prazo pendente no momento.</p>`;
+            const box = document.getElementById('overview-deadlines-list');
+            if (!box) return;
+            const items = deadlinesList.filter(d => (d.status || 'Pendente') !== 'Concluído').slice(0, 4);
+            if (items.length === 0) {
+                box.innerHTML = `<div class="p-6 rounded-xl bg-slate-50 text-center text-xs text-slate-400">Nenhum prazo pendente no momento.</div>`;
                 return;
             }
-            container.innerHTML = pending.map(d => `
-                <div class="p-3.5 rounded-xl border border-slate-100 bg-slate-50/70 flex flex-wrap items-center justify-between gap-3">
-                    <div>
-                        <div class="flex items-center gap-2 mb-1">
-                            <span class="px-2 py-0.5 rounded text-[10px] font-bold ${
-                                d.type === 'Fatal' ? 'bg-rose-100 text-rose-800' :
-                                d.type === 'Audiência' ? 'bg-amber-100 text-amber-800' :
-                                'bg-slate-200 text-slate-700'
-                            }">${d.type || 'Prazo'}</span>
-                            <span class="text-xs font-semibold text-slate-500">${formatDateBR(d.date)}</span>
-                        </div>
-                        <p class="text-sm font-bold text-aab-navy">${d.title}</p>
-                        <p class="text-xs text-slate-500 font-mono">${d.caseRef || ''}</p>
-                    </div>
-                    <button type="button" onclick="markDeadlineDone('${d.id}')" class="px-3 py-1.5 rounded-xl bg-white border border-slate-200 hover:border-emerald-400 hover:text-emerald-700 text-xs font-semibold text-slate-700 transition cursor-pointer">
-                        ✓ Marcar Cumprido
-                    </button>
-                </div>
-            `).join('');
-        }
-
-        function renderDeadlinesList() {
-            const container = document.getElementById('deadlines-full-list');
-            if (!container) return;
-            const list = deadlinesList.filter(d => currentDeadlineFilter === 'Todos' || d.status === currentDeadlineFilter);
-            if (list.length === 0) {
-                container.innerHTML = `<div class="bg-white p-8 rounded-2xl border border-slate-200/80 text-center text-xs text-slate-400">Nenhum prazo encontrado para o filtro selecionado.</div>`;
-                return;
-            }
-            container.innerHTML = list.map(d => `
-                <div class="bg-white p-4 rounded-2xl border border-slate-200/80 flex flex-wrap items-center justify-between gap-3">
-                    <div>
+            box.innerHTML = items.map(d => `
+                <div class="p-3.5 rounded-xl border border-slate-100 hover:border-amber-200 bg-slate-50/70 flex items-center justify-between gap-3">
+                    <div class="min-w-0">
                         <div class="flex items-center gap-2 mb-1">
                             <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-100 text-amber-900">${d.type || 'Prazo'}</span>
-                            <span class="text-xs font-semibold text-slate-500">${formatDateBR(d.date)}</span>
-                            <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold ${d.status === 'Concluído' ? 'bg-emerald-50 text-emerald-700' : 'bg-rose-50 text-rose-700'}">${d.status}</span>
+                            <span class="text-xs font-semibold text-slate-600">${formatDateBR(d.date)}</span>
                         </div>
-                        <p class="text-sm font-bold text-aab-navy">${d.title}</p>
-                        <p class="text-xs text-slate-500 font-mono">${d.caseRef || ''}</p>
+                        <p class="text-sm font-semibold text-aab-navy truncate">${d.title}</p>
+                        <p class="text-xs text-slate-500 truncate">${d.caseRef || d.case || ''}</p>
                     </div>
-                    <button type="button" onclick="markDeadlineDone('${d.id}')" class="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-emerald-50 hover:text-emerald-700 text-xs font-semibold text-slate-700 transition cursor-pointer">
-                        ${d.status === 'Concluído' ? 'Reabrir Prazo' : '✓ Marcar Cumprido'}
+                    <button type="button" onclick="markDeadlineDone('${d.id}')" class="px-2.5 py-1.5 rounded-lg bg-white border border-slate-200 hover:bg-emerald-50 hover:text-emerald-700 text-xs font-semibold text-slate-600 shrink-0 cursor-pointer">
+                        Cumprir
                     </button>
                 </div>
             `).join('');
         }
 
-        function openFinanceModal() {
-            document.getElementById('finance-form').reset();
-            openModal('modal-finance');
-        }
+        function renderPublications() {
+            const overviewBox = document.getElementById('overview-publications-list');
+            const adminBox = document.getElementById('admin-publications-list');
 
-        async function handleSaveFinance(event) {
-            event.preventDefault();
-            const item = {
-                id: 'fin_' + Date.now(),
-                description: document.getElementById('finance-desc').value.trim(),
-                amount: Number(document.getElementById('finance-amount').value || 0),
-                dueDate: document.getElementById('finance-due').value,
-                status: document.getElementById('finance-status').value
-            };
-            if (isDemoFallbackMode) {
-                financeList.unshift(item);
-                renderFinanceTable();
-                updateOverviewKPIs();
-            } else {
-                await persistSubcollectionItem('financeiro', item);
-            }
-            closeModal('modal-finance');
-            showToast('Honorário lançado!');
-        }
+            const sorted = [...publicationsList].sort((a, b) => {
+                if (a.pinned && !b.pinned) return -1;
+                if (!a.pinned && b.pinned) return 1;
+                return (b.createdAtMs || 0) - (a.createdAtMs || 0);
+            });
 
-        async function toggleFinanceStatus(id) {
-            const target = financeList.find(f => f.id === id);
-            if (!target) return;
-            target.status = target.status === 'Pago' ? 'Pendente' : 'Pago';
-            if (isDemoFallbackMode) {
-                renderFinanceTable();
-                updateOverviewKPIs();
-            } else {
-                await persistSubcollectionItem('financeiro', target);
-            }
-            showToast(`Lançamento marcado como ${target.status}.`);
-        }
-
-        function renderFinanceTable() {
-            const tbody = document.getElementById('finance-tbody');
-            if (!tbody) return;
-            const pending = financeList.filter(f => f.status !== 'Pago').reduce((a, b) => a + Number(b.amount || 0), 0);
-            const paid = financeList.filter(f => f.status === 'Pago').reduce((a, b) => a + Number(b.amount || 0), 0);
-
-            document.getElementById('fin-pending-total').textContent = formatCurrency(pending);
-            document.getElementById('fin-paid-total').textContent = formatCurrency(paid);
-            document.getElementById('fin-count-total').textContent = financeList.length;
-
-            if (financeList.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="5" class="py-8 text-center text-slate-400 text-xs">Nenhum lançamento financeiro registrado.</td></tr>`;
-                return;
-            }
-
-            tbody.innerHTML = financeList.map(f => `
-                <tr class="hover:bg-slate-50/70">
-                    <td class="py-3.5 px-4 font-medium text-aab-navy">${f.description}</td>
-                    <td class="py-3.5 px-4 text-xs text-slate-600">${formatDateBR(f.dueDate)}</td>
-                    <td class="py-3.5 px-4 font-bold text-slate-800">${formatCurrency(f.amount)}</td>
-                    <td class="py-3.5 px-4">
-                        <span class="px-2.5 py-1 rounded-full text-[11px] font-semibold ${f.status === 'Pago' ? 'bg-emerald-50 text-emerald-700' : 'bg-amber-50 text-amber-800'}">${f.status}</span>
-                    </td>
-                    <td class="py-3.5 px-4 text-right">
-                        <button type="button" onclick="toggleFinanceStatus('${f.id}')" class="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-emerald-50 hover:text-emerald-700 text-xs font-semibold text-slate-700 cursor-pointer">
-                            ${f.status === 'Pago' ? 'Marcar Pendente' : 'Confirmar Recebimento'}
-                        </button>
-                    </td>
-                </tr>
-            `).join('');
-        }
-
-        function openBenefitModal(type) {
-            const titleEl = document.getElementById('benefit-modal-title');
-            const bodyEl = document.getElementById('benefit-modal-body');
-
-            if (type === 'salas') {
-                titleEl.textContent = 'Reservar Sala de Apoio & Coworking';
-                bodyEl.innerHTML = `
-                    <form onsubmit="handleBookRoom(event)" class="space-y-3.5">
-                        <div>
-                            <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1">Unidade / Seccional</label>
-                            <input type="text" id="booking-unit" required value="Sede Nacional / Brasília - DF" class="w-full px-3.5 py-2 rounded-xl border border-slate-200 text-sm">
-                        </div>
-                        <div>
-                            <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1">Tipo de Espaço</label>
-                            <select id="booking-room" class="w-full px-3.5 py-2 rounded-xl border border-slate-200 text-sm bg-white">
-                                <option value="Sala de Audiência Virtual">Sala de Audiência Virtual</option>
-                                <option value="Sala de Atendimento a Cliente">Sala de Atendimento a Cliente</option>
-                                <option value="Estação de Coworking Jurídico">Estação de Coworking Jurídico</option>
-                            </select>
-                        </div>
-                        <div class="grid grid-cols-2 gap-3">
-                            <div>
-                                <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1">Data</label>
-                                <input type="date" id="booking-date" required class="w-full px-3.5 py-2 rounded-xl border border-slate-200 text-sm">
+            if (overviewBox) {
+                if (sorted.length === 0) {
+                    overviewBox.innerHTML = `<div class="col-span-2 p-6 rounded-xl bg-slate-50 text-center text-xs text-slate-400">Nenhuma publicação institucional no mural.</div>`;
+                } else {
+                    overviewBox.innerHTML = sorted.map(p => `
+                        <article class="p-4 rounded-xl border ${p.pinned ? 'border-amber-300 bg-amber-50/40' : 'border-slate-200/80 bg-slate-50/50'}">
+                            <div class="flex items-center justify-between gap-2 mb-2">
+                                <div class="flex items-center gap-1.5">
+                                    <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-aab-navy text-amber-300">${p.category || 'Comunicado'}</span>
+                                    ${p.pinned ? `<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-200 text-amber-950">FIXADO</span>` : ''}
+                                </div>
+                                <span class="text-[11px] text-slate-400">${p.dateLabel || ''}</span>
                             </div>
-                            <div>
-                                <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1">Horário</label>
-                                <input type="text" id="booking-time" required value="14:00 - 16:00" class="w-full px-3.5 py-2 rounded-xl border border-slate-200 text-sm">
+                            <h3 class="font-bold text-aab-navy text-sm mb-1">${p.title}</h3>
+                            <p class="text-xs text-slate-600 leading-relaxed whitespace-pre-line">${p.content}</p>
+                        </article>
+                    `).join('');
+                }
+            }
+
+            if (adminBox) {
+                if (sorted.length === 0) {
+                    adminBox.innerHTML = `<div class="p-6 rounded-xl bg-slate-50 text-center text-xs text-slate-400">Nenhuma publicação cadastrada.</div>`;
+                } else {
+                    adminBox.innerHTML = sorted.map(p => `
+                        <div class="p-4 rounded-xl border border-slate-200/80 bg-slate-50/60 flex items-start justify-between gap-3">
+                            <div class="min-w-0">
+                                <div class="flex items-center gap-2 mb-1">
+                                    <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-slate-200 text-slate-800">${p.category || 'Comunicado'}</span>
+                                    ${p.pinned ? `<span class="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-100 text-amber-900">FIXADO</span>` : ''}
+                                    <span class="text-[11px] text-slate-400">${p.dateLabel || ''}</span>
+                                </div>
+                                <p class="text-sm font-bold text-aab-navy">${p.title}</p>
+                                <p class="text-xs text-slate-600 mt-1 line-clamp-2">${p.content}</p>
+                            </div>
+                            <div class="flex items-center gap-1 shrink-0">
+                                <button type="button" onclick="editPublication('${p.id}')" class="p-1.5 rounded-lg text-slate-500 hover:text-aab-navy hover:bg-slate-200/70 cursor-pointer" title="Editar">
+                                    <i data-lucide="pencil" class="w-4 h-4"></i>
+                                </button>
+                                <button type="button" onclick="deletePublication('${p.id}')" class="p-1.5 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50 cursor-pointer" title="Excluir">
+                                    <i data-lucide="trash-2" class="w-4 h-4"></i>
+                                </button>
                             </div>
                         </div>
-                        <div class="flex justify-end gap-2 pt-3">
-                            <button type="button" onclick="closeModal('modal-benefit')" class="px-4 py-2 rounded-xl border border-slate-200 text-sm cursor-pointer">Cancelar</button>
-                            <button type="submit" class="px-4 py-2 rounded-xl bg-aab-navy text-white text-sm font-semibold cursor-pointer">Confirmar Reserva</button>
-                        </div>
-                    </form>
-                `;
-            } else if (type === 'certificado') {
-                titleEl.textContent = 'Certificado Digital A3 — ICP-AAB';
-                bodyEl.innerHTML = `
-                    <div class="space-y-3 text-sm text-slate-600">
-                        <p>Associado: <strong class="text-aab-navy">${currentUser?.name || ''}</strong> (${currentUser?.oab || 'OAB'})</p>
-                        <p class="text-xs leading-relaxed">Protocolo de validação institucional gerado com vínculo ao cadastro ativo na AAB para emissão em nuvem ou token criptográfico.</p>
-                        <div class="p-3.5 rounded-xl bg-amber-50 border border-amber-200 text-xs font-mono text-amber-900">
-                            PROTOCOLO AAB-CERT: ICP-${Date.now().toString().slice(-6)}-BR
-                        </div>
-                        <div class="flex justify-end pt-2">
-                            <button type="button" onclick="closeModal('modal-benefit'); showToast('Solicitação de Certificado A3 registrada!')" class="px-4 py-2 rounded-xl bg-amber-600 text-white text-xs font-semibold cursor-pointer">Confirmar Solicitação</button>
-                        </div>
-                    </div>
-                `;
-            } else if (type === 'biblioteca') {
-                titleEl.textContent = 'Biblioteca & Doutrina Digital AAB';
-                bodyEl.innerHTML = `
-                    <div class="space-y-2.5 text-xs">
-                        <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between">
-                            <div>
-                                <p class="font-bold text-aab-navy">Código de Processo Civil Comentado (Ed. 2026)</p>
-                                <p class="text-slate-500">Doutrina • Acesso Digital Liberado</p>
-                            </div>
-                            <button type="button" onclick="showToast('Abrindo obra na Biblioteca AAB...')" class="px-3 py-1.5 rounded-lg bg-aab-navy text-white font-semibold cursor-pointer">Consultar</button>
-                        </div>
-                        <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between">
-                            <div>
-                                <p class="font-bold text-aab-navy">Prática Forense, Recursos e Tribunais Superiores</p>
-                                <p class="text-slate-500">Modelos & Jurisprudência • Acesso Digital Liberado</p>
-                            </div>
-                            <button type="button" onclick="showToast('Abrindo acervo de peças AAB...')" class="px-3 py-1.5 rounded-lg bg-aab-navy text-white font-semibold cursor-pointer">Consultar</button>
-                        </div>
-                    </div>
-                `;
-            } else {
-                titleEl.textContent = 'Caixa de Assistência & Saúde — AAB';
-                bodyEl.innerHTML = `
-                    <div class="space-y-3 text-xs text-slate-600">
-                        <p>Declaração de elegibilidade emitida para <strong class="text-aab-navy">${currentUser?.name || ''}</strong>.</p>
-                        <div class="p-3.5 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-900 space-y-1">
-                            <p class="font-bold">Convênios Ativos para Associados e Dependentes</p>
-                            <p>• Planos de Saúde Empresariais e Odontológicos com carência reduzida</p>
-                            <p>• Previdência complementar e assistência farmacêutica institucional</p>
-                        </div>
-                        <div class="flex justify-end pt-2">
-                            <button type="button" onclick="closeModal('modal-benefit')" class="px-4 py-2 rounded-xl bg-emerald-700 text-white font-semibold cursor-pointer">Fechar</button>
-                        </div>
-                    </div>
-                `;
+                    `).join('');
+                }
             }
-            openModal('modal-benefit');
-        }
 
-        async function handleBookRoom(event) {
-            event.preventDefault();
-            const booking = {
-                id: 'res_' + Date.now(),
-                unit: document.getElementById('booking-unit').value.trim(),
-                room: document.getElementById('booking-room').value,
-                date: document.getElementById('booking-date').value,
-                time: document.getElementById('booking-time').value.trim()
-            };
-            if (isDemoFallbackMode) {
-                bookingsList.unshift(booking);
-                renderBookingsList();
-            } else {
-                await persistSubcollectionItem('reservas_salas', booking);
-            }
-            closeModal('modal-benefit');
-            showToast('Sala reservada com sucesso!');
-        }
-
-        function renderBookingsList() {
-            const list = document.getElementById('bookings-list');
-            if (!list) return;
-            if (bookingsList.length === 0) {
-                list.innerHTML = `<p class="text-xs text-slate-400">Nenhuma reserva de sala registrada.</p>`;
-                return;
-            }
-            list.innerHTML = bookingsList.map(b => `
-                <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200/70 flex flex-wrap items-center justify-between gap-2 text-xs">
-                    <div>
-                        <p class="font-bold text-aab-navy">${b.room} — ${b.unit}</p>
-                        <p class="text-slate-500">${formatDateBR(b.date)} • ${b.time}</p>
-                    </div>
-                    <button type="button" onclick="cancelRoomBooking('${b.id}')" class="px-2.5 py-1 rounded-lg text-rose-600 hover:bg-rose-50 font-semibold cursor-pointer">Cancelar</button>
-                </div>
-            `).join('');
-        }
-
-        async function cancelRoomBooking(id) {
-            if (isDemoFallbackMode) {
-                bookingsList = bookingsList.filter(b => b.id !== id);
-                renderBookingsList();
-            } else {
-                await deleteSubcollectionItem('reservas_salas', id);
-            }
-            showToast('Reserva cancelada.');
-        }
-
-        // =====================================================================
-        // PAINEL DO RESPONSÁVEL AAB (PUBLICAÇÕES, AUTORIZAÇÕES E ASSOCIADOS)
-        // =====================================================================
-        function updateAdminKPIs() {
-            const total = adminMembersList.length;
-            const onlineThreshold = Date.now() - (5 * 60 * 1000);
-            const onlineCount = adminMembersList.filter(m => Number(m.lastSeen || 0) >= onlineThreshold).length;
-            const siteCount = adminMembersList.filter(m => Boolean(String(m.website || '').trim())).length;
-
-            const elTotal = document.getElementById('admin-kpi-total-members');
-            const elOnline = document.getElementById('admin-kpi-online-members');
-            const elSite = document.getElementById('admin-kpi-site-members');
-            const elPubs = document.getElementById('admin-kpi-publications');
-
-            if (elTotal) elTotal.textContent = total;
-            if (elOnline) elOnline.textContent = Math.max(onlineCount, currentUser ? 1 : 0);
-            if (elSite) elSite.textContent = siteCount;
-            if (elPubs) elPubs.textContent = publicationsList.length;
+            const pubKpi = document.getElementById('admin-kpi-publications');
+            if (pubKpi) pubKpi.textContent = publicationsList.length;
+            lucide.createIcons();
         }
 
         async function handleSavePublication(event) {
             event.preventDefault();
-            if (!hasResponsibleAccess()) {
-                showToast('Apenas Responsáveis AAB podem publicar no mural.', 'info');
+            if (!hasResponsibleAccess(currentUser)) {
+                showToast('Apenas Responsáveis AAB podem publicar no mural.', 'error');
                 return;
             }
 
@@ -2583,6 +1891,7 @@
             const category = document.getElementById('pub-category').value;
             const pinned = document.getElementById('pub-pinned').checked;
             const content = document.getElementById('pub-content').value.trim();
+            const existing = editingPublicationId ? publicationsList.find(p => p.id === editingPublicationId) : null;
 
             const item = {
                 id: editingPublicationId || ('pub_' + Date.now()),
@@ -2590,11 +1899,9 @@
                 category,
                 pinned,
                 content,
-                authorName: currentUser?.name || 'Administração AAB',
-                dateLabel: new Date().toLocaleDateString('pt-BR'),
-                createdAtMs: editingPublicationId
-                    ? (publicationsList.find(p => p.id === editingPublicationId)?.createdAtMs || Date.now())
-                    : Date.now()
+                author: currentUser.name || 'Responsável AAB',
+                dateLabel: existing?.dateLabel || new Date().toLocaleDateString('pt-BR'),
+                createdAtMs: existing?.createdAtMs || Date.now()
             };
 
             if (isDemoFallbackMode) {
@@ -2603,21 +1910,18 @@
                 } else {
                     publicationsList.unshift(item);
                 }
-                renderOverviewPublications();
-                renderAdminPublications();
-                updateAdminKPIs();
+                renderPublications();
             } else {
                 try {
                     await setDoc(doc(db, 'publicacoes_aab', item.id), item, { merge: true });
                 } catch (err) {
-                    console.error('Erro ao publicar no mural:', err);
-                    showToast('Erro ao salvar publicação no Firestore.', 'info');
+                    showToast('Erro ao salvar publicação no Firestore. Verifique as regras.', 'error');
                     return;
                 }
             }
 
             cancelPublicationEdit();
-            showToast('Publicação salva no Mural Institucional!');
+            showToast('Publicação salva no Mural AAB!');
         }
 
         function editPublication(id) {
@@ -2644,131 +1948,105 @@
         }
 
         async function deletePublication(id) {
-            if (!hasResponsibleAccess()) return;
+            if (!hasResponsibleAccess(currentUser)) {
+                showToast('Sem permissão para excluir publicações.', 'error');
+                return;
+            }
             if (isDemoFallbackMode) {
                 publicationsList = publicationsList.filter(p => p.id !== id);
-                renderOverviewPublications();
-                renderAdminPublications();
-                updateAdminKPIs();
+                renderPublications();
             } else {
-                await deleteDoc(doc(db, 'publicacoes_aab', id));
+                try {
+                    await deleteDoc(doc(db, 'publicacoes_aab', id));
+                } catch (err) {
+                    showToast('Erro ao excluir publicação.', 'error');
+                    return;
+                }
             }
+            if (editingPublicationId === id) cancelPublicationEdit();
             showToast('Publicação removida.');
-        }
-
-        function renderOverviewPublications() {
-            const container = document.getElementById('overview-publications-list');
-            if (!container) return;
-            if (publicationsList.length === 0) {
-                container.innerHTML = `<p class="text-xs text-slate-400 col-span-full py-4">Nenhuma publicação institucional no momento.</p>`;
-                return;
-            }
-            container.innerHTML = publicationsList.map(p => `
-                <article class="p-4 rounded-xl border ${p.pinned ? 'border-amber-300 bg-amber-50/40' : 'border-slate-200/80 bg-slate-50/50'}">
-                    <div class="flex items-center justify-between gap-2 mb-1.5">
-                        <div class="flex items-center gap-1.5">
-                            <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-aab-navy text-amber-300">${p.category || 'Comunicado'}</span>
-                            ${p.pinned ? `<span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-amber-200 text-amber-950">Fixado</span>` : ''}
-                        </div>
-                        <span class="text-[11px] text-slate-400">${p.dateLabel || ''}</span>
-                    </div>
-                    <h3 class="font-bold text-aab-navy text-sm mb-1">${p.title}</h3>
-                    <p class="text-xs text-slate-600 leading-relaxed whitespace-pre-line">${p.content}</p>
-                </article>
-            `).join('');
-        }
-
-        function renderAdminPublications() {
-            const container = document.getElementById('admin-publications-list');
-            if (!container) return;
-            if (publicationsList.length === 0) {
-                container.innerHTML = `<p class="text-xs text-slate-400 py-6 text-center">Nenhuma publicação cadastrada.</p>`;
-                return;
-            }
-            container.innerHTML = publicationsList.map(p => `
-                <div class="p-3.5 rounded-xl border border-slate-200/80 bg-slate-50/50 flex items-start justify-between gap-3">
-                    <div class="min-w-0">
-                        <div class="flex items-center gap-2 mb-1">
-                            <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-slate-200 text-slate-700">${p.category || 'Comunicado'}</span>
-                            ${p.pinned ? `<span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-amber-100 text-amber-800">Fixado</span>` : ''}
-                            <span class="text-[11px] text-slate-400">${p.dateLabel || ''}</span>
-                        </div>
-                        <p class="text-sm font-bold text-aab-navy truncate">${p.title}</p>
-                        <p class="text-xs text-slate-600 line-clamp-2 mt-0.5">${p.content}</p>
-                    </div>
-                    <div class="flex items-center gap-1 shrink-0">
-                        <button type="button" onclick="editPublication('${p.id}')" class="p-1.5 rounded-lg text-slate-500 hover:bg-slate-200/70 cursor-pointer" title="Editar">
-                            <i data-lucide="pencil" class="w-4 h-4"></i>
-                        </button>
-                        <button type="button" onclick="deletePublication('${p.id}')" class="p-1.5 rounded-lg text-slate-500 hover:text-rose-600 hover:bg-rose-50 cursor-pointer" title="Excluir">
-                            <i data-lucide="trash-2" class="w-4 h-4"></i>
-                        </button>
-                    </div>
-                </div>
-            `).join('');
-            lucide.createIcons();
         }
 
         async function handleAuthorizeEmail(event) {
             event.preventDefault();
-            if (!hasResponsibleAccess()) return;
-            const name = document.getElementById('auth-email-name').value.trim();
-            const email = document.getElementById('auth-email-address').value.trim().toLowerCase();
-            const oab = document.getElementById('auth-email-oab').value.trim();
-            const role = document.getElementById('auth-email-role').value;
+            if (!hasResponsibleAccess(currentUser)) {
+                showToast('Apenas Responsáveis AAB podem autorizar e-mails.', 'error');
+                return;
+            }
 
-            const record = {
-                id: sanitizeDocId(email),
+            const name = document.getElementById('auth-email-name').value.trim();
+            const email = normalizeEmail(document.getElementById('auth-email-address').value);
+            const oab = document.getElementById('auth-email-oab').value.trim();
+            const role = document.getElementById('auth-email-role').value === 'responsavel_aab' ? 'responsavel_aab' : 'associado';
+
+            if (!email) return;
+
+            const docId = sanitizeAuthDocId(email);
+            const payload = {
+                id: docId,
                 name,
                 email,
                 oab,
                 role,
                 active: true,
-                authorizedBy: currentUser?.email || MASTER_ADMIN_EMAIL
+                authorizedBy: currentUser.email,
+                updatedAt: Date.now()
             };
 
             if (isDemoFallbackMode) {
-                authorizedEmailsList = authorizedEmailsList.filter(a => a.email !== email).concat(record);
-                renderAuthorizedEmailsList();
+                authorizedEmailsList = [...authorizedEmailsList.filter(x => x.id !== docId), payload];
+                renderAuthorizedEmails();
             } else {
-                await setDoc(doc(db, 'responsaveis_autorizados', record.id), { ...record, updatedAt: serverTimestamp() }, { merge: true });
+                try {
+                    await setDoc(doc(db, 'responsaveis_autorizados', docId), payload, { merge: true });
+                } catch (err) {
+                    showToast('Erro ao autorizar e-mail no Firestore.', 'error');
+                    return;
+                }
             }
 
             document.getElementById('authorize-email-form').reset();
-            showToast(`E-mail ${email} autorizado como ${role === 'responsavel_aab' ? 'Responsável AAB' : 'Associado'}.`);
+            showToast(`E-mail ${email} autorizado como ${role === 'responsavel_aab' ? 'Responsável AAB' : 'Associado'}!`);
         }
 
-        async function revokeAuthorizedEmail(id, email) {
-            if (!hasResponsibleAccess()) return;
+        async function revokeAuthorizedEmail(docId, email) {
+            if (!hasResponsibleAccess(currentUser)) return;
             if (isMasterAdminEmail(email)) {
-                showToast('O e-mail willbrasilia@gmail.com não pode ser revogado.', 'info');
+                showToast('O e-mail willbrasilia@gmail.com não pode ser removido.', 'info');
                 return;
             }
             if (isDemoFallbackMode) {
-                authorizedEmailsList = authorizedEmailsList.filter(a => a.id !== id);
-                renderAuthorizedEmailsList();
+                authorizedEmailsList = authorizedEmailsList.filter(x => x.id !== docId);
+                renderAuthorizedEmails();
             } else {
-                await deleteDoc(doc(db, 'responsaveis_autorizados', id));
+                try {
+                    await deleteDoc(doc(db, 'responsaveis_autorizados', docId));
+                } catch (err) {
+                    showToast('Erro ao revogar autorização.', 'error');
+                    return;
+                }
             }
-            showToast('Autorização removida.');
+            showToast('Autorização revogada.');
         }
 
-        function renderAuthorizedEmailsList() {
-            const container = document.getElementById('authorized-emails-list');
-            if (!container) return;
+        function renderAuthorizedEmails() {
+            const box = document.getElementById('authorized-emails-list');
+            if (!box) return;
             if (authorizedEmailsList.length === 0) {
-                container.innerHTML = `<span class="text-xs text-slate-400">Nenhum e-mail adicional cadastrado na lista de pré-autorização (willbrasilia@gmail.com já possui autorização permanente).</span>`;
+                box.innerHTML = `<span class="text-xs text-slate-400">Nenhum e-mail adicional cadastrado ainda (willbrasilia@gmail.com é master por padrão).</span>`;
                 return;
             }
-            container.innerHTML = authorizedEmailsList.map(a => `
+            box.innerHTML = authorizedEmailsList.map(item => `
                 <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-xl bg-slate-100 border border-slate-200 text-xs">
-                    <span class="font-semibold text-aab-navy">${a.email}</span>
-                    <span class="px-1.5 py-0.5 rounded text-[10px] font-bold ${a.role === 'responsavel_aab' ? 'bg-amber-200 text-amber-950' : 'bg-white text-slate-600'}">
-                        ${a.role === 'responsavel_aab' ? 'Responsável AAB' : 'Associado'}
+                    <span class="font-semibold text-aab-navy">${item.email}</span>
+                    <span class="px-1.5 py-0.5 rounded text-[10px] font-bold ${item.role === 'responsavel_aab' ? 'bg-amber-200 text-amber-950' : 'bg-white text-slate-600'}">
+                        ${item.role === 'responsavel_aab' ? 'Responsável AAB' : 'Associado'}
                     </span>
-                    <button type="button" onclick="revokeAuthorizedEmail('${a.id}', '${a.email}')" class="text-slate-400 hover:text-rose-600 cursor-pointer" title="Revogar">
-                        <i data-lucide="x" class="w-3.5 h-3.5"></i>
-                    </button>
+                    ${!isMasterAdminEmail(item.email) ? `
+                        <button type="button" onclick="revokeAuthorizedEmail('${item.id}', '${item.email}')" class="text-slate-400 hover:text-rose-600 cursor-pointer" title="Revogar">
+                            <i data-lucide="x" class="w-3.5 h-3.5"></i>
+                        </button>
+                    ` : ''}
                 </div>
             `).join('');
             lucide.createIcons();
@@ -2777,248 +2055,1073 @@
         function renderAdminMembersTable() {
             const tbody = document.getElementById('admin-members-tbody');
             if (!tbody) return;
-            const search = (document.getElementById('admin-member-search')?.value || '').trim().toLowerCase();
+            const search = String(document.getElementById('admin-member-search')?.value || '').trim().toLowerCase();
 
             const list = adminMembersList.filter(m => {
                 if (!search) return true;
                 return (
-                    (m.name || '').toLowerCase().includes(search) ||
-                    (m.oab || '').toLowerCase().includes(search) ||
-                    (m.email || '').toLowerCase().includes(search) ||
-                    (m.website || '').toLowerCase().includes(search) ||
-                    (m.firm || '').toLowerCase().includes(search)
+                    String(m.name || '').toLowerCase().includes(search) ||
+                    String(m.email || '').toLowerCase().includes(search) ||
+                    String(m.oab || '').toLowerCase().includes(search) ||
+                    String(m.website || '').toLowerCase().includes(search)
                 );
             });
 
+            const now = Date.now();
+            const onlineCount = adminMembersList.filter(m => m.lastSeen && (now - Number(m.lastSeen)) < 5 * 60 * 1000).length;
+            const siteCount = adminMembersList.filter(m => Boolean(m.website && String(m.website).trim())).length;
+
+            document.getElementById('admin-kpi-total-members').textContent = adminMembersList.length;
+            document.getElementById('admin-kpi-online-members').textContent = onlineCount;
+            document.getElementById('admin-kpi-site-members').textContent = siteCount;
+
             if (list.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="5" class="py-8 text-center text-slate-400 text-xs">Nenhum associado encontrado.</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="5" class="py-6 text-center text-xs text-slate-400">Nenhum associado encontrado.</td></tr>`;
                 return;
             }
 
-            const onlineThreshold = Date.now() - (5 * 60 * 1000);
-
             tbody.innerHTML = list.map(m => {
                 const isMaster = isMasterAdminEmail(m.email);
-                const isOnline = Number(m.lastSeen || 0) >= onlineThreshold || m.id === currentUser?.uid;
-                const siteUrl = String(m.website || '').trim();
-                const perms = m.permissions || defaultPermissions;
-                const isSuspended = !isMaster && m.accountStatus === 'Suspenso';
+                const isOnline = m.lastSeen && (now - Number(m.lastSeen)) < 5 * 60 * 1000;
+                const roleValue = isMaster ? 'responsavel_aab' : (m.role === 'responsavel_aab' ? 'responsavel_aab' : 'associado');
+                const statusValue = isMaster ? 'Ativo' : (m.accountStatus || 'Ativo');
+                const perms = { ...defaultPermissions, ...(m.permissions || {}) };
 
                 return `
                     <tr class="hover:bg-slate-50/70">
                         <td class="py-3.5 px-4">
-                            <p class="font-bold text-aab-navy">${m.name || 'Associado'} ${isMaster ? '<span class="ml-1 px-1.5 py-0.5 rounded text-[10px] bg-amber-100 text-amber-900">MASTER</span>' : ''}</p>
-                            <p class="text-xs text-slate-500">OAB ${m.oab || '-'} • ${m.email || ''}</p>
+                            <p class="font-bold text-aab-navy">${m.name || 'Associado'}</p>
+                            <p class="text-xs text-slate-500">${m.oab || 'Sem OAB'} • ${m.email || ''}</p>
                             <p class="text-[11px] text-slate-400">${m.firm || ''}</p>
                         </td>
                         <td class="py-3.5 px-4">
                             <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold ${isOnline ? 'bg-emerald-50 text-emerald-700' : 'bg-slate-100 text-slate-500'}">
-                                <span class="w-1.5 h-1.5 rounded-full ${isOnline ? 'bg-emerald-500' : 'bg-slate-400'}"></span>
+                                <span class="w-2 h-2 rounded-full ${isOnline ? 'bg-emerald-500' : 'bg-slate-400'}"></span>
                                 ${isOnline ? 'Online' : 'Offline'}
                             </span>
                         </td>
                         <td class="py-3.5 px-4 text-xs">
-                            ${siteUrl
-                                ? `<a href="${siteUrl}" target="_blank" rel="noopener noreferrer" class="text-blue-700 hover:underline font-medium inline-flex items-center gap-1">${siteUrl}<i data-lucide="external-link" class="w-3 h-3"></i></a>`
-                                : `<span class="text-slate-400 italic">Sem site vinculado</span>`
-                            }
+                            ${m.website ? `<a href="${m.website}" target="_blank" rel="noopener noreferrer" class="text-blue-700 hover:underline font-medium">${m.website}</a>` : `<span class="text-slate-400 italic">Sem site vinculado</span>`}
                         </td>
                         <td class="py-3.5 px-4 text-xs space-y-1">
                             <label class="flex items-center gap-1.5 cursor-pointer">
-                                <input type="checkbox" ${perms.portalAccess !== false ? 'checked' : ''} onchange="toggleMemberPermission('${m.id}', 'portalAccess', this.checked)" class="rounded border-slate-300">
+                                <input type="checkbox" ${perms.portalAccess ? 'checked' : ''} ${isMaster ? 'disabled' : ''} onchange="toggleMemberPermission('${m.uid}', 'portalAccess', this.checked)" class="rounded border-slate-300">
                                 <span>Acesso Portal</span>
                             </label>
                             <label class="flex items-center gap-1.5 cursor-pointer">
-                                <input type="checkbox" ${perms.canBookRooms !== false ? 'checked' : ''} onchange="toggleMemberPermission('${m.id}', 'canBookRooms', this.checked)" class="rounded border-slate-300">
-                                <span>Salas / Coworking</span>
-                            </label>
-                            <label class="flex items-center gap-1.5 cursor-pointer">
-                                <input type="checkbox" ${perms.canUseBenefits !== false ? 'checked' : ''} onchange="toggleMemberPermission('${m.id}', 'canUseBenefits', this.checked)" class="rounded border-slate-300">
-                                <span>Convênios / CAA</span>
+                                <input type="checkbox" ${perms.canPublish || roleValue === 'responsavel_aab' ? 'checked' : ''} ${isMaster || roleValue === 'responsavel_aab' ? 'disabled' : ''} onchange="toggleMemberPermission('${m.uid}', 'canPublish', this.checked)" class="rounded border-slate-300">
+                                <span>Publicar Mural</span>
                             </label>
                         </td>
                         <td class="py-3.5 px-4 space-y-1.5">
-                            <select ${isMaster ? 'disabled' : ''} onchange="updateMemberRole('${m.id}', this.value)"
-                                class="w-full px-2.5 py-1.5 rounded-lg border border-slate-200 text-xs bg-white disabled:bg-slate-100 disabled:text-slate-500">
-                                <option value="associado" ${m.role !== 'responsavel_aab' ? 'selected' : ''}>Associado</option>
-                                <option value="responsavel_aab" ${m.role === 'responsavel_aab' ? 'selected' : ''}>Responsável AAB</option>
+                            <select ${isMaster ? 'disabled' : ''} onchange="updateMemberRole('${m.uid}', this.value)"
+                                class="w-full px-2.5 py-1.5 rounded-lg border border-slate-200 text-xs bg-white font-medium">
+                                <option value="associado" ${roleValue === 'associado' ? 'selected' : ''}>Associado</option>
+                                <option value="responsavel_aab" ${roleValue === 'responsavel_aab' ? 'selected' : ''}>Responsável AAB</option>
                             </select>
-                            ${isMaster ? '' : `
-                                <button type="button" onclick="toggleMemberAccountStatus('${m.id}', '${isSuspended ? 'Ativo' : 'Suspenso'}')"
-                                    class="w-full py-1 px-2 rounded-lg text-[11px] font-semibold cursor-pointer ${isSuspended ? 'bg-emerald-50 text-emerald-700 hover:bg-emerald-100' : 'bg-rose-50 text-rose-700 hover:bg-rose-100'}">
-                                    ${isSuspended ? 'Reativar Conta' : 'Suspender'}
-                                </button>
-                            `}
+                            <button type="button" ${isMaster ? 'disabled' : ''} onclick="toggleMemberAccountStatus('${m.uid}')"
+                                class="w-full px-2.5 py-1 rounded-lg text-xs font-semibold ${isMaster ? 'bg-amber-50 text-amber-800 cursor-default' : statusValue === 'Ativo' ? 'bg-rose-50 text-rose-700 hover:bg-rose-100 cursor-pointer' : 'bg-emerald-50 text-emerald-700 hover:bg-emerald-100 cursor-pointer'}">
+                                ${isMaster ? 'Master Protegido' : statusValue === 'Ativo' ? 'Suspender' : 'Reativar'}
+                            </button>
                         </td>
                     </tr>
                 `;
             }).join('');
-            lucide.createIcons();
         }
 
-        async function toggleMemberPermission(memberId, permKey, checked) {
-            if (!hasResponsibleAccess()) return;
+        async function toggleMemberPermission(uid, permKey, checked) {
+            if (!hasResponsibleAccess(currentUser)) return;
+            const target = adminMembersList.find(m => m.uid === uid);
+            if (!target || isMasterAdminEmail(target.email)) return;
+
+            const updatedPerms = { ...defaultPermissions, ...(target.permissions || {}), [permKey]: Boolean(checked) };
             if (isDemoFallbackMode) {
-                adminMembersList = adminMembersList.map(m => m.id === memberId
-                    ? { ...m, permissions: { ...(m.permissions || defaultPermissions), [permKey]: checked } }
-                    : m
-                );
+                adminMembersList = adminMembersList.map(m => m.uid === uid ? { ...m, permissions: updatedPerms } : m);
                 renderAdminMembersTable();
-                return;
+            } else {
+                await setDoc(doc(db, 'usuarios', uid), { permissions: updatedPerms }, { merge: true });
             }
-            await setDoc(doc(db, 'usuarios', memberId), {
-                permissions: { [permKey]: checked }
-            }, { merge: true });
             showToast('Permissão atualizada.');
         }
 
-        async function updateMemberRole(memberId, newRole) {
-            if (!hasResponsibleAccess()) return;
-            const target = adminMembersList.find(m => m.id === memberId);
-            if (target && isMasterAdminEmail(target.email)) {
-                showToast('O e-mail willbrasilia@gmail.com não pode deixar de ser Responsável AAB.', 'info');
+        async function updateMemberRole(uid, newRole) {
+            if (!hasResponsibleAccess(currentUser)) return;
+            const target = adminMembersList.find(m => m.uid === uid);
+            if (!target) return;
+            if (isMasterAdminEmail(target.email)) {
+                showToast('willbrasilia@gmail.com permanece sempre como Responsável AAB.', 'info');
                 renderAdminMembersTable();
                 return;
             }
 
-            const isPromoted = newRole === 'responsavel_aab';
+            const role = newRole === 'responsavel_aab' ? 'responsavel_aab' : 'associado';
+            const promotedByAdmin = role === 'responsavel_aab';
+            const permissions = {
+                ...defaultPermissions,
+                ...(target.permissions || {}),
+                canPublish: role === 'responsavel_aab' ? true : Boolean(target.permissions?.canPublish && false)
+            };
+
             if (isDemoFallbackMode) {
-                adminMembersList = adminMembersList.map(m => m.id === memberId
-                    ? { ...m, role: newRole, promotedByAdmin: isPromoted }
-                    : m
-                );
+                adminMembersList = adminMembersList.map(m => m.uid === uid ? { ...m, role, promotedByAdmin, permissions } : m);
                 renderAdminMembersTable();
-                return;
-            }
-
-            await setDoc(doc(db, 'usuarios', memberId), {
-                role: newRole,
-                promotedByAdmin: isPromoted,
-                permissions: {
-                    portalAccess: true,
-                    canBookRooms: true,
-                    canUseBenefits: true,
-                    canPublish: isPromoted
+            } else {
+                await setDoc(doc(db, 'usuarios', uid), { role, promotedByAdmin, permissions }, { merge: true });
+                if (target.email) {
+                    const authDocId = sanitizeAuthDocId(target.email);
+                    await setDoc(doc(db, 'responsaveis_autorizados', authDocId), {
+                        id: authDocId,
+                        name: target.name || 'Associado',
+                        email: normalizeEmail(target.email),
+                        oab: target.oab || '',
+                        role,
+                        active: true,
+                        updatedAt: Date.now()
+                    }, { merge: true });
                 }
-            }, { merge: true });
-
-            if (target?.email) {
-                await setDoc(doc(db, 'responsaveis_autorizados', sanitizeDocId(target.email)), {
-                    email: target.email.toLowerCase(),
-                    name: target.name || '',
-                    oab: target.oab || '',
-                    role: newRole,
-                    active: true,
-                    updatedAt: serverTimestamp()
-                }, { merge: true });
             }
-            showToast('Papel da conta atualizado.');
+            showToast(`Papel atualizado para ${role === 'responsavel_aab' ? 'Responsável AAB' : 'Associado'}.`);
         }
 
-        async function toggleMemberAccountStatus(memberId, nextStatus) {
-            if (!hasResponsibleAccess()) return;
-            const target = adminMembersList.find(m => m.id === memberId);
-            if (target && isMasterAdminEmail(target.email)) {
-                showToast('A conta master willbrasilia@gmail.com não pode ser suspensa.', 'info');
+        async function toggleMemberAccountStatus(uid) {
+            if (!hasResponsibleAccess(currentUser)) return;
+            const target = adminMembersList.find(m => m.uid === uid);
+            if (!target || isMasterAdminEmail(target.email)) {
+                showToast('Conta master protegida contra suspensão.', 'info');
                 return;
             }
+
+            const nextStatus = (target.accountStatus || 'Ativo') === 'Ativo' ? 'Suspenso' : 'Ativo';
             if (isDemoFallbackMode) {
-                adminMembersList = adminMembersList.map(m => m.id === memberId ? { ...m, accountStatus: nextStatus } : m);
+                adminMembersList = adminMembersList.map(m => m.uid === uid ? { ...m, accountStatus: nextStatus } : m);
                 renderAdminMembersTable();
-                return;
+            } else {
+                await setDoc(doc(db, 'usuarios', uid), { accountStatus: nextStatus }, { merge: true });
             }
-            await setDoc(doc(db, 'usuarios', memberId), { accountStatus: nextStatus }, { merge: true });
-            showToast(`Conta marcada como ${nextStatus}.`);
+            showToast(`Status da conta alterado para ${nextStatus}.`);
         }
 
-        // =====================================================================
-        // DADOS EXEMPLO E MIGRAÇÃO DO LOCALSTORAGE
-        // =====================================================================
-        function seedDemoCollections() {
+        function openProfileModal() {
+            if (!currentUser) return;
+            draftProfilePhoto = currentUser.photo || '';
+            document.getElementById('profile-name').value = currentUser.name || '';
+            document.getElementById('profile-oab').value = currentUser.oab || '';
+            document.getElementById('profile-firm').value = currentUser.firm || '';
+            document.getElementById('profile-seccional').value = currentUser.seccional || '';
+            document.getElementById('profile-phone').value = currentUser.phone || '';
+            document.getElementById('profile-website').value = currentUser.website || '';
+            document.getElementById('profile-address').value = currentUser.address || '';
+            document.getElementById('profile-bio').value = currentUser.bio || '';
+            document.getElementById('profile-photo-url').value = draftProfilePhoto.startsWith('http') ? draftProfilePhoto : '';
+            updateProfilePhotoPreview();
+            openModal('modal-profile');
+        }
+
+        function updateProfilePhotoPreview() {
+            const box = document.getElementById('profile-photo-preview');
+            if (!box) return;
+            const initials = getInitials(document.getElementById('profile-name')?.value || currentUser?.name || 'AA');
+            if (draftProfilePhoto) {
+                box.innerHTML = `<img src="${draftProfilePhoto}" alt="Preview" class="w-full h-full object-cover" onerror="this.parentElement.textContent='${initials}'">`;
+            } else {
+                box.textContent = initials;
+            }
+        }
+
+        function handleProfilePhotoUrlInput() {
+            const url = document.getElementById('profile-photo-url').value.trim();
+            draftProfilePhoto = url;
+            updateProfilePhotoPreview();
+        }
+
+        function clearProfilePhoto() {
+            draftProfilePhoto = '';
+            document.getElementById('profile-photo-url').value = '';
+            document.getElementById('profile-photo-file').value = '';
+            updateProfilePhotoPreview();
+        }
+
+        function handleProfilePhotoUpload(event) {
+            const file = event.target.files?.[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const img = new Image();
+                img.onload = () => {
+                    const canvas = document.createElement('canvas');
+                    const maxDim = 240;
+                    let w = img.width;
+                    let h = img.height;
+                    if (w > h && w > maxDim) {
+                        h = Math.round((h * maxDim) / w);
+                        w = maxDim;
+                    } else if (h > maxDim) {
+                        w = Math.round((w * maxDim) / h);
+                        h = maxDim;
+                    }
+                    canvas.width = w;
+                    canvas.height = h;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0, w, h);
+                    draftProfilePhoto = canvas.toDataURL('image/jpeg', 0.82);
+                    updateProfilePhotoPreview();
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        async function handleSaveProfile(event) {
+            event.preventDefault();
+            if (!currentUser) return;
+
+            const updatedFields = {
+                name: document.getElementById('profile-name').value.trim(),
+                oab: document.getElementById('profile-oab').value.trim(),
+                firm: document.getElementById('profile-firm').value.trim(),
+                seccional: document.getElementById('profile-seccional').value.trim(),
+                phone: document.getElementById('profile-phone').value.trim(),
+                website: document.getElementById('profile-website').value.trim(),
+                address: document.getElementById('profile-address').value.trim(),
+                bio: document.getElementById('profile-bio').value.trim(),
+                photo: draftProfilePhoto || '',
+                lastSeen: Date.now()
+            };
+
+            currentUser = { ...currentUser, ...updatedFields };
+            applyUserProfileUI();
+
+            if (!isDemoFallbackMode && currentUser.uid) {
+                try {
+                    await setDoc(doc(db, 'usuarios', currentUser.uid), updatedFields, { merge: true });
+                } catch (err) {
+                    showToast('Perfil atualizado localmente, mas houve erro ao salvar no Firestore.', 'info');
+                }
+            }
+
+            closeModal('modal-profile');
+            showToast('Perfil atualizado com sucesso!');
+        }
+
+        async function persistSubcollectionItem(subcollectionName, item) {
+            if (!currentUser?.uid) return;
+            await setDoc(doc(db, 'escritorios', currentUser.uid, subcollectionName, item.id), item, { merge: true });
+        }
+
+        async function deleteSubcollectionItem(subcollectionName, id) {
+            if (!currentUser?.uid) return;
+            await deleteDoc(doc(db, 'escritorios', currentUser.uid, subcollectionName, id));
+        }
+
+        function openCaseModal(caseId = null) {
+            document.getElementById('case-form').reset();
+            editingCaseId = null;
+            const modalTitle = document.querySelector('#modal-case h3');
+            const submitBtn = document.querySelector('#case-form button[type="submit"]');
+
+            if (caseId) {
+                const target = casesList.find(c => c.id === caseId);
+                if (target) {
+                    editingCaseId = target.id;
+                    document.getElementById('case-cnj').value = target.cnj || '';
+                    document.getElementById('case-client').value = target.client || '';
+                    document.getElementById('case-area').value = target.area || '';
+                    document.getElementById('case-court').value = target.court || '';
+                    document.getElementById('case-value').value = Number(target.value || 0);
+                    document.getElementById('case-status').value = target.status || 'Em andamento';
+                }
+            }
+
+            if (modalTitle) modalTitle.textContent = editingCaseId ? 'Editar Processo' : 'Cadastrar Processo';
+            if (submitBtn) submitBtn.textContent = editingCaseId ? 'Atualizar Processo' : 'Salvar Processo';
+            openModal('modal-case');
+        }
+
+        async function handleSaveCase(event) {
+            event.preventDefault();
+            const item = {
+                id: editingCaseId || ('proc_' + Date.now()),
+                cnj: document.getElementById('case-cnj').value.trim(),
+                client: document.getElementById('case-client').value.trim(),
+                area: document.getElementById('case-area').value.trim(),
+                court: document.getElementById('case-court').value.trim(),
+                value: Number(document.getElementById('case-value').value || 0),
+                status: document.getElementById('case-status').value
+            };
+
+            if (isDemoFallbackMode) {
+                if (editingCaseId) {
+                    casesList = casesList.map(c => c.id === editingCaseId ? item : c);
+                } else {
+                    casesList.unshift(item);
+                }
+                renderCasesTable();
+                updateOverviewKPIs();
+            } else {
+                await persistSubcollectionItem('processos', item);
+            }
+
+            const wasEditing = Boolean(editingCaseId);
+            editingCaseId = null;
+            closeModal('modal-case');
+            showToast(wasEditing ? 'Processo atualizado!' : 'Processo cadastrado!');
+        }
+
+        function setCaseFilter(filter) {
+            currentCaseFilter = filter;
+            document.querySelectorAll('.case-filter-btn').forEach(btn => {
+                const active = btn.dataset.caseFilter === filter;
+                btn.className = `case-filter-btn px-3 py-1.5 rounded-xl text-xs font-semibold cursor-pointer ${active ? 'bg-aab-navy text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}`;
+            });
+            renderCasesTable();
+        }
+
+        function renderCasesTable() {
+            const tbody = document.getElementById('cases-tbody');
+            if (!tbody) return;
+            const search = String(document.getElementById('case-search')?.value || '').trim().toLowerCase();
+
+            const list = casesList.filter(c => {
+                const matchesFilter = currentCaseFilter === 'Todos' || c.status === currentCaseFilter;
+                const matchesSearch = !search ||
+                    String(c.cnj || '').toLowerCase().includes(search) ||
+                    String(c.client || '').toLowerCase().includes(search) ||
+                    String(c.area || '').toLowerCase().includes(search);
+                return matchesFilter && matchesSearch;
+            });
+
+            if (list.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="6" class="py-8 text-center text-xs text-slate-400">Nenhum processo encontrado.</td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = list.map(c => `
+                <tr class="hover:bg-slate-50/70">
+                    <td class="py-3.5 px-4 font-mono text-xs font-semibold text-aab-navy">${c.cnj}</td>
+                    <td class="py-3.5 px-4 font-medium text-slate-800">${c.client}</td>
+                    <td class="py-3.5 px-4 text-xs text-slate-600">${c.area} • ${c.court}</td>
+                    <td class="py-3.5 px-4">
+                        <span class="px-2.5 py-1 rounded-full text-[11px] font-semibold bg-blue-50 text-blue-700">${c.status || 'Em andamento'}</span>
+                    </td>
+                    <td class="py-3.5 px-4 font-semibold text-slate-700">${formatCurrency(c.value)}</td>
+                    <td class="py-3.5 px-4 text-right">
+                        <div class="inline-flex items-center gap-1">
+                            <button type="button" onclick="openCaseModal('${c.id}')" class="p-1.5 rounded-lg text-slate-500 hover:text-aab-navy hover:bg-slate-100 cursor-pointer" title="Editar">
+                                <i data-lucide="pencil" class="w-4 h-4"></i>
+                            </button>
+                            <button type="button" onclick="removeCase('${c.id}')" class="p-1.5 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50 cursor-pointer" title="Excluir">
+                                <i data-lucide="trash-2" class="w-4 h-4"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            `).join('');
+            lucide.createIcons();
+        }
+
+        async function removeCase(id) {
+            if (isDemoFallbackMode) {
+                casesList = casesList.filter(c => c.id !== id);
+                renderCasesTable();
+                updateOverviewKPIs();
+            } else {
+                await deleteSubcollectionItem('processos', id);
+            }
+            showToast('Processo removido.');
+        }
+
+        function openClientModal(clientId = null) {
+            document.getElementById('client-form').reset();
+            editingClientId = null;
+            const modalTitle = document.querySelector('#modal-client h3');
+            const submitBtn = document.querySelector('#client-form button[type="submit"]');
+
+            if (clientId) {
+                const target = clientsList.find(cl => cl.id === clientId);
+                if (target) {
+                    editingClientId = target.id;
+                    document.getElementById('client-name').value = target.name || '';
+                    document.getElementById('client-type').value = target.type || 'PF';
+                    document.getElementById('client-doc').value = target.doc || '';
+                    document.getElementById('client-phone').value = target.phone || '';
+                    document.getElementById('client-email').value = target.email || '';
+                }
+            }
+
+            if (modalTitle) modalTitle.textContent = editingClientId ? 'Editar Cliente' : 'Cadastrar Cliente';
+            if (submitBtn) submitBtn.textContent = editingClientId ? 'Atualizar Cliente' : 'Salvar Cliente';
+            openModal('modal-client');
+        }
+
+        async function handleSaveClient(event) {
+            event.preventDefault();
+            const item = {
+                id: editingClientId || ('cli_' + Date.now()),
+                name: document.getElementById('client-name').value.trim(),
+                type: document.getElementById('client-type').value,
+                doc: document.getElementById('client-doc').value.trim(),
+                phone: document.getElementById('client-phone').value.trim(),
+                email: document.getElementById('client-email').value.trim()
+            };
+
+            if (isDemoFallbackMode) {
+                if (editingClientId) {
+                    clientsList = clientsList.map(cl => cl.id === editingClientId ? item : cl);
+                } else {
+                    clientsList.unshift(item);
+                }
+                renderClientsGrid();
+                updateOverviewKPIs();
+            } else {
+                await persistSubcollectionItem('clientes', item);
+            }
+
+            const wasEditing = Boolean(editingClientId);
+            editingClientId = null;
+            closeModal('modal-client');
+            showToast(wasEditing ? 'Cliente atualizado!' : 'Cliente adicionado!');
+        }
+
+        function renderClientsGrid() {
+            const grid = document.getElementById('clients-grid');
+            if (!grid) return;
+            const search = String(document.getElementById('client-search')?.value || '').trim().toLowerCase();
+
+            const list = clientsList.filter(cl => {
+                if (!search) return true;
+                return (
+                    String(cl.name || '').toLowerCase().includes(search) ||
+                    String(cl.doc || '').toLowerCase().includes(search) ||
+                    String(cl.email || '').toLowerCase().includes(search)
+                );
+            });
+
+            if (list.length === 0) {
+                grid.innerHTML = `<div class="col-span-full bg-white p-8 rounded-2xl border border-slate-200/80 text-center text-xs text-slate-400">Nenhum cliente encontrado.</div>`;
+                return;
+            }
+
+            grid.innerHTML = list.map(cl => `
+                <div class="bg-white p-5 rounded-2xl border border-slate-200/80 flex flex-col justify-between gap-3">
+                    <div>
+                        <div class="flex items-center justify-between gap-2 mb-2">
+                            <span class="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-slate-100 text-aab-navy">${cl.type || 'PF'}</span>
+                            <div class="inline-flex items-center gap-1">
+                                <button type="button" onclick="openClientModal('${cl.id}')" class="p-1 rounded-lg text-slate-400 hover:text-aab-navy hover:bg-slate-100 cursor-pointer" title="Editar">
+                                    <i data-lucide="pencil" class="w-4 h-4"></i>
+                                </button>
+                                <button type="button" onclick="removeClient('${cl.id}')" class="p-1 rounded-lg text-slate-400 hover:text-rose-600 hover:bg-rose-50 cursor-pointer" title="Excluir">
+                                    <i data-lucide="trash-2" class="w-4 h-4"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <h4 class="font-bold text-aab-navy text-base">${cl.name}</h4>
+                        <p class="text-xs text-slate-500 mt-0.5">${cl.doc || ''}</p>
+                    </div>
+                    <div class="pt-3 border-t border-slate-100 text-xs text-slate-600 space-y-1">
+                        ${cl.phone ? `<p class="truncate">📞 ${cl.phone}</p>` : ''}
+                        ${cl.email ? `<p class="truncate">✉️ ${cl.email}</p>` : ''}
+                    </div>
+                </div>
+            `).join('');
+            lucide.createIcons();
+        }
+
+        async function removeClient(id) {
+            if (isDemoFallbackMode) {
+                clientsList = clientsList.filter(c => c.id !== id);
+                renderClientsGrid();
+                updateOverviewKPIs();
+            } else {
+                await deleteSubcollectionItem('clientes', id);
+            }
+            showToast('Cliente removido.');
+        }
+
+        function openDeadlineModal(deadlineId = null) {
+            document.getElementById('deadline-form').reset();
+            editingDeadlineId = null;
+            const modalTitle = document.querySelector('#modal-deadline h3');
+            const submitBtn = document.querySelector('#deadline-form button[type="submit"]');
+
+            if (deadlineId) {
+                const target = deadlinesList.find(d => d.id === deadlineId);
+                if (target) {
+                    editingDeadlineId = target.id;
+                    document.getElementById('deadline-title').value = target.title || '';
+                    document.getElementById('deadline-type').value = target.type || 'Fatal';
+                    document.getElementById('deadline-date').value = target.date || '';
+                    document.getElementById('deadline-case').value = target.caseRef || target.case || '';
+                }
+            }
+
+            if (modalTitle) modalTitle.textContent = editingDeadlineId ? 'Editar Prazo / Compromisso' : 'Novo Prazo / Compromisso';
+            if (submitBtn) submitBtn.textContent = editingDeadlineId ? 'Atualizar Prazo' : 'Salvar Prazo';
+            openModal('modal-deadline');
+        }
+
+        async function handleSaveDeadline(event) {
+            event.preventDefault();
+            const existing = editingDeadlineId ? deadlinesList.find(d => d.id === editingDeadlineId) : null;
+            const item = {
+                id: editingDeadlineId || ('prz_' + Date.now()),
+                title: document.getElementById('deadline-title').value.trim(),
+                type: document.getElementById('deadline-type').value,
+                date: document.getElementById('deadline-date').value,
+                caseRef: document.getElementById('deadline-case').value.trim(),
+                status: existing?.status || 'Pendente'
+            };
+
+            if (isDemoFallbackMode) {
+                if (editingDeadlineId) {
+                    deadlinesList = deadlinesList.map(d => d.id === editingDeadlineId ? item : d);
+                } else {
+                    deadlinesList.unshift(item);
+                }
+                renderDeadlinesList();
+                renderOverviewDeadlines();
+                updateOverviewKPIs();
+            } else {
+                await persistSubcollectionItem('prazos', item);
+            }
+
+            const wasEditing = Boolean(editingDeadlineId);
+            editingDeadlineId = null;
+            closeModal('modal-deadline');
+            showToast(wasEditing ? 'Prazo atualizado!' : 'Prazo salvo na agenda!');
+        }
+
+        async function markDeadlineDone(id) {
+            const target = deadlinesList.find(d => d.id === id);
+            if (!target) return;
+            const nextStatus = (target.status || 'Pendente') === 'Concluído' ? 'Pendente' : 'Concluído';
+            const updated = { ...target, status: nextStatus };
+
+            if (isDemoFallbackMode) {
+                deadlinesList = deadlinesList.map(d => d.id === id ? updated : d);
+                renderDeadlinesList();
+                renderOverviewDeadlines();
+                updateOverviewKPIs();
+            } else {
+                await persistSubcollectionItem('prazos', updated);
+            }
+            showToast(nextStatus === 'Concluído' ? 'Prazo marcado como cumprido!' : 'Prazo reaberto.');
+        }
+
+        function setDeadlineFilter(filter) {
+            currentDeadlineFilter = filter;
+            document.querySelectorAll('.deadline-filter-btn').forEach(btn => {
+                const active = btn.dataset.deadlineFilter === filter;
+                btn.className = `deadline-filter-btn px-3 py-1.5 rounded-xl text-xs font-semibold cursor-pointer ${active ? 'bg-aab-navy text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}`;
+            });
+            renderDeadlinesList();
+        }
+
+        function renderDeadlinesList() {
+            const container = document.getElementById('deadlines-full-list');
+            if (!container) return;
+            const list = deadlinesList.filter(d => {
+                const st = d.status || 'Pendente';
+                return currentDeadlineFilter === 'Todos' || st === currentDeadlineFilter;
+            });
+
+            if (list.length === 0) {
+                container.innerHTML = `<div class="bg-white p-8 rounded-2xl border border-slate-200/80 text-center text-xs text-slate-400">Nenhum prazo encontrado para o filtro selecionado.</div>`;
+                return;
+            }
+
+            container.innerHTML = list.map(d => {
+                const st = d.status || 'Pendente';
+                const caseLabel = d.caseRef || d.case || '';
+                return `
+                    <div class="bg-white p-4 rounded-2xl border border-slate-200/80 flex flex-wrap items-center justify-between gap-3">
+                        <div>
+                            <div class="flex items-center gap-2 mb-1">
+                                <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-100 text-amber-900">${d.type || 'Prazo'}</span>
+                                <span class="text-xs font-semibold text-slate-500">${formatDateBR(d.date)}</span>
+                                <span class="px-2 py-0.5 rounded-full text-[10px] font-semibold ${st === 'Concluído' ? 'bg-emerald-50 text-emerald-700' : 'bg-rose-50 text-rose-700'}">${st}</span>
+                            </div>
+                            <p class="text-sm font-bold text-aab-navy">${d.title}</p>
+                            <p class="text-xs text-slate-500 font-mono">${caseLabel}</p>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <button type="button" onclick="openDeadlineModal('${d.id}')" class="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-xs font-semibold text-slate-700 transition cursor-pointer">
+                                Editar
+                            </button>
+                            <button type="button" onclick="markDeadlineDone('${d.id}')" class="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-emerald-50 hover:text-emerald-700 text-xs font-semibold text-slate-700 transition cursor-pointer">
+                                ${st === 'Concluído' ? 'Reabrir Prazo' : '✓ Marcar Cumprido'}
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function openFinanceModal(financeId = null) {
+            document.getElementById('finance-form').reset();
+            editingFinanceId = null;
+            const modalTitle = document.querySelector('#modal-finance h3');
+            const submitBtn = document.querySelector('#finance-form button[type="submit"]');
+
+            if (financeId) {
+                const target = financeList.find(f => f.id === financeId);
+                if (target) {
+                    editingFinanceId = target.id;
+                    document.getElementById('finance-desc').value = target.description || target.title || '';
+                    document.getElementById('finance-amount').value = Number(target.amount || 0);
+                    document.getElementById('finance-due').value = target.dueDate || target.date || '';
+                    document.getElementById('finance-status').value = target.status || 'Pendente';
+                }
+            }
+
+            if (modalTitle) modalTitle.textContent = editingFinanceId ? 'Editar Honorário / Lançamento' : 'Lançar Honorário';
+            if (submitBtn) submitBtn.textContent = editingFinanceId ? 'Atualizar Lançamento' : 'Salvar Lançamento';
+            openModal('modal-finance');
+        }
+
+        async function handleSaveFinance(event) {
+            event.preventDefault();
+            const item = {
+                id: editingFinanceId || ('fin_' + Date.now()),
+                description: document.getElementById('finance-desc').value.trim(),
+                amount: Number(document.getElementById('finance-amount').value || 0),
+                dueDate: document.getElementById('finance-due').value,
+                status: document.getElementById('finance-status').value
+            };
+
+            if (isDemoFallbackMode) {
+                if (editingFinanceId) {
+                    financeList = financeList.map(f => f.id === editingFinanceId ? item : f);
+                } else {
+                    financeList.unshift(item);
+                }
+                renderFinanceTable();
+                updateOverviewKPIs();
+            } else {
+                await persistSubcollectionItem('financeiro', item);
+            }
+
+            const wasEditing = Boolean(editingFinanceId);
+            editingFinanceId = null;
+            closeModal('modal-finance');
+            showToast(wasEditing ? 'Lançamento atualizado!' : 'Honorário lançado!');
+        }
+
+        async function toggleFinanceStatus(id) {
+            const target = financeList.find(f => f.id === id);
+            if (!target) return;
+            const nextStatus = (target.status || 'Pendente') === 'Pago' ? 'Pendente' : 'Pago';
+            const updated = { ...target, status: nextStatus };
+
+            if (isDemoFallbackMode) {
+                financeList = financeList.map(f => f.id === id ? updated : f);
+                renderFinanceTable();
+                updateOverviewKPIs();
+            } else {
+                await persistSubcollectionItem('financeiro', updated);
+            }
+            showToast(nextStatus === 'Pago' ? 'Recebimento confirmado!' : 'Lançamento marcado como pendente.');
+        }
+
+        function renderFinanceTable() {
+            const tbody = document.getElementById('finance-tbody');
+            if (!tbody) return;
+
+            if (financeList.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="5" class="py-8 text-center text-xs text-slate-400">Nenhum lançamento financeiro registrado.</td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = financeList.map(f => {
+                const desc = f.description || f.title || 'Lançamento';
+                const due = f.dueDate || f.date || '';
+                const st = f.status || 'Pendente';
+                return `
+                    <tr class="hover:bg-slate-50/70">
+                        <td class="py-3.5 px-4 font-medium text-aab-navy">${desc}</td>
+                        <td class="py-3.5 px-4 text-xs text-slate-600">${formatDateBR(due)}</td>
+                        <td class="py-3.5 px-4 font-bold text-slate-800">${formatCurrency(f.amount)}</td>
+                        <td class="py-3.5 px-4">
+                            <span class="px-2.5 py-1 rounded-full text-[11px] font-semibold ${st === 'Pago' ? 'bg-emerald-50 text-emerald-700' : st === 'Atrasado' ? 'bg-rose-50 text-rose-700' : 'bg-amber-50 text-amber-800'}">${st}</span>
+                        </td>
+                        <td class="py-3.5 px-4 text-right">
+                            <div class="inline-flex items-center gap-1.5">
+                                <button type="button" onclick="openFinanceModal('${f.id}')" class="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-xs font-semibold text-slate-700 cursor-pointer">
+                                    Editar
+                                </button>
+                                <button type="button" onclick="toggleFinanceStatus('${f.id}')" class="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-emerald-50 hover:text-emerald-700 text-xs font-semibold text-slate-700 cursor-pointer">
+                                    ${st === 'Pago' ? 'Marcar Pendente' : 'Confirmar Recebimento'}
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+            }).join('');
+        }
+
+        function openBenefitModal(type) {
+            const titleEl = document.getElementById('benefit-modal-title');
+            const bodyEl = document.getElementById('benefit-modal-body');
+
+            if (type === 'salas') {
+                titleEl.textContent = 'Reservar Sala de Apoio / Coworking AAB';
+                bodyEl.innerHTML = `
+                    <form onsubmit="handleBookRoom(event)" class="space-y-3.5">
+                        <div>
+                            <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1">Sala / Unidade</label>
+                            <select id="booking-room" class="w-full px-3.5 py-2 rounded-xl border border-slate-200 text-sm bg-white">
+                                <option value="Sala de Audiência Virtual 01 - Sede">Sala de Audiência Virtual 01 - Sede</option>
+                                <option value="Estação Coworking Jurídico - Bloco B">Estação Coworking Jurídico - Bloco B</option>
+                                <option value="Sala de Atendimento a Clientes 03">Sala de Atendimento a Clientes 03</option>
+                            </select>
+                        </div>
+                        <div class="grid grid-cols-2 gap-3">
+                            <div>
+                                <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1">Data</label>
+                                <input type="date" id="booking-date" required class="w-full px-3.5 py-2 rounded-xl border border-slate-200 text-sm">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1">Horário</label>
+                                <input type="text" id="booking-time" required placeholder="14:00 - 16:00" class="w-full px-3.5 py-2 rounded-xl border border-slate-200 text-sm">
+                            </div>
+                        </div>
+                        <div class="flex justify-end gap-2 pt-3 border-t border-slate-100">
+                            <button type="button" onclick="closeModal('modal-benefit')" class="px-4 py-2 rounded-xl border border-slate-200 text-sm text-slate-600 cursor-pointer">Fechar</button>
+                            <button type="submit" class="px-4 py-2 rounded-xl bg-indigo-700 text-white text-sm font-semibold cursor-pointer">Confirmar Reserva</button>
+                        </div>
+                    </form>
+                `;
+            } else {
+                const infoMap = {
+                    certificado: ['Certificado Digital A3 AAB', 'Associados regulares contam com condições especiais para emissão ou renovação de certificado digital ICP-Brasil em nuvem ou token para acesso aos tribunais.'],
+                    biblioteca: ['Biblioteca & Doutrina AAB', 'Acesso liberado a periódicos jurídicos, doutrinas atualizadas e repertórios de jurisprudência para associados.'],
+                    saude: ['Caixa de Assistência & Saúde AAB', 'Convênios com planos médico-hospitalares, odontológicos, academias e seguros profissionais para o advogado e dependentes.']
+                };
+                const [t, desc] = infoMap[type] || ['Benefício Institucional AAB', 'Benefício disponível para associados regulares.'];
+                titleEl.textContent = t;
+                bodyEl.innerHTML = `
+                    <p class="text-sm text-slate-600 leading-relaxed mb-5">${desc}</p>
+                    <div class="flex justify-end">
+                        <button type="button" onclick="closeModal('modal-benefit')" class="px-4 py-2 rounded-xl bg-aab-navy text-white text-sm font-semibold cursor-pointer">Entendido</button>
+                    </div>
+                `;
+            }
+
+            openModal('modal-benefit');
+        }
+
+        async function handleBookRoom(event) {
+            event.preventDefault();
+            const item = {
+                id: 'res_' + Date.now(),
+                room: document.getElementById('booking-room').value,
+                date: document.getElementById('booking-date').value,
+                time: document.getElementById('booking-time').value.trim(),
+                status: 'Confirmada'
+            };
+
+            if (isDemoFallbackMode) {
+                bookingsList.unshift(item);
+                renderBookingsList();
+            } else {
+                await persistSubcollectionItem('reservas', item);
+            }
+
+            closeModal('modal-benefit');
+            showToast('Reserva de sala confirmada!');
+        }
+
+        async function cancelRoomBooking(id) {
+            if (isDemoFallbackMode) {
+                bookingsList = bookingsList.filter(b => b.id !== id);
+                renderBookingsList();
+            } else {
+                await deleteSubcollectionItem('reservas', id);
+            }
+            showToast('Reserva cancelada.');
+        }
+
+        function renderBookingsList() {
+            const box = document.getElementById('bookings-list');
+            if (!box) return;
+            if (bookingsList.length === 0) {
+                box.innerHTML = `<p class="text-xs text-slate-400">Nenhuma reserva de sala registrada.</p>`;
+                return;
+            }
+            box.innerHTML = bookingsList.map(b => `
+                <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200/70 flex items-center justify-between gap-3">
+                    <div>
+                        <p class="text-sm font-bold text-aab-navy">${b.room}</p>
+                        <p class="text-xs text-slate-500">${formatDateBR(b.date)} • ${b.time} • <span class="text-emerald-700 font-semibold">${b.status || 'Confirmada'}</span></p>
+                    </div>
+                    <button type="button" onclick="cancelRoomBooking('${b.id}')" class="px-3 py-1 rounded-lg bg-white border border-slate-200 hover:bg-rose-50 hover:text-rose-600 text-xs font-semibold text-slate-600 cursor-pointer">
+                        Cancelar
+                    </button>
+                </div>
+            `).join('');
+        }
+
+        function seedSampleState() {
             casesList = [
-                { id: 'c1', cnj: '1048291-44.2025.8.26.0100', client: 'Vanguarda Logística S.A.', area: 'Cível', court: '8ª Vara Cível', value: 185000, status: 'Em andamento' },
-                { id: 'c2', cnj: '0010452-88.2025.5.02.0014', client: 'Carlos Henrique Alves', area: 'Trabalhista', court: '14ª VT São Paulo', value: 64000, status: 'Aguardando Prazo' }
+                { id: 'c1', cnj: '1048291-44.2025.8.26.0100', client: 'Grupo Metalúrgico Vanguarda S.A.', area: 'Tributário', court: '2ª Vara Fazenda TJSP', value: 420000, status: 'Em andamento' },
+                { id: 'c2', cnj: '0010452-88.2025.5.02.0014', client: 'Roberto Carlos Almeida', area: 'Trabalhista', court: '14ª Vara TRT-2', value: 85000, status: 'Aguardando Prazo' },
+                { id: 'c3', cnj: '5009123-12.2024.4.03.6100', client: 'Dra. Beatriz Nogueira', area: 'Empresarial', court: '6ª Vara TRF-3', value: 310000, status: 'Em andamento' }
             ];
             clientsList = [
-                { id: 'cl1', name: 'Vanguarda Logística S.A.', type: 'PJ', doc: '12.345.678/0001-90', phone: '(61) 3322-1000', email: 'juridico@vanguarda.com.br' },
-                { id: 'cl2', name: 'Carlos Henrique Alves', type: 'PF', doc: '045.882.119-00', phone: '(61) 99811-2233', email: 'carlos.alves@email.com' }
+                { id: 'cl1', name: 'Grupo Metalúrgico Vanguarda S.A.', type: 'PJ', doc: '12.345.678/0001-90', phone: '(11) 3000-1000', email: 'juridico@vanguarda.com.br' },
+                { id: 'cl2', name: 'Roberto Carlos Almeida', type: 'PF', doc: '321.654.987-00', phone: '(11) 98888-7777', email: 'roberto.almeida@email.com' }
             ];
             deadlinesList = [
-                { id: 'd1', title: 'Protocolar Réplica à Contestação', type: 'Fatal', date: '2026-11-26', caseRef: 'Proc. 1048291-44.2025.8.26.0100', status: 'Pendente' },
-                { id: 'd2', title: 'Audiência de Instrução e Julgamento', type: 'Audiência', date: '2026-11-27', caseRef: 'Proc. 0010452-88.2025.5.02.0014', status: 'Pendente' }
+                { id: 'd1', title: 'Audiência de Instrução e Julgamento (TRT-2)', type: 'Audiência', date: '2026-11-27', caseRef: 'Proc. 0010452-88.2025.5.02.0014', status: 'Pendente' },
+                { id: 'd2', title: 'Protocolar Réplica à Contestação (Prazo Fatal)', type: 'Fatal', date: '2026-11-26', caseRef: 'Proc. 1048291-44.2025.8.26.0100', status: 'Pendente' }
             ];
             financeList = [
-                { id: 'f1', description: 'Honorários Contratuais - Vanguarda Logística', amount: 14500, dueDate: '2026-11-30', status: 'Pendente' },
-                { id: 'f2', description: 'Consultoria Mensal - Carlos Henrique Alves', amount: 3200, dueDate: '2026-11-15', status: 'Pago' }
+                { id: 'f1', description: 'Honorários Mensais - Grupo Vanguarda S.A.', amount: 12500, dueDate: '2026-11-30', status: 'Pago' },
+                { id: 'f2', description: 'Honorários Sucumbenciais - Proc. 1092834-19', amount: 18400, dueDate: '2026-12-05', status: 'Pendente' }
             ];
+            bookingsList = [];
             publicationsList = [
-                {
-                    id: 'p1',
-                    title: 'Calendário Institucional e Plantão AAB 2026/2027',
-                    category: 'Portaria',
-                    pinned: true,
-                    content: 'A Associação dos Advogados do Brasil informa os horários especiais das salas de apoio e plantão de prerrogativas.',
-                    authorName: 'Responsável Master AAB',
-                    dateLabel: '23/11/2026',
-                    createdAtMs: Date.now()
-                }
+                { id: 'p1', title: 'Calendário Institucional de Recesso Forense e Plantão AAB 2026/2027', category: 'Portaria', pinned: true, content: 'A Associação dos Advogados do Brasil informa os horários especiais das salas de apoio, atendimento de urgência e emissão de certidões durante o período de recesso.', dateLabel: '23/11/2026', createdAtMs: Date.now() },
+                { id: 'p2', title: 'Simpósio Nacional de Processo Eletrônico, IA Forense e Prerrogativas', category: 'Evento', pinned: false, content: 'Inscrições abertas para associados com certificação digital gratuita e transmissão híbrida nas sedes estaduais.', dateLabel: '21/11/2026', createdAtMs: Date.now() - 86400000 }
             ];
             adminMembersList = [
-                {
-                    id: currentUser?.uid || 'demo-user',
-                    name: currentUser?.name || 'Dr(a). Willbrasilia',
-                    oab: currentUser?.oab || '248.910/DF',
-                    firm: currentUser?.firm || 'Sociedade Individual de Advocacia',
-                    email: currentUser?.email || MASTER_ADMIN_EMAIL,
-                    role: 'responsavel_aab',
-                    promotedByAdmin: true,
-                    accountStatus: 'Ativo',
-                    lastSeen: Date.now(),
-                    permissions: { portalAccess: true, canPublish: true, canBookRooms: true, canUseBenefits: true }
-                }
+                { uid: currentUser.uid, name: currentUser.name, oab: currentUser.oab, email: currentUser.email, firm: currentUser.firm, website: currentUser.website || '', role: 'responsavel_aab', promotedByAdmin: true, accountStatus: 'Ativo', permissions: { ...defaultPermissions, canPublish: true }, lastSeen: Date.now() }
             ];
-            renderAllViews();
         }
 
         async function populateSampleData() {
-            seedDemoCollections();
+            seedSampleState();
             if (!isDemoFallbackMode && currentUser?.uid) {
                 for (const c of casesList) await persistSubcollectionItem('processos', c);
                 for (const cl of clientsList) await persistSubcollectionItem('clientes', cl);
                 for (const d of deadlinesList) await persistSubcollectionItem('prazos', d);
                 for (const f of financeList) await persistSubcollectionItem('financeiro', f);
-                if (hasResponsibleAccess()) {
+                if (hasResponsibleAccess(currentUser)) {
                     for (const p of publicationsList) {
                         await setDoc(doc(db, 'publicacoes_aab', p.id), p, { merge: true });
                     }
                 }
             }
-            showToast('Dados de exemplo carregados!');
+            renderAllViews();
+            showToast('Dados de exemplo populados!');
         }
 
-        function checkLocalStorageMigrationButton() {
-            const btn = document.getElementById('btn-import-local');
-            if (!btn) return;
-            const raw = localStorage.getItem(LOCAL_STORAGE_KEY);
-            btn.classList.toggle('hidden', !raw);
-        }
-
-        async function importLocalStorageToFirestore() {
-            if (isDemoFallbackMode || !currentUser?.uid) return;
+        function readLocalStorageData() {
             try {
-                const parsed = JSON.parse(localStorage.getItem(LOCAL_STORAGE_KEY) || '{}');
-                if (Array.isArray(parsed.cases)) for (const c of parsed.cases) await persistSubcollectionItem('processos', { ...c, id: c.id || 'imp_' + Math.random().toString(36).slice(2) });
-                if (Array.isArray(parsed.clients)) for (const cl of parsed.clients) await persistSubcollectionItem('clientes', { ...cl, id: cl.id || 'imp_' + Math.random().toString(36).slice(2) });
-                if (Array.isArray(parsed.deadlines)) for (const d of parsed.deadlines) await persistSubcollectionItem('prazos', { ...d, id: d.id || 'imp_' + Math.random().toString(36).slice(2) });
-                if (Array.isArray(parsed.finance)) for (const f of parsed.finance) await persistSubcollectionItem('financeiro', { ...f, id: f.id || 'imp_' + Math.random().toString(36).slice(2) });
-                showToast('Dados locais importados para o Firestore!');
-            } catch (err) {
-                console.error('Erro ao importar localStorage:', err);
-                showToast('Não foi possível importar os dados locais.', 'info');
+                const raw = localStorage.getItem(LOCAL_STORAGE_KEY);
+                return raw ? JSON.parse(raw) : null;
+            } catch (_) {
+                return null;
             }
         }
 
-        // Exposição global para eventos inline
+        async function importLocalStorageToFirestore() {
+            const local = readLocalStorageData();
+            if (!local || isDemoFallbackMode || !currentUser?.uid) return;
+            for (const c of (local.cases || [])) await persistSubcollectionItem('processos', c);
+            for (const cl of (local.clients || [])) await persistSubcollectionItem('clientes', cl);
+            for (const d of (local.deadlines || [])) await persistSubcollectionItem('prazos', d);
+            for (const f of (local.finance || [])) await persistSubcollectionItem('financeiro', f);
+            document.getElementById('btn-import-local')?.classList.add('hidden');
+            showToast('Dados locais importados para o Firestore!');
+        }
+
+        function renderAllViews() {
+            updateOverviewKPIs();
+            renderOverviewDeadlines();
+            renderPublications();
+            renderCasesTable();
+            renderClientsGrid();
+            renderDeadlinesList();
+            renderFinanceTable();
+            renderBookingsList();
+            renderAuthorizedEmails();
+            if (hasResponsibleAccess(currentUser)) {
+                renderAdminMembersTable();
+            }
+            lucide.createIcons();
+        }
+
+        function subscribeSubcollection(subcollectionName, onData) {
+            if (!currentUser?.uid) return () => {};
+            const colRef = collection(db, 'escritorios', currentUser.uid, subcollectionName);
+            return onSnapshot(colRef, (snap) => {
+                const rows = [];
+                snap.forEach(d => rows.push({ id: d.id, ...d.data() }));
+                onData(rows);
+            }, (err) => {
+                console.warn(`Erro ao ouvir ${subcollectionName}:`, err);
+            });
+        }
+
+        function startFirestoreSync(userId) {
+            cleanupListeners();
+
+            const unsubSelf = onSnapshot(doc(db, 'usuarios', userId), (snap) => {
+                if (!currentUser) return;
+                const data = snap.exists() ? snap.data() : {};
+                const email = normalizeEmail(data.email || currentUser.email);
+                const isMaster = isMasterAdminEmail(email);
+                const isAuthorizedAdmin = isMaster || (data.role === 'responsavel_aab' && Boolean(data.promotedByAdmin));
+                const role = isAuthorizedAdmin ? 'responsavel_aab' : 'associado';
+
+                currentUser = {
+                    ...currentUser,
+                    ...data,
+                    uid: userId,
+                    email,
+                    role,
+                    promotedByAdmin: isAuthorizedAdmin,
+                    accountStatus: isMaster ? 'Ativo' : (data.accountStatus || 'Ativo'),
+                    permissions: {
+                        ...defaultPermissions,
+                        ...(data.permissions || {}),
+                        canPublish: isAuthorizedAdmin ? true : Boolean(data.permissions?.canPublish && false)
+                    }
+                };
+
+                applyUserProfileUI();
+
+                const adminView = document.getElementById('view-admin');
+                if (!isAuthorizedAdmin && adminView && !adminView.classList.contains('hidden')) {
+                    navigateTo('overview');
+                }
+            }, (err) => {
+                console.warn('Erro no listener do usuário:', err);
+            });
+            firestoreUnsubscribers.push(unsubSelf);
+
+            firestoreUnsubscribers.push(subscribeSubcollection('processos', (rows) => {
+                casesList = rows;
+                renderCasesTable();
+                updateOverviewKPIs();
+            }));
+
+            firestoreUnsubscribers.push(subscribeSubcollection('clientes', (rows) => {
+                clientsList = rows;
+                renderClientsGrid();
+                updateOverviewKPIs();
+            }));
+
+            firestoreUnsubscribers.push(subscribeSubcollection('prazos', (rows) => {
+                deadlinesList = rows;
+                renderDeadlinesList();
+                renderOverviewDeadlines();
+                updateOverviewKPIs();
+            }));
+
+            firestoreUnsubscribers.push(subscribeSubcollection('financeiro', (rows) => {
+                financeList = rows;
+                renderFinanceTable();
+                updateOverviewKPIs();
+            }));
+
+            firestoreUnsubscribers.push(subscribeSubcollection('reservas', (rows) => {
+                bookingsList = rows;
+                renderBookingsList();
+            }));
+
+            firestoreUnsubscribers.push(onSnapshot(collection(db, 'publicacoes_aab'), (snap) => {
+                const rows = [];
+                snap.forEach(d => rows.push({ id: d.id, ...d.data() }));
+                publicationsList = rows;
+                renderPublications();
+            }, (err) => {
+                console.warn('Erro ao ouvir publicacoes_aab:', err);
+            }));
+
+            firestoreUnsubscribers.push(onSnapshot(collection(db, 'responsaveis_autorizados'), (snap) => {
+                const rows = [];
+                snap.forEach(d => rows.push({ id: d.id, ...d.data() }));
+                authorizedEmailsList = rows;
+                renderAuthorizedEmails();
+            }, (err) => {
+                console.warn('Erro ao ouvir responsaveis_autorizados:', err);
+            }));
+
+            firestoreUnsubscribers.push(onSnapshot(collection(db, 'usuarios'), (snap) => {
+                const rows = [];
+                snap.forEach(d => rows.push({ uid: d.id, ...d.data() }));
+                adminMembersList = rows;
+                if (hasResponsibleAccess(currentUser)) {
+                    renderAdminMembersTable();
+                }
+            }, (err) => {
+                console.warn('Erro ao ouvir usuarios:', err);
+            }));
+
+            const updateHeartbeat = async () => {
+                if (!auth.currentUser?.uid) return;
+                try {
+                    await setDoc(doc(db, 'usuarios', auth.currentUser.uid), {
+                        lastSeen: Date.now()
+                    }, { merge: true });
+                } catch (_) {}
+            };
+            updateHeartbeat();
+            heartbeatIntervalId = setInterval(updateHeartbeat, 60000);
+        }
+
+        onAuthStateChanged(auth, async (firebaseUser) => {
+            if (isDemoFallbackMode || authTransitionInProgress) return;
+
+            if (!firebaseUser) {
+                cleanupListeners();
+                currentUser = null;
+                document.getElementById('app-shell').classList.add('hidden');
+                document.getElementById('auth-screen').classList.remove('hidden');
+                lucide.createIcons();
+                return;
+            }
+
+            const email = normalizeEmail(firebaseUser.email);
+            const isMaster = isMasterAdminEmail(email);
+
+            let userDocData = {};
+            try {
+                const userSnap = await getDoc(doc(db, 'usuarios', firebaseUser.uid));
+                if (userSnap.exists()) {
+                    userDocData = userSnap.data() || {};
+                }
+            } catch (err) {
+                console.warn('Erro ao carregar perfil inicial:', err);
+            }
+
+            const authCheck = await checkEmailAuthorization(email);
+            const isAuthorizedAdmin = isMaster ||
+                (userDocData.role === 'responsavel_aab' && Boolean(userDocData.promotedByAdmin)) ||
+                (authCheck.authorized && authCheck.role === 'responsavel_aab');
+
+            const role = isAuthorizedAdmin ? 'responsavel_aab' : 'associado';
+            const initialDoc = {
+                uid: firebaseUser.uid,
+                name: userDocData.name || authCheck.data?.name || (isMaster ? 'Responsável Master AAB' : 'Advogado(a) Associado(a)'),
+                oab: userDocData.oab || authCheck.data?.oab || '',
+                firm: userDocData.firm || (isAuthorizedAdmin ? 'Administração AAB' : 'Escritório Associado'),
+                email,
+                role,
+                promotedByAdmin: isAuthorizedAdmin,
+                accountStatus: isMaster ? 'Ativo' : (userDocData.accountStatus || 'Ativo'),
+                permissions: {
+                    ...defaultPermissions,
+                    ...(userDocData.permissions || {}),
+                    canPublish: isAuthorizedAdmin ? true : Boolean(userDocData.permissions?.canPublish && false)
+                },
+                lastSeen: Date.now()
+            };
+
+            try {
+                await setDoc(doc(db, 'usuarios', firebaseUser.uid), initialDoc, { merge: true });
+            } catch (_) {}
+
+            currentUser = { ...userDocData, ...initialDoc };
+            showAppShell();
+            applyUserProfileUI();
+            startFirestoreSync(firebaseUser.uid);
+            renderAllViews();
+            navigateTo('overview');
+        });
+
         Object.assign(window, {
             switchAuthTab,
             openAdminLoginForm,
