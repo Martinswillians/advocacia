@@ -188,6 +188,11 @@
                         <i data-lucide="zap" class="w-4 h-4 text-amber-700"></i>
                         <span>Acesso Rápido (Demonstração)</span>
                     </button>
+
+                    <button type="button" onclick="quickAdminDemoLogin()" class="w-full py-2 px-4 bg-slate-900 hover:bg-slate-800 text-amber-300 border border-slate-700 font-semibold text-xs rounded-xl transition flex items-center justify-center gap-2">
+                        <i data-lucide="shield-alert" class="w-3.5 h-3.5 text-amber-400"></i>
+                        <span>Acesso Responsável AAB (Administração)</span>
+                    </button>
                 </form>
 
                 <!-- FORMULÁRIO DE PRIMEIRO ACESSO / CADASTRO -->
@@ -264,20 +269,26 @@
                 <!-- Perfil Resumido do Associado -->
                 <div class="px-5 py-4 mx-4 mt-4 rounded-xl bg-slate-800/70 border border-slate-700/70">
                     <div class="flex items-center gap-3">
-                        <div id="user-avatar" class="w-10 h-10 rounded-full bg-amber-700/30 border border-amber-500/40 text-amber-400 font-serif font-bold flex items-center justify-center text-sm shrink-0">
+                        <div id="user-avatar" class="w-10 h-10 rounded-full bg-amber-700/30 border border-amber-500/40 text-amber-400 font-serif font-bold flex items-center justify-center text-sm shrink-0 overflow-hidden">
                             HM
                         </div>
-                        <div class="min-w-0">
+                        <div class="min-w-0 flex-1">
                             <p id="sidebar-user-name" class="text-sm font-semibold text-white truncate">Dra. Helena Monteiro</p>
-                            <p id="sidebar-user-oab" class="text-xs text-amber-400 font-medium">OAB/SP 312.845</p>
+                            <p id="sidebar-user-oab" class="text-xs text-amber-400 font-medium truncate">OAB/SP 312.845</p>
                         </div>
+                        <button type="button" onclick="openProfileModal()" title="Editar Perfil e Foto" class="p-1.5 rounded-lg bg-slate-700/70 hover:bg-amber-700 text-slate-200 hover:text-white transition shrink-0">
+                            <i data-lucide="user-cog" class="w-4 h-4"></i>
+                        </button>
                     </div>
-                    <div class="mt-2.5 pt-2 border-t border-slate-700/60 flex items-center justify-between text-[11px] text-slate-400">
+                    <div class="mt-2.5 pt-2 border-t border-slate-700/60 flex items-center justify-between text-[11px] text-slate-400 gap-2">
                         <span id="sidebar-firm-name" class="truncate">Monteiro & Alencar Advogados</span>
-                        <span id="cloud-status-badge" class="px-1.5 py-0.5 rounded bg-emerald-500/10 text-emerald-400 font-medium shrink-0 flex items-center gap-1">
-                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-                            <span>Nuvem</span>
-                        </span>
+                        <div class="flex items-center gap-1.5 shrink-0">
+                            <button type="button" onclick="openProfileModal()" class="text-amber-400 hover:text-amber-300 font-semibold underline-offset-2 hover:underline">Perfil</button>
+                            <span id="cloud-status-badge" class="px-1.5 py-0.5 rounded bg-emerald-500/10 text-emerald-400 font-medium flex items-center gap-1">
+                                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                                <span>Nuvem</span>
+                            </span>
+                        </div>
                     </div>
                 </div>
 
@@ -308,6 +319,11 @@
                     <button onclick="navigateTo('benefits')" data-nav="benefits" class="nav-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-300 hover:bg-slate-800 hover:text-white transition-all">
                         <i data-lucide="id-card" class="w-4 h-4 text-amber-400"></i>
                         <span>Benefícios AAB</span>
+                    </button>
+                    <button id="nav-btn-admin" onclick="navigateTo('admin')" data-nav="admin" class="nav-btn hidden w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium text-amber-300 bg-amber-950/30 hover:bg-amber-900/40 border border-amber-500/20 transition-all">
+                        <i data-lucide="shield-check" class="w-4 h-4 text-amber-400"></i>
+                        <span>Painel Responsável AAB</span>
+                        <span class="ml-auto text-[10px] uppercase font-bold px-1.5 py-0.5 rounded bg-amber-500/20 text-amber-300">Admin</span>
                     </button>
                 </nav>
             </div>
@@ -348,6 +364,10 @@
                     <button onclick="openModal('modal-new-case')" class="hidden sm:flex items-center gap-2 px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold rounded-xl shadow-xs transition">
                         <i data-lucide="plus" class="w-4 h-4 text-amber-400"></i>
                         <span>Novo Processo</span>
+                    </button>
+                    <button type="button" onclick="openProfileModal()" title="Editar Perfil do Associado" class="p-2.5 rounded-xl bg-slate-100 text-slate-700 border border-slate-200 hover:bg-slate-200/70 transition flex items-center gap-2">
+                        <i data-lucide="user-cog" class="w-4 h-4 text-amber-700"></i>
+                        <span class="text-xs font-semibold hidden md:inline">Meu Perfil</span>
                     </button>
                     <button onclick="navigateTo('benefits')" title="Carteira Digital AAB" class="p-2.5 rounded-xl bg-amber-50 text-amber-800 border border-amber-200 hover:bg-amber-100 transition flex items-center gap-2">
                         <i data-lucide="shield" class="w-4 h-4"></i>
@@ -500,6 +520,37 @@
                             </div>
                         </div>
 
+                    </div>
+
+                    <!-- Mural Institucional de Publicações AAB (Tempo Real) -->
+                    <div class="bg-white rounded-2xl border border-slate-200/90 shadow-xs overflow-hidden">
+                        <div class="p-5 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-gradient-to-r from-slate-900 to-slate-800 text-white">
+                            <div class="flex items-center gap-3">
+                                <div class="w-9 h-9 rounded-xl bg-amber-600/20 border border-amber-400/30 text-amber-400 flex items-center justify-center">
+                                    <i data-lucide="megaphone" class="w-5 h-5"></i>
+                                </div>
+                                <div>
+                                    <h2 class="font-serif text-lg font-bold text-white leading-tight">Mural Oficial de Publicações AAB</h2>
+                                    <p class="text-xs text-slate-300">Comunicados, portarias, eventos e resoluções publicados pela Diretoria / Responsável AAB</p>
+                                </div>
+                            </div>
+                            <div class="flex items-center gap-2">
+                                <select id="overview-pub-category" onchange="renderOverviewPublications()" class="px-3 py-1.5 text-xs bg-slate-950/70 text-slate-100 border border-slate-700 rounded-xl focus:outline-none focus:border-amber-500">
+                                    <option value="Todas">Todas as Categorias</option>
+                                    <option value="Comunicado">Comunicado</option>
+                                    <option value="Portaria">Portaria</option>
+                                    <option value="Evento">Evento</option>
+                                    <option value="Benefício">Benefício</option>
+                                </select>
+                                <button id="btn-quick-publish-overview" type="button" onclick="navigateTo('admin')" class="hidden px-3 py-1.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-xs font-semibold transition flex items-center gap-1.5">
+                                    <i data-lucide="plus" class="w-3.5 h-3.5"></i>
+                                    <span>Publicar</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div id="overview-publications-list" class="p-5 grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <!-- Renderizado via JS -->
+                        </div>
                     </div>
                 </div>
 
@@ -706,13 +757,13 @@
                     <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
                         
                         <!-- Carteira Digital do Associado AAB -->
-                        <div class="lg:col-span-5">
+                        <div class="lg:col-span-5 space-y-4">
                             <div class="rounded-2xl bg-gradient-to-br from-slate-950 via-slate-900 to-slate-800 text-white p-6 shadow-xl border border-amber-500/30 relative overflow-hidden">
                                 <div class="absolute -right-10 -bottom-10 w-44 h-44 bg-amber-500/10 rounded-full blur-2xl"></div>
                                 
                                 <div class="flex items-center justify-between border-b border-slate-700/80 pb-4 mb-5">
                                     <div class="flex items-center gap-3">
-                                        <div class="w-10 h-10 rounded-lg bg-amber-600 flex items-center justify-center text-white">
+                                        <div id="card-user-photo" class="w-12 h-12 rounded-xl bg-amber-600 flex items-center justify-center text-white font-serif font-bold overflow-hidden border border-amber-400/40 shrink-0">
                                             <i data-lucide="scale" class="w-5 h-5"></i>
                                         </div>
                                         <div>
@@ -720,15 +771,16 @@
                                             <span class="text-[10px] uppercase tracking-widest text-amber-400">Identidade Digital do Associado</span>
                                         </div>
                                     </div>
-                                    <span class="px-2.5 py-1 rounded-full text-[11px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                                    <span id="card-status-badge" class="px-2.5 py-1 rounded-full text-[11px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
                                         REGULAR • ATIVO
                                     </span>
                                 </div>
 
-                                <div class="space-y-3 mb-6">
+                                <div class="space-y-3 mb-5">
                                     <div>
                                         <span class="text-[10px] uppercase tracking-wider text-slate-400 block">Advogado(a) Titular</span>
                                         <p id="card-user-name" class="font-serif text-lg font-bold text-white">Dra. Helena Monteiro</p>
+                                        <p id="card-user-firm" class="text-xs text-slate-300">Monteiro & Alencar Advogados</p>
                                     </div>
                                     <div class="grid grid-cols-2 gap-4">
                                         <div>
@@ -736,19 +788,30 @@
                                             <p id="card-user-oab" class="text-sm font-semibold text-amber-400">312.845/SP</p>
                                         </div>
                                         <div>
-                                            <span class="text-[10px] uppercase tracking-wider text-slate-400 block">Validade Institucional</span>
-                                            <p class="text-sm font-semibold text-slate-200">31/12/2027</p>
+                                            <span class="text-[10px] uppercase tracking-wider text-slate-400 block">Seccional / UF</span>
+                                            <p id="card-user-seccional" class="text-sm font-semibold text-slate-200">São Paulo • SP</p>
                                         </div>
                                     </div>
+                                    <div id="card-user-website-row" class="hidden pt-1">
+                                        <span class="text-[10px] uppercase tracking-wider text-slate-400 block">Site / Página Profissional</span>
+                                        <a id="card-user-website" href="#" target="_blank" rel="noopener noreferrer" class="text-xs font-medium text-amber-300 hover:underline break-all"></a>
+                                    </div>
+                                    <p id="card-user-bio" class="text-xs text-slate-300/90 leading-relaxed line-clamp-2 hidden"></p>
                                 </div>
 
-                                <div class="pt-4 border-t border-slate-700/80 flex items-center justify-between">
+                                <div class="pt-4 border-t border-slate-700/80 flex items-center justify-between gap-2">
                                     <div class="text-[11px] text-slate-400">
                                         <p>Token de Autenticação ICP-AAB</p>
                                         <p class="font-mono text-slate-300">AAB-9948-2026-BR</p>
                                     </div>
-                                    <div class="p-2 bg-white rounded-lg text-slate-900">
-                                        <i data-lucide="qr-code" class="w-8 h-8"></i>
+                                    <div class="flex items-center gap-2">
+                                        <button type="button" onclick="openProfileModal()" class="px-3 py-1.5 rounded-lg bg-amber-600 hover:bg-amber-700 text-white text-xs font-semibold transition flex items-center gap-1.5">
+                                            <i data-lucide="edit-3" class="w-3.5 h-3.5"></i>
+                                            <span>Editar Perfil</span>
+                                        </button>
+                                        <div class="p-1.5 bg-white rounded-lg text-slate-900">
+                                            <i data-lucide="qr-code" class="w-7 h-7"></i>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -816,13 +879,240 @@
                     </div>
                 </div>
 
+                <!-- ========================================================= -->
+                <!-- ABA G: PAINEL DO RESPONSÁVEL AAB (ADMINISTRAÇÃO INSTITUCIONAL) -->
+                <!-- ========================================================= -->
+                <div id="view-admin" class="view-section hidden space-y-6 fade-in">
+                    
+                    <!-- KPIs de Governança e Monitoramento de Associados -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5">
+                        <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-xs">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-xs font-semibold uppercase tracking-wider text-slate-500">Total de Associados</span>
+                                <div class="w-9 h-9 rounded-xl bg-slate-900 text-amber-400 flex items-center justify-center">
+                                    <i data-lucide="users" class="w-4 h-4"></i>
+                                </div>
+                            </div>
+                            <h3 id="admin-kpi-total-members" class="text-3xl font-bold text-slate-900">0</h3>
+                            <p class="text-xs text-slate-500 mt-1">Cadastros ativos na base AAB</p>
+                        </div>
+
+                        <div class="bg-white rounded-2xl p-5 border border-emerald-200 shadow-xs">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-xs font-semibold uppercase tracking-wider text-emerald-800">Logados / Online Agora</span>
+                                <div class="w-9 h-9 rounded-xl bg-emerald-100 text-emerald-700 flex items-center justify-center">
+                                    <i data-lucide="activity" class="w-4 h-4"></i>
+                                </div>
+                            </div>
+                            <h3 id="admin-kpi-online-members" class="text-3xl font-bold text-emerald-700">0</h3>
+                            <p class="text-xs text-slate-500 mt-1">Heartbeat ativo nos últimos 5 min</p>
+                        </div>
+
+                        <div class="bg-white rounded-2xl p-5 border border-blue-200 shadow-xs">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-xs font-semibold uppercase tracking-wider text-blue-800">Associados com Site</span>
+                                <div class="w-9 h-9 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center">
+                                    <i data-lucide="globe" class="w-4 h-4"></i>
+                                </div>
+                            </div>
+                            <h3 id="admin-kpi-website-members" class="text-3xl font-bold text-blue-700">0</h3>
+                            <p class="text-xs text-slate-500 mt-1">Domínio / página jurídica vinculada</p>
+                        </div>
+
+                        <div class="bg-slate-900 text-white rounded-2xl p-5 border border-slate-800 shadow-md">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-xs font-semibold uppercase tracking-wider text-amber-400">Publicações no Mural</span>
+                                <div class="w-9 h-9 rounded-xl bg-amber-600/20 text-amber-400 flex items-center justify-center">
+                                    <i data-lucide="megaphone" class="w-4 h-4"></i>
+                                </div>
+                            </div>
+                            <h3 id="admin-kpi-publications" class="text-3xl font-bold text-white">0</h3>
+                            <p class="text-xs text-slate-400 mt-1">Avisos visíveis no portal</p>
+                        </div>
+                    </div>
+
+                    <!-- Publicação de Avisos / Comunicados na Página do Portal -->
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                        <div class="lg:col-span-5 bg-white p-5 rounded-2xl border border-slate-200 shadow-xs h-fit">
+                            <div class="flex items-center justify-between mb-1">
+                                <h2 id="pub-form-heading" class="font-serif text-lg font-bold text-slate-900">Publicar no Portal AAB</h2>
+                                <button id="btn-cancel-pub-edit" type="button" onclick="cancelPublicationEdit()" class="hidden text-xs font-semibold text-rose-600 hover:underline">Cancelar edição</button>
+                            </div>
+                            <p class="text-xs text-slate-500 mb-4">O conteúdo publicado aparece imediatamente no Mural da Visão Geral.</p>
+
+                            <form onsubmit="handleSavePublication(event)" class="space-y-3.5">
+                                <input type="hidden" id="pub-edit-id">
+                                <div>
+                                    <label class="block text-xs font-semibold uppercase text-slate-600 mb-1">Título da Publicação</label>
+                                    <input type="text" id="pub-title" required placeholder="Ex: Convocação Assembleia Geral Extraordinária" class="w-full px-3.5 py-2 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:outline-none focus:border-amber-600">
+                                </div>
+                                <div class="grid grid-cols-2 gap-3">
+                                    <div>
+                                        <label class="block text-xs font-semibold uppercase text-slate-600 mb-1">Categoria</label>
+                                        <select id="pub-category" class="w-full px-3 py-2 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:outline-none focus:border-amber-600">
+                                            <option value="Comunicado">Comunicado</option>
+                                            <option value="Portaria">Portaria</option>
+                                            <option value="Evento">Evento</option>
+                                            <option value="Benefício">Benefício</option>
+                                        </select>
+                                    </div>
+                                    <div class="flex items-end pb-1.5">
+                                        <label class="inline-flex items-center gap-2 text-xs font-semibold text-slate-700 cursor-pointer">
+                                            <input type="checkbox" id="pub-pinned" class="rounded accent-amber-700 w-4 h-4">
+                                            <span>Destacar / Fixar no topo</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-semibold uppercase text-slate-600 mb-1">Texto / Comunicado</label>
+                                    <textarea id="pub-content" rows="4" required placeholder="Escreva os detalhes, datas, links ou orientações aos associados..." class="w-full px-3.5 py-2 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:outline-none focus:border-amber-600"></textarea>
+                                </div>
+                                <button type="submit" id="btn-submit-pub" class="w-full py-2.5 bg-amber-700 hover:bg-amber-800 text-white text-sm font-semibold rounded-xl transition flex items-center justify-center gap-2">
+                                    <i data-lucide="send" class="w-4 h-4"></i>
+                                    <span>Publicar no Mural do Portal</span>
+                                </button>
+                            </form>
+                        </div>
+
+                        <div class="lg:col-span-7 bg-white p-5 rounded-2xl border border-slate-200 shadow-xs">
+                            <h2 class="font-serif text-lg font-bold text-slate-900 mb-1">Gerenciar Publicações Ativas</h2>
+                            <p class="text-xs text-slate-500 mb-4">Edite, destaque ou remova publicações exibidas aos associados.</p>
+                            <div id="admin-publications-list" class="space-y-3 max-h-[420px] overflow-y-auto pr-1">
+                                <!-- Renderizado via JS -->
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Gestão de Associados, Sites Vinculados, Presença Online e Permissões -->
+                    <div class="bg-white rounded-2xl border border-slate-200 shadow-xs overflow-hidden">
+                        <div class="p-5 border-b border-slate-100 flex flex-col md:flex-row md:items-center justify-between gap-3">
+                            <div>
+                                <h2 class="font-serif text-lg font-bold text-slate-900">Associados, Sites Vinculados, Presença e Permissões</h2>
+                                <p class="text-xs text-slate-500">Controle o status da conta, o site/página do associado e as permissões de acesso aos módulos da AAB.</p>
+                            </div>
+                            <div class="relative w-full md:w-72">
+                                <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3 top-2.5"></i>
+                                <input type="text" id="admin-member-search" oninput="renderAdminMembersTable()" placeholder="Buscar associado, OAB ou site..." class="w-full pl-9 pr-3 py-2 text-xs bg-slate-50 border border-slate-300 rounded-xl focus:outline-none focus:border-amber-600">
+                            </div>
+                        </div>
+
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left border-collapse">
+                                <thead>
+                                    <tr class="bg-slate-900 text-slate-200 text-[11px] uppercase tracking-wider">
+                                        <th class="py-3 px-4 font-semibold">Associado / OAB</th>
+                                        <th class="py-3 px-4 font-semibold">Presença</th>
+                                        <th class="py-3 px-4 font-semibold">Site / Página</th>
+                                        <th class="py-3 px-4 font-semibold">Permissões no Portal</th>
+                                        <th class="py-3 px-4 font-semibold text-right">Conta / Papel</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="admin-members-table-body" class="divide-y divide-slate-200 text-xs">
+                                    <!-- Renderizado via JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+
             </main>
         </div>
     </div>
 
     <!-- ===================================================================== -->
-    <!-- MODAIS DE CADASTRO E DETALHES                                         -->
+    <!-- MODAIS DE CADASTRO, PERFIL E DETALHES                                 -->
     <!-- ===================================================================== -->
+
+    <!-- MODAL: EDITAR PERFIL DO ASSOCIADO (FOTO + DADOS COMPLETOS) -->
+    <div id="modal-edit-profile" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-2xl w-full shadow-2xl border border-slate-200 overflow-hidden fade-in max-h-[92vh] flex flex-col">
+            <div class="px-6 py-4 bg-slate-900 text-white flex items-center justify-between shrink-0">
+                <div class="flex items-center gap-2.5">
+                    <i data-lucide="user-cog" class="w-5 h-5 text-amber-400"></i>
+                    <h3 class="font-serif text-lg font-bold">Editar Perfil & Dados Profissionais</h3>
+                </div>
+                <button onclick="closeModal('modal-edit-profile')" class="text-slate-400 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button>
+            </div>
+
+            <form onsubmit="handleSaveProfile(event)" class="p-6 overflow-y-auto space-y-5">
+                <!-- Foto de Perfil + Upload / URL -->
+                <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 flex flex-col sm:flex-row items-center gap-4">
+                    <div id="profile-modal-preview" class="w-20 h-20 rounded-2xl bg-slate-900 text-amber-400 font-serif text-xl font-bold flex items-center justify-center overflow-hidden border-2 border-amber-500/40 shrink-0">
+                        AAB
+                    </div>
+                    <div class="flex-1 w-full space-y-2.5">
+                        <div class="flex flex-wrap items-center justify-between gap-2">
+                            <span class="text-xs font-bold uppercase tracking-wider text-slate-700">Foto do Associado</span>
+                            <div class="flex items-center gap-2">
+                                <label class="cursor-pointer px-3 py-1.5 rounded-xl bg-amber-700 hover:bg-amber-800 text-white text-xs font-semibold transition flex items-center gap-1.5">
+                                    <i data-lucide="upload" class="w-3.5 h-3.5"></i>
+                                    <span>Enviar Foto</span>
+                                    <input type="file" id="profile-photo-file" accept="image/*" onchange="handleProfilePhotoUpload(event)" class="hidden">
+                                </label>
+                                <button type="button" onclick="clearProfilePhoto()" class="px-2.5 py-1.5 rounded-xl bg-slate-200 hover:bg-slate-300 text-slate-700 text-xs font-semibold transition">
+                                    Remover Foto
+                                </button>
+                            </div>
+                        </div>
+                        <input type="text" id="profile-photo-url" oninput="handleProfilePhotoUrlChange(event)" placeholder="Ou cole aqui a URL de uma imagem (https://...)" class="w-full px-3 py-1.5 text-xs bg-white border border-slate-300 rounded-xl focus:outline-none focus:border-amber-600">
+                        <p class="text-[11px] text-slate-500">A foto enviada é otimizada automaticamente para salvar com segurança no perfil do Firestore.</p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold uppercase text-slate-600 mb-1">Nome / Tratamento</label>
+                        <input type="text" id="prof-name" required class="w-full px-3.5 py-2 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:outline-none focus:border-amber-600">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold uppercase text-slate-600 mb-1">Inscrição OAB / Registro AAB</label>
+                        <input type="text" id="prof-oab" required class="w-full px-3.5 py-2 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:outline-none focus:border-amber-600">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold uppercase text-slate-600 mb-1">Sociedade / Escritório</label>
+                        <input type="text" id="prof-firm" required class="w-full px-3.5 py-2 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:outline-none focus:border-amber-600">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold uppercase text-slate-600 mb-1">Seccional / UF</label>
+                        <input type="text" id="prof-seccional" placeholder="Ex: São Paulo • SP" class="w-full px-3.5 py-2 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:outline-none focus:border-amber-600">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold uppercase text-slate-600 mb-1">Telefone / WhatsApp Profissional</label>
+                        <input type="text" id="prof-phone" placeholder="(11) 99999-9999" class="w-full px-3.5 py-2 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:outline-none focus:border-amber-600">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold uppercase text-slate-600 mb-1">Site / Página Profissional (URL)</label>
+                        <input type="url" id="prof-website" placeholder="https://seu-escritorio.adv.br" class="w-full px-3.5 py-2 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:outline-none focus:border-amber-600">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold uppercase text-slate-600 mb-1">Endereço Profissional</label>
+                    <input type="text" id="prof-address" placeholder="Av. Paulista, 1000 - Bela Vista, São Paulo - SP" class="w-full px-3.5 py-2 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:outline-none focus:border-amber-600">
+                </div>
+
+                <div>
+                    <label class="block text-xs font-semibold uppercase text-slate-600 mb-1">Biografia / Áreas de Atuação</label>
+                    <textarea id="prof-bio" rows="3" placeholder="Ex: Especialista em Direito Tributário, Contencioso Estratégico e Governança Corporativa..." class="w-full px-3.5 py-2 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:outline-none focus:border-amber-600"></textarea>
+                </div>
+
+                <div class="pt-2 flex justify-end gap-2 border-t border-slate-100">
+                    <button type="button" onclick="closeModal('modal-edit-profile')" class="px-4 py-2 text-sm font-medium text-slate-600 hover:bg-slate-100 rounded-xl">Cancelar</button>
+                    <button type="submit" class="px-5 py-2 text-sm font-semibold bg-amber-700 hover:bg-amber-800 text-white rounded-xl flex items-center gap-2">
+                        <i data-lucide="save" class="w-4 h-4"></i>
+                        <span>Salvar Perfil</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
 
     <!-- MODAL: NOVO PROCESSO -->
     <div id="modal-new-case" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs hidden flex items-center justify-center p-4">
@@ -1547,10 +1837,41 @@
             finances: []
         };
         let coworkingBookings = [];
+        let publicationsList = [];
+        let adminMembersList = [];
         let currentUser = null;
         let isDemoFallbackMode = false;
         let firestoreUnsubscribers = [];
+        let heartbeatIntervalId = null;
         let currentDeadlineFilter = 'Todos';
+        let draftProfilePhoto = '';
+        let editingPublicationId = null;
+
+        const defaultPermissions = {
+            portalAccess: true,
+            canPublish: false,
+            canBookRooms: true,
+            canUseBenefits: true
+        };
+
+        const defaultPublications = [
+            {
+                title: 'Calendário Institucional de Recesso Forense e Plantão AAB 2026/2027',
+                category: 'Portaria',
+                author: 'Presidência & Diretoria Executiva AAB',
+                dateLabel: '23/11/2026',
+                pinned: true,
+                content: 'A Associação dos Advogados do Brasil informa os horários especiais das salas de apoio, atendimento de urgência e emissão de certidões durante o período de recesso.'
+            },
+            {
+                title: 'Simpósio Nacional de Processo Eletrônico, IA Forense e Prerrogativas',
+                category: 'Evento',
+                author: 'Comissão de Inovação e Prerrogativas AAB',
+                dateLabel: '21/11/2026',
+                pinned: false,
+                content: 'Inscrições abertas para associados com certificação digital gratuita e transmissão híbrida nas sedes estaduais.'
+            }
+        ];
 
         // =====================================================================
         // MONITORAMENTO DE AUTENTICAÇÃO EM TEMPO REAL (FIREBASE AUTH)
@@ -1570,12 +1891,27 @@
 
         async function loadUserProfileAndListeners(firebaseUser) {
             const uid = firebaseUser.uid;
+            const wantsAdmin = sessionStorage.getItem('aab_wants_admin') === 'true';
+            sessionStorage.removeItem('aab_wants_admin');
+
             let profileData = {
                 uid: uid,
                 name: firebaseUser.displayName || 'Dr(a). Associado AAB',
                 oab: sessionStorage.getItem('aab_pending_oab') || 'OAB/BR Ativa',
                 email: firebaseUser.email || 'associado@aab.org.br',
-                firm: 'Sociedade Individual de Advocacia'
+                firm: 'Sociedade Individual de Advocacia',
+                seccional: 'São Paulo • SP',
+                phone: '',
+                website: '',
+                address: '',
+                bio: '',
+                photo: '',
+                role: wantsAdmin ? 'responsavel_aab' : 'associado',
+                accountStatus: 'Ativo',
+                permissions: {
+                    ...defaultPermissions,
+                    canPublish: wantsAdmin
+                }
             };
 
             try {
@@ -1583,19 +1919,38 @@
                 const userSnap = await getDoc(userDocRef);
 
                 if (userSnap.exists()) {
-                    profileData = { ...profileData, ...userSnap.data(), uid };
+                    const existing = userSnap.data();
+                    profileData = {
+                        ...profileData,
+                        ...existing,
+                        uid,
+                        permissions: { ...defaultPermissions, ...(existing.permissions || {}) }
+                    };
+                    if (wantsAdmin && existing.role !== 'responsavel_aab') {
+                        profileData.role = 'responsavel_aab';
+                        profileData.permissions.canPublish = true;
+                        await setDoc(userDocRef, { role: 'responsavel_aab', permissions: profileData.permissions }, { merge: true });
+                    }
                 } else {
-                    // Cria documento inicial do usuário no Firestore se ainda não existir
                     await setDoc(userDocRef, {
                         name: profileData.name,
                         oab: profileData.oab,
                         email: profileData.email,
                         firm: profileData.firm,
+                        seccional: profileData.seccional,
+                        phone: profileData.phone,
+                        website: profileData.website,
+                        address: profileData.address,
+                        bio: profileData.bio,
+                        photo: profileData.photo,
+                        role: profileData.role,
+                        accountStatus: profileData.accountStatus,
+                        permissions: profileData.permissions,
+                        lastSeen: Date.now(),
                         createdAt: serverTimestamp()
                     }, { merge: true });
                 }
 
-                // Se usuário marcou OAB específica no formulário de login, atualiza
                 const pendingOab = sessionStorage.getItem('aab_pending_oab');
                 if (pendingOab) {
                     profileData.oab = pendingOab;
@@ -1603,7 +1958,6 @@
                     await setDoc(userDocRef, { oab: pendingOab }, { merge: true });
                 }
 
-                // Verifica se o escritório já foi inicializado; se não, popula dados iniciais
                 const officeMetaRef = doc(db, 'escritorios', uid);
                 const officeMetaSnap = await getDoc(officeMetaRef);
                 if (!officeMetaSnap.exists()) {
@@ -1613,22 +1967,37 @@
                 currentUser = profileData;
                 applyUserProfileUI();
                 checkLegacyLocalStorageButton();
+                startHeartbeat(uid);
 
                 document.getElementById('auth-screen').classList.add('hidden');
                 document.getElementById('dashboard-screen').classList.remove('hidden');
                 setCloudBadgeStatus('connected');
 
                 setupFirestoreRealtimeListeners(uid);
+                if (wantsAdmin) {
+                    navigateTo('admin');
+                }
             } catch (err) {
                 console.error('Erro ao conectar Firestore:', err);
                 handleFirebasePermissionOrSetupError(err);
-                // Ainda exibe o painel com dados em memória para não bloquear o usuário
                 currentUser = profileData;
                 applyUserProfileUI();
                 document.getElementById('auth-screen').classList.add('hidden');
                 document.getElementById('dashboard-screen').classList.remove('hidden');
                 loadFallbackMemoryData();
             }
+        }
+
+        function startHeartbeat(uid) {
+            if (heartbeatIntervalId) clearInterval(heartbeatIntervalId);
+            const ping = async () => {
+                if (!auth.currentUser || auth.currentUser.uid !== uid) return;
+                try {
+                    await setDoc(doc(db, 'usuarios', uid), { lastSeen: Date.now() }, { merge: true });
+                } catch (e) {}
+            };
+            ping();
+            heartbeatIntervalId = setInterval(ping, 60000);
         }
 
         // =====================================================================
@@ -1639,10 +2008,15 @@
                 try { unsub(); } catch (e) {}
             });
             firestoreUnsubscribers = [];
+            if (heartbeatIntervalId) {
+                clearInterval(heartbeatIntervalId);
+                heartbeatIntervalId = null;
+            }
         }
 
         function setupFirestoreRealtimeListeners(uid) {
             cleanupFirestoreListeners();
+            startHeartbeat(uid);
 
             const subcollections = [
                 { key: 'cases', path: `escritorios/${uid}/processos`, render: () => renderCasesTable() },
@@ -1664,13 +2038,81 @@
                 firestoreUnsubscribers.push(unsub);
             });
 
-            // Listener para reservas de Coworking
             const unsubBookings = onSnapshot(collection(db, `escritorios/${uid}/reservas`), (snapshot) => {
                 coworkingBookings = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
                 renderCoworkingBookings();
                 lucide.createIcons();
             });
             firestoreUnsubscribers.push(unsubBookings);
+
+            // Mural público da AAB (/publicacoes_aab) visível para todos os associados logados
+            const unsubPubs = onSnapshot(collection(db, 'publicacoes_aab'), async (snapshot) => {
+                if (snapshot.empty && currentUser?.role === 'responsavel_aab') {
+                    for (const pub of defaultPublications) {
+                        await addDoc(collection(db, 'publicacoes_aab'), { ...pub, createdAt: Date.now() });
+                    }
+                    return;
+                }
+                publicationsList = snapshot.docs
+                    .map(d => ({ id: d.id, ...d.data() }))
+                    .sort((a, b) => (b.pinned ? 1 : 0) - (a.pinned ? 1 : 0) || (b.createdAt || 0) - (a.createdAt || 0));
+                renderOverviewPublications();
+                renderAdminPublications();
+                updateAdminKPIs();
+                lucide.createIcons();
+            }, () => {
+                if (publicationsList.length === 0) {
+                    publicationsList = defaultPublications.map((p, idx) => ({ id: 'pub-def-' + idx, ...p, createdAt: Date.now() - idx * 1000 }));
+                    renderOverviewPublications();
+                    renderAdminPublications();
+                }
+            });
+            firestoreUnsubscribers.push(unsubPubs);
+
+            // Observa o próprio documento em /usuarios/{uid} para aplicar permissões/status em tempo real
+            const unsubSelfUser = onSnapshot(doc(db, 'usuarios', uid), (snap) => {
+                if (snap.exists() && currentUser) {
+                    const data = snap.data();
+                    currentUser = {
+                        ...currentUser,
+                        ...data,
+                        uid,
+                        permissions: { ...defaultPermissions, ...(data.permissions || {}) }
+                    };
+                    applyUserProfileUI();
+                }
+            });
+            firestoreUnsubscribers.push(unsubSelfUser);
+
+            // Lista de associados para o Painel do Responsável AAB
+            const unsubMembers = onSnapshot(collection(db, 'usuarios'), (snapshot) => {
+                adminMembersList = snapshot.docs.map(d => {
+                    const data = d.data();
+                    return {
+                        uid: d.id,
+                        name: data.name || 'Associado AAB',
+                        oab: data.oab || 'OAB/BR',
+                        email: data.email || '-',
+                        firm: data.firm || 'Escritório Jurídico',
+                        website: data.website || '',
+                        role: data.role || 'associado',
+                        accountStatus: data.accountStatus || 'Ativo',
+                        lastSeen: data.lastSeen || 0,
+                        permissions: { ...defaultPermissions, ...(data.permissions || {}) }
+                    };
+                });
+                renderAdminMembersTable();
+                updateAdminKPIs();
+                lucide.createIcons();
+            }, () => {
+                // Caso regras de /usuarios restrinjam leitura de terceiros, mantém ao menos o usuário atual visível
+                if (currentUser) {
+                    adminMembersList = [{ ...currentUser, lastSeen: Date.now() }];
+                    renderAdminMembersTable();
+                    updateAdminKPIs();
+                }
+            });
+            firestoreUnsubscribers.push(unsubMembers);
         }
 
         async function seedDefaultDataToFirestore(uid) {
@@ -1840,14 +2282,22 @@
                 await signInAnonymously(auth);
                 showToast('Conectado ao ambiente de demonstração na nuvem!', 'success');
             } catch (err) {
-                // Fallback gracioso caso o login anônimo ainda não esteja habilitado no Console Firebase
                 isDemoFallbackMode = true;
                 currentUser = {
                     uid: 'demo-local-session',
                     name: 'Dra. Helena Monteiro',
                     oab: '312.845/SP',
                     email: 'helena.monteiro@aab.org.br',
-                    firm: 'Monteiro & Alencar Advogados'
+                    firm: 'Monteiro & Alencar Advogados',
+                    seccional: 'São Paulo • SP',
+                    phone: '(11) 99876-5432',
+                    website: 'https://monteiroalencar.adv.br',
+                    address: 'Av. Paulista, 1200 - São Paulo/SP',
+                    bio: 'Atuação estratégica em Direito Tributário, Societário e Contencioso Empresarial.',
+                    photo: '',
+                    role: 'associado',
+                    accountStatus: 'Ativo',
+                    permissions: { ...defaultPermissions }
                 };
                 applyUserProfileUI();
                 setCloudBadgeStatus('demo');
@@ -1855,6 +2305,39 @@
                 document.getElementById('dashboard-screen').classList.remove('hidden');
                 loadFallbackMemoryData();
                 showToast('Modo Demonstração ativo (ative E-mail/Senha no Firebase para salvar na nuvem).', 'info');
+            }
+        }
+
+        async function quickAdminDemoLogin() {
+            sessionStorage.setItem('aab_wants_admin', 'true');
+            try {
+                await signInAnonymously(auth);
+                showToast('Conectado como Responsável Institucional AAB!', 'success');
+            } catch (err) {
+                isDemoFallbackMode = true;
+                currentUser = {
+                    uid: 'admin-demo-session',
+                    name: 'Dr. Henrique Vasconcelos',
+                    oab: '104.550/DF',
+                    email: 'presidencia@aab.org.br',
+                    firm: 'Diretoria Executiva AAB',
+                    seccional: 'Distrito Federal • DF',
+                    phone: '(61) 3322-1000',
+                    website: 'https://aab.org.br',
+                    address: 'SAS Quadra 5 - Brasília/DF',
+                    bio: 'Responsável institucional pela gestão do portal, associados, prerrogativas e convênios da AAB.',
+                    photo: '',
+                    role: 'responsavel_aab',
+                    accountStatus: 'Ativo',
+                    permissions: { portalAccess: true, canPublish: true, canBookRooms: true, canUseBenefits: true }
+                };
+                applyUserProfileUI();
+                setCloudBadgeStatus('demo');
+                document.getElementById('auth-screen').classList.add('hidden');
+                document.getElementById('dashboard-screen').classList.remove('hidden');
+                loadFallbackMemoryData();
+                navigateTo('admin');
+                showToast('Modo Responsável AAB ativado!', 'success');
             }
         }
 
@@ -1872,6 +2355,45 @@
                 date: '2026-11-27',
                 time: '14:00 às 16:00'
             }];
+            publicationsList = defaultPublications.map((p, idx) => ({ id: 'demo-pub-' + idx, ...p, createdAt: Date.now() - idx * 1000 }));
+            adminMembersList = [
+                {
+                    uid: currentUser?.uid || 'demo-1',
+                    name: currentUser?.name || 'Dra. Helena Monteiro',
+                    oab: currentUser?.oab || '312.845/SP',
+                    email: currentUser?.email || 'helena.monteiro@aab.org.br',
+                    firm: currentUser?.firm || 'Monteiro & Alencar Advogados',
+                    website: currentUser?.website || 'https://monteiroalencar.adv.br',
+                    role: currentUser?.role || 'associado',
+                    accountStatus: 'Ativo',
+                    lastSeen: Date.now(),
+                    permissions: currentUser?.permissions || { ...defaultPermissions }
+                },
+                {
+                    uid: 'demo-assoc-2',
+                    name: 'Dr. Rafael Magalhães',
+                    oab: '88.412/RJ',
+                    email: 'rafael@magalhaes.adv.br',
+                    firm: 'Magalhães Advocacia',
+                    website: 'https://magalhaes.adv.br',
+                    role: 'associado',
+                    accountStatus: 'Ativo',
+                    lastSeen: Date.now() - 120000,
+                    permissions: { ...defaultPermissions }
+                },
+                {
+                    uid: 'demo-assoc-3',
+                    name: 'Dra. Camila Ferraz',
+                    oab: '194.220/MG',
+                    email: 'camila@ferrazjuridico.com.br',
+                    firm: 'Ferraz Consultoria',
+                    website: '',
+                    role: 'associado',
+                    accountStatus: 'Ativo',
+                    lastSeen: Date.now() - 3600000,
+                    permissions: { portalAccess: true, canPublish: false, canBookRooms: true, canUseBenefits: false }
+                }
+            ];
             refreshAllViews();
         }
 
@@ -1925,17 +2447,171 @@
 
         function applyUserProfileUI() {
             if (!currentUser) return;
+            const cleanName = (currentUser.name || 'Associado').replace(/^Dr\(a\)\.\s|^Dr\.\s|^Dra\.\s/i, '');
+            const parts = cleanName.split(' ');
+            const initials = ((parts[0]?.[0] || 'A') + (parts[1]?.[0] || 'B')).toUpperCase();
+
             document.getElementById('sidebar-user-name').textContent = currentUser.name;
             document.getElementById('sidebar-user-oab').textContent = `OAB ${currentUser.oab}`;
             document.getElementById('sidebar-firm-name').textContent = currentUser.firm;
             
             document.getElementById('card-user-name').textContent = currentUser.name;
             document.getElementById('card-user-oab').textContent = currentUser.oab;
+            document.getElementById('card-user-firm').textContent = currentUser.firm || '';
+            document.getElementById('card-user-seccional').textContent = currentUser.seccional || 'Brasil • AAB';
 
-            const cleanName = currentUser.name.replace(/^Dr\(a\)\.\s|^Dr\.\s|^Dra\.\s/i, '');
-            const parts = cleanName.split(' ');
-            const initials = (parts[0]?.[0] || 'A') + (parts[1]?.[0] || 'B');
-            document.getElementById('user-avatar').textContent = initials.toUpperCase();
+            const webRow = document.getElementById('card-user-website-row');
+            const webLink = document.getElementById('card-user-website');
+            if (currentUser.website) {
+                webLink.href = currentUser.website.startsWith('http') ? currentUser.website : `https://${currentUser.website}`;
+                webLink.textContent = currentUser.website;
+                webRow.classList.remove('hidden');
+            } else {
+                webRow.classList.add('hidden');
+            }
+
+            const bioEl = document.getElementById('card-user-bio');
+            if (currentUser.bio) {
+                bioEl.textContent = currentUser.bio;
+                bioEl.classList.remove('hidden');
+            } else {
+                bioEl.classList.add('hidden');
+            }
+
+            const statusBadge = document.getElementById('card-status-badge');
+            const isSuspended = currentUser.accountStatus === 'Suspenso';
+            statusBadge.textContent = isSuspended ? 'SUSPENSO • PENDENTE' : (currentUser.role === 'responsavel_aab' ? 'RESPONSÁVEL • ATIVO' : 'REGULAR • ATIVO');
+            statusBadge.className = isSuspended
+                ? 'px-2.5 py-1 rounded-full text-[11px] font-bold bg-rose-500/20 text-rose-300 border border-rose-500/30'
+                : 'px-2.5 py-1 rounded-full text-[11px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30';
+
+            const avatarEl = document.getElementById('user-avatar');
+            const cardPhotoEl = document.getElementById('card-user-photo');
+            if (currentUser.photo) {
+                avatarEl.innerHTML = `<img src="${currentUser.photo}" alt="Foto do Associado" class="w-full h-full object-cover">`;
+                cardPhotoEl.innerHTML = `<img src="${currentUser.photo}" alt="Foto do Associado" class="w-full h-full object-cover">`;
+            } else {
+                avatarEl.textContent = initials;
+                cardPhotoEl.innerHTML = `<span>${initials}</span>`;
+            }
+
+            const isAdmin = currentUser.role === 'responsavel_aab' || Boolean(currentUser.permissions?.canPublish);
+            document.getElementById('nav-btn-admin').classList.toggle('hidden', !isAdmin);
+            document.getElementById('btn-quick-publish-overview').classList.toggle('hidden', !isAdmin);
+        }
+
+        // =====================================================================
+        // EDIÇÃO DE PERFIL COM FOTO (UPLOAD COMPRIMIDO VIA CANVAS + URL)
+        // =====================================================================
+        function openProfileModal() {
+            if (!currentUser) return;
+            draftProfilePhoto = currentUser.photo || '';
+            document.getElementById('prof-name').value = currentUser.name || '';
+            document.getElementById('prof-oab').value = currentUser.oab || '';
+            document.getElementById('prof-firm').value = currentUser.firm || '';
+            document.getElementById('prof-seccional').value = currentUser.seccional || '';
+            document.getElementById('prof-phone').value = currentUser.phone || '';
+            document.getElementById('prof-website').value = currentUser.website || '';
+            document.getElementById('prof-address').value = currentUser.address || '';
+            document.getElementById('prof-bio').value = currentUser.bio || '';
+            document.getElementById('profile-photo-url').value = currentUser.photo?.startsWith('http') ? currentUser.photo : '';
+            document.getElementById('profile-photo-file').value = '';
+            renderProfileModalPreview();
+            openModal('modal-edit-profile');
+        }
+
+        function renderProfileModalPreview() {
+            const preview = document.getElementById('profile-modal-preview');
+            if (!preview) return;
+            if (draftProfilePhoto) {
+                preview.innerHTML = `<img src="${draftProfilePhoto}" alt="Prévia da foto" class="w-full h-full object-cover">`;
+            } else {
+                const nameVal = document.getElementById('prof-name')?.value || currentUser?.name || 'AAB';
+                const clean = nameVal.replace(/^Dr\(a\)\.\s|^Dr\.\s|^Dra\.\s/i, '').trim();
+                const parts = clean.split(' ');
+                preview.textContent = ((parts[0]?.[0] || 'A') + (parts[1]?.[0] || 'B')).toUpperCase();
+            }
+        }
+
+        function handleProfilePhotoUpload(event) {
+            const file = event.target.files?.[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const img = new Image();
+                img.onload = () => {
+                    const canvas = document.createElement('canvas');
+                    const maxSize = 240;
+                    let width = img.width;
+                    let height = img.height;
+                    if (width > height && width > maxSize) {
+                        height = Math.round((height * maxSize) / width);
+                        width = maxSize;
+                    } else if (height >= width && height > maxSize) {
+                        width = Math.round((width * maxSize) / height);
+                        height = maxSize;
+                    }
+                    canvas.width = width;
+                    canvas.height = height;
+                    const ctx = canvas.getContext('2d');
+                    ctx.drawImage(img, 0, 0, width, height);
+                    draftProfilePhoto = canvas.toDataURL('image/jpeg', 0.82);
+                    document.getElementById('profile-photo-url').value = '';
+                    renderProfileModalPreview();
+                };
+                img.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function handleProfilePhotoUrlChange(event) {
+            const url = event.target.value.trim();
+            draftProfilePhoto = url;
+            renderProfileModalPreview();
+        }
+
+        function clearProfilePhoto() {
+            draftProfilePhoto = '';
+            document.getElementById('profile-photo-file').value = '';
+            document.getElementById('profile-photo-url').value = '';
+            renderProfileModalPreview();
+        }
+
+        async function handleSaveProfile(e) {
+            e.preventDefault();
+            if (!currentUser) return;
+
+            const updatedFields = {
+                name: document.getElementById('prof-name').value.trim(),
+                oab: document.getElementById('prof-oab').value.trim(),
+                firm: document.getElementById('prof-firm').value.trim(),
+                seccional: document.getElementById('prof-seccional').value.trim(),
+                phone: document.getElementById('prof-phone').value.trim(),
+                website: document.getElementById('prof-website').value.trim(),
+                address: document.getElementById('prof-address').value.trim(),
+                bio: document.getElementById('prof-bio').value.trim(),
+                photo: draftProfilePhoto,
+                lastSeen: Date.now()
+            };
+
+            currentUser = { ...currentUser, ...updatedFields };
+            applyUserProfileUI();
+
+            if (!isDemoFallbackMode) {
+                try {
+                    await setDoc(doc(db, 'usuarios', currentUser.uid), updatedFields, { merge: true });
+                } catch (err) {
+                    handleFirebasePermissionOrSetupError(err);
+                }
+            } else {
+                const idx = adminMembersList.findIndex(m => m.uid === currentUser.uid);
+                if (idx !== -1) adminMembersList[idx] = { ...adminMembersList[idx], ...updatedFields };
+                renderAdminMembersTable();
+                updateAdminKPIs();
+            }
+
+            closeModal('modal-edit-profile');
+            showToast('Perfil e foto atualizados com sucesso!', 'success');
         }
 
         // =====================================================================
@@ -1947,7 +2623,8 @@
             clients: 'Clientes & CRM Jurídico',
             deadlines: 'Prazos Fatais & Agenda Jurídica',
             finance: 'Controle Financeiro & Honorários',
-            benefits: 'Benefícios & Carteira Digital AAB'
+            benefits: 'Benefícios & Carteira Digital AAB',
+            admin: 'Painel do Responsável AAB'
         };
 
         function navigateTo(sectionId) {
@@ -1986,11 +2663,15 @@
         function refreshAllViews() {
             updateKPIs();
             renderOverviewDeadlines();
+            renderOverviewPublications();
             renderCasesTable();
             renderClientsGrid();
             renderDeadlinesList();
             renderFinanceTable();
             renderCoworkingBookings();
+            renderAdminPublications();
+            renderAdminMembersTable();
+            updateAdminKPIs();
             lucide.createIcons();
         }
 
@@ -2022,18 +2703,308 @@
         }
 
         // =====================================================================
-        // VISÃO GERAL: LISTA DE PRAZOS DA SEMANA
+        // MURAL DE PUBLICAÇÕES & PAINEL DO RESPONSÁVEL AAB
         // =====================================================================
+        function renderOverviewPublications() {
+            const container = document.getElementById('overview-publications-list');
+            if (!container) return;
+            const selectedCat = document.getElementById('overview-pub-category')?.value || 'Todas';
+
+            const list = publicationsList.filter(p => selectedCat === 'Todas' || p.category === selectedCat);
+            if (list.length === 0) {
+                container.innerHTML = `<div class="col-span-full text-center py-6 text-xs text-slate-400">Nenhuma publicação oficial nesta categoria.</div>`;
+                return;
+            }
+
+            const catStyles = {
+                'Portaria': 'bg-slate-900 text-amber-400',
+                'Evento': 'bg-blue-100 text-blue-800',
+                'Benefício': 'bg-emerald-100 text-emerald-800',
+                'Comunicado': 'bg-amber-100 text-amber-900'
+            };
+
+            container.innerHTML = list.map(pub => `
+                <article class="p-4 rounded-xl border ${pub.pinned ? 'border-amber-400 bg-amber-50/40' : 'border-slate-200 bg-slate-50/60'} flex flex-col justify-between gap-2.5">
+                    <div>
+                        <div class="flex items-center justify-between gap-2 mb-1.5">
+                            <div class="flex items-center gap-1.5">
+                                <span class="text-[10px] font-bold uppercase px-2 py-0.5 rounded ${catStyles[pub.category] || catStyles['Comunicado']}">${pub.category}</span>
+                                ${pub.pinned ? '<span class="text-[10px] font-bold uppercase px-2 py-0.5 rounded bg-amber-600 text-white">Fixado</span>' : ''}
+                            </div>
+                            <span class="text-[11px] text-slate-500">${pub.dateLabel || ''}</span>
+                        </div>
+                        <h3 class="font-serif text-sm sm:text-base font-bold text-slate-900">${pub.title}</h3>
+                        <p class="text-xs text-slate-600 mt-1 leading-relaxed">${pub.content}</p>
+                    </div>
+                    <p class="text-[11px] font-medium text-slate-500 pt-2 border-t border-slate-200/70">Publicado por: ${pub.author || 'Responsável AAB'}</p>
+                </article>
+            `).join('');
+        }
+
+        function renderAdminPublications() {
+            const container = document.getElementById('admin-publications-list');
+            if (!container) return;
+
+            if (publicationsList.length === 0) {
+                container.innerHTML = `<p class="text-xs text-slate-400 text-center py-6">Nenhuma publicação cadastrada.</p>`;
+                return;
+            }
+
+            container.innerHTML = publicationsList.map(pub => `
+                <div class="p-3.5 rounded-xl border border-slate-200 bg-slate-50/70 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                    <div class="space-y-1">
+                        <div class="flex items-center gap-2">
+                            <span class="text-[10px] font-bold uppercase px-2 py-0.5 rounded bg-slate-900 text-amber-400">${pub.category}</span>
+                            ${pub.pinned ? '<span class="text-[10px] font-bold uppercase px-2 py-0.5 rounded bg-amber-100 text-amber-900">Fixado</span>' : ''}
+                            <span class="text-[11px] text-slate-500">${pub.dateLabel || ''}</span>
+                        </div>
+                        <p class="text-sm font-bold text-slate-900">${pub.title}</p>
+                        <p class="text-xs text-slate-600 line-clamp-2">${pub.content}</p>
+                    </div>
+                    <div class="flex items-center gap-1.5 shrink-0">
+                        <button type="button" onclick="startEditPublication('${pub.id}')" title="Editar publicação" class="p-2 rounded-lg text-slate-600 hover:bg-slate-200 transition">
+                            <i data-lucide="pencil" class="w-4 h-4"></i>
+                        </button>
+                        <button type="button" onclick="deletePublication('${pub.id}')" title="Excluir publicação" class="p-2 rounded-lg text-rose-600 hover:bg-rose-50 transition">
+                            <i data-lucide="trash-2" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+            lucide.createIcons();
+        }
+
+        function startEditPublication(id) {
+            const pub = publicationsList.find(p => String(p.id) === String(id));
+            if (!pub) return;
+            editingPublicationId = pub.id;
+            document.getElementById('pub-edit-id').value = pub.id;
+            document.getElementById('pub-title').value = pub.title;
+            document.getElementById('pub-category').value = pub.category;
+            document.getElementById('pub-pinned').checked = Boolean(pub.pinned);
+            document.getElementById('pub-content').value = pub.content;
+            document.getElementById('pub-form-heading').textContent = 'Editar Publicação AAB';
+            document.getElementById('btn-submit-pub').innerHTML = '<i data-lucide="check" class="w-4 h-4"></i><span>Salvar Alterações</span>';
+            document.getElementById('btn-cancel-pub-edit').classList.remove('hidden');
+            lucide.createIcons();
+        }
+
+        function cancelPublicationEdit() {
+            editingPublicationId = null;
+            document.getElementById('pub-edit-id').value = '';
+            document.getElementById('pub-title').value = '';
+            document.getElementById('pub-pinned').checked = false;
+            document.getElementById('pub-content').value = '';
+            document.getElementById('pub-form-heading').textContent = 'Publicar no Portal AAB';
+            document.getElementById('btn-submit-pub').innerHTML = '<i data-lucide="send" class="w-4 h-4"></i><span>Publicar no Mural do Portal</span>';
+            document.getElementById('btn-cancel-pub-edit').classList.add('hidden');
+            lucide.createIcons();
+        }
+
+        async function handleSavePublication(e) {
+            e.preventDefault();
+            const payload = {
+                title: document.getElementById('pub-title').value.trim(),
+                category: document.getElementById('pub-category').value,
+                pinned: document.getElementById('pub-pinned').checked,
+                content: document.getElementById('pub-content').value.trim(),
+                author: currentUser?.name || 'Responsável AAB',
+                dateLabel: new Date().toLocaleDateString('pt-BR')
+            };
+
+            if (isDemoFallbackMode) {
+                if (editingPublicationId) {
+                    const idx = publicationsList.findIndex(p => String(p.id) === String(editingPublicationId));
+                    if (idx !== -1) publicationsList[idx] = { ...publicationsList[idx], ...payload };
+                } else {
+                    publicationsList.unshift({ id: 'demo-pub-' + Date.now(), ...payload, createdAt: Date.now() });
+                }
+                publicationsList.sort((a, b) => (b.pinned ? 1 : 0) - (a.pinned ? 1 : 0) || (b.createdAt || 0) - (a.createdAt || 0));
+                renderOverviewPublications();
+                renderAdminPublications();
+                updateAdminKPIs();
+            } else {
+                if (editingPublicationId) {
+                    await updateDoc(doc(db, 'publicacoes_aab', String(editingPublicationId)), payload);
+                } else {
+                    await addDoc(collection(db, 'publicacoes_aab'), { ...payload, createdAt: Date.now() });
+                }
+            }
+
+            cancelPublicationEdit();
+            showToast('Mural do portal atualizado com sucesso!', 'success');
+        }
+
+        async function deletePublication(id) {
+            if (isDemoFallbackMode) {
+                publicationsList = publicationsList.filter(p => String(p.id) !== String(id));
+                renderOverviewPublications();
+                renderAdminPublications();
+                updateAdminKPIs();
+            } else {
+                await deleteDoc(doc(db, 'publicacoes_aab', String(id)));
+            }
+            showToast('Publicação removida do mural.', 'info');
+        }
+
+        function isMemberOnline(lastSeen) {
+            if (!lastSeen) return false;
+            return (Date.now() - Number(lastSeen)) <= 5 * 60 * 1000;
+        }
+
+        function updateAdminKPIs() {
+            const totalEl = document.getElementById('admin-kpi-total-members');
+            if (!totalEl) return;
+
+            const total = adminMembersList.length;
+            const online = adminMembersList.filter(m => isMemberOnline(m.lastSeen)).length;
+            const withSite = adminMembersList.filter(m => m.website && m.website.trim().length > 3).length;
+
+            totalEl.textContent = total;
+            document.getElementById('admin-kpi-online-members').textContent = online;
+            document.getElementById('admin-kpi-website-members').textContent = withSite;
+            document.getElementById('admin-kpi-publications').textContent = publicationsList.length;
+        }
+
+        function renderAdminMembersTable() {
+            const tbody = document.getElementById('admin-members-table-body');
+            if (!tbody) return;
+
+            const search = (document.getElementById('admin-member-search')?.value || '').toLowerCase();
+            const filtered = adminMembersList.filter(m =>
+                (m.name || '').toLowerCase().includes(search) ||
+                (m.oab || '').toLowerCase().includes(search) ||
+                (m.email || '').toLowerCase().includes(search) ||
+                (m.website || '').toLowerCase().includes(search)
+            );
+
+            if (filtered.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="5" class="py-8 text-center text-slate-400">Nenhum associado encontrado.</td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = filtered.map(m => {
+                const online = isMemberOnline(m.lastSeen);
+                const perms = { ...defaultPermissions, ...(m.permissions || {}) };
+                const cleanUrl = m.website ? (m.website.startsWith('http') ? m.website : `https://${m.website}`) : '';
+
+                return `
+                <tr class="hover:bg-slate-50/90 transition align-top">
+                    <td class="py-3.5 px-4">
+                        <p class="font-bold text-slate-900">${m.name}</p>
+                        <p class="text-[11px] font-semibold text-amber-800">OAB ${m.oab} • <span class="text-slate-500 font-normal">${m.email}</span></p>
+                        <p class="text-[11px] text-slate-500 mt-0.5">${m.firm || ''}</p>
+                    </td>
+                    <td class="py-3.5 px-4">
+                        ${online
+                            ? '<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 font-semibold"><span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>Online</span>'
+                            : '<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-slate-100 text-slate-500 border border-slate-200 font-medium"><span class="w-2 h-2 rounded-full bg-slate-400"></span>Offline</span>'}
+                    </td>
+                    <td class="py-3.5 px-4">
+                        ${cleanUrl
+                            ? `<a href="${cleanUrl}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-blue-700 hover:underline font-medium break-all"><i data-lucide="external-link" class="w-3.5 h-3.5 shrink-0"></i><span>${m.website}</span></a>`
+                            : '<span class="text-slate-400 italic">Sem site vinculado</span>'}
+                    </td>
+                    <td class="py-3.5 px-4">
+                        <div class="grid grid-cols-2 gap-x-3 gap-y-1.5">
+                            <label class="inline-flex items-center gap-1.5 cursor-pointer text-slate-700">
+                                <input type="checkbox" ${perms.portalAccess ? 'checked' : ''} onchange="toggleMemberPermission('${m.uid}', 'portalAccess', this.checked)" class="rounded accent-amber-700">
+                                <span>Acesso Portal</span>
+                            </label>
+                            <label class="inline-flex items-center gap-1.5 cursor-pointer text-slate-700">
+                                <input type="checkbox" ${perms.canPublish ? 'checked' : ''} onchange="toggleMemberPermission('${m.uid}', 'canPublish', this.checked)" class="rounded accent-amber-700">
+                                <span>Publicar Mural</span>
+                            </label>
+                            <label class="inline-flex items-center gap-1.5 cursor-pointer text-slate-700">
+                                <input type="checkbox" ${perms.canBookRooms ? 'checked' : ''} onchange="toggleMemberPermission('${m.uid}', 'canBookRooms', this.checked)" class="rounded accent-amber-700">
+                                <span>Salas / Coworking</span>
+                            </label>
+                            <label class="inline-flex items-center gap-1.5 cursor-pointer text-slate-700">
+                                <input type="checkbox" ${perms.canUseBenefits ? 'checked' : ''} onchange="toggleMemberPermission('${m.uid}', 'canUseBenefits', this.checked)" class="rounded accent-amber-700">
+                                <span>Convênios / CAA</span>
+                            </label>
+                        </div>
+                    </td>
+                    <td class="py-3.5 px-4 text-right space-y-1.5">
+                        <div>
+                            <select onchange="updateMemberRole('${m.uid}', this.value)" class="px-2 py-1 rounded-lg border border-slate-300 bg-white text-[11px] font-semibold text-slate-700">
+                                <option value="associado" ${m.role !== 'responsavel_aab' ? 'selected' : ''}>Associado</option>
+                                <option value="responsavel_aab" ${m.role === 'responsavel_aab' ? 'selected' : ''}>Responsável AAB</option>
+                            </select>
+                        </div>
+                        <div>
+                            <button type="button" onclick="toggleMemberAccountStatus('${m.uid}')" class="px-2.5 py-1 rounded-lg text-[11px] font-semibold border transition ${m.accountStatus === 'Suspenso' ? 'bg-emerald-50 text-emerald-700 border-emerald-200 hover:bg-emerald-100' : 'bg-rose-50 text-rose-700 border-rose-200 hover:bg-rose-100'}">
+                                ${m.accountStatus === 'Suspenso' ? 'Reativar Conta' : 'Suspender'}
+                            </button>
+                        </div>
+                    </td>
+                </tr>`;
+            }).join('');
+            lucide.createIcons();
+        }
+
+        async function toggleMemberPermission(uid, permKey, checked) {
+            const member = adminMembersList.find(m => m.uid === uid);
+            if (!member) return;
+            const nextPerms = { ...defaultPermissions, ...(member.permissions || {}), [permKey]: checked };
+            member.permissions = nextPerms;
+
+            if (isDemoFallbackMode) {
+                if (currentUser?.uid === uid) {
+                    currentUser.permissions = nextPerms;
+                    applyUserProfileUI();
+                }
+                renderAdminMembersTable();
+            } else {
+                await setDoc(doc(db, 'usuarios', uid), { permissions: nextPerms }, { merge: true });
+            }
+            showToast('Permissão do associado salva na nuvem.', 'success');
+        }
+
+        async function updateMemberRole(uid, role) {
+            const member = adminMembersList.find(m => m.uid === uid);
+            if (!member) return;
+            const nextPerms = { ...defaultPermissions, ...(member.permissions || {}), canPublish: role === 'responsavel_aab' ? true : Boolean(member.permissions?.canPublish) };
+            member.role = role;
+            member.permissions = nextPerms;
+
+            if (isDemoFallbackMode) {
+                if (currentUser?.uid === uid) {
+                    currentUser.role = role;
+                    currentUser.permissions = nextPerms;
+                    applyUserProfileUI();
+                }
+                renderAdminMembersTable();
+            } else {
+                await setDoc(doc(db, 'usuarios', uid), { role, permissions: nextPerms }, { merge: true });
+            }
+            showToast('Papel institucional atualizado.', 'success');
+        }
+
+        async function toggleMemberAccountStatus(uid) {
+            const member = adminMembersList.find(m => m.uid === uid);
+            if (!member) return;
+            const nextStatus = member.accountStatus === 'Suspenso' ? 'Ativo' : 'Suspenso';
+            member.accountStatus = nextStatus;
+
+            if (isDemoFallbackMode) {
+                if (currentUser?.uid === uid) {
+                    currentUser.accountStatus = nextStatus;
+                    applyUserProfileUI();
+                }
+                renderAdminMembersTable();
+            } else {
+                await setDoc(doc(db, 'usuarios', uid), { accountStatus: nextStatus }, { merge: true });
+            }
+            showToast(`Status da conta alterado para ${nextStatus}.`, 'info');
+        }
+
         function renderOverviewDeadlines() {
             const container = document.getElementById('overview-deadlines-list');
-            const pending = appData.deadlines.filter(d => !d.completed);
+            const pending = appData.deadlines.filter(d => !d.completed).slice(0, 4);
 
             if (pending.length === 0) {
-                container.innerHTML = `
-                    <div class="text-center py-8 text-slate-400">
-                        <i data-lucide="check-circle-2" class="w-10 h-10 mx-auto text-emerald-500 mb-2"></i>
-                        <p class="text-sm font-medium text-slate-600">Todos os prazos da semana foram cumpridos!</p>
-                    </div>`;
+                container.innerHTML = `<p class="text-sm text-slate-400 text-center py-6">Nenhum prazo pendente na semana.</p>`;
                 return;
             }
 
@@ -2744,7 +3715,22 @@
             handleLogin,
             handleRegister,
             quickDemoLogin,
+            quickAdminDemoLogin,
             handleLogout,
+            openProfileModal,
+            handleProfilePhotoUpload,
+            handleProfilePhotoUrlChange,
+            clearProfilePhoto,
+            handleSaveProfile,
+            renderOverviewPublications,
+            startEditPublication,
+            cancelPublicationEdit,
+            handleSavePublication,
+            deletePublication,
+            renderAdminMembersTable,
+            toggleMemberPermission,
+            updateMemberRole,
+            toggleMemberAccountStatus,
             navigateTo,
             toggleMobileSidebar,
             resetDemoData,
