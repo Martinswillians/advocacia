@@ -360,57 +360,67 @@
                     <!-- Cards de KPIs -->
                     <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5">
                         <!-- KPI 1 -->
-                        <div class="bg-white rounded-2xl p-5 border border-slate-200/90 shadow-xs hover:shadow-md transition">
+                        <div onclick="navigateTo('cases')" role="button" tabindex="0" class="group cursor-pointer bg-white rounded-2xl p-5 border border-slate-200/90 hover:border-amber-500/80 shadow-xs hover:shadow-md hover:-translate-y-0.5 transition-all">
                             <div class="flex items-center justify-between mb-3">
-                                <span class="text-xs font-semibold uppercase tracking-wider text-slate-500">Processos Ativos</span>
-                                <div class="w-9 h-9 rounded-xl bg-slate-900 text-amber-400 flex items-center justify-center">
+                                <span class="text-xs font-semibold uppercase tracking-wider text-slate-500 group-hover:text-slate-800 transition-colors">Processos Ativos</span>
+                                <div class="w-9 h-9 rounded-xl bg-slate-900 text-amber-400 flex items-center justify-center group-hover:scale-105 transition-transform">
                                     <i data-lucide="scale" class="w-4 h-4"></i>
                                 </div>
                             </div>
                             <div class="flex items-baseline justify-between">
                                 <h3 id="kpi-active-cases" class="text-3xl font-bold text-slate-900">0</h3>
-                                <span class="text-xs font-medium text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full">Em andamento</span>
+                                <span class="text-xs font-medium text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full flex items-center gap-1">
+                                    <span>Em andamento</span>
+                                    <i data-lucide="arrow-up-right" class="w-3 h-3 opacity-70 group-hover:opacity-100"></i>
+                                </span>
                             </div>
                         </div>
 
                         <!-- KPI 2 -->
-                        <div class="bg-white rounded-2xl p-5 border border-amber-300/80 shadow-xs hover:shadow-md transition relative overflow-hidden">
+                        <div onclick="navigateTo('deadlines')" role="button" tabindex="0" class="group cursor-pointer bg-white rounded-2xl p-5 border border-amber-300/80 hover:border-amber-600 shadow-xs hover:shadow-md hover:-translate-y-0.5 transition-all relative overflow-hidden">
                             <div class="flex items-center justify-between mb-3">
                                 <span class="text-xs font-semibold uppercase tracking-wider text-amber-800">Prazos (Próx. 7 Dias)</span>
-                                <div class="w-9 h-9 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center">
+                                <div class="w-9 h-9 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center group-hover:scale-105 transition-transform">
                                     <i data-lucide="alert-triangle" class="w-4 h-4"></i>
                                 </div>
                             </div>
                             <div class="flex items-baseline justify-between">
                                 <h3 id="kpi-urgent-deadlines" class="text-3xl font-bold text-amber-700">0</h3>
-                                <span class="text-xs font-semibold text-amber-800 bg-amber-100 px-2 py-0.5 rounded-full">Atenção Fatal</span>
+                                <span class="text-xs font-semibold text-amber-800 bg-amber-100 px-2 py-0.5 rounded-full flex items-center gap-1">
+                                    <span>Atenção Fatal</span>
+                                    <i data-lucide="arrow-up-right" class="w-3 h-3 opacity-70 group-hover:opacity-100"></i>
+                                </span>
                             </div>
                         </div>
 
                         <!-- KPI 3 -->
-                        <div class="bg-white rounded-2xl p-5 border border-slate-200/90 shadow-xs hover:shadow-md transition">
+                        <div onclick="navigateTo('finance')" role="button" tabindex="0" class="group cursor-pointer bg-white rounded-2xl p-5 border border-slate-200/90 hover:border-amber-500/80 shadow-xs hover:shadow-md hover:-translate-y-0.5 transition-all">
                             <div class="flex items-center justify-between mb-3">
-                                <span class="text-xs font-semibold uppercase tracking-wider text-slate-500">Honorários a Receber</span>
-                                <div class="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center">
+                                <span class="text-xs font-semibold uppercase tracking-wider text-slate-500 group-hover:text-slate-800 transition-colors">Honorários a Receber</span>
+                                <div class="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center group-hover:scale-105 transition-transform">
                                     <i data-lucide="banknote" class="w-4 h-4"></i>
                                 </div>
                             </div>
                             <div class="flex items-baseline justify-between">
                                 <h3 id="kpi-receivable" class="text-2xl sm:text-3xl font-bold text-slate-900">R$ 0,00</h3>
+                                <i data-lucide="arrow-up-right" class="w-4 h-4 text-slate-400 group-hover:text-amber-700 transition-colors"></i>
                             </div>
                         </div>
 
                         <!-- KPI 4 -->
-                        <div class="bg-white rounded-2xl p-5 border border-slate-200/90 shadow-xs hover:shadow-md transition">
+                        <div onclick="navigateTo('clients')" role="button" tabindex="0" class="group cursor-pointer bg-white rounded-2xl p-5 border border-slate-200/90 hover:border-amber-500/80 shadow-xs hover:shadow-md hover:-translate-y-0.5 transition-all">
                             <div class="flex items-center justify-between mb-3">
-                                <span class="text-xs font-semibold uppercase tracking-wider text-slate-500">Clientes Ativos</span>
-                                <div class="w-9 h-9 rounded-xl bg-blue-50 text-blue-700 flex items-center justify-center">
+                                <span class="text-xs font-semibold uppercase tracking-wider text-slate-500 group-hover:text-slate-800 transition-colors">Clientes Ativos</span>
+                                <div class="w-9 h-9 rounded-xl bg-blue-50 text-blue-700 flex items-center justify-center group-hover:scale-105 transition-transform">
                                     <i data-lucide="users" class="w-4 h-4"></i>
                                 </div>
                             </div>
                             <div class="flex items-baseline justify-between">
                                 <h3 id="kpi-active-clients" class="text-3xl font-bold text-slate-900">0</h3>
-                                <span class="text-xs font-medium text-slate-500">PF & PJ</span>
+                                <span class="text-xs font-medium text-slate-500 group-hover:text-amber-700 flex items-center gap-1 transition-colors">
+                                    <span>PF & PJ</span>
+                                    <i data-lucide="arrow-up-right" class="w-3 h-3"></i>
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -419,13 +429,13 @@
                     <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
                         
                         <!-- Prazos Fatais e Audiências da Semana -->
-                        <div class="lg:col-span-7 bg-white rounded-2xl border border-slate-200/90 shadow-xs flex flex-col">
-                            <div class="p-5 border-b border-slate-100 flex items-center justify-between">
+                        <div onclick="navigateTo('deadlines')" class="lg:col-span-7 cursor-pointer bg-white rounded-2xl border border-slate-200/90 hover:border-amber-500/70 shadow-xs hover:shadow-md transition-all flex flex-col">
+                            <div class="p-5 border-b border-slate-100 flex items-center justify-between hover:bg-slate-50/70 rounded-t-2xl transition-colors">
                                 <div class="flex items-center gap-2.5">
                                     <i data-lucide="clock" class="w-5 h-5 text-amber-700"></i>
                                     <h2 class="font-serif text-lg font-bold text-slate-900">Prazos Fatais & Audiências</h2>
                                 </div>
-                                <button onclick="navigateTo('deadlines')" class="text-xs font-semibold text-amber-700 hover:text-amber-800">Ver agenda completa →</button>
+                                <button type="button" onclick="event.stopPropagation(); navigateTo('deadlines')" class="text-xs font-semibold text-amber-700 hover:text-amber-800">Ver agenda completa →</button>
                             </div>
                             <div id="overview-deadlines-list" class="p-5 divide-y divide-slate-100 space-y-3 flex-1">
                                 <!-- Preenchido via JS -->
@@ -727,57 +737,57 @@
 
                         <!-- Convênios e Serviços Exclusivos -->
                         <div class="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4">
-                            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs flex flex-col justify-between">
+                            <div onclick="openBenefitModal('certificate')" role="button" tabindex="0" class="group cursor-pointer bg-white p-5 rounded-2xl border border-slate-200 hover:border-amber-500/80 shadow-xs hover:shadow-md hover:-translate-y-0.5 transition-all flex flex-col justify-between">
                                 <div>
-                                    <div class="w-10 h-10 rounded-xl bg-amber-50 text-amber-700 flex items-center justify-center mb-3">
+                                    <div class="w-10 h-10 rounded-xl bg-amber-50 text-amber-700 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
                                         <i data-lucide="key-round" class="w-5 h-5"></i>
                                     </div>
-                                    <h3 class="font-serif text-base font-bold text-slate-900">Certificado Digital A3</h3>
+                                    <h3 class="font-serif text-base font-bold text-slate-900 group-hover:text-amber-800 transition-colors">Certificado Digital A3</h3>
                                     <p class="text-xs text-slate-600 mt-1 leading-relaxed">Emissão e renovação gratuita de Token/Nuvem ICP-Brasil para acesso ao PJe, e-SAJ e e-Proc.</p>
                                 </div>
-                                <button onclick="showToast('Solicitação de Certificado Digital AAB iniciada!', 'success')" class="mt-4 text-xs font-semibold text-amber-700 hover:text-amber-800 flex items-center gap-1">
+                                <button type="button" onclick="event.stopPropagation(); openBenefitModal('certificate')" class="mt-4 text-xs font-semibold text-amber-700 hover:text-amber-800 flex items-center gap-1">
                                     <span>Solicitar Renovação</span>
                                     <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
                                 </button>
                             </div>
 
-                            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs flex flex-col justify-between">
+                            <div onclick="openBenefitModal('library')" role="button" tabindex="0" class="group cursor-pointer bg-white p-5 rounded-2xl border border-slate-200 hover:border-amber-500/80 shadow-xs hover:shadow-md hover:-translate-y-0.5 transition-all flex flex-col justify-between">
                                 <div>
-                                    <div class="w-10 h-10 rounded-xl bg-slate-900 text-amber-400 flex items-center justify-center mb-3">
+                                    <div class="w-10 h-10 rounded-xl bg-slate-900 text-amber-400 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
                                         <i data-lucide="book-open" class="w-5 h-5"></i>
                                     </div>
-                                    <h3 class="font-serif text-base font-bold text-slate-900">Biblioteca & Doutrina AAB</h3>
+                                    <h3 class="font-serif text-base font-bold text-slate-900 group-hover:text-amber-800 transition-colors">Biblioteca & Doutrina AAB</h3>
                                     <p class="text-xs text-slate-600 mt-1 leading-relaxed">Acesso ilimitado a mais de 18.000 obras jurídicas digitais, revistas dos tribunais e modelos de peças.</p>
                                 </div>
-                                <button onclick="showToast('Acessando acervo digital da Biblioteca AAB...', 'info')" class="mt-4 text-xs font-semibold text-amber-700 hover:text-amber-800 flex items-center gap-1">
+                                <button type="button" onclick="event.stopPropagation(); openBenefitModal('library')" class="mt-4 text-xs font-semibold text-amber-700 hover:text-amber-800 flex items-center gap-1">
                                     <span>Acessar Acervo</span>
                                     <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
                                 </button>
                             </div>
 
-                            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs flex flex-col justify-between">
+                            <div onclick="openBenefitModal('coworking')" role="button" tabindex="0" class="group cursor-pointer bg-white p-5 rounded-2xl border border-slate-200 hover:border-amber-500/80 shadow-xs hover:shadow-md hover:-translate-y-0.5 transition-all flex flex-col justify-between">
                                 <div>
-                                    <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-700 flex items-center justify-center mb-3">
+                                    <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-700 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
                                         <i data-lucide="building-2" class="w-5 h-5"></i>
                                     </div>
-                                    <h3 class="font-serif text-base font-bold text-slate-900">Salas de Apoio & Coworking</h3>
+                                    <h3 class="font-serif text-base font-bold text-slate-900 group-hover:text-amber-800 transition-colors">Salas de Apoio & Coworking</h3>
                                     <p class="text-xs text-slate-600 mt-1 leading-relaxed">Reserva de salas de audiência virtual e escritórios compartilhados nas sedes da AAB em todo o país.</p>
                                 </div>
-                                <button onclick="showToast('Agenda de salas compartilhadas AAB aberta.', 'info')" class="mt-4 text-xs font-semibold text-amber-700 hover:text-amber-800 flex items-center gap-1">
+                                <button type="button" onclick="event.stopPropagation(); openBenefitModal('coworking')" class="mt-4 text-xs font-semibold text-amber-700 hover:text-amber-800 flex items-center gap-1">
                                     <span>Reservar Sala</span>
                                     <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
                                 </button>
                             </div>
 
-                            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs flex flex-col justify-between">
+                            <div onclick="openBenefitModal('health')" role="button" tabindex="0" class="group cursor-pointer bg-white p-5 rounded-2xl border border-slate-200 hover:border-amber-500/80 shadow-xs hover:shadow-md hover:-translate-y-0.5 transition-all flex flex-col justify-between">
                                 <div>
-                                    <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center mb-3">
+                                    <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">
                                         <i data-lucide="heart-handshake" class="w-5 h-5"></i>
                                     </div>
-                                    <h3 class="font-serif text-base font-bold text-slate-900">Caixa de Assistência & Saúde</h3>
+                                    <h3 class="font-serif text-base font-bold text-slate-900 group-hover:text-amber-800 transition-colors">Caixa de Assistência & Saúde</h3>
                                     <p class="text-xs text-slate-600 mt-1 leading-relaxed">Planos de saúde corporativos para sociedades de advogados, previdência privada e convênios.</p>
                                 </div>
-                                <button onclick="showToast('Tabela de convênios AAB Saúde enviada ao seu e-mail.', 'success')" class="mt-4 text-xs font-semibold text-amber-700 hover:text-amber-800 flex items-center gap-1">
+                                <button type="button" onclick="event.stopPropagation(); openBenefitModal('health')" class="mt-4 text-xs font-semibold text-amber-700 hover:text-amber-800 flex items-center gap-1">
                                     <span>Consultar Convênios</span>
                                     <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
                                 </button>
@@ -965,6 +975,253 @@
         </div>
     </div>
 
+    <!-- MODAL INTERATIVO: CERTIFICADO DIGITAL A3 -->
+    <div id="modal-benefit-certificate" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-xl w-full shadow-2xl border border-slate-200 overflow-hidden fade-in max-h-[90vh] flex flex-col">
+            <div class="px-6 py-4 bg-slate-900 text-white flex items-center justify-between shrink-0">
+                <div class="flex items-center gap-2.5">
+                    <i data-lucide="key-round" class="w-5 h-5 text-amber-400"></i>
+                    <h3 class="font-serif text-lg font-bold">Certificação Digital ICP-Brasil AAB</h3>
+                </div>
+                <button onclick="closeModal('modal-benefit-certificate')" class="text-slate-400 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button>
+            </div>
+            <div class="p-6 overflow-y-auto space-y-5">
+                <div class="p-4 rounded-xl bg-amber-50/80 border border-amber-200/80 flex items-start gap-3">
+                    <i data-lucide="shield-check" class="w-5 h-5 text-amber-700 shrink-0 mt-0.5"></i>
+                    <div class="text-xs text-amber-950 space-y-1">
+                        <p class="font-semibold">Benefício Exclusivo para Associados Adimplentes</p>
+                        <p>Emita ou renove seu certificado A3 com validade de 3 anos para assinatura no PJe, e-SAJ, e-Proc e Receita Federal.</p>
+                    </div>
+                </div>
+
+                <form id="cert-form" onsubmit="handleCertificateSubmit(event)" class="space-y-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 bg-slate-50 p-3.5 rounded-xl border border-slate-200">
+                        <div>
+                            <span class="text-[10px] uppercase font-semibold text-slate-400 block">Titular Validado</span>
+                            <span id="cert-holder-name" class="text-xs font-bold text-slate-900">Dr(a). Associado</span>
+                        </div>
+                        <div>
+                            <span class="text-[10px] uppercase font-semibold text-slate-400 block">Inscrição OAB/AAB</span>
+                            <span id="cert-holder-oab" class="text-xs font-bold text-amber-700">000.000/UF</span>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold uppercase text-slate-600 mb-2">Selecione o Tipo de Mídia Criptográfica</label>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                            <label class="cursor-pointer border border-slate-300 rounded-xl p-3.5 flex items-start gap-3 has-[:checked]:border-amber-600 has-[:checked]:bg-amber-50/40 transition">
+                                <input type="radio" name="cert-media" value="Nuvem BirdID / SafeID (3 Anos)" checked class="mt-1 accent-amber-700">
+                                <div>
+                                    <span class="text-xs font-bold text-slate-900 block">Nuvem BirdID / SafeID</span>
+                                    <span class="text-[11px] text-slate-500">Assinatura pelo celular sem leitora física. Emissão online imediata.</span>
+                                </div>
+                            </label>
+                            <label class="cursor-pointer border border-slate-300 rounded-xl p-3.5 flex items-start gap-3 has-[:checked]:border-amber-600 has-[:checked]:bg-amber-50/40 transition">
+                                <input type="radio" name="cert-media" value="Token USB Criptográfico A3" class="mt-1 accent-amber-700">
+                                <div>
+                                    <span class="text-xs font-bold text-slate-900 block">Token USB Físico A3</span>
+                                    <span class="text-[11px] text-slate-500">Retirada presencial na sede AAB ou envio via portador.</span>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-xs font-semibold uppercase text-slate-600 mb-1">Tipo de Solicitação</label>
+                            <select id="cert-action-type" class="w-full px-3.5 py-2 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:outline-none focus:border-amber-600">
+                                <option value="Renovação Online (Videoconferência)">Renovação Online (Videoconferência)</option>
+                                <option value="Primeira Emissão ICP-Brasil">Primeira Emissão ICP-Brasil</option>
+                                <option value="Segunda Via / Revogação">Segunda Via / Revogação</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold uppercase text-slate-600 mb-1">Telefone para Validação</label>
+                            <input type="text" id="cert-phone" required placeholder="(61) 99999-0000" class="w-full px-3.5 py-2 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:outline-none focus:border-amber-600">
+                        </div>
+                    </div>
+
+                    <div id="cert-protocol-box" class="hidden p-4 rounded-xl bg-emerald-50 border border-emerald-200 text-emerald-950 space-y-1.5">
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs font-bold text-emerald-800 uppercase flex items-center gap-1.5">
+                                <i data-lucide="check-circle-2" class="w-4 h-4"></i> Protocolo Emitido com Sucesso
+                            </span>
+                            <span id="cert-protocol-code" class="font-mono text-xs font-bold bg-white px-2 py-0.5 rounded border border-emerald-300">ICP-AAB-0000</span>
+                        </div>
+                        <p id="cert-protocol-detail" class="text-xs text-emerald-800"></p>
+                    </div>
+
+                    <div class="pt-2 flex justify-end gap-2">
+                        <button type="button" onclick="closeModal('modal-benefit-certificate')" class="px-4 py-2 text-sm font-medium text-slate-600 hover:bg-slate-100 rounded-xl">Fechar</button>
+                        <button type="submit" class="px-5 py-2 text-sm font-semibold bg-amber-700 hover:bg-amber-800 text-white rounded-xl flex items-center gap-2">
+                            <i data-lucide="shield-check" class="w-4 h-4"></i>
+                            <span>Gerar Protocolo de Emissão</span>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL INTERATIVO: BIBLIOTECA & DOUTRINA AAB -->
+    <div id="modal-benefit-library" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-3xl w-full shadow-2xl border border-slate-200 overflow-hidden fade-in max-h-[90vh] flex flex-col">
+            <div class="px-6 py-4 bg-slate-900 text-white flex items-center justify-between shrink-0">
+                <div class="flex items-center gap-2.5">
+                    <i data-lucide="book-open" class="w-5 h-5 text-amber-400"></i>
+                    <div>
+                        <h3 class="font-serif text-lg font-bold leading-none">Biblioteca Digital & Doutrina AAB</h3>
+                        <span class="text-[11px] text-slate-400">Acervo com +18.000 títulos, revistas dos tribunais e peças processuais</span>
+                    </div>
+                </div>
+                <button onclick="closeModal('modal-benefit-library')" class="text-slate-400 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button>
+            </div>
+
+            <div class="p-6 overflow-y-auto space-y-4">
+                <!-- Busca e Filtros -->
+                <div class="flex flex-col sm:flex-row gap-3">
+                    <div class="relative flex-1">
+                        <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3.5 top-3"></i>
+                        <input type="text" id="lib-search" oninput="renderLibraryCatalog()" placeholder="Pesquisar por título, autor ou ramo do Direito..." class="w-full pl-10 pr-4 py-2 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:outline-none focus:border-amber-600">
+                    </div>
+                    <select id="lib-category" onchange="renderLibraryCatalog()" class="px-3.5 py-2 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:outline-none focus:border-amber-600">
+                        <option value="Todos">Todas as Categorias</option>
+                        <option value="Doutrina">Doutrina</option>
+                        <option value="Jurisprudência Comentada">Jurisprudência Comentada</option>
+                        <option value="Modelos de Peças">Modelos de Peças</option>
+                    </select>
+                </div>
+
+                <!-- Lista de Obras -->
+                <div id="library-catalog-list" class="space-y-3">
+                    <!-- Renderizado via JS -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL INTERATIVO: SALAS DE APOIO & COWORKING -->
+    <div id="modal-benefit-coworking" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-3xl w-full shadow-2xl border border-slate-200 overflow-hidden fade-in max-h-[90vh] flex flex-col">
+            <div class="px-6 py-4 bg-slate-900 text-white flex items-center justify-between shrink-0">
+                <div class="flex items-center gap-2.5">
+                    <i data-lucide="building-2" class="w-5 h-5 text-amber-400"></i>
+                    <div>
+                        <h3 class="font-serif text-lg font-bold leading-none">Salas de Apoio & Coworking AAB</h3>
+                        <span class="text-[11px] text-slate-400">Agendamento gratuito de cabines de audiência e salas de reunião</span>
+                    </div>
+                </div>
+                <button onclick="closeModal('modal-benefit-coworking')" class="text-slate-400 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button>
+            </div>
+
+            <div class="p-6 overflow-y-auto grid grid-cols-1 lg:grid-cols-12 gap-6">
+                <!-- Formulário de Reserva -->
+                <form onsubmit="handleAddCoworkingBooking(event)" class="lg:col-span-6 space-y-3.5">
+                    <h4 class="font-serif text-base font-bold text-slate-900">Nova Reserva de Espaço</h4>
+                    <div>
+                        <label class="block text-xs font-semibold uppercase text-slate-600 mb-1">Unidade / Seccional AAB</label>
+                        <select id="cw-unit" class="w-full px-3.5 py-2 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:outline-none focus:border-amber-600">
+                            <option value="Brasília - Asa Sul (Sede Nacional)">Brasília - Asa Sul (Sede Nacional)</option>
+                            <option value="São Paulo - Centro (Praça da Sé)">São Paulo - Centro (Praça da Sé)</option>
+                            <option value="Rio de Janeiro - Centro (Av. Marechal Câmara)">Rio de Janeiro - Centro</option>
+                            <option value="Belo Horizonte - Funcionários">Belo Horizonte - Funcionários</option>
+                            <option value="Curitiba - Centro Cívico">Curitiba - Centro Cívico</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold uppercase text-slate-600 mb-1">Tipo de Espaço</label>
+                        <select id="cw-space" class="w-full px-3.5 py-2 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:outline-none focus:border-amber-600">
+                            <option value="Cabine de Audiência Virtual (Acústica)">Cabine de Audiência Virtual (Acústica)</option>
+                            <option value="Sala de Reunião com Cliente (6 lugares)">Sala de Reunião com Cliente (6 lugares)</option>
+                            <option value="Estação Coworking + Impressão">Estação Coworking + Impressão</option>
+                        </select>
+                    </div>
+                    <div class="grid grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-xs font-semibold uppercase text-slate-600 mb-1">Data</label>
+                            <input type="date" id="cw-date" required class="w-full px-3 py-2 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:outline-none focus:border-amber-600">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold uppercase text-slate-600 mb-1">Período / Horário</label>
+                            <select id="cw-time" class="w-full px-3 py-2 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:outline-none focus:border-amber-600">
+                                <option value="09:00 às 11:00">09:00 às 11:00</option>
+                                <option value="11:00 às 13:00">11:00 às 13:00</option>
+                                <option value="14:00 às 16:00">14:00 às 16:00</option>
+                                <option value="16:00 às 18:00">16:00 às 18:00</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button type="submit" class="w-full py-2.5 bg-amber-700 hover:bg-amber-800 text-white text-sm font-semibold rounded-xl transition flex items-center justify-center gap-2">
+                        <i data-lucide="calendar-check" class="w-4 h-4"></i>
+                        <span>Confirmar Reserva</span>
+                    </button>
+                </form>
+
+                <!-- Minhas Reservas Salvas -->
+                <div class="lg:col-span-6 bg-slate-50 p-4 rounded-xl border border-slate-200 flex flex-col">
+                    <div class="flex items-center justify-between mb-3">
+                        <h4 class="font-serif text-sm font-bold text-slate-900">Minhas Reservas Confirmadas</h4>
+                        <span id="cw-count-badge" class="text-xs font-semibold px-2 py-0.5 rounded-full bg-slate-200 text-slate-700">0</span>
+                    </div>
+                    <div id="cw-bookings-list" class="space-y-2.5 overflow-y-auto max-h-64 flex-1">
+                        <!-- Renderizado via JS -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL INTERATIVO: CAIXA DE ASSISTÊNCIA & SAÚDE (CAA-AAB) -->
+    <div id="modal-benefit-health" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-3xl w-full shadow-2xl border border-slate-200 overflow-hidden fade-in max-h-[90vh] flex flex-col">
+            <div class="px-6 py-4 bg-slate-900 text-white flex items-center justify-between shrink-0">
+                <div class="flex items-center gap-2.5">
+                    <i data-lucide="heart-handshake" class="w-5 h-5 text-amber-400"></i>
+                    <div>
+                        <h3 class="font-serif text-lg font-bold leading-none">Caixa de Assistência & Saúde (CAA-AAB)</h3>
+                        <span class="text-[11px] text-slate-400">Convênios corporativos, saúde, previdência e pós-graduação</span>
+                    </div>
+                </div>
+                <button onclick="closeModal('modal-benefit-health')" class="text-slate-400 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button>
+            </div>
+
+            <div class="p-6 overflow-y-auto space-y-4">
+                <!-- Busca e Filtro -->
+                <div class="flex flex-col sm:flex-row gap-3">
+                    <div class="relative flex-1">
+                        <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3.5 top-3"></i>
+                        <input type="text" id="health-search" oninput="renderHealthCatalog()" placeholder="Buscar convênio, operadora, instituição..." class="w-full pl-10 pr-4 py-2 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:outline-none focus:border-amber-600">
+                    </div>
+                    <select id="health-category" onchange="renderHealthCatalog()" class="px-3.5 py-2 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:outline-none focus:border-amber-600">
+                        <option value="Todos">Todos os Segmentos</option>
+                        <option value="Saúde & Odontologia">Saúde & Odontologia</option>
+                        <option value="Previdência Privada">Previdência Privada</option>
+                        <option value="Educação & Pós">Educação & Pós</option>
+                        <option value="Farmácias & Bem-Estar">Farmácias & Bem-Estar</option>
+                    </select>
+                </div>
+
+                <!-- Voucher Gerado -->
+                <div id="health-voucher-box" class="hidden p-4 rounded-xl bg-slate-900 text-white border border-amber-500/40 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                    <div>
+                        <span class="text-[10px] uppercase tracking-widest text-amber-400 font-bold block">Declaração de Elegibilidade CAA-AAB</span>
+                        <p id="health-voucher-partner" class="font-serif text-base font-bold text-white mt-0.5"></p>
+                        <p id="health-voucher-holder" class="text-xs text-slate-300 mt-0.5"></p>
+                    </div>
+                    <div class="bg-slate-800 px-3.5 py-2 rounded-xl border border-slate-700 text-right shrink-0">
+                        <span class="text-[10px] text-slate-400 block">CÓDIGO VOUCHER</span>
+                        <span id="health-voucher-code" class="font-mono text-sm font-bold text-amber-400">AAB-CONV-0000</span>
+                    </div>
+                </div>
+
+                <!-- Grid de Convênios -->
+                <div id="health-catalog-grid" class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
+                    <!-- Renderizado via JS -->
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- ===================================================================== -->
     <!-- JAVASCRIPT: LÓGICA DE ESTADO, PERSISTÊNCIA E INTERATIVIDADE           -->
     <!-- ===================================================================== -->
@@ -972,6 +1229,111 @@
         // Chaves de armazenamento localStorage
         const STORAGE_KEY_USER = 'aab_portal_user_v1';
         const STORAGE_KEY_DATA = 'aab_portal_data_v1';
+        const STORAGE_KEY_BOOKINGS = 'aab_portal_coworking_v1';
+
+        // Catálogo da Biblioteca & Doutrina AAB
+        const libraryCatalog = [
+            {
+                id: 'lib-1',
+                title: 'Curso de Direito Processual Civil Contemporâneo (Vol. Único)',
+                author: 'Prof. Dr. Humberto Vasconcelos',
+                category: 'Doutrina',
+                area: 'Processo Civil',
+                year: '2026',
+                pages: '1.420 págs.'
+            },
+            {
+                id: 'lib-2',
+                title: 'Coletânea de Precedentes Vinculantes do STF e STJ Comentados',
+                author: 'Comissão de Estudos Constitucionais AAB',
+                category: 'Jurisprudência Comentada',
+                area: 'Constitucional & Tributário',
+                year: '2026',
+                pages: '890 págs.'
+            },
+            {
+                id: 'lib-3',
+                title: 'Kit Completo: Petições Iniciais, Recursos Especiais e Agravos (CPC)',
+                author: 'Núcleo de Prática Forense AAB',
+                category: 'Modelos de Peças',
+                area: 'Prática Cível',
+                year: '2026',
+                pages: '145 modelos editáveis'
+            },
+            {
+                id: 'lib-4',
+                title: 'Reforma Tributária e Contencioso Administrativo Fiscal',
+                author: 'Dra. Helena Monteiro & Dr. Ricardo Soares',
+                category: 'Doutrina',
+                area: 'Direito Tributário',
+                year: '2026',
+                pages: '612 págs.'
+            },
+            {
+                id: 'lib-5',
+                title: 'Súmulas e OJs do TST Comentadas à Luz da Jurisprudência Atual',
+                author: 'Instituto Trabalhista AAB',
+                category: 'Jurisprudência Comentada',
+                area: 'Direito do Trabalho',
+                year: '2025',
+                pages: '740 págs.'
+            },
+            {
+                id: 'lib-6',
+                title: 'Manual de Contratos Empresariais, Societário e Governança',
+                author: 'Núcleo de Direito Empresarial AAB',
+                category: 'Modelos de Peças',
+                area: 'Empresarial',
+                year: '2026',
+                pages: '92 cláusulas e minutas'
+            }
+        ];
+
+        // Catálogo da Caixa de Assistência & Saúde (CAA-AAB)
+        const healthPartnersCatalog = [
+            {
+                id: 'hl-1',
+                name: 'Bradesco Saúde & SulAmérica Corporativo AAB',
+                segment: 'Saúde & Odontologia',
+                discount: 'Até 38% de redução na tabela',
+                description: 'Planos médicos e odontológicos nacionais para advogados inscritos e dependentes, com carência reduzida.'
+            },
+            {
+                id: 'hl-2',
+                name: 'AAB Prev - Previdência Complementar da Advocacia',
+                segment: 'Previdência Privada',
+                discount: 'Taxa zero de carregamento',
+                description: 'Plano de previdência instituído com dedução no IR e rentabilidade acima do CDI para planejamento sucessório.'
+            },
+            {
+                id: 'hl-3',
+                name: 'Escola Superior de Advocacia & FGV / IDP',
+                segment: 'Educação & Pós',
+                discount: '40% de bolsa institucional',
+                description: 'Pós-graduação Lato Sensu, LLM em Direito Empresarial e cursos de extensão com certificação MEC.'
+            },
+            {
+                id: 'hl-4',
+                name: 'Rede Droga Raia, Drogasil & Pague Menos',
+                segment: 'Farmácias & Bem-Estar',
+                discount: '15% a 35% em medicamentos',
+                description: 'Desconto direto no balcão mediante apresentação do CPF e carteira digital da AAB.'
+            },
+            {
+                id: 'hl-5',
+                name: 'Wellhub (Gympass) & TotalPass Advocacia',
+                segment: 'Farmácias & Bem-Estar',
+                discount: 'Planos a partir de R$ 49,90/mês',
+                description: 'Acesso a mais de 20.000 academias, estúdios e aplicativos de saúde mental em todo o Brasil.'
+            },
+            {
+                id: 'hl-6',
+                name: 'OdontoPrev Executivo AAB',
+                segment: 'Saúde & Odontologia',
+                discount: 'R$ 29,90/mês plano integral',
+                description: 'Cobertura nacional com urgência 24h, ortodontia e próteses para titulares e familiares.'
+            }
+        ];
 
         // Dados iniciais realistas para demonstração
         const defaultData = {
@@ -1134,6 +1496,7 @@
         };
 
         let appData = {};
+        let coworkingBookings = [];
         let currentUser = null;
         let currentDeadlineFilter = 'Todos';
 
@@ -1155,6 +1518,26 @@
             } else {
                 appData = JSON.parse(JSON.stringify(defaultData));
                 saveDataToStorage();
+            }
+
+            const savedBookings = localStorage.getItem(STORAGE_KEY_BOOKINGS);
+            if (savedBookings) {
+                try {
+                    coworkingBookings = JSON.parse(savedBookings);
+                } catch (e) {
+                    coworkingBookings = [];
+                }
+            } else {
+                coworkingBookings = [
+                    {
+                        id: 901,
+                        unit: 'Brasília - Asa Sul (Sede Nacional)',
+                        space: 'Cabine de Audiência Virtual (Acústica)',
+                        date: '2026-11-27',
+                        time: '14:00 às 16:00'
+                    }
+                ];
+                localStorage.setItem(STORAGE_KEY_BOOKINGS, JSON.stringify(coworkingBookings));
             }
         }
 
@@ -1411,7 +1794,7 @@
                         <p class="text-sm font-semibold text-slate-900">${item.title}</p>
                         <p class="text-xs text-slate-500 font-mono">Proc: ${item.caseCnj}</p>
                     </div>
-                    <button onclick="toggleDeadlineComplete(${item.id})" class="px-3 py-1.5 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200 text-xs font-semibold transition flex items-center gap-1.5 self-start sm:self-center shrink-0">
+                    <button type="button" onclick="event.stopPropagation(); toggleDeadlineComplete(${item.id})" class="px-3 py-1.5 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200 text-xs font-semibold transition flex items-center gap-1.5 self-start sm:self-center shrink-0">
                         <i data-lucide="check" class="w-3.5 h-3.5"></i>
                         <span>Marcar Cumprido</span>
                     </button>
@@ -1420,333 +1803,186 @@
         }
 
         // =====================================================================
-        // GESTÃO DE PROCESSOS
+        // BENEFÍCIOS AAB: MODAIS INTERATIVOS (CERTIFICADO, BIBLIOTECA, SALAS, SAÚDE)
         // =====================================================================
-        function renderCasesTable() {
-            const tbody = document.getElementById('cases-table-body');
-            const search = document.getElementById('filter-case-search').value.toLowerCase();
-            const areaFilter = document.getElementById('filter-case-area').value;
-            const statusFilter = document.getElementById('filter-case-status').value;
-
-            const filtered = appData.cases.filter(c => {
-                const matchSearch = c.cnj.toLowerCase().includes(search) || 
-                                    c.client.toLowerCase().includes(search) || 
-                                    c.opposing.toLowerCase().includes(search);
-                const matchArea = areaFilter === 'Todas' || c.area === areaFilter;
-                const matchStatus = statusFilter === 'Todos' || c.status === statusFilter;
-                return matchSearch && matchArea && matchStatus;
-            });
-
-            if (filtered.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="6" class="py-8 text-center text-slate-500 text-sm">Nenhum processo encontrado com os filtros aplicados.</td></tr>`;
-                return;
-            }
-
-            tbody.innerHTML = filtered.map(c => {
-                const statusColors = {
-                    'Ativo': 'bg-emerald-50 text-emerald-700 border-emerald-200',
-                    'Aguardando Julgamento': 'bg-amber-50 text-amber-800 border-amber-200',
-                    'Recursal': 'bg-blue-50 text-blue-700 border-blue-200',
-                    'Arquivado': 'bg-slate-100 text-slate-600 border-slate-200'
-                };
-                const badgeClass = statusColors[c.status] || statusColors['Ativo'];
-
-                return `
-                <tr class="hover:bg-slate-50/90 transition">
-                    <td class="py-3.5 px-4">
-                        <p class="font-mono text-xs font-semibold text-slate-900">${c.cnj}</p>
-                        <span class="inline-block mt-1 text-[11px] font-medium px-2 py-0.5 rounded bg-slate-100 text-slate-700">${c.area}</span>
-                    </td>
-                    <td class="py-3.5 px-4">
-                        <p class="font-semibold text-slate-900 text-xs sm:text-sm">${c.client}</p>
-                        <p class="text-xs text-slate-500">vs. ${c.opposing}</p>
-                    </td>
-                    <td class="py-3.5 px-4 text-xs text-slate-600">${c.court}</td>
-                    <td class="py-3.5 px-4 text-xs font-semibold text-amber-800">${formatDateBR(c.nextDeadline)}</td>
-                    <td class="py-3.5 px-4">
-                        <span class="text-xs font-semibold px-2.5 py-1 rounded-full border ${badgeClass}">${c.status}</span>
-                    </td>
-                    <td class="py-3.5 px-4 text-right">
-                        <button onclick="openCaseDetails(${c.id})" class="px-3 py-1.5 text-xs font-semibold text-slate-700 hover:text-slate-900 bg-slate-100 hover:bg-slate-200 rounded-lg transition">
-                            Detalhes / Editar
-                        </button>
-                    </td>
-                </tr>`;
-            }).join('');
-        }
-
-        function handleAddCase(e) {
-            e.preventDefault();
-            const newCase = {
-                id: Date.now(),
-                cnj: document.getElementById('case-cnj').value.trim(),
-                client: document.getElementById('case-client').value.trim(),
-                opposing: document.getElementById('case-opposing').value.trim(),
-                area: document.getElementById('case-area').value,
-                status: document.getElementById('case-status').value,
-                court: document.getElementById('case-court').value.trim(),
-                nextDeadline: document.getElementById('case-deadline').value,
-                notes: 'Processo distribuído e cadastrado no sistema AAB.'
-            };
-
-            appData.cases.unshift(newCase);
-            saveDataToStorage();
-            refreshAllViews();
-            closeModal('modal-new-case');
-            e.target.reset();
-            showToast('Processo cadastrado com sucesso!', 'success');
-        }
-
-        function openCaseDetails(caseId) {
-            const c = appData.cases.find(item => item.id === caseId);
-            if (!c) return;
-
-            const content = document.getElementById('case-details-content');
-            content.innerHTML = `
-                <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-2">
-                    <span class="text-xs font-semibold text-amber-800 uppercase">${c.area} • ${c.court}</span>
-                    <p class="font-mono text-sm font-bold text-slate-900">${c.cnj}</p>
-                    <p class="text-xs text-slate-600"><strong>Cliente:</strong> ${c.client}</p>
-                    <p class="text-xs text-slate-600"><strong>Parte Contrária:</strong> ${c.opposing}</p>
-                    <p class="text-xs text-slate-600"><strong>Observações:</strong> ${c.notes}</p>
-                </div>
-                <div class="space-y-3 pt-2">
-                    <label class="block text-xs font-semibold uppercase text-slate-600">Atualizar Status Processual</label>
-                    <select id="edit-case-status" class="w-full px-3.5 py-2 text-sm bg-slate-50 border border-slate-300 rounded-xl">
-                        <option value="Ativo" ${c.status === 'Ativo' ? 'selected' : ''}>Ativo</option>
-                        <option value="Aguardando Julgamento" ${c.status === 'Aguardando Julgamento' ? 'selected' : ''}>Aguardando Julgamento</option>
-                        <option value="Recursal" ${c.status === 'Recursal' ? 'selected' : ''}>Recursal</option>
-                        <option value="Arquivado" ${c.status === 'Arquivado' ? 'selected' : ''}>Arquivado</option>
-                    </select>
-                </div>
-                <div class="pt-3 flex justify-end gap-2">
-                    <button onclick="closeModal('modal-case-details')" class="px-4 py-2 text-sm text-slate-600 hover:bg-slate-100 rounded-xl">Fechar</button>
-                    <button onclick="saveCaseStatus(${c.id})" class="px-4 py-2 text-sm font-semibold bg-slate-900 text-white rounded-xl hover:bg-slate-800">Salvar Alteração</button>
-                </div>
-            `;
-            openModal('modal-case-details');
-        }
-
-        function saveCaseStatus(caseId) {
-            const c = appData.cases.find(item => item.id === caseId);
-            if (c) {
-                c.status = document.getElementById('edit-case-status').value;
-                saveDataToStorage();
-                refreshAllViews();
-                closeModal('modal-case-details');
-                showToast('Status processual atualizado.', 'success');
-            }
-        }
-
-        // =====================================================================
-        // CLIENTES & CRM JURÍDICO
-        // =====================================================================
-        function renderClientsGrid() {
-            const grid = document.getElementById('clients-grid');
-            grid.innerHTML = appData.clients.map(cli => {
-                const isPJ = cli.type === 'Pessoa Jurídica';
-                return `
-                <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-xs hover:shadow-md transition flex flex-col justify-between">
-                    <div>
-                        <div class="flex items-start justify-between gap-2 mb-3">
-                            <div class="w-10 h-10 rounded-xl ${isPJ ? 'bg-slate-900 text-amber-400' : 'bg-amber-50 text-amber-700'} flex items-center justify-center shrink-0">
-                                <i data-lucide="${isPJ ? 'building-2' : 'user'}" class="w-5 h-5"></i>
-                            </div>
-                            <span class="text-[11px] font-semibold px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-700">${cli.type}</span>
-                        </div>
-                        <h3 class="font-serif text-base font-bold text-slate-900">${cli.name}</h3>
-                        <p class="text-xs font-mono text-slate-500 mt-0.5">${isPJ ? 'CNPJ' : 'CPF'}: ${cli.doc}</p>
-                        
-                        <div class="mt-4 pt-3 border-t border-slate-100 space-y-1.5 text-xs text-slate-600">
-                            <p class="flex items-center gap-2"><i data-lucide="phone" class="w-3.5 h-3.5 text-slate-400"></i> ${cli.phone}</p>
-                            <p class="flex items-center gap-2 truncate"><i data-lucide="mail" class="w-3.5 h-3.5 text-slate-400"></i> ${cli.email}</p>
-                        </div>
-                    </div>
-
-                    <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
-                        <span class="text-xs font-semibold text-slate-700">${cli.casesCount} processo(s) vinculado(s)</span>
-                        <button onclick="navigateTo('cases')" class="text-xs font-semibold text-amber-700 hover:text-amber-800">Ver pastas →</button>
-                    </div>
-                </div>`;
-            }).join('');
-        }
-
-        function handleAddClient(e) {
-            e.preventDefault();
-            const newClient = {
-                id: Date.now(),
-                name: document.getElementById('cli-name').value.trim(),
-                type: document.getElementById('cli-type').value,
-                doc: document.getElementById('cli-doc').value.trim(),
-                phone: document.getElementById('cli-phone').value.trim(),
-                email: document.getElementById('cli-email').value.trim(),
-                casesCount: 1
-            };
-
-            appData.clients.unshift(newClient);
-            saveDataToStorage();
-            refreshAllViews();
-            closeModal('modal-new-client');
-            e.target.reset();
-            showToast('Cliente cadastrado na carteira do escritório!', 'success');
-        }
-
-        // =====================================================================
-        // PRAZOS E AGENDA JURÍDICA
-        // =====================================================================
-        function setDeadlineFilter(filter) {
-            currentDeadlineFilter = filter;
-            document.querySelectorAll('.dl-filter-btn').forEach(btn => {
-                if (btn.dataset.filter === filter) {
-                    btn.className = 'dl-filter-btn px-3 py-1 text-xs font-semibold rounded-lg bg-slate-900 text-white';
-                } else {
-                    btn.className = 'dl-filter-btn px-3 py-1 text-xs font-medium rounded-lg bg-slate-100 text-slate-600 hover:bg-slate-200';
+        function openBenefitModal(type) {
+            if (type === 'certificate') {
+                if (currentUser) {
+                    document.getElementById('cert-holder-name').textContent = currentUser.name;
+                    document.getElementById('cert-holder-oab').textContent = currentUser.oab;
                 }
-            });
-            renderDeadlinesList();
+                document.getElementById('cert-protocol-box').classList.add('hidden');
+                openModal('modal-benefit-certificate');
+            } else if (type === 'library') {
+                renderLibraryCatalog();
+                openModal('modal-benefit-library');
+            } else if (type === 'coworking') {
+                const dateInput = document.getElementById('cw-date');
+                if (dateInput && !dateInput.value) {
+                    dateInput.value = '2026-11-30';
+                }
+                renderCoworkingBookings();
+                openModal('modal-benefit-coworking');
+            } else if (type === 'health') {
+                document.getElementById('health-voucher-box').classList.add('hidden');
+                renderHealthCatalog();
+                openModal('modal-benefit-health');
+            }
         }
 
-        function renderDeadlinesList() {
-            const container = document.getElementById('deadlines-full-list');
-            const filtered = appData.deadlines.filter(d => currentDeadlineFilter === 'Todos' || d.type === currentDeadlineFilter);
+        // 1. Certificado Digital A3
+        function handleCertificateSubmit(e) {
+            e.preventDefault();
+            const media = document.querySelector('input[name="cert-media"]:checked')?.value || 'Nuvem BirdID / SafeID';
+            const actionType = document.getElementById('cert-action-type').value;
+            const randomCode = 'ICP-AAB-' + Math.floor(100000 + Math.random() * 900000);
+
+            document.getElementById('cert-protocol-code').textContent = randomCode;
+            document.getElementById('cert-protocol-detail').textContent = `${actionType} (${media}) registrada para ${currentUser ? currentUser.name : 'Associado'}. Link de validação enviado ao e-mail cadastrado.`;
+            document.getElementById('cert-protocol-box').classList.remove('hidden');
+
+            lucide.createIcons();
+            showToast(`Protocolo ${randomCode} emitido com sucesso!`, 'success');
+        }
+
+        // 2. Biblioteca & Doutrina AAB
+        function renderLibraryCatalog() {
+            const container = document.getElementById('library-catalog-list');
+            const query = (document.getElementById('lib-search')?.value || '').toLowerCase();
+            const category = document.getElementById('lib-category')?.value || 'Todos';
+
+            const filtered = libraryCatalog.filter(item => {
+                const matchText = item.title.toLowerCase().includes(query) ||
+                                  item.author.toLowerCase().includes(query) ||
+                                  item.area.toLowerCase().includes(query);
+                const matchCat = category === 'Todos' || item.category === category;
+                return matchText && matchCat;
+            });
 
             if (filtered.length === 0) {
-                container.innerHTML = `<p class="text-sm text-slate-500 text-center py-6">Nenhum compromisso encontrado nesta categoria.</p>`;
+                container.innerHTML = `<p class="text-sm text-slate-500 text-center py-6">Nenhuma obra encontrada para a pesquisa informada.</p>`;
                 return;
             }
 
-            container.innerHTML = filtered.map(d => {
-                const badgeStyle = d.type === 'Fatal' 
-                    ? 'bg-rose-100 text-rose-800' 
-                    : d.type === 'Audiência' 
-                    ? 'bg-amber-100 text-amber-800' 
-                    : 'bg-blue-50 text-blue-800';
-
-                return `
-                <div class="p-4 rounded-xl border ${d.completed ? 'bg-slate-50 border-slate-200 opacity-65' : 'bg-white border-slate-200'} flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                    <div>
-                        <div class="flex items-center gap-2 mb-1">
-                            <span class="text-[11px] font-bold px-2 py-0.5 rounded ${badgeStyle}">${d.type}</span>
-                            <span class="text-xs font-semibold text-slate-600">${formatDateBR(d.date)}</span>
-                            ${d.completed ? '<span class="text-[11px] font-semibold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded">Cumprido</span>' : ''}
+            container.innerHTML = filtered.map(item => `
+                <div class="p-4 rounded-xl border border-slate-200 bg-slate-50/70 hover:bg-white transition flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                    <div class="space-y-1">
+                        <div class="flex flex-wrap items-center gap-2">
+                            <span class="text-[11px] font-bold px-2 py-0.5 rounded bg-amber-100 text-amber-900">${item.category}</span>
+                            <span class="text-xs font-medium text-slate-500">${item.area} • ${item.year} • ${item.pages}</span>
                         </div>
-                        <p class="text-sm font-semibold ${d.completed ? 'line-through text-slate-500' : 'text-slate-900'}">${d.title}</p>
-                        <p class="text-xs text-slate-500 font-mono mt-0.5">CNJ: ${d.caseCnj}</p>
+                        <h4 class="font-serif text-sm sm:text-base font-bold text-slate-900">${item.title}</h4>
+                        <p class="text-xs text-slate-600">${item.author}</p>
                     </div>
-                    <button onclick="toggleDeadlineComplete(${d.id})" class="px-3.5 py-2 rounded-xl text-xs font-semibold transition flex items-center gap-1.5 self-start sm:self-center ${d.completed ? 'bg-slate-200 text-slate-700 hover:bg-slate-300' : 'bg-emerald-600 text-white hover:bg-emerald-700'}">
-                        <i data-lucide="${d.completed ? 'rotate-ccw' : 'check'}" class="w-3.5 h-3.5"></i>
-                        <span>${d.completed ? 'Reabrir' : 'Concluir Prazo'}</span>
+                    <button type="button" onclick="downloadLibraryItem('${item.title.replace(/'/g, "\\'")}')" class="px-3.5 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold transition flex items-center gap-1.5 self-start sm:self-center shrink-0">
+                        <i data-lucide="file-down" class="w-3.5 h-3.5 text-amber-400"></i>
+                        <span>Ler / Baixar PDF</span>
                     </button>
-                </div>`;
-            }).join('');
+                </div>
+            `).join('');
             lucide.createIcons();
         }
 
-        function handleAddDeadline(e) {
+        function downloadLibraryItem(title) {
+            showToast(`Abrindo exemplar digital: "${title}"`, 'success');
+        }
+
+        // 3. Salas de Apoio & Coworking
+        function renderCoworkingBookings() {
+            const list = document.getElementById('cw-bookings-list');
+            document.getElementById('cw-count-badge').textContent = coworkingBookings.length;
+
+            if (coworkingBookings.length === 0) {
+                list.innerHTML = `<p class="text-xs text-slate-500 text-center py-6">Nenhuma reserva agendada no momento.</p>`;
+                return;
+            }
+
+            list.innerHTML = coworkingBookings.map(b => `
+                <div class="p-3 rounded-xl bg-white border border-slate-200 flex items-start justify-between gap-2">
+                    <div class="space-y-0.5">
+                        <span class="text-[11px] font-bold text-amber-800 block">${formatDateBR(b.date)} • ${b.time}</span>
+                        <p class="text-xs font-bold text-slate-900">${b.space}</p>
+                        <p class="text-[11px] text-slate-500">${b.unit}</p>
+                    </div>
+                    <button type="button" onclick="cancelCoworkingBooking(${b.id})" title="Cancelar reserva" class="text-xs text-rose-600 hover:text-rose-800 p-1 rounded hover:bg-rose-50 transition">
+                        <i data-lucide="trash-2" class="w-4 h-4"></i>
+                    </button>
+                </div>
+            `).join('');
+            lucide.createIcons();
+        }
+
+        function handleAddCoworkingBooking(e) {
             e.preventDefault();
-            const newDl = {
+            const booking = {
                 id: Date.now(),
-                title: document.getElementById('dl-title').value.trim(),
-                caseCnj: document.getElementById('dl-case').value.trim(),
-                date: document.getElementById('dl-date').value,
-                type: document.getElementById('dl-type').value,
-                completed: false
+                unit: document.getElementById('cw-unit').value,
+                space: document.getElementById('cw-space').value,
+                date: document.getElementById('cw-date').value,
+                time: document.getElementById('cw-time').value
             };
 
-            appData.deadlines.unshift(newDl);
-            saveDataToStorage();
-            refreshAllViews();
-            e.target.reset();
-            showToast('Novo prazo adicionado à agenda jurídica!', 'success');
+            coworkingBookings.unshift(booking);
+            localStorage.setItem(STORAGE_KEY_BOOKINGS, JSON.stringify(coworkingBookings));
+            renderCoworkingBookings();
+            showToast('Sala reservada com sucesso! Comprovante vinculado à sua Carteira AAB.', 'success');
         }
 
-        function toggleDeadlineComplete(id) {
-            const item = appData.deadlines.find(d => d.id === id);
-            if (item) {
-                item.completed = !item.completed;
-                saveDataToStorage();
-                refreshAllViews();
-                showToast(item.completed ? 'Prazo marcado como cumprido!' : 'Prazo reaberto na pauta.', 'success');
-            }
+        function cancelCoworkingBooking(id) {
+            coworkingBookings = coworkingBookings.filter(b => b.id !== id);
+            localStorage.setItem(STORAGE_KEY_BOOKINGS, JSON.stringify(coworkingBookings));
+            renderCoworkingBookings();
+            showToast('Reserva cancelada.', 'info');
         }
 
-        // =====================================================================
-        // FINANCEIRO & HONORÁRIOS
-        // =====================================================================
-        function renderFinanceTable() {
-            const tbody = document.getElementById('finance-table-body');
-            
-            let totalIncome = 0;
-            let totalExpense = 0;
+        // 4. Caixa de Assistência & Saúde (CAA-AAB)
+        function renderHealthCatalog() {
+            const grid = document.getElementById('health-catalog-grid');
+            const query = (document.getElementById('health-search')?.value || '').toLowerCase();
+            const segment = document.getElementById('health-category')?.value || 'Todos';
 
-            appData.finances.forEach(f => {
-                if (f.kind === 'Receita' && f.status === 'Pago') totalIncome += Number(f.amount);
-                if (f.kind === 'Despesa' && f.status === 'Pago') totalExpense += Number(f.amount);
+            const filtered = healthPartnersCatalog.filter(p => {
+                const matchText = p.name.toLowerCase().includes(query) || p.description.toLowerCase().includes(query);
+                const matchSeg = segment === 'Todos' || p.segment === segment;
+                return matchText && matchSeg;
             });
 
-            document.getElementById('fin-total-income').textContent = formatCurrency(totalIncome);
-            document.getElementById('fin-total-expense').textContent = formatCurrency(totalExpense);
-            document.getElementById('fin-balance').textContent = formatCurrency(totalIncome - totalExpense);
-
-            tbody.innerHTML = appData.finances.map(f => {
-                const statusBadge = f.status === 'Pago' 
-                    ? 'bg-emerald-50 text-emerald-700 border-emerald-200' 
-                    : f.status === 'Atrasado' 
-                    ? 'bg-rose-50 text-rose-700 border-rose-200' 
-                    : 'bg-amber-50 text-amber-800 border-amber-200';
-
-                const isIncome = f.kind === 'Receita';
-
-                return `
-                <tr class="hover:bg-slate-50 transition">
-                    <td class="py-3.5 px-4 font-medium text-slate-900">${f.description}</td>
-                    <td class="py-3.5 px-4 text-xs text-slate-600">${f.category}</td>
-                    <td class="py-3.5 px-4 text-xs text-slate-600">${formatDateBR(f.date)}</td>
-                    <td class="py-3.5 px-4 font-semibold ${isIncome ? 'text-emerald-700' : 'text-rose-700'}">
-                        ${isIncome ? '+' : '-'} ${formatCurrency(f.amount)}
-                    </td>
-                    <td class="py-3.5 px-4">
-                        <span class="text-xs font-semibold px-2.5 py-0.5 rounded-full border ${statusBadge}">${f.status}</span>
-                    </td>
-                    <td class="py-3.5 px-4 text-right">
-                        ${f.status !== 'Pago' ? `
-                            <button onclick="markFinancePaid(${f.id})" class="px-3 py-1 text-xs font-semibold bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg transition">
-                                Dar Baixa
-                            </button>
-                        ` : `<span class="text-xs text-slate-400">Liquidado</span>`}
-                    </td>
-                </tr>`;
-            }).join('');
-        }
-
-        function handleAddFinance(e) {
-            e.preventDefault();
-            const newFin = {
-                id: Date.now(),
-                description: document.getElementById('fin-desc').value.trim(),
-                kind: document.getElementById('fin-kind').value,
-                category: document.getElementById('fin-category').value,
-                amount: parseFloat(document.getElementById('fin-amount').value),
-                date: document.getElementById('fin-date').value,
-                status: document.getElementById('fin-status').value
-            };
-
-            appData.finances.unshift(newFin);
-            saveDataToStorage();
-            refreshAllViews();
-            closeModal('modal-new-finance');
-            e.target.reset();
-            showToast('Lançamento financeiro registrado!', 'success');
-        }
-
-        function markFinancePaid(id) {
-            const item = appData.finances.find(f => f.id === id);
-            if (item) {
-                item.status = 'Pago';
-                saveDataToStorage();
-                refreshAllViews();
-                showToast('Baixa financeira realizada com sucesso!', 'success');
+            if (filtered.length === 0) {
+                grid.innerHTML = `<p class="col-span-full text-sm text-slate-500 text-center py-6">Nenhum convênio encontrado.</p>`;
+                return;
             }
+
+            grid.innerHTML = filtered.map(p => `
+                <div class="p-4 rounded-xl border border-slate-200 bg-slate-50/60 hover:bg-white transition flex flex-col justify-between gap-3">
+                    <div>
+                        <div class="flex items-center justify-between gap-2 mb-1.5">
+                            <span class="text-[10px] font-bold uppercase px-2 py-0.5 rounded bg-emerald-100 text-emerald-800">${p.segment}</span>
+                            <span class="text-[11px] font-semibold text-amber-800">${p.discount}</span>
+                        </div>
+                        <h4 class="font-serif text-sm font-bold text-slate-900">${p.name}</h4>
+                        <p class="text-xs text-slate-600 mt-1 leading-relaxed">${p.description}</p>
+                    </div>
+                    <button type="button" onclick="generateHealthVoucher('${p.name.replace(/'/g, "\\'")}')" class="w-full py-2 px-3 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold transition flex items-center justify-center gap-1.5">
+                        <i data-lucide="ticket" class="w-3.5 h-3.5 text-amber-400"></i>
+                        <span>Emitir Declaração / Voucher</span>
+                    </button>
+                </div>
+            `).join('');
+            lucide.createIcons();
+        }
+
+        function generateHealthVoucher(partnerName) {
+            const voucherCode = 'AAB-CONV-' + Math.floor(1000 + Math.random() * 9000);
+            const holderText = currentUser
+                ? `Associado(a): ${currentUser.name} • Inscrição OAB ${currentUser.oab} (Situação Regular)`
+                : 'Associado(a) Regular AAB';
+
+            document.getElementById('health-voucher-partner').textContent = partnerName;
+            document.getElementById('health-voucher-holder').textContent = holderText;
+            document.getElementById('health-voucher-code').textContent = voucherCode;
+            document.getElementById('health-voucher-box').classList.remove('hidden');
+
+            showToast(`Voucher ${voucherCode} gerado para ${partnerName}!`, 'success');
         }
 
         // =====================================================================
