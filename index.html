@@ -2079,12 +2079,12 @@
                 currentUser = profileData;
                 applyUserProfileUI();
                 checkLegacyLocalStorageButton();
-                startHeartbeat(uid);
 
                 document.getElementById('auth-screen').classList.add('hidden');
                 document.getElementById('dashboard-screen').classList.remove('hidden');
                 setCloudBadgeStatus('connected');
 
+                // Inicia os listeners após currentUser estar definido para evitar condição de corrida no mural e permissões
                 setupFirestoreRealtimeListeners(uid);
                 if (sessionStorage.getItem('aab_pending_admin_login') === '1') {
                     sessionStorage.removeItem('aab_pending_admin_login');
@@ -2178,11 +2178,13 @@
                 renderAdminPublications();
                 updateAdminKPIs();
                 lucide.createIcons();
-            }, () => {
+            }, (error) => {
+                console.error('Erro ao ler publicacoes_aab:', error);
                 if (publicationsList.length === 0) {
                     publicationsList = defaultPublications.map((p, idx) => ({ id: 'pub-def-' + idx, ...p, createdAt: Date.now() - idx * 1000 }));
                     renderOverviewPublications();
                     renderAdminPublications();
+                    updateAdminKPIs();
                 }
             });
             firestoreUnsubscribers.push(unsubPubs);
@@ -2267,95 +2269,143 @@
                 const uid = currentUser.uid;
                 showToast('Populando dados padrão na nuvem...', 'info');
                 await seedDefaultDataToFirestore(uid);
-                showToast('Dados exemplo adicionados ao Firestore!', 'success');
+                showToast('Dados padrão adicionados na nuvem!', 'success');
             } catch (err) {
+                console.error('Erro ao popular dados:', err);
                 handleFirebasePermissionOrSetupError(err);
+                showToast('Não foi possível popular dados padrão no Firestore.', 'info');
             }
         }
 
-        // =====================================================================
-        // MIGRAÇÃO DO LOCALSTORAGE ANTIGO PARA O FIRESTORE (1 CLIQUE)
-        // =====================================================================
-        function checkLegacyLocalStorageButton() {
-            const hasLegacyData = localStorage.getItem(LEGACY_KEY_DATA) || localStorage.getItem(LEGACY_KEY_USER);
-            const btn = document.getElementById('btn-migrate-local');
-            if (hasLegacyData && btn) {
-                btn.classList.remove('hidden');
+        function loadFallbackMemoryData() {
+            appData = {
+                cases: defaultData.cases.map((c, i) => ({ id: 'fb-c-' + i, ...c })),
+                clients: defaultData.clients.map((c, i) => ({ id: 'fb-cl-' + i, ...c })),
+                deadlines: defaultData.deadlines.map((d, i) => ({ id: 'fb-dl-' + i, ...d })),
+                finances: defaultData.finances.map((f, i) => ({ id: 'fb-fn-' + i, ...f }))
+            };
+            coworkingBookings = [{
+                id: 'fb-cw-0',
+                unit: 'Brasília - Asa Sul (Sede Nacional)',
+                space: 'Cabine de Audiência Virtual (Acústica)',
+                date: '2026-11-27',
+                time: '14:00 às 16:00'
+            }];
+            if (publicationsList.length === 0) {
+                publicationsList = defaultPublications.map((p, i) => ({ id: 'fb-pub-' + i, ...p, createdAt: Date.now() - i * 1000 }));
             }
+            if (adminMembersList.length === 0 && currentUser) {
+                adminMembersList = [{ ...currentUser, lastSeen: Date.now() }];
+            }
+            updateKPIs();
+            renderCasesTable();
+            renderClientsGrid();
+            renderOverviewDeadlines();
+            renderDeadlinesList();
+            renderFinanceTable();
+            renderCoworkingBookings();
+            renderOverviewPublications();
+            renderAdminPublications();
+            renderAdminMembersTable();
+            updateAdminKPIs();
+        }
+
+        function setCloudBadgeStatus(mode) {
+            const badge = document.getElementById('cloud-status-badge');
+            if (!badge) return;
+            if (mode === 'connected') {
+                badge.className = 'px-1.5 py-0.5 rounded bg-emerald-500/10 text-emerald-400 font-medium flex items-center gap-1';
+                badge.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span><span>Firebase</span>`;
+            } else {
+                badge.className = 'px-1.5 py-0.5 rounded bg-amber-500/15 text-amber-300 font-medium flex items-center gap-1';
+                badge.innerHTML = `<span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span><span>Local</span>`;
+            }
+        }
+
+        function handleFirebasePermissionOrSetupError(error) {
+            setCloudBadgeStatus('fallback');
+            const banner = document.getElementById('firebase-alert-banner');
+            const titleEl = document.getElementById('firebase-alert-title');
+            const descEl = document.getElementById('firebase-alert-desc');
+            if (!banner || !titleEl || !descEl) return;
+
+            if (error?.code === 'permission-denied') {
+                titleEl.textContent = 'Permissão negada nas Regras do Firestore (advocacia-6864f)';
+                descEl.textContent = 'Verifique as regras de leitura/escrita no Console do Firebase para permitir usuários autenticados em /usuarios, /publicacoes_aab e /escritorios.';
+            } else {
+                titleEl.textContent = 'Modo Local Temporário Ativado';
+                descEl.textContent = 'Não foi possível concluir a operação remota no Firestore agora. Suas alterações continuam funcionando na sessão atual.';
+            }
+            banner.classList.remove('hidden');
+        }
+
+        function checkLegacyLocalStorageButton() {
+            const btn = document.getElementById('btn-migrate-local');
+            if (!btn) return;
+            const hasLegacy = Boolean(localStorage.getItem(LEGACY_KEY_DATA) || localStorage.getItem(LEGACY_KEY_BOOKINGS));
+            btn.classList.toggle('hidden', !hasLegacy);
         }
 
         async function migrateLocalStorageToFirebase() {
             if (!currentUser || isDemoFallbackMode) {
-                showToast('Faça login com sua conta para importar dados para a nuvem.', 'info');
+                showToast('Conecte-se ao Firebase para importar dados locais.', 'info');
                 return;
             }
-
             try {
+                const rawData = JSON.parse(localStorage.getItem(LEGACY_KEY_DATA) || 'null');
+                const rawBookings = JSON.parse(localStorage.getItem(LEGACY_KEY_BOOKINGS) || '[]');
                 const uid = currentUser.uid;
-                const legacyUserRaw = localStorage.getItem(LEGACY_KEY_USER);
-                const legacyDataRaw = localStorage.getItem(LEGACY_KEY_DATA);
-                const legacyBookingsRaw = localStorage.getItem(LEGACY_KEY_BOOKINGS);
-
-                if (legacyUserRaw) {
-                    const legacyUser = JSON.parse(legacyUserRaw);
-                    await setDoc(doc(db, 'usuarios', uid), {
-                        name: legacyUser.name || currentUser.name,
-                        oab: legacyUser.oab || currentUser.oab,
-                        firm: legacyUser.firm || currentUser.firm
-                    }, { merge: true });
-                    currentUser = { ...currentUser, ...legacyUser };
-                    applyUserProfileUI();
-                }
-
                 const tasks = [];
-                if (legacyDataRaw) {
-                    const parsed = JSON.parse(legacyDataRaw);
-                    (parsed.cases || []).forEach(({ id, ...rest }) => tasks.push(addDoc(collection(db, `escritorios/${uid}/processos`), rest)));
-                    (parsed.clients || []).forEach(({ id, ...rest }) => tasks.push(addDoc(collection(db, `escritorios/${uid}/clientes`), rest)));
-                    (parsed.deadlines || []).forEach(({ id, ...rest }) => tasks.push(addDoc(collection(db, `escritorios/${uid}/prazos`), rest)));
-                    (parsed.finances || []).forEach(({ id, ...rest }) => tasks.push(addDoc(collection(db, `escritorios/${uid}/financeiro`), rest)));
+
+                if (rawData) {
+                    (rawData.cases || []).forEach(c => tasks.push(addDoc(collection(db, `escritorios/${uid}/processos`), { ...c, createdAt: serverTimestamp() })));
+                    (rawData.clients || []).forEach(cl => tasks.push(addDoc(collection(db, `escritorios/${uid}/clientes`), { ...cl, createdAt: serverTimestamp() })));
+                    (rawData.deadlines || []).forEach(dl => tasks.push(addDoc(collection(db, `escritorios/${uid}/prazos`), { ...dl, createdAt: serverTimestamp() })));
+                    (rawData.finances || []).forEach(fn => tasks.push(addDoc(collection(db, `escritorios/${uid}/financeiro`), { ...fn, createdAt: serverTimestamp() })));
                 }
-                if (legacyBookingsRaw) {
-                    const parsedBookings = JSON.parse(legacyBookingsRaw);
-                    parsedBookings.forEach(({ id, ...rest }) => tasks.push(addDoc(collection(db, `escritorios/${uid}/reservas`), rest)));
+                if (Array.isArray(rawBookings)) {
+                    rawBookings.forEach(b => tasks.push(addDoc(collection(db, `escritorios/${uid}/reservas`), { ...b, createdAt: serverTimestamp() })));
                 }
 
                 await Promise.all(tasks);
+                localStorage.removeItem(LEGACY_KEY_DATA);
+                localStorage.removeItem(LEGACY_KEY_BOOKINGS);
+                checkLegacyLocalStorageButton();
                 showToast('Dados locais importados para o Firebase com sucesso!', 'success');
             } catch (err) {
-                console.error(err);
-                showToast('Não foi possível migrar os dados locais.', 'info');
+                console.error('Erro ao migrar dados locais:', err);
+                showToast('Erro ao importar dados locais.', 'info');
             }
         }
 
         // =====================================================================
-        // AUTENTICAÇÃO (LOGIN / CADASTRO / DEMO / LOGOUT)
+        // AUTENTICAÇÃO (LOGIN, CADASTRO, RESPONSÁVEL AAB E LOGOUT)
         // =====================================================================
         function switchAuthTab(tab) {
-            const loginForm = document.getElementById('login-form');
-            const regForm = document.getElementById('register-form');
-            const adminForm = document.getElementById('admin-login-form');
             const tabLogin = document.getElementById('tab-login');
-            const tabReg = document.getElementById('tab-register');
+            const tabRegister = document.getElementById('tab-register');
+            const loginForm = document.getElementById('login-form');
+            const adminLoginForm = document.getElementById('admin-login-form');
+            const registerForm = document.getElementById('register-form');
 
-            loginForm.classList.add('hidden');
-            regForm.classList.add('hidden');
-            adminForm.classList.add('hidden');
+            const isRegister = tab === 'register';
+            const isAdmin = tab === 'admin';
 
-            if (tab === 'login') {
-                loginForm.classList.remove('hidden');
-                tabLogin.className = 'flex-1 py-2.5 text-sm font-semibold rounded-lg bg-white text-slate-900 shadow-sm transition-all';
-                tabReg.className = 'flex-1 py-2.5 text-sm font-medium rounded-lg text-slate-600 hover:text-slate-900 transition-all';
-            } else if (tab === 'register') {
-                regForm.classList.remove('hidden');
-                tabReg.className = 'flex-1 py-2.5 text-sm font-semibold rounded-lg bg-white text-slate-900 shadow-sm transition-all';
-                tabLogin.className = 'flex-1 py-2.5 text-sm font-medium rounded-lg text-slate-600 hover:text-slate-900 transition-all';
-            } else if (tab === 'admin') {
-                adminForm.classList.remove('hidden');
-                tabLogin.className = 'flex-1 py-2.5 text-sm font-medium rounded-lg text-slate-600 hover:text-slate-900 transition-all';
-                tabReg.className = 'flex-1 py-2.5 text-sm font-medium rounded-lg text-slate-600 hover:text-slate-900 transition-all';
+            tabLogin.className = `flex-1 py-2.5 text-sm font-semibold rounded-lg transition-all ${!isRegister && !isAdmin ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-600 hover:text-slate-900 font-medium'}`;
+            tabRegister.className = `flex-1 py-2.5 text-sm font-semibold rounded-lg transition-all ${isRegister ? 'bg-white text-slate-900 shadow-sm' : 'text-slate-600 hover:text-slate-900 font-medium'}`;
+
+            loginForm.classList.toggle('hidden', isRegister || isAdmin);
+            adminLoginForm.classList.toggle('hidden', !isAdmin);
+            registerForm.classList.toggle('hidden', !isRegister);
+        }
+
+        function prefillRegisterFromAdmin() {
+            const adminEmail = document.getElementById('admin-login-email')?.value.trim();
+            switchAuthTab('register');
+            if (adminEmail) {
+                const regEmailInput = document.getElementById('reg-email');
+                if (regEmailInput) regEmailInput.value = adminEmail;
             }
-            lucide.createIcons();
         }
 
         async function handleLogin(e) {
@@ -2365,51 +2415,29 @@
             const password = document.getElementById('login-password').value;
 
             try {
-                if (oab) sessionStorage.setItem('aab_pending_oab', oab);
+                sessionStorage.setItem('aab_pending_oab', oab);
                 await signInWithEmailAndPassword(auth, email, password);
                 showToast('Autenticação realizada com sucesso!', 'success');
             } catch (err) {
+                console.error('Erro no login:', err);
                 sessionStorage.removeItem('aab_pending_oab');
-                showToast(translateFirebaseAuthError(err.code), 'info');
+                showToast('Falha no login: verifique e-mail e senha cadastrados no Firebase.', 'info');
             }
         }
 
         async function handleAdminLogin(e) {
             e.preventDefault();
-            const email = document.getElementById('admin-login-email').value.trim().toLowerCase();
+            const email = document.getElementById('admin-login-email').value.trim();
             const password = document.getElementById('admin-login-password').value;
-
-            if (!email || !password) return;
 
             try {
                 sessionStorage.setItem('aab_pending_admin_login', '1');
-                const cred = await signInWithEmailAndPassword(auth, email, password);
-
-                // Verifica se o e-mail é willbrasilia@gmail.com ou está autorizado em responsaveis_autorizados / usuarios
-                let authorized = isMasterAdminEmail(email);
-                if (!authorized) {
-                    const authSnap = await getDoc(doc(db, 'responsaveis_autorizados', sanitizeDocId(email)));
-                    if (authSnap.exists() && authSnap.data().role === 'responsavel_aab') {
-                        authorized = true;
-                    } else {
-                        const userSnap = await getDoc(doc(db, 'usuarios', cred.user.uid));
-                        if (userSnap.exists() && userSnap.data().role === 'responsavel_aab') {
-                            authorized = true;
-                        }
-                    }
-                }
-
-                if (!authorized) {
-                    sessionStorage.removeItem('aab_pending_admin_login');
-                    await signOut(auth);
-                    showToast('Acesso negado: este e-mail não está autorizado como Responsável AAB.', 'info');
-                    return;
-                }
-
-                showToast(`Bem-vindo(a) ao Painel do Responsável AAB (${email})!`, 'success');
+                await signInWithEmailAndPassword(auth, email, password);
+                showToast('Verificando credenciais de Responsável AAB...', 'info');
             } catch (err) {
+                console.error('Erro no login do responsável:', err);
                 sessionStorage.removeItem('aab_pending_admin_login');
-                showToast(translateFirebaseAuthError(err.code), 'info');
+                showToast('E-mail ou senha inválidos para acesso administrativo.', 'info');
             }
         }
 
@@ -2422,228 +2450,231 @@
             const password = document.getElementById('reg-password').value;
 
             try {
+                sessionStorage.setItem('aab_pending_oab', oab);
                 const cred = await createUserWithEmailAndPassword(auth, email, password);
                 await updateProfile(cred.user, { displayName: name });
-
                 await setDoc(doc(db, 'usuarios', cred.user.uid), {
                     name,
                     oab,
                     firm,
-                    email,
+                    email: email.toLowerCase(),
+                    role: isMasterAdminEmail(email) ? 'responsavel_aab' : 'associado',
+                    accountStatus: 'Ativo',
+                    permissions: {
+                        ...defaultPermissions,
+                        canPublish: isMasterAdminEmail(email)
+                    },
+                    lastSeen: Date.now(),
                     createdAt: serverTimestamp()
                 }, { merge: true });
-
-                showToast(`Cadastro concluído! Bem-vindo(a), ${name}.`, 'success');
+                showToast('Conta criada e vinculada ao portal AAB!', 'success');
             } catch (err) {
-                showToast(translateFirebaseAuthError(err.code), 'info');
+                console.error('Erro no primeiro acesso:', err);
+                sessionStorage.removeItem('aab_pending_oab');
+                showToast('Não foi possível concluir o cadastro. Verifique os dados ou se o e-mail já existe.', 'info');
             }
         }
 
         async function quickDemoLogin() {
             try {
                 await signInAnonymously(auth);
-                showToast('Conectado ao ambiente de demonstração na nuvem!', 'success');
+                showToast('Sessão de demonstração iniciada!', 'success');
             } catch (err) {
                 isDemoFallbackMode = true;
                 currentUser = {
-                    uid: 'demo-local-session',
+                    uid: 'demo-user',
                     name: 'Dra. Helena Monteiro',
-                    oab: '312.845/SP',
+                    oab: 'OAB/SP 312.845',
                     email: 'helena.monteiro@aab.org.br',
                     firm: 'Monteiro & Alencar Advogados',
                     seccional: 'São Paulo • SP',
                     phone: '(11) 99876-5432',
                     website: 'https://monteiroalencar.adv.br',
-                    address: 'Av. Paulista, 1200 - São Paulo/SP',
-                    bio: 'Atuação estratégica em Direito Tributário, Societário e Contencioso Empresarial.',
+                    address: 'Av. Paulista, 1100 - São Paulo/SP',
+                    bio: 'Advocacia estratégica em Direito Tributário, Empresarial e Contencioso Cível.',
                     photo: '',
                     role: 'associado',
                     accountStatus: 'Ativo',
                     permissions: { ...defaultPermissions }
                 };
                 applyUserProfileUI();
-                setCloudBadgeStatus('demo');
                 document.getElementById('auth-screen').classList.add('hidden');
                 document.getElementById('dashboard-screen').classList.remove('hidden');
+                setCloudBadgeStatus('fallback');
                 loadFallbackMemoryData();
-                showToast('Modo Demonstração ativo (ative E-mail/Senha no Firebase para salvar na nuvem).', 'info');
+                showToast('Modo demonstração local ativado.', 'info');
             }
         }
 
         function quickAdminDemoLogin() {
             switchAuthTab('admin');
-        }
-
-        function prefillRegisterFromAdmin() {
-            const adminEmail = document.getElementById('admin-login-email')?.value.trim() || '';
-            switchAuthTab('register');
-            if (adminEmail) {
-                document.getElementById('reg-email').value = adminEmail;
+            const emailInput = document.getElementById('admin-login-email');
+            if (emailInput && !emailInput.value) {
+                emailInput.value = MASTER_ADMIN_EMAIL;
             }
-        }
-
-        function loadFallbackMemoryData() {
-            appData = {
-                cases: defaultData.cases.map((item, idx) => ({ id: 'demo-c-' + idx, ...item })),
-                clients: defaultData.clients.map((item, idx) => ({ id: 'demo-cl-' + idx, ...item })),
-                deadlines: defaultData.deadlines.map((item, idx) => ({ id: 'demo-dl-' + idx, ...item })),
-                finances: defaultData.finances.map((item, idx) => ({ id: 'demo-fn-' + idx, ...item }))
-            };
-            coworkingBookings = [{
-                id: 'demo-cw-1',
-                unit: 'Brasília - Asa Sul (Sede Nacional)',
-                space: 'Cabine de Audiência Virtual (Acústica)',
-                date: '2026-11-27',
-                time: '14:00 às 16:00'
-            }];
-            publicationsList = defaultPublications.map((p, idx) => ({ id: 'demo-pub-' + idx, ...p, createdAt: Date.now() - idx * 1000 }));
-            adminMembersList = [
-                {
-                    uid: currentUser?.uid || 'demo-1',
-                    name: currentUser?.name || 'Dra. Helena Monteiro',
-                    oab: currentUser?.oab || '312.845/SP',
-                    email: currentUser?.email || 'helena.monteiro@aab.org.br',
-                    firm: currentUser?.firm || 'Monteiro & Alencar Advogados',
-                    website: currentUser?.website || 'https://monteiroalencar.adv.br',
-                    role: currentUser?.role || 'associado',
-                    accountStatus: 'Ativo',
-                    lastSeen: Date.now(),
-                    permissions: currentUser?.permissions || { ...defaultPermissions }
-                },
-                {
-                    uid: 'demo-assoc-2',
-                    name: 'Dr. Rafael Magalhães',
-                    oab: '88.412/RJ',
-                    email: 'rafael@magalhaes.adv.br',
-                    firm: 'Magalhães Advocacia',
-                    website: 'https://magalhaes.adv.br',
-                    role: 'associado',
-                    accountStatus: 'Ativo',
-                    lastSeen: Date.now() - 120000,
-                    permissions: { ...defaultPermissions }
-                },
-                {
-                    uid: 'demo-assoc-3',
-                    name: 'Dra. Camila Ferraz',
-                    oab: '194.220/MG',
-                    email: 'camila@ferrazjuridico.com.br',
-                    firm: 'Ferraz Consultoria',
-                    website: '',
-                    role: 'associado',
-                    accountStatus: 'Ativo',
-                    lastSeen: Date.now() - 3600000,
-                    permissions: { portalAccess: true, canPublish: false, canBookRooms: true, canUseBenefits: false }
-                }
-            ];
-            refreshAllViews();
         }
 
         async function handleLogout() {
             cleanupFirestoreListeners();
             isDemoFallbackMode = false;
+            currentUser = null;
             try {
                 await signOut(auth);
             } catch (e) {}
-            currentUser = null;
             document.getElementById('dashboard-screen').classList.add('hidden');
             document.getElementById('auth-screen').classList.remove('hidden');
-            showToast('Sessão encerrada com segurança.', 'info');
+            showToast('Você saiu do portal AAB.', 'info');
         }
 
-        function translateFirebaseAuthError(code) {
-            const map = {
-                'auth/invalid-credential': 'E-mail ou senha incorretos. Verifique suas credenciais ou clique em "Primeiro Acesso".',
-                'auth/user-not-found': 'Associado não encontrado. Utilize a aba "Primeiro Acesso" para habilitar sua conta.',
-                'auth/wrong-password': 'Senha incorreta. Tente novamente.',
-                'auth/email-already-in-use': 'Este e-mail já possui cadastro ativo. Faça login na aba "Acesso do Associado".',
-                'auth/weak-password': 'A senha deve conter pelo menos 6 caracteres.',
-                'auth/invalid-email': 'Informe um endereço de e-mail válido.',
-                'auth/operation-not-allowed': 'Ative o provedor "E-mail/Senha" em Authentication > Sign-in method no Console do Firebase.'
+        // =====================================================================
+        // NAVEGAÇÃO, KPIS E PERFIL DO ASSOCIADO
+        // =====================================================================
+        function navigateTo(viewName) {
+            if (viewName === 'admin' && currentUser?.role !== 'responsavel_aab') {
+                showToast('Acesso restrito ao Responsável AAB.', 'info');
+                return;
+            }
+
+            document.querySelectorAll('.view-section').forEach(sec => sec.classList.add('hidden'));
+            const targetView = document.getElementById(`view-${viewName}`);
+            if (targetView) targetView.classList.remove('hidden');
+
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                const isActive = btn.dataset.nav === viewName;
+                if (btn.id === 'nav-btn-admin') {
+                    btn.className = isActive
+                        ? 'nav-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold text-white bg-amber-700 shadow-sm transition-all'
+                        : 'nav-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium text-amber-300 bg-amber-950/30 hover:bg-amber-900/40 border border-amber-500/20 transition-all';
+                } else {
+                    btn.className = isActive
+                        ? 'nav-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all bg-amber-700 text-white shadow-sm'
+                        : 'nav-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-300 hover:bg-slate-800 hover:text-white transition-all';
+                }
+            });
+
+            const titles = {
+                overview: 'Visão Geral do Escritório',
+                cases: 'Gestão de Processos',
+                clients: 'Clientes & CRM Jurídico',
+                deadlines: 'Prazos & Agenda Jurídica',
+                finance: 'Financeiro & Honorários',
+                benefits: 'Benefícios & Carteira Digital AAB',
+                admin: 'Painel do Responsável AAB'
             };
-            return map[code] || `Não foi possível autenticar (${code || 'erro de conexão'}).`;
+            const titleEl = document.getElementById('page-title');
+            if (titleEl && titles[viewName]) titleEl.textContent = titles[viewName];
+
+            const sidebar = document.getElementById('sidebar');
+            const backdrop = document.getElementById('sidebar-backdrop');
+            if (sidebar && !sidebar.classList.contains('-translate-x-full')) {
+                sidebar.classList.add('-translate-x-full');
+                backdrop?.classList.add('hidden');
+            }
+            lucide.createIcons();
         }
 
-        function handleFirebasePermissionOrSetupError(err) {
-            const banner = document.getElementById('firebase-alert-banner');
-            const desc = document.getElementById('firebase-alert-desc');
-            if (banner && desc) {
-                desc.innerHTML = `Verifique se o <strong>Cloud Firestore</strong> foi criado e se as regras permitem leitura/gravação para usuários autenticados (<code>request.auth != null</code>). Detalhe: ${err.code || err.message}`;
-                banner.classList.remove('hidden');
-                lucide.createIcons();
-            }
-            setCloudBadgeStatus('warning');
+        function toggleMobileSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const backdrop = document.getElementById('sidebar-backdrop');
+            if (!sidebar || !backdrop) return;
+            const willOpen = sidebar.classList.contains('-translate-x-full');
+            sidebar.classList.toggle('-translate-x-full', !willOpen);
+            backdrop.classList.toggle('hidden', !willOpen);
         }
 
-        function setCloudBadgeStatus(status) {
-            const badge = document.getElementById('cloud-status-badge');
-            if (!badge) return;
-            if (status === 'connected') {
-                badge.className = 'px-1.5 py-0.5 rounded bg-emerald-500/10 text-emerald-400 font-medium shrink-0 flex items-center gap-1';
-                badge.innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span><span>Firebase</span>';
-            } else {
-                badge.className = 'px-1.5 py-0.5 rounded bg-amber-500/10 text-amber-400 font-medium shrink-0 flex items-center gap-1';
-                badge.innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span><span>Demo</span>';
-            }
+        function updateKPIs() {
+            const activeCases = appData.cases.filter(c => c.status !== 'Arquivado').length;
+            const pendingDeadlines = appData.deadlines.filter(d => !d.completed).length;
+            const receivable = appData.finances
+                .filter(f => f.kind === 'Receita' && f.status !== 'Pago')
+                .reduce((sum, f) => sum + Number(f.amount || 0), 0);
+            const activeClients = appData.clients.length;
+
+            const setText = (id, val) => {
+                const el = document.getElementById(id);
+                if (el) el.textContent = val;
+            };
+
+            setText('kpi-active-cases', activeCases);
+            setText('kpi-urgent-deadlines', pendingDeadlines);
+            setText('kpi-receivable', formatCurrency(receivable));
+            setText('kpi-active-clients', activeClients);
+            setText('badge-cases', activeCases);
+            setText('badge-deadlines', pendingDeadlines);
+        }
+
+        function getUserInitials(name) {
+            const parts = String(name || 'AAB').trim().split(/\s+/).filter(Boolean);
+            if (parts.length === 1) return parts[0].slice(0, 2).toUpperCase();
+            return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
         }
 
         function applyUserProfileUI() {
             if (!currentUser) return;
-            const cleanName = (currentUser.name || 'Associado').replace(/^Dr\(a\)\.\s|^Dr\.\s|^Dra\.\s/i, '');
-            const parts = cleanName.split(' ');
-            const initials = ((parts[0]?.[0] || 'A') + (parts[1]?.[0] || 'B')).toUpperCase();
+            const initials = getUserInitials(currentUser.name);
 
-            document.getElementById('sidebar-user-name').textContent = currentUser.name;
-            document.getElementById('sidebar-user-oab').textContent = `OAB ${currentUser.oab}`;
-            document.getElementById('sidebar-firm-name').textContent = currentUser.firm;
-            
-            document.getElementById('card-user-name').textContent = currentUser.name;
-            document.getElementById('card-user-oab').textContent = currentUser.oab;
-            document.getElementById('card-user-firm').textContent = currentUser.firm || '';
-            document.getElementById('card-user-seccional').textContent = currentUser.seccional || 'Brasil • AAB';
-
-            const webRow = document.getElementById('card-user-website-row');
-            const webLink = document.getElementById('card-user-website');
-            if (currentUser.website) {
-                webLink.href = currentUser.website.startsWith('http') ? currentUser.website : `https://${currentUser.website}`;
-                webLink.textContent = currentUser.website;
-                webRow.classList.remove('hidden');
-            } else {
-                webRow.classList.add('hidden');
-            }
-
-            const bioEl = document.getElementById('card-user-bio');
-            if (currentUser.bio) {
-                bioEl.textContent = currentUser.bio;
-                bioEl.classList.remove('hidden');
-            } else {
-                bioEl.classList.add('hidden');
-            }
-
-            const statusBadge = document.getElementById('card-status-badge');
-            const isSuspended = currentUser.accountStatus === 'Suspenso';
-            statusBadge.textContent = isSuspended ? 'SUSPENSO • PENDENTE' : (currentUser.role === 'responsavel_aab' ? 'RESPONSÁVEL • ATIVO' : 'REGULAR • ATIVO');
-            statusBadge.className = isSuspended
-                ? 'px-2.5 py-1 rounded-full text-[11px] font-bold bg-rose-500/20 text-rose-300 border border-rose-500/30'
-                : 'px-2.5 py-1 rounded-full text-[11px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30';
-
+            const nameEl = document.getElementById('sidebar-user-name');
+            const oabEl = document.getElementById('sidebar-user-oab');
+            const firmEl = document.getElementById('sidebar-firm-name');
             const avatarEl = document.getElementById('user-avatar');
-            const cardPhotoEl = document.getElementById('card-user-photo');
-            if (currentUser.photo) {
-                avatarEl.innerHTML = `<img src="${currentUser.photo}" alt="Foto do Associado" class="w-full h-full object-cover">`;
-                cardPhotoEl.innerHTML = `<img src="${currentUser.photo}" alt="Foto do Associado" class="w-full h-full object-cover">`;
-            } else {
-                avatarEl.textContent = initials;
-                cardPhotoEl.innerHTML = `<span>${initials}</span>`;
+
+            if (nameEl) nameEl.textContent = currentUser.name;
+            if (oabEl) oabEl.textContent = currentUser.oab;
+            if (firmEl) firmEl.textContent = currentUser.firm;
+            if (avatarEl) {
+                avatarEl.innerHTML = currentUser.photo
+                    ? `<img src="${currentUser.photo}" alt="${currentUser.name}" class="w-full h-full object-cover" onerror="this.remove()">`
+                    : initials;
             }
 
-            const isAdmin = currentUser.role === 'responsavel_aab' || Boolean(currentUser.permissions?.canPublish);
-            document.getElementById('nav-btn-admin').classList.toggle('hidden', !isAdmin);
-            document.getElementById('btn-quick-publish-overview').classList.toggle('hidden', !isAdmin);
+            const cardName = document.getElementById('card-user-name');
+            const cardFirm = document.getElementById('card-user-firm');
+            const cardOab = document.getElementById('card-user-oab');
+            const cardSec = document.getElementById('card-user-seccional');
+            const cardPhoto = document.getElementById('card-user-photo');
+            const cardWebRow = document.getElementById('card-user-website-row');
+            const cardWebLink = document.getElementById('card-user-website');
+            const cardBio = document.getElementById('card-user-bio');
+
+            if (cardName) cardName.textContent = currentUser.name;
+            if (cardFirm) cardFirm.textContent = currentUser.firm;
+            if (cardOab) cardOab.textContent = currentUser.oab;
+            if (cardSec) cardSec.textContent = currentUser.seccional || 'Brasil • AAB';
+            if (cardPhoto) {
+                cardPhoto.innerHTML = currentUser.photo
+                    ? `<img src="${currentUser.photo}" alt="${currentUser.name}" class="w-full h-full object-cover">`
+                    : initials;
+            }
+            if (cardWebRow && cardWebLink) {
+                const site = String(currentUser.website || '').trim();
+                if (site) {
+                    cardWebLink.textContent = site;
+                    cardWebLink.href = site.startsWith('http') ? site : `https://${site}`;
+                    cardWebRow.classList.remove('hidden');
+                } else {
+                    cardWebRow.classList.add('hidden');
+                }
+            }
+            if (cardBio) {
+                const bio = String(currentUser.bio || '').trim();
+                if (bio) {
+                    cardBio.textContent = bio;
+                    cardBio.classList.remove('hidden');
+                } else {
+                    cardBio.classList.add('hidden');
+                }
+            }
+
+            const isAdmin = currentUser.role === 'responsavel_aab';
+            const canPublish = isAdmin || Boolean(currentUser.permissions?.canPublish);
+
+            const adminNavBtn = document.getElementById('nav-btn-admin');
+            if (adminNavBtn) adminNavBtn.classList.toggle('hidden', !isAdmin);
+
+            const quickPubBtn = document.getElementById('btn-quick-publish-overview');
+            if (quickPubBtn) quickPubBtn.classList.toggle('hidden', !canPublish);
         }
 
-        // =====================================================================
-        // EDIÇÃO DE PERFIL COM FOTO (UPLOAD COMPRIMIDO VIA CANVAS + URL)
-        // =====================================================================
         function openProfileModal() {
             if (!currentUser) return;
             draftProfilePhoto = currentUser.photo || '';
@@ -2655,30 +2686,40 @@
             document.getElementById('prof-website').value = currentUser.website || '';
             document.getElementById('prof-address').value = currentUser.address || '';
             document.getElementById('prof-bio').value = currentUser.bio || '';
-            document.getElementById('profile-photo-url').value = currentUser.photo?.startsWith('http') ? currentUser.photo : '';
-            document.getElementById('profile-photo-file').value = '';
-            renderProfileModalPreview();
+            document.getElementById('profile-photo-url').value = draftProfilePhoto.startsWith('http') ? draftProfilePhoto : '';
+            updateProfileModalPreview();
             openModal('modal-edit-profile');
         }
 
-        function renderProfileModalPreview() {
+        function updateProfileModalPreview() {
             const preview = document.getElementById('profile-modal-preview');
             if (!preview) return;
             if (draftProfilePhoto) {
-                preview.innerHTML = `<img src="${draftProfilePhoto}" alt="Prévia da foto" class="w-full h-full object-cover">`;
+                preview.innerHTML = `<img src="${draftProfilePhoto}" alt="Foto do Associado" class="w-full h-full object-cover">`;
             } else {
-                const nameVal = document.getElementById('prof-name')?.value || currentUser?.name || 'AAB';
-                const clean = nameVal.replace(/^Dr\(a\)\.\s|^Dr\.\s|^Dra\.\s/i, '').trim();
-                const parts = clean.split(' ');
-                preview.textContent = ((parts[0]?.[0] || 'A') + (parts[1]?.[0] || 'B')).toUpperCase();
+                preview.textContent = getUserInitials(document.getElementById('prof-name')?.value || currentUser?.name || 'AAB');
             }
         }
 
-        function handleProfilePhotoUpload(event) {
-            const file = event.target.files?.[0];
+        function handleProfilePhotoUrlChange(e) {
+            draftProfilePhoto = e.target.value.trim();
+            updateProfileModalPreview();
+        }
+
+        function clearProfilePhoto() {
+            draftProfilePhoto = '';
+            const urlInput = document.getElementById('profile-photo-url');
+            const fileInput = document.getElementById('profile-photo-file');
+            if (urlInput) urlInput.value = '';
+            if (fileInput) fileInput.value = '';
+            updateProfileModalPreview();
+        }
+
+        function handleProfilePhotoUpload(e) {
+            const file = e.target.files?.[0];
             if (!file) return;
             const reader = new FileReader();
-            reader.onload = (e) => {
+            reader.onload = (ev) => {
                 const img = new Image();
                 img.onload = () => {
                     const canvas = document.createElement('canvas');
@@ -2697,25 +2738,11 @@
                     const ctx = canvas.getContext('2d');
                     ctx.drawImage(img, 0, 0, width, height);
                     draftProfilePhoto = canvas.toDataURL('image/jpeg', 0.82);
-                    document.getElementById('profile-photo-url').value = '';
-                    renderProfileModalPreview();
+                    updateProfileModalPreview();
                 };
-                img.src = e.target.result;
+                img.src = ev.target.result;
             };
             reader.readAsDataURL(file);
-        }
-
-        function handleProfilePhotoUrlChange(event) {
-            const url = event.target.value.trim();
-            draftProfilePhoto = url;
-            renderProfileModalPreview();
-        }
-
-        function clearProfilePhoto() {
-            draftProfilePhoto = '';
-            document.getElementById('profile-photo-file').value = '';
-            document.getElementById('profile-photo-url').value = '';
-            renderProfileModalPreview();
         }
 
         async function handleSaveProfile(e) {
@@ -2738,146 +2765,57 @@
             currentUser = { ...currentUser, ...updatedFields };
             applyUserProfileUI();
 
-            if (!isDemoFallbackMode) {
+            if (!isDemoFallbackMode && auth.currentUser) {
                 try {
-                    await setDoc(doc(db, 'usuarios', currentUser.uid), updatedFields, { merge: true });
+                    await setDoc(doc(db, 'usuarios', auth.currentUser.uid), updatedFields, { merge: true });
                 } catch (err) {
+                    console.error('Erro ao salvar perfil no Firestore:', err);
                     handleFirebasePermissionOrSetupError(err);
                 }
-            } else {
-                const idx = adminMembersList.findIndex(m => m.uid === currentUser.uid);
-                if (idx !== -1) adminMembersList[idx] = { ...adminMembersList[idx], ...updatedFields };
+            }
+
+            const memberIdx = adminMembersList.findIndex(m => m.uid === currentUser.uid);
+            if (memberIdx !== -1) {
+                adminMembersList[memberIdx] = { ...adminMembersList[memberIdx], ...updatedFields };
                 renderAdminMembersTable();
                 updateAdminKPIs();
             }
 
             closeModal('modal-edit-profile');
-            showToast('Perfil e foto atualizados com sucesso!', 'success');
+            showToast('Perfil e dados profissionais atualizados com sucesso!', 'success');
         }
 
         // =====================================================================
-        // NAVEGAÇÃO ENTRE ABAS DO PAINEL
-        // =====================================================================
-        const pageTitles = {
-            overview: 'Visão Geral do Escritório',
-            cases: 'Gestão de Processos Judiciais',
-            clients: 'Clientes & CRM Jurídico',
-            deadlines: 'Prazos Fatais & Agenda Jurídica',
-            finance: 'Controle Financeiro & Honorários',
-            benefits: 'Benefícios & Carteira Digital AAB',
-            admin: 'Painel do Responsável AAB'
-        };
-
-        function navigateTo(sectionId) {
-            document.querySelectorAll('.view-section').forEach(el => el.classList.add('hidden'));
-            const target = document.getElementById(`view-${sectionId}`);
-            if (target) target.classList.remove('hidden');
-
-            document.getElementById('page-title').textContent = pageTitles[sectionId] || 'Portal AAB';
-
-            document.querySelectorAll('.nav-btn').forEach(btn => {
-                if (btn.dataset.nav === sectionId) {
-                    btn.className = 'nav-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all bg-amber-700 text-white shadow-sm';
-                } else {
-                    btn.className = 'nav-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-300 hover:bg-slate-800 hover:text-white transition-all';
-                }
-            });
-
-            const sidebar = document.getElementById('sidebar');
-            if (!sidebar.classList.contains('-translate-x-full') && window.innerWidth < 1024) {
-                toggleMobileSidebar();
-            }
-
-            lucide.createIcons();
-        }
-
-        function toggleMobileSidebar() {
-            const sidebar = document.getElementById('sidebar');
-            const backdrop = document.getElementById('sidebar-backdrop');
-            sidebar.classList.toggle('-translate-x-full');
-            backdrop.classList.toggle('hidden');
-        }
-
-        // =====================================================================
-        // ATUALIZAÇÃO GERAL DE KPIS E RENDERIZAÇÕES
-        // =====================================================================
-        function refreshAllViews() {
-            updateKPIs();
-            renderOverviewDeadlines();
-            renderOverviewPublications();
-            renderCasesTable();
-            renderClientsGrid();
-            renderDeadlinesList();
-            renderFinanceTable();
-            renderCoworkingBookings();
-            renderAdminPublications();
-            renderAdminMembersTable();
-            updateAdminKPIs();
-            lucide.createIcons();
-        }
-
-        function formatCurrency(val) {
-            return Number(val).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
-        }
-
-        function formatDateBR(isoDate) {
-            if (!isoDate) return '-';
-            const [y, m, d] = isoDate.split('-');
-            return `${d}/${m}/${y}`;
-        }
-
-        function updateKPIs() {
-            const activeCases = appData.cases.filter(c => c.status !== 'Arquivado').length;
-            document.getElementById('kpi-active-cases').textContent = activeCases;
-            document.getElementById('badge-cases').textContent = activeCases;
-
-            const pendingDeadlines = appData.deadlines.filter(d => !d.completed);
-            document.getElementById('kpi-urgent-deadlines').textContent = pendingDeadlines.length;
-            document.getElementById('badge-deadlines').textContent = pendingDeadlines.length;
-
-            const receivable = appData.finances
-                .filter(f => f.kind === 'Receita' && f.status !== 'Pago')
-                .reduce((acc, item) => acc + Number(item.amount), 0);
-            document.getElementById('kpi-receivable').textContent = formatCurrency(receivable);
-
-            document.getElementById('kpi-active-clients').textContent = appData.clients.length;
-        }
-
-        // =====================================================================
-        // MURAL DE PUBLICAÇÕES & PAINEL DO RESPONSÁVEL AAB
+        // MURAL DE PUBLICAÇÕES OFICIAIS DA AAB
         // =====================================================================
         function renderOverviewPublications() {
             const container = document.getElementById('overview-publications-list');
             if (!container) return;
-            const selectedCat = document.getElementById('overview-pub-category')?.value || 'Todas';
 
+            const selectedCat = document.getElementById('overview-pub-category')?.value || 'Todas';
             const list = publicationsList.filter(p => selectedCat === 'Todas' || p.category === selectedCat);
+
             if (list.length === 0) {
-                container.innerHTML = `<div class="col-span-full text-center py-6 text-xs text-slate-400">Nenhuma publicação oficial nesta categoria.</div>`;
+                container.innerHTML = `<p class="col-span-full text-xs text-slate-400 text-center py-6">Nenhuma publicação disponível nesta categoria.</p>`;
                 return;
             }
 
-            const catStyles = {
-                'Portaria': 'bg-slate-900 text-amber-400',
-                'Evento': 'bg-blue-100 text-blue-800',
-                'Benefício': 'bg-emerald-100 text-emerald-800',
-                'Comunicado': 'bg-amber-100 text-amber-900'
-            };
-
             container.innerHTML = list.map(pub => `
-                <article class="p-4 rounded-xl border ${pub.pinned ? 'border-amber-400 bg-amber-50/40' : 'border-slate-200 bg-slate-50/60'} flex flex-col justify-between gap-2.5">
+                <article class="p-4 rounded-xl border ${pub.pinned ? 'border-amber-300 bg-amber-50/40' : 'border-slate-200 bg-slate-50/50'} flex flex-col justify-between gap-3">
                     <div>
-                        <div class="flex items-center justify-between gap-2 mb-1.5">
+                        <div class="flex flex-wrap items-center justify-between gap-2 mb-2">
                             <div class="flex items-center gap-1.5">
-                                <span class="text-[10px] font-bold uppercase px-2 py-0.5 rounded ${catStyles[pub.category] || catStyles['Comunicado']}">${pub.category}</span>
-                                ${pub.pinned ? '<span class="text-[10px] font-bold uppercase px-2 py-0.5 rounded bg-amber-600 text-white">Fixado</span>' : ''}
+                                <span class="text-[10px] font-bold uppercase px-2 py-0.5 rounded bg-slate-900 text-amber-300">${pub.category}</span>
+                                ${pub.pinned ? '<span class="text-[10px] font-bold uppercase px-2 py-0.5 rounded bg-amber-200 text-amber-950">Fixado</span>' : ''}
                             </div>
                             <span class="text-[11px] text-slate-500">${pub.dateLabel || ''}</span>
                         </div>
-                        <h3 class="font-serif text-sm sm:text-base font-bold text-slate-900">${pub.title}</h3>
-                        <p class="text-xs text-slate-600 mt-1 leading-relaxed">${pub.content}</p>
+                        <h3 class="font-serif text-base font-bold text-slate-900 leading-snug">${pub.title}</h3>
+                        <p class="text-xs text-slate-600 mt-1.5 leading-relaxed whitespace-pre-line">${pub.content}</p>
                     </div>
-                    <p class="text-[11px] font-medium text-slate-500 pt-2 border-t border-slate-200/70">Publicado por: ${pub.author || 'Responsável AAB'}</p>
+                    <div class="pt-2.5 border-t border-slate-200/70 flex items-center justify-between text-[11px] text-slate-500">
+                        <span>Por: <strong class="text-slate-700">${pub.author || 'Responsável AAB'}</strong></span>
+                    </div>
                 </article>
             `).join('');
         }
@@ -2887,26 +2825,26 @@
             if (!container) return;
 
             if (publicationsList.length === 0) {
-                container.innerHTML = `<p class="text-xs text-slate-400 text-center py-6">Nenhuma publicação cadastrada.</p>`;
+                container.innerHTML = `<p class="text-xs text-slate-400 text-center py-6">Nenhuma publicação ativa no portal.</p>`;
                 return;
             }
 
             container.innerHTML = publicationsList.map(pub => `
-                <div class="p-3.5 rounded-xl border border-slate-200 bg-slate-50/70 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                    <div class="space-y-1">
-                        <div class="flex items-center gap-2">
-                            <span class="text-[10px] font-bold uppercase px-2 py-0.5 rounded bg-slate-900 text-amber-400">${pub.category}</span>
-                            ${pub.pinned ? '<span class="text-[10px] font-bold uppercase px-2 py-0.5 rounded bg-amber-100 text-amber-900">Fixado</span>' : ''}
+                <div class="p-3.5 rounded-xl border border-slate-200 bg-slate-50/60 flex items-start justify-between gap-3">
+                    <div class="min-w-0">
+                        <div class="flex flex-wrap items-center gap-1.5 mb-1">
+                            <span class="text-[10px] font-bold uppercase px-2 py-0.5 rounded bg-slate-900 text-amber-300">${pub.category}</span>
+                            ${pub.pinned ? '<span class="text-[10px] font-bold uppercase px-2 py-0.5 rounded bg-amber-200 text-amber-950">Fixado</span>' : ''}
                             <span class="text-[11px] text-slate-500">${pub.dateLabel || ''}</span>
                         </div>
-                        <p class="text-sm font-bold text-slate-900">${pub.title}</p>
-                        <p class="text-xs text-slate-600 line-clamp-2">${pub.content}</p>
+                        <p class="text-sm font-bold text-slate-900 truncate">${pub.title}</p>
+                        <p class="text-xs text-slate-600 line-clamp-2 mt-0.5">${pub.content}</p>
                     </div>
-                    <div class="flex items-center gap-1.5 shrink-0">
-                        <button type="button" onclick="startEditPublication('${pub.id}')" title="Editar publicação" class="p-2 rounded-lg text-slate-600 hover:bg-slate-200 transition">
-                            <i data-lucide="pencil" class="w-4 h-4"></i>
+                    <div class="flex items-center gap-1 shrink-0">
+                        <button type="button" onclick="startEditPublication('${pub.id}')" title="Editar publicação" class="p-1.5 rounded-lg text-slate-600 hover:bg-slate-200 transition">
+                            <i data-lucide="edit-2" class="w-4 h-4"></i>
                         </button>
-                        <button type="button" onclick="deletePublication('${pub.id}')" title="Excluir publicação" class="p-2 rounded-lg text-rose-600 hover:bg-rose-50 transition">
+                        <button type="button" onclick="deletePublication('${pub.id}')" title="Excluir publicação" class="p-1.5 rounded-lg text-rose-600 hover:bg-rose-50 transition">
                             <i data-lucide="trash-2" class="w-4 h-4"></i>
                         </button>
                     </div>
@@ -2921,285 +2859,308 @@
             editingPublicationId = pub.id;
             document.getElementById('pub-edit-id').value = pub.id;
             document.getElementById('pub-title').value = pub.title;
-            document.getElementById('pub-category').value = pub.category;
+            document.getElementById('pub-category').value = pub.category || 'Comunicado';
             document.getElementById('pub-pinned').checked = Boolean(pub.pinned);
             document.getElementById('pub-content').value = pub.content;
-            document.getElementById('pub-form-heading').textContent = 'Editar Publicação AAB';
-            document.getElementById('btn-submit-pub').innerHTML = '<i data-lucide="check" class="w-4 h-4"></i><span>Salvar Alterações</span>';
+            document.getElementById('pub-form-heading').textContent = 'Editar Publicação do Portal';
             document.getElementById('btn-cancel-pub-edit').classList.remove('hidden');
-            lucide.createIcons();
         }
 
         function cancelPublicationEdit() {
             editingPublicationId = null;
             document.getElementById('pub-edit-id').value = '';
             document.getElementById('pub-title').value = '';
+            document.getElementById('pub-category').value = 'Comunicado';
             document.getElementById('pub-pinned').checked = false;
             document.getElementById('pub-content').value = '';
             document.getElementById('pub-form-heading').textContent = 'Publicar no Portal AAB';
-            document.getElementById('btn-submit-pub').innerHTML = '<i data-lucide="send" class="w-4 h-4"></i><span>Publicar no Mural do Portal</span>';
             document.getElementById('btn-cancel-pub-edit').classList.add('hidden');
-            lucide.createIcons();
         }
 
         async function handleSavePublication(e) {
             e.preventDefault();
-            const payload = {
-                title: document.getElementById('pub-title').value.trim(),
-                category: document.getElementById('pub-category').value,
-                pinned: document.getElementById('pub-pinned').checked,
-                content: document.getElementById('pub-content').value.trim(),
-                author: currentUser?.name || 'Responsável AAB',
-                dateLabel: new Date().toLocaleDateString('pt-BR')
-            };
+            const title = document.getElementById('pub-title').value.trim();
+            const category = document.getElementById('pub-category').value;
+            const pinned = document.getElementById('pub-pinned').checked;
+            const content = document.getElementById('pub-content').value.trim();
+            const author = currentUser ? `${currentUser.name} (${currentUser.oab})` : 'Responsável AAB';
+            const dateLabel = new Date().toLocaleDateString('pt-BR');
 
-            if (isDemoFallbackMode) {
+            try {
                 if (editingPublicationId) {
-                    const idx = publicationsList.findIndex(p => String(p.id) === String(editingPublicationId));
-                    if (idx !== -1) publicationsList[idx] = { ...publicationsList[idx], ...payload };
+                    const payload = { title, category, pinned, content, author };
+                    if (isDemoFallbackMode) {
+                        publicationsList = publicationsList.map(p => String(p.id) === String(editingPublicationId) ? { ...p, ...payload } : p);
+                    } else {
+                        await updateDoc(doc(db, 'publicacoes_aab', String(editingPublicationId)), payload);
+                    }
+                    showToast('Publicação atualizada no mural!', 'success');
                 } else {
-                    publicationsList.unshift({ id: 'demo-pub-' + Date.now(), ...payload, createdAt: Date.now() });
+                    const newPub = { title, category, pinned, content, author, dateLabel, createdAt: Date.now() };
+                    if (isDemoFallbackMode) {
+                        publicationsList.unshift({ id: 'pub-' + Date.now(), ...newPub });
+                    } else {
+                        await addDoc(collection(db, 'publicacoes_aab'), newPub);
+                    }
+                    showToast('Publicação enviada para o mural do portal!', 'success');
                 }
-                publicationsList.sort((a, b) => (b.pinned ? 1 : 0) - (a.pinned ? 1 : 0) || (b.createdAt || 0) - (a.createdAt || 0));
-                renderOverviewPublications();
-                renderAdminPublications();
-                updateAdminKPIs();
-            } else {
-                if (editingPublicationId) {
-                    await updateDoc(doc(db, 'publicacoes_aab', String(editingPublicationId)), payload);
-                } else {
-                    await addDoc(collection(db, 'publicacoes_aab'), { ...payload, createdAt: Date.now() });
+
+                if (isDemoFallbackMode) {
+                    publicationsList.sort((a, b) => (b.pinned ? 1 : 0) - (a.pinned ? 1 : 0) || (b.createdAt || 0) - (a.createdAt || 0));
+                    renderOverviewPublications();
+                    renderAdminPublications();
+                    updateAdminKPIs();
                 }
+                cancelPublicationEdit();
+            } catch (err) {
+                console.error('Erro ao salvar publicação:', err);
+                handleFirebasePermissionOrSetupError(err);
+                showToast('Não foi possível salvar a publicação.', 'info');
             }
-
-            cancelPublicationEdit();
-            showToast('Mural do portal atualizado com sucesso!', 'success');
         }
 
         async function deletePublication(id) {
-            if (isDemoFallbackMode) {
-                publicationsList = publicationsList.filter(p => String(p.id) !== String(id));
-                renderOverviewPublications();
-                renderAdminPublications();
-                updateAdminKPIs();
-            } else {
-                await deleteDoc(doc(db, 'publicacoes_aab', String(id)));
+            try {
+                if (isDemoFallbackMode) {
+                    publicationsList = publicationsList.filter(p => String(p.id) !== String(id));
+                    renderOverviewPublications();
+                    renderAdminPublications();
+                    updateAdminKPIs();
+                } else {
+                    await deleteDoc(doc(db, 'publicacoes_aab', String(id)));
+                }
+                showToast('Publicação removida do mural.', 'info');
+            } catch (err) {
+                console.error('Erro ao excluir publicação:', err);
+                handleFirebasePermissionOrSetupError(err);
+                showToast('Não foi possível remover a publicação.', 'info');
             }
-            showToast('Publicação removida do mural.', 'info');
         }
 
-        function isMemberOnline(lastSeen) {
-            if (!lastSeen) return false;
-            return (Date.now() - Number(lastSeen)) <= 5 * 60 * 1000;
-        }
-
+        // =====================================================================
+        // PAINEL DO RESPONSÁVEL AAB: ASSOCIADOS, SITES, PRESENÇA E PERMISSÕES
+        // =====================================================================
         function updateAdminKPIs() {
             const totalEl = document.getElementById('admin-kpi-total-members');
-            if (!totalEl) return;
+            const onlineEl = document.getElementById('admin-kpi-online-members');
+            const siteEl = document.getElementById('admin-kpi-website-members');
+            const pubEl = document.getElementById('admin-kpi-publications');
 
-            const total = adminMembersList.length;
-            const online = adminMembersList.filter(m => isMemberOnline(m.lastSeen)).length;
-            const withSite = adminMembersList.filter(m => m.website && m.website.trim().length > 3).length;
+            const now = Date.now();
+            const onlineThreshold = 5 * 60 * 1000;
+            const onlineCount = adminMembersList.filter(m => (m.lastSeen && (now - Number(m.lastSeen)) <= onlineThreshold) || m.uid === currentUser?.uid).length;
+            const siteCount = adminMembersList.filter(m => Boolean(String(m.website || '').trim())).length;
 
-            totalEl.textContent = total;
-            document.getElementById('admin-kpi-online-members').textContent = online;
-            document.getElementById('admin-kpi-website-members').textContent = withSite;
-            document.getElementById('admin-kpi-publications').textContent = publicationsList.length;
+            if (totalEl) totalEl.textContent = adminMembersList.length;
+            if (onlineEl) onlineEl.textContent = onlineCount;
+            if (siteEl) siteEl.textContent = siteCount;
+            if (pubEl) pubEl.textContent = publicationsList.length;
         }
 
         function renderAdminMembersTable() {
             const tbody = document.getElementById('admin-members-table-body');
             if (!tbody) return;
 
-            const search = (document.getElementById('admin-member-search')?.value || '').toLowerCase();
-            const filtered = adminMembersList.filter(m =>
-                (m.name || '').toLowerCase().includes(search) ||
-                (m.oab || '').toLowerCase().includes(search) ||
-                (m.email || '').toLowerCase().includes(search) ||
-                (m.website || '').toLowerCase().includes(search)
-            );
+            const query = (document.getElementById('admin-member-search')?.value || '').trim().toLowerCase();
+            const filtered = adminMembersList.filter(m => {
+                if (!query) return true;
+                return (m.name || '').toLowerCase().includes(query) ||
+                       (m.oab || '').toLowerCase().includes(query) ||
+                       (m.email || '').toLowerCase().includes(query) ||
+                       (m.firm || '').toLowerCase().includes(query) ||
+                       (m.website || '').toLowerCase().includes(query);
+            });
 
             if (filtered.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="5" class="py-8 text-center text-slate-400">Nenhum associado encontrado.</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="5" class="py-8 text-center text-slate-400">Nenhum associado encontrado com o filtro atual.</td></tr>`;
                 return;
             }
 
+            const now = Date.now();
+            const onlineThreshold = 5 * 60 * 1000;
+
             tbody.innerHTML = filtered.map(m => {
-                const online = isMemberOnline(m.lastSeen);
+                const isOnline = (m.lastSeen && (now - Number(m.lastSeen)) <= onlineThreshold) || m.uid === currentUser?.uid;
                 const perms = { ...defaultPermissions, ...(m.permissions || {}) };
-                const cleanUrl = m.website ? (m.website.startsWith('http') ? m.website : `https://${m.website}`) : '';
+                const cleanSite = String(m.website || '').trim();
+                const hrefSite = cleanSite ? (cleanSite.startsWith('http') ? cleanSite : `https://${cleanSite}`) : '';
+                const isSuspended = m.accountStatus === 'Suspenso';
 
                 return `
-                <tr class="hover:bg-slate-50/90 transition align-top">
-                    <td class="py-3.5 px-4">
-                        <p class="font-bold text-slate-900">${m.name}</p>
-                        <p class="text-[11px] font-semibold text-amber-800">OAB ${m.oab} • <span class="text-slate-500 font-normal">${m.email}</span></p>
-                        <p class="text-[11px] text-slate-500 mt-0.5">${m.firm || ''}</p>
-                    </td>
-                    <td class="py-3.5 px-4">
-                        ${online
-                            ? '<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 font-semibold"><span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>Online</span>'
-                            : '<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-slate-100 text-slate-500 border border-slate-200 font-medium"><span class="w-2 h-2 rounded-full bg-slate-400"></span>Offline</span>'}
-                    </td>
-                    <td class="py-3.5 px-4">
-                        ${cleanUrl
-                            ? `<a href="${cleanUrl}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-blue-700 hover:underline font-medium break-all"><i data-lucide="external-link" class="w-3.5 h-3.5 shrink-0"></i><span>${m.website}</span></a>`
-                            : '<span class="text-slate-400 italic">Sem site vinculado</span>'}
-                    </td>
-                    <td class="py-3.5 px-4">
-                        <div class="grid grid-cols-2 gap-x-3 gap-y-1.5">
-                            <label class="inline-flex items-center gap-1.5 cursor-pointer text-slate-700">
-                                <input type="checkbox" ${perms.portalAccess ? 'checked' : ''} onchange="toggleMemberPermission('${m.uid}', 'portalAccess', this.checked)" class="rounded accent-amber-700">
-                                <span>Acesso Portal</span>
-                            </label>
-                            <label class="inline-flex items-center gap-1.5 cursor-pointer text-slate-700">
-                                <input type="checkbox" ${perms.canPublish ? 'checked' : ''} onchange="toggleMemberPermission('${m.uid}', 'canPublish', this.checked)" class="rounded accent-amber-700">
-                                <span>Publicar Mural</span>
-                            </label>
-                            <label class="inline-flex items-center gap-1.5 cursor-pointer text-slate-700">
-                                <input type="checkbox" ${perms.canBookRooms ? 'checked' : ''} onchange="toggleMemberPermission('${m.uid}', 'canBookRooms', this.checked)" class="rounded accent-amber-700">
-                                <span>Salas / Coworking</span>
-                            </label>
-                            <label class="inline-flex items-center gap-1.5 cursor-pointer text-slate-700">
-                                <input type="checkbox" ${perms.canUseBenefits ? 'checked' : ''} onchange="toggleMemberPermission('${m.uid}', 'canUseBenefits', this.checked)" class="rounded accent-amber-700">
-                                <span>Convênios / CAA</span>
-                            </label>
-                        </div>
-                    </td>
-                    <td class="py-3.5 px-4 text-right space-y-1.5">
-                        <div>
-                            <select onchange="updateMemberRole('${m.uid}', this.value)" class="px-2 py-1 rounded-lg border border-slate-300 bg-white text-[11px] font-semibold text-slate-700">
-                                <option value="associado" ${m.role !== 'responsavel_aab' ? 'selected' : ''}>Associado</option>
-                                <option value="responsavel_aab" ${m.role === 'responsavel_aab' ? 'selected' : ''}>Responsável AAB</option>
-                            </select>
-                        </div>
-                        <div>
-                            <button type="button" onclick="toggleMemberAccountStatus('${m.uid}')" class="px-2.5 py-1 rounded-lg text-[11px] font-semibold border transition ${m.accountStatus === 'Suspenso' ? 'bg-emerald-50 text-emerald-700 border-emerald-200 hover:bg-emerald-100' : 'bg-rose-50 text-rose-700 border-rose-200 hover:bg-rose-100'}">
-                                ${m.accountStatus === 'Suspenso' ? 'Reativar Conta' : 'Suspender'}
-                            </button>
-                        </div>
-                    </td>
-                </tr>`;
+                    <tr class="hover:bg-slate-50/80 transition ${isSuspended ? 'opacity-70 bg-rose-50/20' : ''}">
+                        <td class="py-3.5 px-4">
+                            <p class="font-bold text-slate-900">${m.name}</p>
+                            <p class="text-[11px] text-amber-800 font-medium">${m.oab} • <span class="text-slate-500 font-normal">${m.email}</span></p>
+                            <p class="text-[11px] text-slate-500">${m.firm || ''}</p>
+                        </td>
+                        <td class="py-3.5 px-4 whitespace-nowrap">
+                            ${isOnline
+                                ? `<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>Online</span>`
+                                : `<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-medium bg-slate-100 text-slate-600 border border-slate-200"><span class="w-1.5 h-1.5 rounded-full bg-slate-400"></span>Offline</span>`
+                            }
+                        </td>
+                        <td class="py-3.5 px-4">
+                            ${cleanSite
+                                ? `<a href="${hrefSite}" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-blue-700 hover:underline font-medium break-all"><i data-lucide="external-link" class="w-3.5 h-3.5 shrink-0"></i><span>${cleanSite}</span></a>`
+                                : `<span class="text-slate-400 italic">Sem site vinculado</span>`
+                            }
+                        </td>
+                        <td class="py-3.5 px-4">
+                            <div class="grid grid-cols-2 gap-x-3 gap-y-1 text-[11px]">
+                                <label class="inline-flex items-center gap-1.5 cursor-pointer text-slate-700">
+                                    <input type="checkbox" ${perms.portalAccess ? 'checked' : ''} onchange="toggleMemberPermission('${m.uid}', 'portalAccess', this.checked)" class="rounded accent-amber-700">
+                                    <span>Acesso Portal</span>
+                                </label>
+                                <label class="inline-flex items-center gap-1.5 cursor-pointer text-slate-700">
+                                    <input type="checkbox" ${perms.canPublish ? 'checked' : ''} onchange="toggleMemberPermission('${m.uid}', 'canPublish', this.checked)" class="rounded accent-amber-700">
+                                    <span>Publicar Mural</span>
+                                </label>
+                                <label class="inline-flex items-center gap-1.5 cursor-pointer text-slate-700">
+                                    <input type="checkbox" ${perms.canBookRooms ? 'checked' : ''} onchange="toggleMemberPermission('${m.uid}', 'canBookRooms', this.checked)" class="rounded accent-amber-700">
+                                    <span>Salas / Coworking</span>
+                                </label>
+                                <label class="inline-flex items-center gap-1.5 cursor-pointer text-slate-700">
+                                    <input type="checkbox" ${perms.canUseBenefits ? 'checked' : ''} onchange="toggleMemberPermission('${m.uid}', 'canUseBenefits', this.checked)" class="rounded accent-amber-700">
+                                    <span>Convênios / CAA</span>
+                                </label>
+                            </div>
+                        </td>
+                        <td class="py-3.5 px-4 text-right whitespace-nowrap">
+                            <div class="inline-flex items-center gap-2">
+                                <select onchange="updateMemberRole('${m.uid}', this.value)" class="px-2 py-1 text-[11px] font-semibold bg-slate-50 border border-slate-300 rounded-lg focus:outline-none focus:border-amber-600">
+                                    <option value="associado" ${m.role !== 'responsavel_aab' ? 'selected' : ''}>Associado</option>
+                                    <option value="responsavel_aab" ${m.role === 'responsavel_aab' ? 'selected' : ''}>Responsável AAB</option>
+                                </select>
+                                <button type="button" onclick="toggleMemberAccountStatus('${m.uid}')" class="px-2.5 py-1 rounded-lg text-[11px] font-semibold transition ${isSuspended ? 'bg-emerald-50 text-emerald-700 hover:bg-emerald-100 border border-emerald-200' : 'bg-rose-50 text-rose-700 hover:bg-rose-100 border border-rose-200'}">
+                                    ${isSuspended ? 'Reativar' : 'Suspender'}
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                `;
             }).join('');
             lucide.createIcons();
-        }
-
-        async function toggleMemberPermission(uid, permKey, checked) {
-            const member = adminMembersList.find(m => m.uid === uid);
-            if (!member) return;
-            const nextPerms = { ...defaultPermissions, ...(member.permissions || {}), [permKey]: checked };
-            member.permissions = nextPerms;
-
-            if (isDemoFallbackMode) {
-                if (currentUser?.uid === uid) {
-                    currentUser.permissions = nextPerms;
-                    applyUserProfileUI();
-                }
-                renderAdminMembersTable();
-            } else {
-                await setDoc(doc(db, 'usuarios', uid), { permissions: nextPerms }, { merge: true });
-            }
-            showToast('Permissão do associado salva na nuvem.', 'success');
-        }
-
-        async function updateMemberRole(uid, role) {
-            const member = adminMembersList.find(m => m.uid === uid);
-            if (!member) return;
-            const nextPerms = { ...defaultPermissions, ...(member.permissions || {}), canPublish: role === 'responsavel_aab' ? true : Boolean(member.permissions?.canPublish) };
-            member.role = role;
-            member.permissions = nextPerms;
-
-            if (isDemoFallbackMode) {
-                if (currentUser?.uid === uid) {
-                    currentUser.role = role;
-                    currentUser.permissions = nextPerms;
-                    applyUserProfileUI();
-                }
-                renderAdminMembersTable();
-            } else {
-                await setDoc(doc(db, 'usuarios', uid), { role, promotedByAdmin: role === 'responsavel_aab', permissions: nextPerms }, { merge: true });
-                if (role === 'responsavel_aab' && member.email) {
-                    await setDoc(doc(db, 'responsaveis_autorizados', sanitizeDocId(member.email)), {
-                        name: member.name,
-                        email: member.email.trim().toLowerCase(),
-                        oab: member.oab,
-                        role: 'responsavel_aab',
-                        authorizedBy: currentUser?.email || MASTER_ADMIN_EMAIL,
-                        updatedAt: Date.now()
-                    }, { merge: true });
-                }
-            }
-            showToast('Papel institucional atualizado.', 'success');
         }
 
         async function handleRegisterResponsible(e) {
             e.preventDefault();
             const name = document.getElementById('resp-name').value.trim();
             const email = document.getElementById('resp-email').value.trim().toLowerCase();
-            const oab = document.getElementById('resp-oab').value.trim() || 'OAB/BR • Diretoria';
+            const oab = document.getElementById('resp-oab').value.trim() || 'OAB/BR • Diretoria AAB';
+            if (!name || !email) return;
 
-            if (!email) return;
-
-            const newResponsiblePayload = {
-                name,
-                email,
-                oab,
-                role: 'responsavel_aab',
-                promotedByAdmin: true,
-                authorizedBy: currentUser?.email || MASTER_ADMIN_EMAIL,
-                permissions: {
-                    portalAccess: true,
-                    canPublish: true,
-                    canBookRooms: true,
-                    canUseBenefits: true
-                }
-            };
-
-            if (isDemoFallbackMode) {
-                const existingIdx = adminMembersList.findIndex(m => (m.email || '').toLowerCase() === email);
-                if (existingIdx !== -1) {
-                    adminMembersList[existingIdx] = {
-                        ...adminMembersList[existingIdx],
+            try {
+                if (!isDemoFallbackMode) {
+                    await setDoc(doc(db, 'responsaveis_autorizados', sanitizeDocId(email)), {
                         name,
+                        email,
                         oab,
                         role: 'responsavel_aab',
-                        permissions: newResponsiblePayload.permissions
-                    };
+                        active: true,
+                        authorizedBy: currentUser?.email || MASTER_ADMIN_EMAIL,
+                        updatedAt: Date.now()
+                    }, { merge: true });
+                }
+
+                const existingIdx = adminMembersList.findIndex(m => (m.email || '').toLowerCase() === email);
+                if (existingIdx !== -1) {
+                    const target = adminMembersList[existingIdx];
+                    target.role = 'responsavel_aab';
+                    target.permissions = { ...defaultPermissions, ...(target.permissions || {}), canPublish: true };
+                    if (!isDemoFallbackMode) {
+                        await setDoc(doc(db, 'usuarios', target.uid), {
+                            role: 'responsavel_aab',
+                            promotedByAdmin: true,
+                            permissions: target.permissions
+                        }, { merge: true });
+                    }
                 } else {
                     adminMembersList.push({
-                        uid: 'auth-' + Date.now(),
+                        uid: 'pending_' + sanitizeDocId(email),
                         name,
                         oab,
                         email,
-                        firm: 'Diretoria & Gestão AAB',
+                        firm: 'Diretoria & Responsável AAB',
                         website: '',
                         role: 'responsavel_aab',
                         accountStatus: 'Ativo',
                         lastSeen: 0,
-                        permissions: newResponsiblePayload.permissions
+                        permissions: { ...defaultPermissions, canPublish: true }
                     });
                 }
+
+                document.getElementById('resp-name').value = '';
+                document.getElementById('resp-email').value = '';
+                document.getElementById('resp-oab').value = '';
                 renderAdminMembersTable();
                 updateAdminKPIs();
-            } else {
-                await setDoc(doc(db, 'responsaveis_autorizados', sanitizeDocId(email)), {
-                    ...newResponsiblePayload,
-                    updatedAt: Date.now()
-                }, { merge: true });
+                showToast(`E-mail ${email} autorizado como Responsável AAB!`, 'success');
+            } catch (err) {
+                console.error('Erro ao autorizar responsável:', err);
+                handleFirebasePermissionOrSetupError(err);
+                showToast('Não foi possível autorizar o responsável.', 'info');
+            }
+        }
 
-                // Se já existir usuário cadastrado com esse e-mail em /usuarios, promove imediatamente
-                const existingMember = adminMembersList.find(m => (m.email || '').toLowerCase() === email);
-                if (existingMember) {
-                    await setDoc(doc(db, 'usuarios', existingMember.uid), {
-                        role: 'responsavel_aab',
-                        promotedByAdmin: true,
-                        permissions: newResponsiblePayload.permissions
-                    }, { merge: true });
+        async function toggleMemberPermission(uid, permKey, checked) {
+            const member = adminMembersList.find(m => m.uid === uid);
+            if (!member) return;
+            const nextPerms = { ...defaultPermissions, ...(member.permissions || {}), [permKey]: Boolean(checked) };
+            member.permissions = nextPerms;
+
+            if (!isDemoFallbackMode && !String(uid).startsWith('pending_')) {
+                try {
+                    await setDoc(doc(db, 'usuarios', uid), { permissions: nextPerms }, { merge: true });
+                } catch (err) {
+                    handleFirebasePermissionOrSetupError(err);
                 }
             }
+            if (currentUser && currentUser.uid === uid) {
+                currentUser.permissions = nextPerms;
+                applyUserProfileUI();
+            }
+            showToast('Permissão do associado atualizada.', 'success');
+        }
 
-            e.target.reset();
-            showToast(`${email} autorizado como Responsável AAB!`, 'success');
+        async function updateMemberRole(uid, newRole) {
+            const member = adminMembersList.find(m => m.uid === uid);
+            if (!member) return;
+            const nextPerms = {
+                ...defaultPermissions,
+                ...(member.permissions || {}),
+                canPublish: newRole === 'responsavel_aab' ? true : Boolean(member.permissions?.canPublish)
+            };
+            member.role = newRole;
+            member.permissions = nextPerms;
+
+            if (!isDemoFallbackMode && !String(uid).startsWith('pending_')) {
+                try {
+                    await setDoc(doc(db, 'usuarios', uid), {
+                        role: newRole,
+                        promotedByAdmin: newRole === 'responsavel_aab',
+                        permissions: nextPerms
+                    }, { merge: true });
+                    if (member.email) {
+                        await setDoc(doc(db, 'responsaveis_autorizados', sanitizeDocId(member.email)), {
+                            name: member.name,
+                            email: member.email,
+                            oab: member.oab,
+                            role: newRole,
+                            active: true,
+                            updatedAt: Date.now()
+                        }, { merge: true });
+                    }
+                } catch (err) {
+                    handleFirebasePermissionOrSetupError(err);
+                }
+            }
+            if (currentUser && currentUser.uid === uid) {
+                currentUser.role = newRole;
+                currentUser.permissions = nextPerms;
+                applyUserProfileUI();
+            }
+            renderAdminMembersTable();
+            showToast(`Papel atualizado para ${newRole === 'responsavel_aab' ? 'Responsável AAB' : 'Associado'}.`, 'success');
         }
 
         async function toggleMemberAccountStatus(uid) {
@@ -3208,85 +3169,51 @@
             const nextStatus = member.accountStatus === 'Suspenso' ? 'Ativo' : 'Suspenso';
             member.accountStatus = nextStatus;
 
-            if (isDemoFallbackMode) {
-                if (currentUser?.uid === uid) {
-                    currentUser.accountStatus = nextStatus;
-                    applyUserProfileUI();
+            if (!isDemoFallbackMode && !String(uid).startsWith('pending_')) {
+                try {
+                    await setDoc(doc(db, 'usuarios', uid), { accountStatus: nextStatus }, { merge: true });
+                } catch (err) {
+                    handleFirebasePermissionOrSetupError(err);
                 }
-                renderAdminMembersTable();
-            } else {
-                await setDoc(doc(db, 'usuarios', uid), { accountStatus: nextStatus }, { merge: true });
             }
-            showToast(`Status da conta alterado para ${nextStatus}.`, 'info');
-        }
-
-        function renderOverviewDeadlines() {
-            const container = document.getElementById('overview-deadlines-list');
-            const pending = appData.deadlines.filter(d => !d.completed).slice(0, 4);
-
-            if (pending.length === 0) {
-                container.innerHTML = `<p class="text-sm text-slate-400 text-center py-6">Nenhum prazo pendente na semana.</p>`;
-                return;
-            }
-
-            container.innerHTML = pending.map(item => {
-                const badgeStyle = item.type === 'Fatal' 
-                    ? 'bg-rose-100 text-rose-800 border-rose-200' 
-                    : item.type === 'Audiência' 
-                    ? 'bg-amber-100 text-amber-800 border-amber-200'
-                    : 'bg-slate-100 text-slate-700 border-slate-200';
-
-                return `
-                <div class="pt-3 first:pt-0 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                    <div class="space-y-1">
-                        <div class="flex items-center gap-2">
-                            <span class="text-[11px] font-bold px-2 py-0.5 rounded border ${badgeStyle}">${item.type}</span>
-                            <span class="text-xs font-semibold text-slate-500">${formatDateBR(item.date)}</span>
-                        </div>
-                        <p class="text-sm font-semibold text-slate-900">${item.title}</p>
-                        <p class="text-xs text-slate-500 font-mono">Proc: ${item.caseCnj}</p>
-                    </div>
-                    <button type="button" onclick="event.stopPropagation(); toggleDeadlineComplete('${item.id}')" class="px-3 py-1.5 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200 text-xs font-semibold transition flex items-center gap-1.5 self-start sm:self-center shrink-0">
-                        <i data-lucide="check" class="w-3.5 h-3.5"></i>
-                        <span>Marcar Cumprido</span>
-                    </button>
-                </div>`;
-            }).join('');
+            renderAdminMembersTable();
+            showToast(`Conta de ${member.name} marcada como ${nextStatus}.`, 'info');
         }
 
         // =====================================================================
-        // GESTÃO DE PROCESSOS (CRUD FIRESTORE)
+        // GESTÃO DE PROCESSOS, CLIENTES, PRAZOS E FINANCEIRO
         // =====================================================================
         function renderCasesTable() {
             const tbody = document.getElementById('cases-table-body');
-            const search = (document.getElementById('filter-case-search')?.value || '').toLowerCase();
-            const areaFilter = document.getElementById('filter-case-area')?.value || 'Todas';
-            const statusFilter = document.getElementById('filter-case-status')?.value || 'Todos';
+            if (!tbody) return;
+            const search = (document.getElementById('filter-case-search')?.value || '').trim().toLowerCase();
+            const area = document.getElementById('filter-case-area')?.value || 'Todas';
+            const status = document.getElementById('filter-case-status')?.value || 'Todos';
 
             const filtered = appData.cases.filter(c => {
-                const matchSearch = (c.cnj || '').toLowerCase().includes(search) ||
-                                    (c.client || '').toLowerCase().includes(search) ||
-                                    (c.opposing || '').toLowerCase().includes(search);
-                const matchArea = areaFilter === 'Todas' || c.area === areaFilter;
-                const matchStatus = statusFilter === 'Todos' || c.status === statusFilter;
-                return matchSearch && matchArea && matchStatus;
+                const matchText = !search ||
+                    (c.cnj || '').toLowerCase().includes(search) ||
+                    (c.client || '').toLowerCase().includes(search) ||
+                    (c.opposing || '').toLowerCase().includes(search);
+                const matchArea = area === 'Todas' || c.area === area;
+                const matchStatus = status === 'Todos' || c.status === status;
+                return matchText && matchArea && matchStatus;
             });
 
             if (filtered.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="6" class="py-8 text-center text-slate-400">Nenhum processo encontrado com os filtros aplicados.</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="6" class="py-8 text-center text-slate-400">Nenhum processo encontrado com os filtros selecionados.</td></tr>`;
                 return;
             }
 
-            tbody.innerHTML = filtered.map(c => {
-                const statusColors = {
-                    'Ativo': 'bg-emerald-50 text-emerald-700 border-emerald-200',
-                    'Aguardando Julgamento': 'bg-amber-50 text-amber-800 border-amber-200',
-                    'Recursal': 'bg-blue-50 text-blue-700 border-blue-200',
-                    'Arquivado': 'bg-slate-100 text-slate-600 border-slate-200'
-                };
+            const statusColors = {
+                'Ativo': 'bg-emerald-50 text-emerald-700 border-emerald-200',
+                'Aguardando Julgamento': 'bg-amber-50 text-amber-800 border-amber-200',
+                'Recursal': 'bg-blue-50 text-blue-700 border-blue-200',
+                'Arquivado': 'bg-slate-100 text-slate-600 border-slate-200'
+            };
 
-                return `
-                <tr class="hover:bg-slate-50/90 transition">
+            tbody.innerHTML = filtered.map(c => `
+                <tr class="hover:bg-slate-50/80 transition">
                     <td class="py-3.5 px-4">
                         <p class="font-mono text-xs font-bold text-slate-900">${c.cnj}</p>
                         <span class="inline-block mt-1 text-[11px] font-semibold px-2 py-0.5 rounded bg-slate-100 text-slate-700">${c.area}</span>
@@ -3296,20 +3223,22 @@
                         <p class="text-xs text-slate-500">vs. ${c.opposing}</p>
                     </td>
                     <td class="py-3.5 px-4 text-xs text-slate-600">${c.court}</td>
-                    <td class="py-3.5 px-4 text-xs font-semibold text-amber-800">${formatDateBR(c.nextDeadline)}</td>
-                    <td class="py-3.5 px-4">
-                        <span class="text-xs font-semibold px-2.5 py-1 rounded-full border ${statusColors[c.status] || statusColors['Ativo']}">${c.status}</span>
+                    <td class="py-3.5 px-4 text-xs font-semibold text-amber-800 whitespace-nowrap">${formatDateBR(c.nextDeadline)}</td>
+                    <td class="py-3.5 px-4 whitespace-nowrap">
+                        <span class="px-2.5 py-1 rounded-full text-xs font-semibold border ${statusColors[c.status] || statusColors['Ativo']}">${c.status}</span>
                     </td>
-                    <td class="py-3.5 px-4 text-right space-x-1">
-                        <button onclick="openCaseDetails('${c.id}')" title="Ver detalhes e alterar status" class="p-1.5 rounded-lg text-slate-600 hover:bg-slate-200/70 hover:text-slate-900 transition">
-                            <i data-lucide="eye" class="w-4 h-4"></i>
-                        </button>
-                        <button onclick="deleteCase('${c.id}')" title="Excluir processo" class="p-1.5 rounded-lg text-rose-600 hover:bg-rose-50 transition">
-                            <i data-lucide="trash-2" class="w-4 h-4"></i>
-                        </button>
+                    <td class="py-3.5 px-4 text-right whitespace-nowrap">
+                        <div class="inline-flex items-center gap-1">
+                            <button type="button" onclick="openCaseDetails('${c.id}')" title="Ver ficha" class="p-1.5 rounded-lg text-slate-600 hover:bg-slate-200 transition">
+                                <i data-lucide="eye" class="w-4 h-4"></i>
+                            </button>
+                            <button type="button" onclick="deleteCase('${c.id}')" title="Excluir processo" class="p-1.5 rounded-lg text-rose-600 hover:bg-rose-50 transition">
+                                <i data-lucide="trash-2" class="w-4 h-4"></i>
+                            </button>
+                        </div>
                     </td>
-                </tr>`;
-            }).join('');
+                </tr>
+            `).join('');
             lucide.createIcons();
         }
 
@@ -3323,122 +3252,112 @@
                 status: document.getElementById('case-status').value,
                 court: document.getElementById('case-court').value.trim(),
                 nextDeadline: document.getElementById('case-deadline').value,
-                notes: 'Processo cadastrado via Portal AAB.'
+                notes: 'Processo cadastrado no Portal de Gestão AAB.'
             };
 
-            if (isDemoFallbackMode) {
-                appData.cases.unshift({ id: 'demo-' + Date.now(), ...newCase });
-                refreshAllViews();
+            if (isDemoFallbackMode || !currentUser) {
+                appData.cases.unshift({ id: 'demo-c-' + Date.now(), ...newCase });
+                updateKPIs();
+                renderCasesTable();
             } else {
-                await addDoc(collection(db, `escritorios/${currentUser.uid}/processos`), {
-                    ...newCase,
-                    createdAt: serverTimestamp()
-                });
+                await addDoc(collection(db, `escritorios/${currentUser.uid}/processos`), { ...newCase, createdAt: serverTimestamp() });
             }
 
             e.target.reset();
             closeModal('modal-new-case');
-            showToast('Processo cadastrado e sincronizado na nuvem!', 'success');
+            showToast('Processo salvo com sucesso!', 'success');
         }
 
         function openCaseDetails(id) {
-            const c = appData.cases.find(item => String(item.id) === String(id));
-            if (!c) return;
-
+            const item = appData.cases.find(c => String(c.id) === String(id));
+            if (!item) return;
             const container = document.getElementById('case-details-content');
             container.innerHTML = `
                 <div class="space-y-3 text-sm">
-                    <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200">
-                        <span class="text-[11px] uppercase font-bold text-slate-400">Número CNJ</span>
-                        <p class="font-mono font-bold text-slate-900">${c.cnj}</p>
+                    <div class="p-3 rounded-xl bg-slate-50 border border-slate-200">
+                        <span class="text-[11px] font-bold uppercase text-slate-400 block">Número CNJ</span>
+                        <span class="font-mono font-bold text-slate-900">${item.cnj}</span>
                     </div>
                     <div class="grid grid-cols-2 gap-3">
                         <div>
-                            <span class="text-xs text-slate-500">Cliente</span>
-                            <p class="font-semibold text-slate-900">${c.client}</p>
+                            <span class="text-[11px] font-bold uppercase text-slate-400 block">Cliente</span>
+                            <span class="font-semibold text-slate-900">${item.client}</span>
                         </div>
                         <div>
-                            <span class="text-xs text-slate-500">Parte Contrária</span>
-                            <p class="font-semibold text-slate-900">${c.opposing}</p>
+                            <span class="text-[11px] font-bold uppercase text-slate-400 block">Parte Contrária</span>
+                            <span class="font-semibold text-slate-700">${item.opposing}</span>
                         </div>
                     </div>
                     <div>
-                        <span class="text-xs text-slate-500">Vara / Tribunal</span>
-                        <p class="font-medium text-slate-800">${c.court}</p>
+                        <span class="text-[11px] font-bold uppercase text-slate-400 block">Vara / Tribunal</span>
+                        <span class="text-slate-700">${item.court} (${item.area})</span>
                     </div>
                     <div>
-                        <span class="text-xs text-slate-500">Resumo / Andamento</span>
-                        <p class="text-xs text-slate-700 bg-amber-50/60 p-3 rounded-xl border border-amber-200/60 mt-1">${c.notes || 'Sem observações.'}</p>
+                        <label class="block text-[11px] font-bold uppercase text-slate-600 mb-1">Atualizar Status</label>
+                        <select onchange="updateCaseStatus('${item.id}', this.value)" class="w-full px-3 py-2 text-sm bg-slate-50 border border-slate-300 rounded-xl">
+                            <option value="Ativo" ${item.status === 'Ativo' ? 'selected' : ''}>Ativo</option>
+                            <option value="Aguardando Julgamento" ${item.status === 'Aguardando Julgamento' ? 'selected' : ''}>Aguardando Julgamento</option>
+                            <option value="Recursal" ${item.status === 'Recursal' ? 'selected' : ''}>Recursal</option>
+                            <option value="Arquivado" ${item.status === 'Arquivado' ? 'selected' : ''}>Arquivado</option>
+                        </select>
                     </div>
-                    <div class="pt-2 border-t border-slate-100">
-                        <label class="block text-xs font-semibold uppercase text-slate-600 mb-1.5">Atualizar Status Processual</label>
-                        <div class="flex gap-2">
-                            <select id="detail-status-select" class="flex-1 px-3 py-2 text-sm bg-slate-50 border border-slate-300 rounded-xl">
-                                <option value="Ativo" ${c.status === 'Ativo' ? 'selected' : ''}>Ativo</option>
-                                <option value="Aguardando Julgamento" ${c.status === 'Aguardando Julgamento' ? 'selected' : ''}>Aguardando Julgamento</option>
-                                <option value="Recursal" ${c.status === 'Recursal' ? 'selected' : ''}>Recursal</option>
-                                <option value="Arquivado" ${c.status === 'Arquivado' ? 'selected' : ''}>Arquivado</option>
-                            </select>
-                            <button onclick="updateCaseStatus('${c.id}')" class="px-4 py-2 bg-slate-900 text-white text-xs font-semibold rounded-xl hover:bg-slate-800">Atualizar</button>
-                        </div>
-                    </div>
+                    <p class="text-xs text-slate-600 bg-amber-50/70 p-3 rounded-xl border border-amber-200/70">${item.notes || ''}</p>
                 </div>
             `;
             openModal('modal-case-details');
         }
 
-        async function updateCaseStatus(id) {
-            const newStatus = document.getElementById('detail-status-select').value;
-            if (isDemoFallbackMode) {
+        async function updateCaseStatus(id, status) {
+            if (isDemoFallbackMode || !currentUser) {
                 const idx = appData.cases.findIndex(c => String(c.id) === String(id));
-                if (idx !== -1) appData.cases[idx].status = newStatus;
-                refreshAllViews();
+                if (idx !== -1) appData.cases[idx].status = status;
+                updateKPIs();
+                renderCasesTable();
             } else {
-                await updateDoc(doc(db, `escritorios/${currentUser.uid}/processos`, String(id)), { status: newStatus });
+                await updateDoc(doc(db, `escritorios/${currentUser.uid}/processos`, String(id)), { status });
             }
-            closeModal('modal-case-details');
-            showToast('Status processual atualizado na nuvem.', 'success');
+            showToast(`Status do processo alterado para "${status}".`, 'success');
         }
 
         async function deleteCase(id) {
-            if (isDemoFallbackMode) {
+            if (isDemoFallbackMode || !currentUser) {
                 appData.cases = appData.cases.filter(c => String(c.id) !== String(id));
-                refreshAllViews();
+                updateKPIs();
+                renderCasesTable();
             } else {
                 await deleteDoc(doc(db, `escritorios/${currentUser.uid}/processos`, String(id)));
             }
             showToast('Processo removido.', 'info');
         }
 
-        // =====================================================================
-        // CLIENTES & CRM (CRUD FIRESTORE)
-        // =====================================================================
         function renderClientsGrid() {
             const grid = document.getElementById('clients-grid');
+            if (!grid) return;
+
             if (appData.clients.length === 0) {
-                grid.innerHTML = `<div class="col-span-full text-center py-10 text-slate-400">Nenhum cliente cadastrado ainda.</div>`;
+                grid.innerHTML = `<div class="col-span-full bg-white p-8 rounded-2xl border border-slate-200 text-center text-sm text-slate-400">Nenhum cliente cadastrado ainda.</div>`;
                 return;
             }
 
-            grid.innerHTML = appData.clients.map(cli => `
-                <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-xs hover:shadow-md transition flex flex-col justify-between gap-4">
+            grid.innerHTML = appData.clients.map(cl => `
+                <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs flex flex-col justify-between gap-4">
                     <div>
-                        <div class="flex items-start justify-between gap-2 mb-2">
-                            <span class="text-[11px] font-bold uppercase px-2.5 py-0.5 rounded-full ${cli.type === 'Pessoa Jurídica' ? 'bg-slate-900 text-amber-400' : 'bg-amber-100 text-amber-900'}">${cli.type}</span>
-                            <button onclick="deleteClient('${cli.id}')" title="Remover cliente" class="text-slate-400 hover:text-rose-600 transition">
+                        <div class="flex items-center justify-between gap-2 mb-2">
+                            <span class="text-[11px] font-bold px-2.5 py-0.5 rounded-full ${cl.type === 'Pessoa Jurídica' ? 'bg-blue-50 text-blue-700' : 'bg-amber-50 text-amber-800'}">${cl.type}</span>
+                            <button type="button" onclick="deleteClient('${cl.id}')" title="Remover cliente" class="text-slate-400 hover:text-rose-600 p-1 rounded">
                                 <i data-lucide="trash-2" class="w-4 h-4"></i>
                             </button>
                         </div>
-                        <h3 class="font-serif text-lg font-bold text-slate-900">${cli.name}</h3>
-                        <p class="text-xs font-mono text-slate-500 mt-0.5">${cli.doc}</p>
-                        <div class="mt-4 space-y-1.5 text-xs text-slate-600 border-t border-slate-100 pt-3">
-                            <p class="flex items-center gap-2"><i data-lucide="phone" class="w-3.5 h-3.5 text-amber-700"></i> ${cli.phone}</p>
-                            <p class="flex items-center gap-2"><i data-lucide="mail" class="w-3.5 h-3.5 text-amber-700"></i> ${cli.email}</p>
+                        <h3 class="font-serif text-base font-bold text-slate-900">${cl.name}</h3>
+                        <p class="text-xs font-mono text-slate-500 mt-0.5">${cl.doc}</p>
+                        <div class="mt-3 pt-3 border-t border-slate-100 space-y-1 text-xs text-slate-600">
+                            <p class="flex items-center gap-1.5"><i data-lucide="phone" class="w-3.5 h-3.5 text-slate-400"></i><span>${cl.phone}</span></p>
+                            <p class="flex items-center gap-1.5"><i data-lucide="mail" class="w-3.5 h-3.5 text-slate-400"></i><span class="truncate">${cl.email}</span></p>
                         </div>
                     </div>
-                    <div class="pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
-                        <span class="text-slate-500 font-medium">${cli.casesCount || 1} processo(s) vinculado(s)</span>
-                        <button onclick="navigateTo('cases')" class="font-semibold text-amber-700 hover:text-amber-800">Ver processos →</button>
+                    <div class="flex items-center justify-between text-xs pt-2 border-t border-slate-100">
+                        <span class="text-slate-500">Processos vinculados</span>
+                        <span class="font-bold text-slate-900">${cl.casesCount ?? 1}</span>
                     </div>
                 </div>
             `).join('');
@@ -3456,34 +3375,64 @@
                 casesCount: 1
             };
 
-            if (isDemoFallbackMode) {
-                appData.clients.unshift({ id: 'demo-cli-' + Date.now(), ...newClient });
-                refreshAllViews();
+            if (isDemoFallbackMode || !currentUser) {
+                appData.clients.unshift({ id: 'demo-cl-' + Date.now(), ...newClient });
+                updateKPIs();
+                renderClientsGrid();
             } else {
-                await addDoc(collection(db, `escritorios/${currentUser.uid}/clientes`), {
-                    ...newClient,
-                    createdAt: serverTimestamp()
-                });
+                await addDoc(collection(db, `escritorios/${currentUser.uid}/clientes`), { ...newClient, createdAt: serverTimestamp() });
             }
 
             e.target.reset();
             closeModal('modal-new-client');
-            showToast('Cliente salvo no banco de dados!', 'success');
+            showToast('Cliente cadastrado com sucesso!', 'success');
         }
 
         async function deleteClient(id) {
-            if (isDemoFallbackMode) {
+            if (isDemoFallbackMode || !currentUser) {
                 appData.clients = appData.clients.filter(c => String(c.id) !== String(id));
-                refreshAllViews();
+                updateKPIs();
+                renderClientsGrid();
             } else {
                 await deleteDoc(doc(db, `escritorios/${currentUser.uid}/clientes`, String(id)));
             }
             showToast('Cliente removido.', 'info');
         }
 
-        // =====================================================================
-        // PRAZOS & AGENDA (CRUD FIRESTORE)
-        // =====================================================================
+        function renderOverviewDeadlines() {
+            const container = document.getElementById('overview-deadlines-list');
+            if (!container) return;
+
+            const pending = appData.deadlines.filter(d => !d.completed).slice(0, 4);
+            if (pending.length === 0) {
+                container.innerHTML = `<p class="text-xs text-slate-400 text-center py-6">Nenhum prazo pendente na agenda.</p>`;
+                return;
+            }
+
+            const badgeColors = {
+                'Fatal': 'bg-rose-100 text-rose-800',
+                'Audiência': 'bg-amber-100 text-amber-900',
+                'Reunião': 'bg-blue-100 text-blue-800',
+                'Diligência': 'bg-slate-200 text-slate-800'
+            };
+
+            container.innerHTML = pending.map(d => `
+                <div class="pt-3 first:pt-0 flex items-center justify-between gap-3">
+                    <div class="min-w-0">
+                        <div class="flex items-center gap-2 mb-1">
+                            <span class="text-[10px] font-bold uppercase px-2 py-0.5 rounded ${badgeColors[d.type] || 'bg-slate-100 text-slate-700'}">${d.type}</span>
+                            <span class="text-xs font-semibold text-slate-500">${formatDateBR(d.date)}</span>
+                        </div>
+                        <p class="text-xs sm:text-sm font-semibold text-slate-900 truncate">${d.title}</p>
+                        <p class="text-[11px] font-mono text-slate-500 truncate">Proc: ${d.caseCnj}</p>
+                    </div>
+                    <button type="button" onclick="event.stopPropagation(); toggleDeadlineComplete('${d.id}')" class="px-3 py-1.5 rounded-xl text-xs font-semibold bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-200 transition shrink-0">
+                        ✓ Marcar Cumprido
+                    </button>
+                </div>
+            `).join('');
+        }
+
         function setDeadlineFilter(filter) {
             currentDeadlineFilter = filter;
             document.querySelectorAll('.dl-filter-btn').forEach(btn => {
@@ -3498,41 +3447,35 @@
 
         function renderDeadlinesList() {
             const container = document.getElementById('deadlines-full-list');
-            const filtered = appData.deadlines.filter(d => currentDeadlineFilter === 'Todos' || d.type === currentDeadlineFilter);
+            if (!container) return;
 
+            const filtered = appData.deadlines.filter(d => currentDeadlineFilter === 'Todos' || d.type === currentDeadlineFilter);
             if (filtered.length === 0) {
-                container.innerHTML = `<p class="text-sm text-slate-400 text-center py-8">Nenhum compromisso nesta categoria.</p>`;
+                container.innerHTML = `<p class="text-xs text-slate-400 text-center py-6">Nenhum prazo encontrado para este filtro.</p>`;
                 return;
             }
 
-            container.innerHTML = filtered.map(d => {
-                const badgeStyle = d.type === 'Fatal' 
-                    ? 'bg-rose-100 text-rose-800 border-rose-200' 
-                    : d.type === 'Audiência' 
-                    ? 'bg-amber-100 text-amber-800 border-amber-200'
-                    : 'bg-slate-100 text-slate-700 border-slate-200';
-
-                return `
-                <div class="p-4 rounded-xl border ${d.completed ? 'bg-slate-50 border-slate-200 opacity-65' : 'bg-white border-slate-200'} flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                    <div class="space-y-1">
-                        <div class="flex items-center gap-2">
-                            <span class="text-[11px] font-bold px-2 py-0.5 rounded border ${badgeStyle}">${d.type}</span>
+            container.innerHTML = filtered.map(d => `
+                <div class="p-3.5 rounded-xl border ${d.completed ? 'bg-slate-50/70 border-slate-200/60 opacity-65' : 'bg-white border-slate-200'} flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                    <div>
+                        <div class="flex items-center gap-2 mb-1">
+                            <span class="text-[10px] font-bold uppercase px-2 py-0.5 rounded bg-amber-100 text-amber-900">${d.type}</span>
                             <span class="text-xs font-semibold text-slate-600">${formatDateBR(d.date)}</span>
-                            ${d.completed ? '<span class="text-[11px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded">Cumprido</span>' : ''}
+                            ${d.completed ? '<span class="text-[10px] font-bold px-2 py-0.5 rounded bg-emerald-100 text-emerald-800">Cumprido</span>' : ''}
                         </div>
-                        <p class="text-sm font-semibold ${d.completed ? 'line-through text-slate-500' : 'text-slate-900'}">${d.title}</p>
+                        <p class="text-sm font-bold text-slate-900 ${d.completed ? 'line-through' : ''}">${d.title}</p>
                         <p class="text-xs font-mono text-slate-500">Proc: ${d.caseCnj}</p>
                     </div>
-                    <div class="flex items-center gap-2 self-start sm:self-center">
-                        <button onclick="toggleDeadlineComplete('${d.id}')" class="px-3 py-1.5 rounded-xl text-xs font-semibold border transition ${d.completed ? 'bg-slate-100 text-slate-600 border-slate-300' : 'bg-emerald-50 text-emerald-800 border-emerald-200 hover:bg-emerald-100'}">
-                            ${d.completed ? 'Reabrir' : 'Concluir'}
+                    <div class="flex items-center gap-2 shrink-0">
+                        <button type="button" onclick="toggleDeadlineComplete('${d.id}')" class="px-3 py-1.5 rounded-xl text-xs font-semibold ${d.completed ? 'bg-slate-200 text-slate-700' : 'bg-emerald-50 hover:bg-emerald-100 text-emerald-700 border border-emerald-200'} transition">
+                            ${d.completed ? 'Reabrir' : '✓ Cumprido'}
                         </button>
-                        <button onclick="deleteDeadline('${d.id}')" class="p-1.5 rounded-lg text-rose-600 hover:bg-rose-50">
+                        <button type="button" onclick="deleteDeadline('${d.id}')" title="Excluir prazo" class="p-1.5 rounded-lg text-rose-600 hover:bg-rose-50 transition">
                             <i data-lucide="trash-2" class="w-4 h-4"></i>
                         </button>
                     </div>
-                </div>`;
-            }).join('');
+                </div>
+            `).join('');
             lucide.createIcons();
         }
 
@@ -3546,96 +3489,98 @@
                 completed: false
             };
 
-            if (isDemoFallbackMode) {
+            if (isDemoFallbackMode || !currentUser) {
                 appData.deadlines.unshift({ id: 'demo-dl-' + Date.now(), ...newDl });
-                refreshAllViews();
+                updateKPIs();
+                renderOverviewDeadlines();
+                renderDeadlinesList();
             } else {
-                await addDoc(collection(db, `escritorios/${currentUser.uid}/prazos`), {
-                    ...newDl,
-                    createdAt: serverTimestamp()
-                });
+                await addDoc(collection(db, `escritorios/${currentUser.uid}/prazos`), { ...newDl, createdAt: serverTimestamp() });
             }
 
             e.target.reset();
-            showToast('Prazo registrado na agenda jurídica!', 'success');
+            showToast('Prazo adicionado à agenda!', 'success');
         }
 
         async function toggleDeadlineComplete(id) {
             const target = appData.deadlines.find(d => String(d.id) === String(id));
             if (!target) return;
-            const nextState = !target.completed;
+            const nextCompleted = !target.completed;
 
-            if (isDemoFallbackMode) {
-                target.completed = nextState;
-                refreshAllViews();
+            if (isDemoFallbackMode || !currentUser) {
+                target.completed = nextCompleted;
+                updateKPIs();
+                renderOverviewDeadlines();
+                renderDeadlinesList();
             } else {
-                await updateDoc(doc(db, `escritorios/${currentUser.uid}/prazos`, String(id)), { completed: nextState });
+                await updateDoc(doc(db, `escritorios/${currentUser.uid}/prazos`, String(id)), { completed: nextCompleted });
             }
-            showToast(nextState ? 'Prazo marcado como cumprido!' : 'Prazo reaberto.', 'success');
+            showToast(nextCompleted ? 'Prazo marcado como cumprido!' : 'Prazo reaberto na agenda.', 'info');
         }
 
         async function deleteDeadline(id) {
-            if (isDemoFallbackMode) {
+            if (isDemoFallbackMode || !currentUser) {
                 appData.deadlines = appData.deadlines.filter(d => String(d.id) !== String(id));
-                refreshAllViews();
+                updateKPIs();
+                renderOverviewDeadlines();
+                renderDeadlinesList();
             } else {
                 await deleteDoc(doc(db, `escritorios/${currentUser.uid}/prazos`, String(id)));
             }
-            showToast('Compromisso removido.', 'info');
+            showToast('Prazo removido.', 'info');
         }
 
-        // =====================================================================
-        // FINANCEIRO & HONORÁRIOS (CRUD FIRESTORE)
-        // =====================================================================
         function renderFinanceTable() {
             const tbody = document.getElementById('finance-table-body');
+            if (!tbody) return;
 
-            const incomePaid = appData.finances
+            const income = appData.finances
                 .filter(f => f.kind === 'Receita' && f.status === 'Pago')
-                .reduce((sum, item) => sum + Number(item.amount), 0);
+                .reduce((sum, f) => sum + Number(f.amount || 0), 0);
+            const expense = appData.finances
+                .filter(f => f.kind === 'Despesa')
+                .reduce((sum, f) => sum + Number(f.amount || 0), 0);
+            const balance = income - expense;
 
-            const expensePaid = appData.finances
-                .filter(f => f.kind === 'Despesa' && f.status === 'Pago')
-                .reduce((sum, item) => sum + Number(item.amount), 0);
-
-            document.getElementById('fin-total-income').textContent = formatCurrency(incomePaid);
-            document.getElementById('fin-total-expense').textContent = formatCurrency(expensePaid);
-            document.getElementById('fin-balance').textContent = formatCurrency(incomePaid - expensePaid);
+            const incEl = document.getElementById('fin-total-income');
+            const expEl = document.getElementById('fin-total-expense');
+            const balEl = document.getElementById('fin-balance');
+            if (incEl) incEl.textContent = formatCurrency(income);
+            if (expEl) expEl.textContent = formatCurrency(expense);
+            if (balEl) balEl.textContent = formatCurrency(balance);
 
             if (appData.finances.length === 0) {
                 tbody.innerHTML = `<tr><td colspan="6" class="py-8 text-center text-slate-400">Nenhum lançamento financeiro registrado.</td></tr>`;
                 return;
             }
 
-            tbody.innerHTML = appData.finances.map(f => {
-                const statusBadge = f.status === 'Pago'
-                    ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
-                    : f.status === 'Atrasado'
-                    ? 'bg-rose-50 text-rose-700 border-rose-200'
-                    : 'bg-amber-50 text-amber-800 border-amber-200';
+            const statusBadge = {
+                'Pago': 'bg-emerald-50 text-emerald-700 border-emerald-200',
+                'Pendente': 'bg-amber-50 text-amber-800 border-amber-200',
+                'Atrasado': 'bg-rose-50 text-rose-700 border-rose-200'
+            };
 
-                return `
-                <tr class="hover:bg-slate-50 transition">
+            tbody.innerHTML = appData.finances.map(f => `
+                <tr class="hover:bg-slate-50/80 transition">
                     <td class="py-3.5 px-4 font-semibold text-slate-900">${f.description}</td>
                     <td class="py-3.5 px-4 text-xs text-slate-600">${f.category}</td>
-                    <td class="py-3.5 px-4 text-xs text-slate-600">${formatDateBR(f.date)}</td>
-                    <td class="py-3.5 px-4 font-bold ${f.kind === 'Receita' ? 'text-emerald-700' : 'text-rose-700'}">
+                    <td class="py-3.5 px-4 text-xs text-slate-600 whitespace-nowrap">${formatDateBR(f.date)}</td>
+                    <td class="py-3.5 px-4 font-bold whitespace-nowrap ${f.kind === 'Receita' ? 'text-emerald-700' : 'text-rose-700'}">
                         ${f.kind === 'Receita' ? '+' : '-'} ${formatCurrency(f.amount)}
                     </td>
-                    <td class="py-3.5 px-4">
-                        <span class="text-xs font-semibold px-2.5 py-0.5 rounded-full border ${statusBadge}">${f.status}</span>
+                    <td class="py-3.5 px-4 whitespace-nowrap">
+                        <span class="px-2.5 py-1 rounded-full text-xs font-semibold border ${statusBadge[f.status] || statusBadge['Pendente']}">${f.status}</span>
                     </td>
-                    <td class="py-3.5 px-4 text-right space-x-1">
-                        ${f.status !== 'Pago' ? `
-                            <button onclick="markFinancePaid('${f.id}')" class="px-2.5 py-1 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-emerald-800 text-xs font-semibold border border-emerald-200">
-                                Dar Baixa
-                            </button>` : ''}
-                        <button onclick="deleteFinance('${f.id}')" class="p-1.5 rounded-lg text-rose-600 hover:bg-rose-50">
-                            <i data-lucide="trash-2" class="w-4 h-4"></i>
-                        </button>
+                    <td class="py-3.5 px-4 text-right whitespace-nowrap">
+                        <div class="inline-flex items-center gap-1.5">
+                            ${f.status !== 'Pago' ? `<button type="button" onclick="markFinancePaid('${f.id}')" class="px-2.5 py-1 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-emerald-700 text-xs font-semibold border border-emerald-200 transition">Baixar</button>` : ''}
+                            <button type="button" onclick="deleteFinance('${f.id}')" title="Excluir lançamento" class="p-1.5 rounded-lg text-rose-600 hover:bg-rose-50 transition">
+                                <i data-lucide="trash-2" class="w-4 h-4"></i>
+                            </button>
+                        </div>
                     </td>
-                </tr>`;
-            }).join('');
+                </tr>
+            `).join('');
             lucide.createIcons();
         }
 
@@ -3650,14 +3595,12 @@
                 status: document.getElementById('fin-status').value
             };
 
-            if (isDemoFallbackMode) {
-                appData.finances.unshift({ id: 'demo-fin-' + Date.now(), ...newFin });
-                refreshAllViews();
+            if (isDemoFallbackMode || !currentUser) {
+                appData.finances.unshift({ id: 'demo-fn-' + Date.now(), ...newFin });
+                updateKPIs();
+                renderFinanceTable();
             } else {
-                await addDoc(collection(db, `escritorios/${currentUser.uid}/financeiro`), {
-                    ...newFin,
-                    createdAt: serverTimestamp()
-                });
+                await addDoc(collection(db, `escritorios/${currentUser.uid}/financeiro`), { ...newFin, createdAt: serverTimestamp() });
             }
 
             e.target.reset();
@@ -3666,49 +3609,45 @@
         }
 
         async function markFinancePaid(id) {
-            if (isDemoFallbackMode) {
-                const item = appData.finances.find(f => String(f.id) === String(id));
-                if (item) item.status = 'Pago';
-                refreshAllViews();
+            if (isDemoFallbackMode || !currentUser) {
+                const idx = appData.finances.findIndex(f => String(f.id) === String(id));
+                if (idx !== -1) appData.finances[idx].status = 'Pago';
+                updateKPIs();
+                renderFinanceTable();
             } else {
                 await updateDoc(doc(db, `escritorios/${currentUser.uid}/financeiro`, String(id)), { status: 'Pago' });
             }
-            showToast('Baixa financeira confirmada!', 'success');
+            showToast('Lançamento marcado como pago!', 'success');
         }
 
         async function deleteFinance(id) {
-            if (isDemoFallbackMode) {
+            if (isDemoFallbackMode || !currentUser) {
                 appData.finances = appData.finances.filter(f => String(f.id) !== String(id));
-                refreshAllViews();
+                updateKPIs();
+                renderFinanceTable();
             } else {
                 await deleteDoc(doc(db, `escritorios/${currentUser.uid}/financeiro`, String(id)));
             }
-            showToast('Lançamento excluído.', 'info');
+            showToast('Lançamento removido.', 'info');
         }
 
         // =====================================================================
-        // BENEFÍCIOS AAB: MODAIS INTERATIVOS (CERTIFICADO, BIBLIOTECA, SALAS, SAÚDE)
+        // MODAIS DE BENEFÍCIOS AAB
         // =====================================================================
         function openBenefitModal(type) {
             if (type === 'certificate') {
-                if (currentUser) {
-                    document.getElementById('cert-holder-name').textContent = currentUser.name;
-                    document.getElementById('cert-holder-oab').textContent = currentUser.oab;
-                }
+                document.getElementById('cert-holder-name').textContent = currentUser?.name || 'Dr(a). Associado';
+                document.getElementById('cert-holder-oab').textContent = currentUser?.oab || 'OAB/BR';
+                if (currentUser?.phone) document.getElementById('cert-phone').value = currentUser.phone;
                 document.getElementById('cert-protocol-box').classList.add('hidden');
                 openModal('modal-benefit-certificate');
             } else if (type === 'library') {
                 renderLibraryCatalog();
                 openModal('modal-benefit-library');
             } else if (type === 'coworking') {
-                const dateInput = document.getElementById('cw-date');
-                if (dateInput && !dateInput.value) {
-                    dateInput.value = '2026-11-30';
-                }
                 renderCoworkingBookings();
                 openModal('modal-benefit-coworking');
             } else if (type === 'health') {
-                document.getElementById('health-voucher-box').classList.add('hidden');
                 renderHealthCatalog();
                 openModal('modal-benefit-health');
             }
@@ -3912,22 +3851,22 @@
             const colors = {
                 success: 'bg-slate-900 text-white border-amber-500',
                 info: 'bg-slate-800 text-slate-100 border-slate-600'
-            };
+        function formatCurrency(val) {
+            return Number(val || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+        }
 
-            toast.className = `pointer-events-auto flex items-center gap-3 px-4 py-3 rounded-xl shadow-lg border-l-4 text-xs sm:text-sm font-medium fade-in ${colors[type] || colors.success}`;
-            toast.innerHTML = `
-                <i data-lucide="${type === 'success' ? 'check-circle' : 'info'}" class="w-4 h-4 text-amber-400 shrink-0"></i>
-                <span>${message}</span>
-            `;
+        function formatDateBR(dateStr) {
+            if (!dateStr) return '-';
+            const parts = String(dateStr).split('-');
+            if (parts.length === 3) return `${parts[2]}/${parts[1]}/${parts[0]}`;
+            return dateStr;
+        }
 
-            container.appendChild(toast);
-            lucide.createIcons();
-
-            setTimeout(() => {
-                toast.style.opacity = '0';
-                toast.style.transition = 'opacity 0.3s ease';
-                setTimeout(() => toast.remove(), 300);
-            }, 3200);
+        const dateDisplayEl = document.getElementById('current-date-display');
+        if (dateDisplayEl) {
+            const now = new Date();
+            const formatted = now.toLocaleDateString('pt-BR', { weekday: 'long', day: '2-digit', month: 'long', year: 'numeric' });
+            dateDisplayEl.textContent = formatted.charAt(0).toUpperCase() + formatted.slice(1);
         }
 
         // Expondo funções para os eventos inline (onclick / onsubmit) do HTML
@@ -3948,6 +3887,8 @@
             renderOverviewPublications,
             startEditPublication,
             cancelPublicationEdit,
+            handleSavePublication,
+            deletePublication,
             renderAdminPublications,
             renderAdminMembersTable,
             handleRegisterResponsible,
