@@ -1,1 +1,1790 @@
-html
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AAB | Portal do Associado & Gestão de Escritórios</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts: Playfair Display (Clássica Institucional) & Inter (UI Limpa) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    colors: {
+                        aab: {
+                            navy: '#0F172A',
+                            slate: '#1E293B',
+                            gold: '#B45309',
+                            amber: '#D97706',
+                            goldLight: '#FEF3C7',
+                            ice: '#F8FAFC',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Ajustes finos de scrollbar e animações */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #F1F5F9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #CBD5E1;
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94A3B8;
+        }
+        .fade-in {
+            animation: fadeIn 0.25s ease-out forwards;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans antialiased selection:bg-amber-700 selection:text-white">
+
+    <!-- NOTIFICAÇÃO TOAST GLOBAL -->
+    <div id="toast-container" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 pointer-events-none"></div>
+
+    <!-- ===================================================================== -->
+    <!-- TELA 1: AUTENTICAÇÃO / LOGIN DO ASSOCIADO AAB                         -->
+    <!-- ===================================================================== -->
+    <section id="auth-screen" class="min-h-screen flex flex-col lg:flex-row bg-slate-900">
+        
+        <!-- Lado Esquerdo: Identidade Institucional AAB -->
+        <div class="lg:w-5/12 bg-gradient-to-br from-slate-950 via-slate-900 to-slate-800 text-white p-8 lg:p-14 flex flex-col justify-between relative overflow-hidden border-b lg:border-b-0 lg:border-r border-slate-800">
+            <!-- Detalhe decorativo sutil -->
+            <div class="absolute -top-24 -left-24 w-96 h-96 bg-amber-600/10 rounded-full blur-3xl pointer-events-none"></div>
+            <div class="absolute bottom-10 right-10 w-64 h-64 bg-amber-500/5 rounded-full blur-2xl pointer-events-none"></div>
+
+            <div class="relative z-10">
+                <div class="flex items-center gap-3.5 mb-8">
+                    <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-amber-600 to-amber-800 flex items-center justify-center shadow-lg shadow-amber-900/40 border border-amber-500/30">
+                        <i data-lucide="scale" class="w-6 h-6 text-white"></i>
+                    </div>
+                    <div>
+                        <span class="font-serif text-2xl font-bold tracking-wide text-white block leading-none">AAB</span>
+                        <span class="text-[11px] uppercase tracking-[0.2em] text-amber-400 font-medium">Associação dos Advogados do Brasil</span>
+                    </div>
+                </div>
+
+                <h1 class="font-serif text-3xl lg:text-4xl font-bold leading-tight text-slate-100 mb-5">
+                    Excelência na gestão jurídica e defesa das prerrogativas.
+                </h1>
+                <p class="text-slate-400 text-sm lg:text-base leading-relaxed mb-8">
+                    Acesse o ambiente exclusivo do associado. Gerencie prazos fatais, processos eletrônicos, carteira de clientes e honorários em uma plataforma integrada de alta segurança.
+                </p>
+
+                <div class="space-y-4 border-t border-slate-800 pt-6">
+                    <div class="flex items-start gap-3">
+                        <div class="p-1.5 rounded-lg bg-amber-500/10 text-amber-400 mt-0.5">
+                            <i data-lucide="shield-check" class="w-4 h-4"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-sm font-semibold text-slate-200">Segurança e Sigilo Profissional</h3>
+                            <p class="text-xs text-slate-400">Infraestrutura criptografada conforme o Estatuto da Advocacia.</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start gap-3">
+                        <div class="p-1.5 rounded-lg bg-amber-500/10 text-amber-400 mt-0.5">
+                            <i data-lucide="award" class="w-4 h-4"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-sm font-semibold text-slate-200">Benefícios Exclusivos AAB</h3>
+                            <p class="text-xs text-slate-400">Carteira digital, certificação ICP-Brasil e biblioteca jurisprudencial.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="relative z-10 mt-10 pt-6 border-t border-slate-800/80 flex items-center justify-between text-xs text-slate-500">
+                <span>© 2026 AAB - Todos os direitos reservados</span>
+                <span class="text-amber-500/80 font-medium">Portal v4.2</span>
+            </div>
+        </div>
+
+        <!-- Lado Direito: Formulários de Login e Primeiro Acesso -->
+        <div class="lg:w-7/12 bg-slate-50 flex items-center justify-center p-6 sm:p-12">
+            <div class="w-full max-w-md bg-white rounded-2xl shadow-xl shadow-slate-200/70 border border-slate-200/80 p-8">
+                
+                <!-- Abas Login / Cadastro -->
+                <div class="flex p-1 bg-slate-100 rounded-xl mb-7">
+                    <button type="button" id="tab-login" onclick="switchAuthTab('login')" class="flex-1 py-2.5 text-sm font-semibold rounded-lg bg-white text-slate-900 shadow-sm transition-all">
+                        Acesso do Associado
+                    </button>
+                    <button type="button" id="tab-register" onclick="switchAuthTab('register')" class="flex-1 py-2.5 text-sm font-medium rounded-lg text-slate-600 hover:text-slate-900 transition-all">
+                        Primeiro Acesso
+                    </button>
+                </div>
+
+                <!-- FORMULÁRIO DE LOGIN -->
+                <form id="login-form" onsubmit="handleLogin(event)" class="space-y-4">
+                    <div class="mb-2">
+                        <h2 class="font-serif text-2xl font-bold text-slate-900">Bem-vindo(a), Doutor(a)</h2>
+                        <p class="text-xs text-slate-500 mt-1">Insira suas credenciais institucionais para acessar seu escritório.</p>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1.5">Inscrição OAB / Registro AAB</label>
+                        <div class="relative">
+                            <i data-lucide="badge-check" class="w-4 h-4 text-slate-400 absolute left-3.5 top-3"></i>
+                            <input type="text" id="login-oab" required placeholder="Ex: 123.456/SP" class="w-full pl-10 pr-4 py-2.5 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-600/30 focus:border-amber-600 transition">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1.5">E-mail Institucional</label>
+                        <div class="relative">
+                            <i data-lucide="mail" class="w-4 h-4 text-slate-400 absolute left-3.5 top-3"></i>
+                            <input type="email" id="login-email" required placeholder="advogado@escritorio.adv.br" class="w-full pl-10 pr-4 py-2.5 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-600/30 focus:border-amber-600 transition">
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="flex justify-between items-center mb-1.5">
+                            <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600">Senha de Acesso</label>
+                            <button type="button" onclick="showToast('Instruções de recuperação enviadas para o e-mail cadastrado na AAB.', 'info')" class="text-xs font-medium text-amber-700 hover:text-amber-800">Esqueceu a senha?</button>
+                        </div>
+                        <div class="relative">
+                            <i data-lucide="lock" class="w-4 h-4 text-slate-400 absolute left-3.5 top-3"></i>
+                            <input type="password" id="login-password" required placeholder="••••••••" class="w-full pl-10 pr-4 py-2.5 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-600/30 focus:border-amber-600 transition">
+                        </div>
+                    </div>
+
+                    <button type="submit" class="w-full py-3 px-4 bg-slate-900 hover:bg-slate-800 text-white font-semibold text-sm rounded-xl shadow-md transition flex items-center justify-center gap-2 mt-2">
+                        <span>Entrar no Painel Jurídico</span>
+                        <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </button>
+
+                    <div class="relative my-5">
+                        <div class="absolute inset-0 flex items-center"><div class="w-full border-t border-slate-200"></div></div>
+                        <div class="relative flex justify-center text-xs"><span class="px-3 bg-white text-slate-400">Ambiente de Demonstração</span></div>
+                    </div>
+
+                    <button type="button" onclick="quickDemoLogin()" class="w-full py-2.5 px-4 bg-amber-50 hover:bg-amber-100/80 text-amber-900 border border-amber-300/80 font-semibold text-sm rounded-xl transition flex items-center justify-center gap-2">
+                        <i data-lucide="zap" class="w-4 h-4 text-amber-700"></i>
+                        <span>Acesso Rápido (Demonstração)</span>
+                    </button>
+                </form>
+
+                <!-- FORMULÁRIO DE PRIMEIRO ACESSO / CADASTRO -->
+                <form id="register-form" onsubmit="handleRegister(event)" class="space-y-4 hidden">
+                    <div class="mb-2">
+                        <h2 class="font-serif text-2xl font-bold text-slate-900">Habilitação de Associado</h2>
+                        <p class="text-xs text-slate-500 mt-1">Ative sua conta vinculada à Associação dos Advogados do Brasil.</p>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1">Nome Completo do(a) Advogado(a)</label>
+                        <input type="text" id="reg-name" required placeholder="Dr. Carlos Eduardo Vasconcelos" class="w-full px-3.5 py-2.5 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:outline-none focus:border-amber-600">
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1">Inscrição OAB</label>
+                            <input type="text" id="reg-oab" required placeholder="248.910/SP" class="w-full px-3.5 py-2.5 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:outline-none focus:border-amber-600">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1">Nome do Escritório</label>
+                            <input type="text" id="reg-firm" required placeholder="Vasconcelos & Associados" class="w-full px-3.5 py-2.5 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:outline-none focus:border-amber-600">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1">E-mail Profissional</label>
+                        <input type="email" id="reg-email" required placeholder="contato@vasconcelos.adv.br" class="w-full px-3.5 py-2.5 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:outline-none focus:border-amber-600">
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-600 mb-1">Criar Senha</label>
+                        <input type="password" id="reg-password" required placeholder="Mínimo 6 caracteres" minlength="4" class="w-full px-3.5 py-2.5 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:outline-none focus:border-amber-600">
+                    </div>
+
+                    <button type="submit" class="w-full py-3 px-4 bg-amber-700 hover:bg-amber-800 text-white font-semibold text-sm rounded-xl shadow-md transition flex items-center justify-center gap-2">
+                        <i data-lucide="user-plus" class="w-4 h-4"></i>
+                        <span>Concluir Cadastro e Acessar</span>
+                    </button>
+                </form>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ===================================================================== -->
+    <!-- TELA 2: PAINEL DE GESTÃO DO ESCRITÓRIO (DASHBOARD COMPLETO)           -->
+    <!-- ===================================================================== -->
+    <div id="dashboard-screen" class="hidden min-h-screen flex bg-slate-100">
+        
+        <!-- Backdrop Mobile Sidebar -->
+        <div id="sidebar-backdrop" onclick="toggleMobileSidebar()" class="fixed inset-0 bg-slate-900/60 z-30 hidden lg:hidden backdrop-blur-xs"></div>
+
+        <!-- SIDEBAR DE NAVEGAÇÃO -->
+        <aside id="sidebar" class="fixed lg:static inset-y-0 left-0 z-40 w-72 bg-slate-900 text-slate-300 flex flex-col justify-between transform -translate-x-full lg:translate-x-0 transition-transform duration-200 ease-in-out border-r border-slate-800">
+            
+            <div>
+                <!-- Logo AAB Sidebar -->
+                <div class="h-20 px-6 flex items-center justify-between border-b border-slate-800">
+                    <div class="flex items-center gap-3">
+                        <div class="w-9 h-9 rounded-lg bg-gradient-to-br from-amber-600 to-amber-800 flex items-center justify-center text-white shadow">
+                            <i data-lucide="scale" class="w-5 h-5"></i>
+                        </div>
+                        <div>
+                            <span class="font-serif text-lg font-bold text-white tracking-wide block leading-none">AAB</span>
+                            <span class="text-[10px] uppercase tracking-widest text-amber-400 font-medium">Gestão Jurídica</span>
+                        </div>
+                    </div>
+                    <button onclick="toggleMobileSidebar()" class="lg:hidden text-slate-400 hover:text-white p-1">
+                        <i data-lucide="x" class="w-5 h-5"></i>
+                    </button>
+                </div>
+
+                <!-- Perfil Resumido do Associado -->
+                <div class="px-5 py-4 mx-4 mt-4 rounded-xl bg-slate-800/70 border border-slate-700/70">
+                    <div class="flex items-center gap-3">
+                        <div id="user-avatar" class="w-10 h-10 rounded-full bg-amber-700/30 border border-amber-500/40 text-amber-400 font-serif font-bold flex items-center justify-center text-sm shrink-0">
+                            HM
+                        </div>
+                        <div class="min-w-0">
+                            <p id="sidebar-user-name" class="text-sm font-semibold text-white truncate">Dra. Helena Monteiro</p>
+                            <p id="sidebar-user-oab" class="text-xs text-amber-400 font-medium">OAB/SP 312.845</p>
+                        </div>
+                    </div>
+                    <div class="mt-2.5 pt-2 border-t border-slate-700/60 flex items-center justify-between text-[11px] text-slate-400">
+                        <span id="sidebar-firm-name" class="truncate">Monteiro & Alencar Advogados</span>
+                        <span class="px-1.5 py-0.5 rounded bg-emerald-500/10 text-emerald-400 font-medium shrink-0">Ativo</span>
+                    </div>
+                </div>
+
+                <!-- Menu de Navegação -->
+                <nav class="mt-5 px-4 space-y-1">
+                    <button onclick="navigateTo('overview')" data-nav="overview" class="nav-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all bg-amber-700 text-white shadow-sm">
+                        <i data-lucide="layout-dashboard" class="w-4 h-4"></i>
+                        <span>Visão Geral</span>
+                    </button>
+                    <button onclick="navigateTo('cases')" data-nav="cases" class="nav-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-300 hover:bg-slate-800 hover:text-white transition-all">
+                        <i data-lucide="briefcase" class="w-4 h-4"></i>
+                        <span>Gestão de Processos</span>
+                        <span id="badge-cases" class="ml-auto text-xs bg-slate-800 text-slate-300 px-2 py-0.5 rounded-full">0</span>
+                    </button>
+                    <button onclick="navigateTo('clients')" data-nav="clients" class="nav-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-300 hover:bg-slate-800 hover:text-white transition-all">
+                        <i data-lucide="users" class="w-4 h-4"></i>
+                        <span>Clientes & CRM</span>
+                    </button>
+                    <button onclick="navigateTo('deadlines')" data-nav="deadlines" class="nav-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-300 hover:bg-slate-800 hover:text-white transition-all">
+                        <i data-lucide="calendar-clock" class="w-4 h-4"></i>
+                        <span>Prazos & Agenda</span>
+                        <span id="badge-deadlines" class="ml-auto text-xs bg-amber-600/20 text-amber-400 border border-amber-500/30 px-2 py-0.5 rounded-full">0</span>
+                    </button>
+                    <button onclick="navigateTo('finance')" data-nav="finance" class="nav-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-300 hover:bg-slate-800 hover:text-white transition-all">
+                        <i data-lucide="wallet" class="w-4 h-4"></i>
+                        <span>Financeiro & Honorários</span>
+                    </button>
+                    <button onclick="navigateTo('benefits')" data-nav="benefits" class="nav-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-300 hover:bg-slate-800 hover:text-white transition-all">
+                        <i data-lucide="id-card" class="w-4 h-4 text-amber-400"></i>
+                        <span>Benefícios AAB</span>
+                    </button>
+                </nav>
+            </div>
+
+            <!-- Rodapé Sidebar: Reset Demo & Logout -->
+            <div class="p-4 border-t border-slate-800 space-y-2">
+                <button onclick="resetDemoData()" class="w-full flex items-center justify-center gap-2 px-3 py-2 rounded-xl text-xs font-medium text-slate-400 hover:text-slate-200 hover:bg-slate-800/70 transition">
+                    <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
+                    <span>Restaurar Dados Padrão</span>
+                </button>
+                <button onclick="handleLogout()" class="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold text-rose-300 bg-rose-950/40 hover:bg-rose-900/60 border border-rose-900/50 transition">
+                    <i data-lucide="log-out" class="w-4 h-4"></i>
+                    <span>Sair do Portal</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- ÁREA PRINCIPAL DE CONTEÚDO -->
+        <div class="flex-1 flex flex-col min-w-0">
+            
+            <!-- HEADER SUPERIOR -->
+            <header class="h-20 bg-white border-b border-slate-200 px-4 sm:px-8 flex items-center justify-between sticky top-0 z-20">
+                <div class="flex items-center gap-3">
+                    <button onclick="toggleMobileSidebar()" class="lg:hidden p-2 rounded-xl text-slate-600 hover:bg-slate-100">
+                        <i data-lucide="menu" class="w-6 h-6"></i>
+                    </button>
+                    <div>
+                        <h1 id="page-title" class="font-serif text-xl sm:text-2xl font-bold text-slate-900">Visão Geral do Escritório</h1>
+                        <p id="current-date-display" class="text-xs text-slate-500 hidden sm:block">Segunda-feira, 23 de Novembro de 2026</p>
+                    </div>
+                </div>
+
+                <div class="flex items-center gap-3">
+                    <button onclick="openModal('modal-new-case')" class="hidden sm:flex items-center gap-2 px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white text-xs font-semibold rounded-xl shadow-xs transition">
+                        <i data-lucide="plus" class="w-4 h-4 text-amber-400"></i>
+                        <span>Novo Processo</span>
+                    </button>
+                    <button onclick="navigateTo('benefits')" title="Carteira Digital AAB" class="p-2.5 rounded-xl bg-amber-50 text-amber-800 border border-amber-200 hover:bg-amber-100 transition flex items-center gap-2">
+                        <i data-lucide="shield" class="w-4 h-4"></i>
+                        <span class="text-xs font-semibold hidden md:inline">Carteira AAB</span>
+                    </button>
+                </div>
+            </header>
+
+            <!-- CONTEÚDO DINÂMICO DAS ABAS -->
+            <main class="flex-1 p-4 sm:p-8 max-w-7xl w-full mx-auto">
+
+                <!-- ========================================================= -->
+                <!-- ABA A: VISÃO GERAL (DASHBOARD)                            -->
+                <!-- ========================================================= -->
+                <div id="view-overview" class="view-section space-y-6 fade-in">
+                    
+                    <!-- Cards de KPIs -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5">
+                        <!-- KPI 1 -->
+                        <div class="bg-white rounded-2xl p-5 border border-slate-200/90 shadow-xs hover:shadow-md transition">
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="text-xs font-semibold uppercase tracking-wider text-slate-500">Processos Ativos</span>
+                                <div class="w-9 h-9 rounded-xl bg-slate-900 text-amber-400 flex items-center justify-center">
+                                    <i data-lucide="scale" class="w-4 h-4"></i>
+                                </div>
+                            </div>
+                            <div class="flex items-baseline justify-between">
+                                <h3 id="kpi-active-cases" class="text-3xl font-bold text-slate-900">0</h3>
+                                <span class="text-xs font-medium text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full">Em andamento</span>
+                            </div>
+                        </div>
+
+                        <!-- KPI 2 -->
+                        <div class="bg-white rounded-2xl p-5 border border-amber-300/80 shadow-xs hover:shadow-md transition relative overflow-hidden">
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="text-xs font-semibold uppercase tracking-wider text-amber-800">Prazos (Próx. 7 Dias)</span>
+                                <div class="w-9 h-9 rounded-xl bg-amber-100 text-amber-700 flex items-center justify-center">
+                                    <i data-lucide="alert-triangle" class="w-4 h-4"></i>
+                                </div>
+                            </div>
+                            <div class="flex items-baseline justify-between">
+                                <h3 id="kpi-urgent-deadlines" class="text-3xl font-bold text-amber-700">0</h3>
+                                <span class="text-xs font-semibold text-amber-800 bg-amber-100 px-2 py-0.5 rounded-full">Atenção Fatal</span>
+                            </div>
+                        </div>
+
+                        <!-- KPI 3 -->
+                        <div class="bg-white rounded-2xl p-5 border border-slate-200/90 shadow-xs hover:shadow-md transition">
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="text-xs font-semibold uppercase tracking-wider text-slate-500">Honorários a Receber</span>
+                                <div class="w-9 h-9 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center">
+                                    <i data-lucide="banknote" class="w-4 h-4"></i>
+                                </div>
+                            </div>
+                            <div class="flex items-baseline justify-between">
+                                <h3 id="kpi-receivable" class="text-2xl sm:text-3xl font-bold text-slate-900">R$ 0,00</h3>
+                            </div>
+                        </div>
+
+                        <!-- KPI 4 -->
+                        <div class="bg-white rounded-2xl p-5 border border-slate-200/90 shadow-xs hover:shadow-md transition">
+                            <div class="flex items-center justify-between mb-3">
+                                <span class="text-xs font-semibold uppercase tracking-wider text-slate-500">Clientes Ativos</span>
+                                <div class="w-9 h-9 rounded-xl bg-blue-50 text-blue-700 flex items-center justify-center">
+                                    <i data-lucide="users" class="w-4 h-4"></i>
+                                </div>
+                            </div>
+                            <div class="flex items-baseline justify-between">
+                                <h3 id="kpi-active-clients" class="text-3xl font-bold text-slate-900">0</h3>
+                                <span class="text-xs font-medium text-slate-500">PF & PJ</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Grid Inferior: Prazos da Semana & Movimentações PJe/e-SAJ -->
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                        
+                        <!-- Prazos Fatais e Audiências da Semana -->
+                        <div class="lg:col-span-7 bg-white rounded-2xl border border-slate-200/90 shadow-xs flex flex-col">
+                            <div class="p-5 border-b border-slate-100 flex items-center justify-between">
+                                <div class="flex items-center gap-2.5">
+                                    <i data-lucide="clock" class="w-5 h-5 text-amber-700"></i>
+                                    <h2 class="font-serif text-lg font-bold text-slate-900">Prazos Fatais & Audiências</h2>
+                                </div>
+                                <button onclick="navigateTo('deadlines')" class="text-xs font-semibold text-amber-700 hover:text-amber-800">Ver agenda completa →</button>
+                            </div>
+                            <div id="overview-deadlines-list" class="p-5 divide-y divide-slate-100 space-y-3 flex-1">
+                                <!-- Preenchido via JS -->
+                            </div>
+                        </div>
+
+                        <!-- Últimas Movimentações Processuais (PJe / e-SAJ) -->
+                        <div class="lg:col-span-5 bg-white rounded-2xl border border-slate-200/90 shadow-xs flex flex-col">
+                            <div class="p-5 border-b border-slate-100 flex items-center justify-between">
+                                <div class="flex items-center gap-2.5">
+                                    <i data-lucide="radio" class="w-5 h-5 text-slate-700"></i>
+                                    <h2 class="font-serif text-lg font-bold text-slate-900">Intimações PJe / e-SAJ</h2>
+                                </div>
+                                <span class="text-[11px] font-medium px-2 py-0.5 rounded bg-slate-100 text-slate-600">Sincronizado</span>
+                            </div>
+                            <div class="p-5 space-y-4">
+                                <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200/70">
+                                    <div class="flex items-center justify-between text-xs mb-1">
+                                        <span class="font-semibold text-amber-800 bg-amber-100/80 px-2 py-0.5 rounded">TJSP • e-SAJ</span>
+                                        <span class="text-slate-400">Hoje, 09:42</span>
+                                    </div>
+                                    <p class="text-xs font-semibold text-slate-800 mt-1.5">Proc. 1048291-44.2025.8.26.0100</p>
+                                    <p class="text-xs text-slate-600 mt-1">Publicado despacho: "Intime-se a parte autora para manifestação sobre a contestação no prazo de 15 dias."</p>
+                                </div>
+
+                                <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200/70">
+                                    <div class="flex items-center justify-between text-xs mb-1">
+                                        <span class="font-semibold text-blue-800 bg-blue-100/80 px-2 py-0.5 rounded">TRT-2 • PJe</span>
+                                        <span class="text-slate-400">Ontem, 17:15</span>
+                                    </div>
+                                    <p class="text-xs font-semibold text-slate-800 mt-1.5">Proc. 0010452-88.2025.5.02.0014</p>
+                                    <p class="text-xs text-slate-600 mt-1">Designada Audiência de Instrução e Julgamento para o dia 27/11/2026 às 14h00.</p>
+                                </div>
+
+                                <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200/70">
+                                    <div class="flex items-center justify-between text-xs mb-1">
+                                        <span class="font-semibold text-slate-800 bg-slate-200/80 px-2 py-0.5 rounded">TRF-3 • PJe</span>
+                                        <span class="text-slate-400">20/11/2026</span>
+                                    </div>
+                                    <p class="text-xs font-semibold text-slate-800 mt-1.5">Proc. 5009123-12.2024.4.03.6100</p>
+                                    <p class="text-xs text-slate-600 mt-1">Juntada de petição de cumprimento de sentença e cálculo homologado.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- ========================================================= -->
+                <!-- ABA B: GESTÃO DE PROCESSOS                                -->
+                <!-- ========================================================= -->
+                <div id="view-cases" class="view-section hidden space-y-6 fade-in">
+                    
+                    <!-- Barra de Filtros e Ação -->
+                    <div class="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 shadow-xs flex flex-col md:flex-row gap-3 justify-between items-stretch md:items-center">
+                        <div class="flex flex-col sm:flex-row gap-3 flex-1">
+                            <div class="relative flex-1 max-w-md">
+                                <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3.5 top-3"></i>
+                                <input type="text" id="filter-case-search" oninput="renderCasesTable()" placeholder="Buscar por nº CNJ, cliente ou parte contrária..." class="w-full pl-10 pr-4 py-2 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:outline-none focus:border-amber-600">
+                            </div>
+                            <select id="filter-case-area" onchange="renderCasesTable()" class="px-3.5 py-2 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:outline-none focus:border-amber-600">
+                                <option value="Todas">Todas as Áreas</option>
+                                <option value="Cível">Cível</option>
+                                <option value="Trabalhista">Trabalhista</option>
+                                <option value="Tributário">Tributário</option>
+                                <option value="Criminal">Criminal</option>
+                                <option value="Empresarial">Empresarial</option>
+                            </select>
+                            <select id="filter-case-status" onchange="renderCasesTable()" class="px-3.5 py-2 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:outline-none focus:border-amber-600">
+                                <option value="Todos">Todos os Status</option>
+                                <option value="Ativo">Ativo</option>
+                                <option value="Aguardando Julgamento">Aguardando Julgamento</option>
+                                <option value="Recursal">Recursal</option>
+                                <option value="Arquivado">Arquivado</option>
+                            </select>
+                        </div>
+                        <button onclick="openModal('modal-new-case')" class="px-4 py-2.5 bg-amber-700 hover:bg-amber-800 text-white text-sm font-semibold rounded-xl shadow-xs transition flex items-center justify-center gap-2 shrink-0">
+                            <i data-lucide="plus-circle" class="w-4 h-4"></i>
+                            <span>Novo Processo</span>
+                        </button>
+                    </div>
+
+                    <!-- Tabela de Processos -->
+                    <div class="bg-white rounded-2xl border border-slate-200 shadow-xs overflow-hidden">
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left border-collapse">
+                                <thead>
+                                    <tr class="bg-slate-900 text-slate-200 text-xs uppercase tracking-wider">
+                                        <th class="py-3.5 px-4 font-semibold">Processo (CNJ) / Área</th>
+                                        <th class="py-3.5 px-4 font-semibold">Cliente & Parte Contrária</th>
+                                        <th class="py-3.5 px-4 font-semibold">Vara / Tribunal</th>
+                                        <th class="py-3.5 px-4 font-semibold">Próximo Prazo</th>
+                                        <th class="py-3.5 px-4 font-semibold">Status</th>
+                                        <th class="py-3.5 px-4 font-semibold text-right">Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="cases-table-body" class="divide-y divide-slate-200 text-sm">
+                                    <!-- Renderizado via JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ========================================================= -->
+                <!-- ABA C: CLIENTES E CRM JURÍDICO                            -->
+                <!-- ========================================================= -->
+                <div id="view-clients" class="view-section hidden space-y-6 fade-in">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-white p-5 rounded-2xl border border-slate-200 shadow-xs">
+                        <div>
+                            <h2 class="font-serif text-lg font-bold text-slate-900">Carteira de Clientes (PF & PJ)</h2>
+                            <p class="text-xs text-slate-500">Gerencie contatos, procurações e processos vinculados por cliente.</p>
+                        </div>
+                        <button onclick="openModal('modal-new-client')" class="px-4 py-2.5 bg-slate-900 hover:bg-slate-800 text-white text-sm font-semibold rounded-xl transition flex items-center gap-2">
+                            <i data-lucide="user-plus" class="w-4 h-4 text-amber-400"></i>
+                            <span>Cadastrar Cliente</span>
+                        </button>
+                    </div>
+
+                    <div id="clients-grid" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
+                        <!-- Renderizado via JS -->
+                    </div>
+                </div>
+
+                <!-- ========================================================= -->
+                <!-- ABA D: PRAZOS E AGENDA JURÍDICA                           -->
+                <!-- ========================================================= -->
+                <div id="view-deadlines" class="view-section hidden space-y-6 fade-in">
+                    
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                        <!-- Formulário Rápido de Novo Prazo -->
+                        <div class="lg:col-span-4 bg-white p-5 rounded-2xl border border-slate-200 shadow-xs h-fit">
+                            <h2 class="font-serif text-lg font-bold text-slate-900 mb-1">Agendar Prazo / Ato</h2>
+                            <p class="text-xs text-slate-500 mb-4">Controle rigoroso de prazos processuais.</p>
+
+                            <form onsubmit="handleAddDeadline(event)" class="space-y-3.5">
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-700 mb-1">Descrição do Ato / Peça</label>
+                                    <input type="text" id="dl-title" required placeholder="Ex: Protocolar Réplica à Contestação" class="w-full px-3 py-2 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:outline-none focus:border-amber-600">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-semibold text-slate-700 mb-1">Processo Vinculado (CNJ)</label>
+                                    <input type="text" id="dl-case" required placeholder="Ex: 1048291-44.2025.8.26.0100" class="w-full px-3 py-2 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:outline-none focus:border-amber-600">
+                                </div>
+                                <div class="grid grid-cols-2 gap-3">
+                                    <div>
+                                        <label class="block text-xs font-semibold text-slate-700 mb-1">Data Limite</label>
+                                        <input type="date" id="dl-date" required class="w-full px-3 py-2 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:outline-none focus:border-amber-600">
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-semibold text-slate-700 mb-1">Tipo / Urgência</label>
+                                        <select id="dl-type" class="w-full px-3 py-2 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:outline-none focus:border-amber-600">
+                                            <option value="Fatal">Prazo Fatal</option>
+                                            <option value="Audiência">Audiência</option>
+                                            <option value="Reunião">Reunião</option>
+                                            <option value="Diligência">Diligência</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <button type="submit" class="w-full py-2.5 bg-amber-700 hover:bg-amber-800 text-white text-sm font-semibold rounded-xl transition flex items-center justify-center gap-2">
+                                    <i data-lucide="calendar-plus" class="w-4 h-4"></i>
+                                    <span>Adicionar à Agenda</span>
+                                </button>
+                            </form>
+                        </div>
+
+                        <!-- Lista Filtrável de Prazos -->
+                        <div class="lg:col-span-8 bg-white p-5 rounded-2xl border border-slate-200 shadow-xs">
+                            <div class="flex flex-wrap items-center justify-between gap-3 pb-4 border-b border-slate-100 mb-4">
+                                <h2 class="font-serif text-lg font-bold text-slate-900">Pauta de Prazos e Compromissos</h2>
+                                <div class="flex flex-wrap gap-1.5">
+                                    <button onclick="setDeadlineFilter('Todos')" class="dl-filter-btn px-3 py-1 text-xs font-semibold rounded-lg bg-slate-900 text-white" data-filter="Todos">Todos</button>
+                                    <button onclick="setDeadlineFilter('Fatal')" class="dl-filter-btn px-3 py-1 text-xs font-medium rounded-lg bg-slate-100 text-slate-600 hover:bg-slate-200" data-filter="Fatal">Fatais</button>
+                                    <button onclick="setDeadlineFilter('Audiência')" class="dl-filter-btn px-3 py-1 text-xs font-medium rounded-lg bg-slate-100 text-slate-600 hover:bg-slate-200" data-filter="Audiência">Audiências</button>
+                                    <button onclick="setDeadlineFilter('Reunião')" class="dl-filter-btn px-3 py-1 text-xs font-medium rounded-lg bg-slate-100 text-slate-600 hover:bg-slate-200" data-filter="Reunião">Reuniões</button>
+                                    <button onclick="setDeadlineFilter('Diligência')" class="dl-filter-btn px-3 py-1 text-xs font-medium rounded-lg bg-slate-100 text-slate-600 hover:bg-slate-200" data-filter="Diligência">Diligências</button>
+                                </div>
+                            </div>
+
+                            <div id="deadlines-full-list" class="space-y-3">
+                                <!-- Renderizado via JS -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ========================================================= -->
+                <!-- ABA E: CONTROLE FINANCEIRO E HONORÁRIOS                   -->
+                <!-- ========================================================= -->
+                <div id="view-finance" class="view-section hidden space-y-6 fade-in">
+                    
+                    <!-- Resumo Financeiro -->
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+                        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs">
+                            <span class="text-xs font-semibold uppercase tracking-wider text-slate-500">Receitas (Honorários Pagos)</span>
+                            <h3 id="fin-total-income" class="text-2xl font-bold text-emerald-700 mt-2">R$ 0,00</h3>
+                            <p class="text-xs text-slate-400 mt-1">Contratuais e Sucumbência</p>
+                        </div>
+                        <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs">
+                            <span class="text-xs font-semibold uppercase tracking-wider text-slate-500">Despesas & Custas</span>
+                            <h3 id="fin-total-expense" class="text-2xl font-bold text-rose-700 mt-2">R$ 0,00</h3>
+                            <p class="text-xs text-slate-400 mt-1">Custas processuais e operacionais</p>
+                        </div>
+                        <div class="bg-slate-900 text-white p-5 rounded-2xl shadow-md border border-slate-800">
+                            <span class="text-xs font-semibold uppercase tracking-wider text-amber-400">Saldo Líquido em Caixa</span>
+                            <h3 id="fin-balance" class="text-2xl font-bold text-white mt-2">R$ 0,00</h3>
+                            <p class="text-xs text-slate-400 mt-1">Exercício atual do escritório</p>
+                        </div>
+                    </div>
+
+                    <!-- Tabela de Lançamentos -->
+                    <div class="bg-white rounded-2xl border border-slate-200 shadow-xs overflow-hidden">
+                        <div class="p-5 border-b border-slate-100 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3">
+                            <div>
+                                <h2 class="font-serif text-lg font-bold text-slate-900">Livro Caixa & Honorários</h2>
+                                <p class="text-xs text-slate-500">Controle de honorários contratuais, sucumbenciais e custas.</p>
+                            </div>
+                            <button onclick="openModal('modal-new-finance')" class="px-4 py-2 bg-amber-700 hover:bg-amber-800 text-white text-sm font-semibold rounded-xl transition flex items-center gap-2">
+                                <i data-lucide="plus" class="w-4 h-4"></i>
+                                <span>Novo Lançamento</span>
+                            </button>
+                        </div>
+
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left border-collapse">
+                                <thead>
+                                    <tr class="bg-slate-50 text-slate-600 text-xs uppercase border-b border-slate-200">
+                                        <th class="py-3 px-4 font-semibold">Descrição / Cliente</th>
+                                        <th class="py-3 px-4 font-semibold">Categoria</th>
+                                        <th class="py-3 px-4 font-semibold">Vencimento</th>
+                                        <th class="py-3 px-4 font-semibold">Valor</th>
+                                        <th class="py-3 px-4 font-semibold">Status</th>
+                                        <th class="py-3 px-4 font-semibold text-right">Ação</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="finance-table-body" class="divide-y divide-slate-100 text-sm">
+                                    <!-- Renderizado via JS -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ========================================================= -->
+                <!-- ABA F: BENEFÍCIOS E CONVÊNIOS AAB (EXCLUSIVO ASSOCIADOS)   -->
+                <!-- ========================================================= -->
+                <div id="view-benefits" class="view-section hidden space-y-6 fade-in">
+                    
+                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+                        
+                        <!-- Carteira Digital do Associado AAB -->
+                        <div class="lg:col-span-5">
+                            <div class="rounded-2xl bg-gradient-to-br from-slate-950 via-slate-900 to-slate-800 text-white p-6 shadow-xl border border-amber-500/30 relative overflow-hidden">
+                                <div class="absolute -right-10 -bottom-10 w-44 h-44 bg-amber-500/10 rounded-full blur-2xl"></div>
+                                
+                                <div class="flex items-center justify-between border-b border-slate-700/80 pb-4 mb-5">
+                                    <div class="flex items-center gap-3">
+                                        <div class="w-10 h-10 rounded-lg bg-amber-600 flex items-center justify-center text-white">
+                                            <i data-lucide="scale" class="w-5 h-5"></i>
+                                        </div>
+                                        <div>
+                                            <span class="font-serif font-bold text-base tracking-wide block">AAB</span>
+                                            <span class="text-[10px] uppercase tracking-widest text-amber-400">Identidade Digital do Associado</span>
+                                        </div>
+                                    </div>
+                                    <span class="px-2.5 py-1 rounded-full text-[11px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                                        REGULAR • ATIVO
+                                    </span>
+                                </div>
+
+                                <div class="space-y-3 mb-6">
+                                    <div>
+                                        <span class="text-[10px] uppercase tracking-wider text-slate-400 block">Advogado(a) Titular</span>
+                                        <p id="card-user-name" class="font-serif text-lg font-bold text-white">Dra. Helena Monteiro</p>
+                                    </div>
+                                    <div class="grid grid-cols-2 gap-4">
+                                        <div>
+                                            <span class="text-[10px] uppercase tracking-wider text-slate-400 block">Inscrição OAB/AAB</span>
+                                            <p id="card-user-oab" class="text-sm font-semibold text-amber-400">312.845/SP</p>
+                                        </div>
+                                        <div>
+                                            <span class="text-[10px] uppercase tracking-wider text-slate-400 block">Validade Institucional</span>
+                                            <p class="text-sm font-semibold text-slate-200">31/12/2027</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="pt-4 border-t border-slate-700/80 flex items-center justify-between">
+                                    <div class="text-[11px] text-slate-400">
+                                        <p>Token de Autenticação ICP-AAB</p>
+                                        <p class="font-mono text-slate-300">AAB-9948-2026-BR</p>
+                                    </div>
+                                    <div class="p-2 bg-white rounded-lg text-slate-900">
+                                        <i data-lucide="qr-code" class="w-8 h-8"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Convênios e Serviços Exclusivos -->
+                        <div class="lg:col-span-7 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs flex flex-col justify-between">
+                                <div>
+                                    <div class="w-10 h-10 rounded-xl bg-amber-50 text-amber-700 flex items-center justify-center mb-3">
+                                        <i data-lucide="key-round" class="w-5 h-5"></i>
+                                    </div>
+                                    <h3 class="font-serif text-base font-bold text-slate-900">Certificado Digital A3</h3>
+                                    <p class="text-xs text-slate-600 mt-1 leading-relaxed">Emissão e renovação gratuita de Token/Nuvem ICP-Brasil para acesso ao PJe, e-SAJ e e-Proc.</p>
+                                </div>
+                                <button onclick="showToast('Solicitação de Certificado Digital AAB iniciada!', 'success')" class="mt-4 text-xs font-semibold text-amber-700 hover:text-amber-800 flex items-center gap-1">
+                                    <span>Solicitar Renovação</span>
+                                    <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
+                                </button>
+                            </div>
+
+                            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs flex flex-col justify-between">
+                                <div>
+                                    <div class="w-10 h-10 rounded-xl bg-slate-900 text-amber-400 flex items-center justify-center mb-3">
+                                        <i data-lucide="book-open" class="w-5 h-5"></i>
+                                    </div>
+                                    <h3 class="font-serif text-base font-bold text-slate-900">Biblioteca & Doutrina AAB</h3>
+                                    <p class="text-xs text-slate-600 mt-1 leading-relaxed">Acesso ilimitado a mais de 18.000 obras jurídicas digitais, revistas dos tribunais e modelos de peças.</p>
+                                </div>
+                                <button onclick="showToast('Acessando acervo digital da Biblioteca AAB...', 'info')" class="mt-4 text-xs font-semibold text-amber-700 hover:text-amber-800 flex items-center gap-1">
+                                    <span>Acessar Acervo</span>
+                                    <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
+                                </button>
+                            </div>
+
+                            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs flex flex-col justify-between">
+                                <div>
+                                    <div class="w-10 h-10 rounded-xl bg-blue-50 text-blue-700 flex items-center justify-center mb-3">
+                                        <i data-lucide="building-2" class="w-5 h-5"></i>
+                                    </div>
+                                    <h3 class="font-serif text-base font-bold text-slate-900">Salas de Apoio & Coworking</h3>
+                                    <p class="text-xs text-slate-600 mt-1 leading-relaxed">Reserva de salas de audiência virtual e escritórios compartilhados nas sedes da AAB em todo o país.</p>
+                                </div>
+                                <button onclick="showToast('Agenda de salas compartilhadas AAB aberta.', 'info')" class="mt-4 text-xs font-semibold text-amber-700 hover:text-amber-800 flex items-center gap-1">
+                                    <span>Reservar Sala</span>
+                                    <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
+                                </button>
+                            </div>
+
+                            <div class="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs flex flex-col justify-between">
+                                <div>
+                                    <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center mb-3">
+                                        <i data-lucide="heart-handshake" class="w-5 h-5"></i>
+                                    </div>
+                                    <h3 class="font-serif text-base font-bold text-slate-900">Caixa de Assistência & Saúde</h3>
+                                    <p class="text-xs text-slate-600 mt-1 leading-relaxed">Planos de saúde corporativos para sociedades de advogados, previdência privada e convênios.</p>
+                                </div>
+                                <button onclick="showToast('Tabela de convênios AAB Saúde enviada ao seu e-mail.', 'success')" class="mt-4 text-xs font-semibold text-amber-700 hover:text-amber-800 flex items-center gap-1">
+                                    <span>Consultar Convênios</span>
+                                    <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </main>
+        </div>
+    </div>
+
+    <!-- ===================================================================== -->
+    <!-- MODAIS DE CADASTRO E DETALHES                                         -->
+    <!-- ===================================================================== -->
+
+    <!-- MODAL: NOVO PROCESSO -->
+    <div id="modal-new-case" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-lg w-full shadow-2xl border border-slate-200 overflow-hidden fade-in">
+            <div class="px-6 py-4 bg-slate-900 text-white flex items-center justify-between">
+                <h3 class="font-serif text-lg font-bold">Cadastrar Novo Processo</h3>
+                <button onclick="closeModal('modal-new-case')" class="text-slate-400 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button>
+            </div>
+            <form onsubmit="handleAddCase(event)" class="p-6 space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold uppercase text-slate-600 mb-1">Número do Processo (Padrão CNJ)</label>
+                    <input type="text" id="case-cnj" required placeholder="0000000-00.2026.8.26.0100" class="w-full px-3.5 py-2 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:outline-none focus:border-amber-600">
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-semibold uppercase text-slate-600 mb-1">Cliente (Autor/Réu)</label>
+                        <input type="text" id="case-client" required placeholder="Nome do Cliente" class="w-full px-3.5 py-2 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:outline-none focus:border-amber-600">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold uppercase text-slate-600 mb-1">Parte Contrária</label>
+                        <input type="text" id="case-opposing" required placeholder="Ex: Banco Nacional S.A." class="w-full px-3.5 py-2 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:outline-none focus:border-amber-600">
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-semibold uppercase text-slate-600 mb-1">Área do Direito</label>
+                        <select id="case-area" class="w-full px-3.5 py-2 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:outline-none focus:border-amber-600">
+                            <option value="Cível">Cível</option>
+                            <option value="Trabalhista">Trabalhista</option>
+                            <option value="Tributário">Tributário</option>
+                            <option value="Criminal">Criminal</option>
+                            <option value="Empresarial">Empresarial</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold uppercase text-slate-600 mb-1">Status Inicial</label>
+                        <select id="case-status" class="w-full px-3.5 py-2 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:outline-none focus:border-amber-600">
+                            <option value="Ativo">Ativo</option>
+                            <option value="Aguardando Julgamento">Aguardando Julgamento</option>
+                            <option value="Recursal">Recursal</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-semibold uppercase text-slate-600 mb-1">Vara / Tribunal</label>
+                        <input type="text" id="case-court" required placeholder="Ex: 4ª Vara Cível - TJSP" class="w-full px-3.5 py-2 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:outline-none focus:border-amber-600">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold uppercase text-slate-600 mb-1">Próximo Prazo</label>
+                        <input type="date" id="case-deadline" required class="w-full px-3.5 py-2 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:outline-none focus:border-amber-600">
+                    </div>
+                </div>
+                <div class="pt-2 flex justify-end gap-2">
+                    <button type="button" onclick="closeModal('modal-new-case')" class="px-4 py-2 text-sm font-medium text-slate-600 hover:bg-slate-100 rounded-xl">Cancelar</button>
+                    <button type="submit" class="px-5 py-2 text-sm font-semibold bg-amber-700 hover:bg-amber-800 text-white rounded-xl">Salvar Processo</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL: DETALHES / EDITAR STATUS DO PROCESSO -->
+    <div id="modal-case-details" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-lg w-full shadow-2xl border border-slate-200 overflow-hidden fade-in">
+            <div class="px-6 py-4 bg-slate-900 text-white flex items-center justify-between">
+                <h3 class="font-serif text-lg font-bold">Ficha Processual</h3>
+                <button onclick="closeModal('modal-case-details')" class="text-slate-400 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button>
+            </div>
+            <div id="case-details-content" class="p-6 space-y-4">
+                <!-- Preenchido via JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL: NOVO CLIENTE -->
+    <div id="modal-new-client" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-md w-full shadow-2xl border border-slate-200 overflow-hidden fade-in">
+            <div class="px-6 py-4 bg-slate-900 text-white flex items-center justify-between">
+                <h3 class="font-serif text-lg font-bold">Novo Cliente</h3>
+                <button onclick="closeModal('modal-new-client')" class="text-slate-400 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button>
+            </div>
+            <form onsubmit="handleAddClient(event)" class="p-6 space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold uppercase text-slate-600 mb-1">Nome Completo ou Razão Social</label>
+                    <input type="text" id="cli-name" required placeholder="Ex: Construtora Horizonte Ltda" class="w-full px-3.5 py-2 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:outline-none focus:border-amber-600">
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-semibold uppercase text-slate-600 mb-1">Tipo</label>
+                        <select id="cli-type" class="w-full px-3.5 py-2 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:outline-none focus:border-amber-600">
+                            <option value="Pessoa Física">Pessoa Física</option>
+                            <option value="Pessoa Jurídica">Pessoa Jurídica</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold uppercase text-slate-600 mb-1">CPF / CNPJ</label>
+                        <input type="text" id="cli-doc" required placeholder="000.000.000-00" class="w-full px-3.5 py-2 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:outline-none focus:border-amber-600">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold uppercase text-slate-600 mb-1">Telefone / WhatsApp</label>
+                    <input type="text" id="cli-phone" required placeholder="(11) 99999-0000" class="w-full px-3.5 py-2 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:outline-none focus:border-amber-600">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold uppercase text-slate-600 mb-1">E-mail</label>
+                    <input type="email" id="cli-email" required placeholder="cliente@dominio.com.br" class="w-full px-3.5 py-2 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:outline-none focus:border-amber-600">
+                </div>
+                <div class="pt-2 flex justify-end gap-2">
+                    <button type="button" onclick="closeModal('modal-new-client')" class="px-4 py-2 text-sm font-medium text-slate-600 hover:bg-slate-100 rounded-xl">Cancelar</button>
+                    <button type="submit" class="px-5 py-2 text-sm font-semibold bg-slate-900 hover:bg-slate-800 text-white rounded-xl">Cadastrar Cliente</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MODAL: NOVO LANÇAMENTO FINANCEIRO -->
+    <div id="modal-new-finance" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs hidden flex items-center justify-center p-4">
+        <div class="bg-white rounded-2xl max-w-md w-full shadow-2xl border border-slate-200 overflow-hidden fade-in">
+            <div class="px-6 py-4 bg-slate-900 text-white flex items-center justify-between">
+                <h3 class="font-serif text-lg font-bold">Novo Lançamento Financeiro</h3>
+                <button onclick="closeModal('modal-new-finance')" class="text-slate-400 hover:text-white"><i data-lucide="x" class="w-5 h-5"></i></button>
+            </div>
+            <form onsubmit="handleAddFinance(event)" class="p-6 space-y-4">
+                <div>
+                    <label class="block text-xs font-semibold uppercase text-slate-600 mb-1">Descrição / Cliente</label>
+                    <input type="text" id="fin-desc" required placeholder="Ex: Honorários Iniciais - Roberto Almeida" class="w-full px-3.5 py-2 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:outline-none focus:border-amber-600">
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-semibold uppercase text-slate-600 mb-1">Tipo</label>
+                        <select id="fin-kind" class="w-full px-3.5 py-2 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:outline-none focus:border-amber-600">
+                            <option value="Receita">Receita (+)</option>
+                            <option value="Despesa">Despesa (-)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold uppercase text-slate-600 mb-1">Categoria</label>
+                        <select id="fin-category" class="w-full px-3.5 py-2 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:outline-none focus:border-amber-600">
+                            <option value="Honorários Contratuais">Honorários Contratuais</option>
+                            <option value="Sucumbência">Sucumbência</option>
+                            <option value="Custas Processuais">Custas Processuais</option>
+                            <option value="Despesa Operacional">Despesa Operacional</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-3">
+                    <div>
+                        <label class="block text-xs font-semibold uppercase text-slate-600 mb-1">Valor (R$)</label>
+                        <input type="number" step="0.01" min="1" id="fin-amount" required placeholder="3500.00" class="w-full px-3.5 py-2 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:outline-none focus:border-amber-600">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold uppercase text-slate-600 mb-1">Vencimento</label>
+                        <input type="date" id="fin-date" required class="w-full px-3.5 py-2 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:outline-none focus:border-amber-600">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold uppercase text-slate-600 mb-1">Status</label>
+                    <select id="fin-status" class="w-full px-3.5 py-2 text-sm bg-slate-50 border border-slate-300 rounded-xl focus:outline-none focus:border-amber-600">
+                        <option value="Pendente">Pendente</option>
+                        <option value="Pago">Pago</option>
+                        <option value="Atrasado">Atrasado</option>
+                    </select>
+                </div>
+                <div class="pt-2 flex justify-end gap-2">
+                    <button type="button" onclick="closeModal('modal-new-finance')" class="px-4 py-2 text-sm font-medium text-slate-600 hover:bg-slate-100 rounded-xl">Cancelar</button>
+                    <button type="submit" class="px-5 py-2 text-sm font-semibold bg-amber-700 hover:bg-amber-800 text-white rounded-xl">Registrar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- ===================================================================== -->
+    <!-- JAVASCRIPT: LÓGICA DE ESTADO, PERSISTÊNCIA E INTERATIVIDADE           -->
+    <!-- ===================================================================== -->
+    <script>
+        // Chaves de armazenamento localStorage
+        const STORAGE_KEY_USER = 'aab_portal_user_v1';
+        const STORAGE_KEY_DATA = 'aab_portal_data_v1';
+
+        // Dados iniciais realistas para demonstração
+        const defaultData = {
+            cases: [
+                {
+                    id: 101,
+                    cnj: '1048291-44.2025.8.26.0100',
+                    client: 'Grupo Metalúrgico Vanguarda S.A.',
+                    opposing: 'Fazenda Pública do Estado de São Paulo',
+                    area: 'Tributário',
+                    court: '2ª Vara da Fazenda Pública - TJSP',
+                    nextDeadline: '2026-11-26',
+                    status: 'Ativo',
+                    notes: 'Ação Anulatória de Débito Fiscal (ICMS). Liminar deferida suspendendo a exigibilidade.'
+                },
+                {
+                    id: 102,
+                    cnj: '0010452-88.2025.5.02.0014',
+                    client: 'Roberto Carlos Almeida',
+                    opposing: 'Logística Rápida Express Ltda.',
+                    area: 'Trabalhista',
+                    court: '14ª Vara do Trabalho de São Paulo - TRT2',
+                    nextDeadline: '2026-11-27',
+                    status: 'Ativo',
+                    notes: 'Reclamação Trabalhista pleiteando horas extras e equiparação salarial. Audiência de instrução marcada.'
+                },
+                {
+                    id: 103,
+                    cnj: '1092834-19.2024.8.26.0002',
+                    client: 'Construtora Horizonte Ltda.',
+                    opposing: 'Condomínio Residencial Jardins',
+                    area: 'Cível',
+                    court: '8ª Vara Cível de Santo Amaro - TJSP',
+                    nextDeadline: '2026-12-04',
+                    status: 'Aguardando Julgamento',
+                    notes: 'Ação de Cobrança de saldo contratual de obra. Perícia de engenharia concluída favoravelmente.'
+                },
+                {
+                    id: 104,
+                    cnj: '5009123-12.2024.4.03.6100',
+                    client: 'Dra. Beatriz Nogueira',
+                    opposing: 'União Federal',
+                    area: 'Empresarial',
+                    court: '6ª Vara Cível Federal - TRF3',
+                    nextDeadline: '2026-12-10',
+                    status: 'Recursal',
+                    notes: 'Apelação Cível aguardando inclusão em pauta de julgamento na 3ª Turma.'
+                }
+            ],
+            clients: [
+                {
+                    id: 201,
+                    name: 'Grupo Metalúrgico Vanguarda S.A.',
+                    type: 'Pessoa Jurídica',
+                    doc: '45.892.110/0001-88',
+                    phone: '(11) 3456-7890',
+                    email: 'juridico@vanguardametal.com.br',
+                    casesCount: 3
+                },
+                {
+                    id: 202,
+                    name: 'Roberto Carlos Almeida',
+                    type: 'Pessoa Física',
+                    doc: '348.912.408-19',
+                    phone: '(11) 98765-4321',
+                    email: 'roberto.almeida@email.com.br',
+                    casesCount: 1
+                },
+                {
+                    id: 203,
+                    name: 'Construtora Horizonte Ltda.',
+                    type: 'Pessoa Jurídica',
+                    doc: '12.345.678/0001-99',
+                    phone: '(11) 3211-9000',
+                    email: 'diretoria@construtorahorizonte.com.br',
+                    casesCount: 2
+                },
+                {
+                    id: 204,
+                    name: 'Dra. Beatriz Nogueira',
+                    type: 'Pessoa Física',
+                    doc: '219.845.308-05',
+                    phone: '(11) 99123-8877',
+                    email: 'beatriz.nogueira@medclin.com.br',
+                    casesCount: 1
+                }
+            ],
+            deadlines: [
+                {
+                    id: 301,
+                    title: 'Protocolar Réplica à Contestação (Prazo Fatal)',
+                    caseCnj: '1048291-44.2025.8.26.0100',
+                    date: '2026-11-26',
+                    type: 'Fatal',
+                    completed: false
+                },
+                {
+                    id: 302,
+                    title: 'Audiência de Instrução e Julgamento (TRT-2)',
+                    caseCnj: '0010452-88.2025.5.02.0014',
+                    date: '2026-11-27',
+                    type: 'Audiência',
+                    completed: false
+                },
+                {
+                    id: 303,
+                    title: 'Reunião de Alinhamento Estratégico - Vanguarda S.A.',
+                    caseCnj: '1048291-44.2025.8.26.0100',
+                    date: '2026-11-28',
+                    type: 'Reunião',
+                    completed: false
+                },
+                {
+                    id: 304,
+                    title: 'Despacho presencial com Juiz Titular - 8ª Vara Cível',
+                    caseCnj: '1092834-19.2024.8.26.0002',
+                    date: '2026-12-01',
+                    type: 'Diligência',
+                    completed: false
+                }
+            ],
+            finances: [
+                {
+                    id: 401,
+                    description: 'Honorários Mensais - Grupo Vanguarda S.A.',
+                    kind: 'Receita',
+                    category: 'Honorários Contratuais',
+                    date: '2026-11-15',
+                    amount: 12500.00,
+                    status: 'Pago'
+                },
+                {
+                    id: 402,
+                    description: 'Honorários Sucumbenciais - Proc. 1092834-19',
+                    kind: 'Receita',
+                    category: 'Sucumbência',
+                    date: '2026-11-28',
+                    amount: 18400.00,
+                    status: 'Pendente'
+                },
+                {
+                    id: 403,
+                    description: 'Custas de Preparo Recursal - TRF3',
+                    kind: 'Despesa',
+                    category: 'Custas Processuais',
+                    date: '2026-11-18',
+                    amount: 1450.00,
+                    status: 'Pago'
+                },
+                {
+                    id: 404,
+                    description: 'Parcela 2/4 Honorários - Construtora Horizonte',
+                    kind: 'Receita',
+                    category: 'Honorários Contratuais',
+                    date: '2026-11-20',
+                    amount: 6500.00,
+                    status: 'Atrasado'
+                }
+            ]
+        };
+
+        let appData = {};
+        let currentUser = null;
+        let currentDeadlineFilter = 'Todos';
+
+        // Inicialização ao carregar a página
+        document.addEventListener('DOMContentLoaded', () => {
+            loadDataFromStorage();
+            checkAuthSession();
+            lucide.createIcons();
+        });
+
+        function loadDataFromStorage() {
+            const savedData = localStorage.getItem(STORAGE_KEY_DATA);
+            if (savedData) {
+                try {
+                    appData = JSON.parse(savedData);
+                } catch (e) {
+                    appData = JSON.parse(JSON.stringify(defaultData));
+                }
+            } else {
+                appData = JSON.parse(JSON.stringify(defaultData));
+                saveDataToStorage();
+            }
+        }
+
+        function saveDataToStorage() {
+            localStorage.setItem(STORAGE_KEY_DATA, JSON.stringify(appData));
+        }
+
+        function resetDemoData() {
+            appData = JSON.parse(JSON.stringify(defaultData));
+            saveDataToStorage();
+            refreshAllViews();
+            showToast('Dados padrão do escritório restaurados com sucesso.', 'info');
+        }
+
+        // =====================================================================
+        // AUTENTICAÇÃO (LOGIN / CADASTRO / DEMO / LOGOUT)
+        // =====================================================================
+        function switchAuthTab(tab) {
+            const loginForm = document.getElementById('login-form');
+            const regForm = document.getElementById('register-form');
+            const tabLogin = document.getElementById('tab-login');
+            const tabReg = document.getElementById('tab-register');
+
+            if (tab === 'login') {
+                loginForm.classList.remove('hidden');
+                regForm.classList.add('hidden');
+                tabLogin.className = 'flex-1 py-2.5 text-sm font-semibold rounded-lg bg-white text-slate-900 shadow-sm transition-all';
+                tabReg.className = 'flex-1 py-2.5 text-sm font-medium rounded-lg text-slate-600 hover:text-slate-900 transition-all';
+            } else {
+                loginForm.classList.add('hidden');
+                regForm.classList.remove('hidden');
+                tabReg.className = 'flex-1 py-2.5 text-sm font-semibold rounded-lg bg-white text-slate-900 shadow-sm transition-all';
+                tabLogin.className = 'flex-1 py-2.5 text-sm font-medium rounded-lg text-slate-600 hover:text-slate-900 transition-all';
+            }
+        }
+
+        function handleLogin(e) {
+            e.preventDefault();
+            const oab = document.getElementById('login-oab').value.trim();
+            const email = document.getElementById('login-email').value.trim();
+            
+            // Extrai nome amigável a partir do e-mail se não houver cadastro prévio
+            const namePart = email.split('@')[0].replace(/[._]/g, ' ');
+            const formattedName = 'Dr(a). ' + namePart.replace(/\b\w/g, l => l.toUpperCase());
+
+            const userObj = {
+                name: formattedName,
+                oab: oab || '312.845/SP',
+                email: email,
+                firm: 'Sociedade Individual de Advocacia'
+            };
+            completeAuthentication(userObj);
+        }
+
+        function quickDemoLogin() {
+            document.getElementById('login-oab').value = '312.845/SP';
+            document.getElementById('login-email').value = 'helena.monteiro@aab.org.br';
+            document.getElementById('login-password').value = 'aab2026demo';
+
+            const demoUser = {
+                name: 'Dra. Helena Monteiro',
+                oab: '312.845/SP',
+                email: 'helena.monteiro@aab.org.br',
+                firm: 'Monteiro & Alencar Advogados'
+            };
+            completeAuthentication(demoUser);
+        }
+
+        function handleRegister(e) {
+            e.preventDefault();
+            const newUser = {
+                name: document.getElementById('reg-name').value.trim(),
+                oab: document.getElementById('reg-oab').value.trim(),
+                firm: document.getElementById('reg-firm').value.trim(),
+                email: document.getElementById('reg-email').value.trim()
+            };
+            completeAuthentication(newUser);
+        }
+
+        function completeAuthentication(userObj) {
+            currentUser = userObj;
+            localStorage.setItem(STORAGE_KEY_USER, JSON.stringify(userObj));
+            applyUserProfileUI();
+
+            document.getElementById('auth-screen').classList.add('hidden');
+            document.getElementById('dashboard-screen').classList.remove('hidden');
+            
+            navigateTo('overview');
+            refreshAllViews();
+            showToast(`Bem-vindo(a), ${userObj.name}!`, 'success');
+        }
+
+        function checkAuthSession() {
+            const savedUser = localStorage.getItem(STORAGE_KEY_USER);
+            if (savedUser) {
+                try {
+                    currentUser = JSON.parse(savedUser);
+                    applyUserProfileUI();
+                    document.getElementById('auth-screen').classList.add('hidden');
+                    document.getElementById('dashboard-screen').classList.remove('hidden');
+                    refreshAllViews();
+                } catch (e) {
+                    localStorage.removeItem(STORAGE_KEY_USER);
+                }
+            }
+        }
+
+        function applyUserProfileUI() {
+            if (!currentUser) return;
+            document.getElementById('sidebar-user-name').textContent = currentUser.name;
+            document.getElementById('sidebar-user-oab').textContent = `OAB ${currentUser.oab}`;
+            document.getElementById('sidebar-firm-name').textContent = currentUser.firm;
+            
+            document.getElementById('card-user-name').textContent = currentUser.name;
+            document.getElementById('card-user-oab').textContent = currentUser.oab;
+
+            // Iniciais para avatar
+            const cleanName = currentUser.name.replace(/^Dr\(a\)\.\s|^Dr\.\s|^Dra\.\s/i, '');
+            const parts = cleanName.split(' ');
+            const initials = (parts[0]?.[0] || 'A') + (parts[1]?.[0] || 'B');
+            document.getElementById('user-avatar').textContent = initials.toUpperCase();
+        }
+
+        function handleLogout() {
+            localStorage.removeItem(STORAGE_KEY_USER);
+            currentUser = null;
+            document.getElementById('dashboard-screen').classList.add('hidden');
+            document.getElementById('auth-screen').classList.remove('hidden');
+            showToast('Sessão encerrada com segurança.', 'info');
+        }
+
+        // =====================================================================
+        // NAVEGAÇÃO ENTRE ABAS DO PAINEL
+        // =====================================================================
+        const pageTitles = {
+            overview: 'Visão Geral do Escritório',
+            cases: 'Gestão de Processos Judiciais',
+            clients: 'Clientes & CRM Jurídico',
+            deadlines: 'Prazos Fatais & Agenda Jurídica',
+            finance: 'Controle Financeiro & Honorários',
+            benefits: 'Benefícios & Carteira Digital AAB'
+        };
+
+        function navigateTo(sectionId) {
+            // Esconde todas as seções
+            document.querySelectorAll('.view-section').forEach(el => el.classList.add('hidden'));
+            
+            // Mostra a seção alvo
+            const target = document.getElementById(`view-${sectionId}`);
+            if (target) target.classList.remove('hidden');
+
+            // Atualiza título no Header
+            document.getElementById('page-title').textContent = pageTitles[sectionId] || 'Portal AAB';
+
+            // Atualiza estilo ativo na Sidebar
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                if (btn.dataset.nav === sectionId) {
+                    btn.className = 'nav-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all bg-amber-700 text-white shadow-sm';
+                } else {
+                    btn.className = 'nav-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-300 hover:bg-slate-800 hover:text-white transition-all';
+                }
+            });
+
+            // Fecha sidebar no mobile após navegar
+            const sidebar = document.getElementById('sidebar');
+            if (!sidebar.classList.contains('-translate-x-full') && window.innerWidth < 1024) {
+                toggleMobileSidebar();
+            }
+
+            lucide.createIcons();
+        }
+
+        function toggleMobileSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const backdrop = document.getElementById('sidebar-backdrop');
+            sidebar.classList.toggle('-translate-x-full');
+            backdrop.classList.toggle('hidden');
+        }
+
+        // =====================================================================
+        // ATUALIZAÇÃO GERAL DE KPIS E RENDERIZAÇÕES
+        // =====================================================================
+        function refreshAllViews() {
+            updateKPIs();
+            renderOverviewDeadlines();
+            renderCasesTable();
+            renderClientsGrid();
+            renderDeadlinesList();
+            renderFinanceTable();
+            lucide.createIcons();
+        }
+
+        function formatCurrency(val) {
+            return Number(val).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+        }
+
+        function formatDateBR(isoDate) {
+            if (!isoDate) return '-';
+            const [y, m, d] = isoDate.split('-');
+            return `${d}/${m}/${y}`;
+        }
+
+        function updateKPIs() {
+            // Processos ativos
+            const activeCases = appData.cases.filter(c => c.status !== 'Arquivado').length;
+            document.getElementById('kpi-active-cases').textContent = activeCases;
+            document.getElementById('badge-cases').textContent = activeCases;
+
+            // Prazos pendentes (próximos 7 dias ou não concluídos)
+            const pendingDeadlines = appData.deadlines.filter(d => !d.completed);
+            document.getElementById('kpi-urgent-deadlines').textContent = pendingDeadlines.length;
+            document.getElementById('badge-deadlines').textContent = pendingDeadlines.length;
+
+            // Honorários a receber (Receitas Pendentes ou Atrasadas)
+            const receivable = appData.finances
+                .filter(f => f.kind === 'Receita' && f.status !== 'Pago')
+                .reduce((acc, item) => acc + Number(item.amount), 0);
+            document.getElementById('kpi-receivable').textContent = formatCurrency(receivable);
+
+            // Clientes ativos
+            document.getElementById('kpi-active-clients').textContent = appData.clients.length;
+        }
+
+        // =====================================================================
+        // VISÃO GERAL: LISTA DE PRAZOS DA SEMANA
+        // =====================================================================
+        function renderOverviewDeadlines() {
+            const container = document.getElementById('overview-deadlines-list');
+            const pending = appData.deadlines.filter(d => !d.completed);
+
+            if (pending.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-8 text-slate-400">
+                        <i data-lucide="check-circle-2" class="w-10 h-10 mx-auto text-emerald-500 mb-2"></i>
+                        <p class="text-sm font-medium text-slate-600">Todos os prazos da semana foram cumpridos!</p>
+                    </div>`;
+                return;
+            }
+
+            container.innerHTML = pending.map(item => {
+                const badgeStyle = item.type === 'Fatal' 
+                    ? 'bg-rose-100 text-rose-800 border-rose-200' 
+                    : item.type === 'Audiência' 
+                    ? 'bg-amber-100 text-amber-800 border-amber-200'
+                    : 'bg-slate-100 text-slate-700 border-slate-200';
+
+                return `
+                <div class="pt-3 first:pt-0 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                    <div class="space-y-1">
+                        <div class="flex items-center gap-2">
+                            <span class="text-[11px] font-bold px-2 py-0.5 rounded border ${badgeStyle}">${item.type}</span>
+                            <span class="text-xs font-semibold text-slate-500">${formatDateBR(item.date)}</span>
+                        </div>
+                        <p class="text-sm font-semibold text-slate-900">${item.title}</p>
+                        <p class="text-xs text-slate-500 font-mono">Proc: ${item.caseCnj}</p>
+                    </div>
+                    <button onclick="toggleDeadlineComplete(${item.id})" class="px-3 py-1.5 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200 text-xs font-semibold transition flex items-center gap-1.5 self-start sm:self-center shrink-0">
+                        <i data-lucide="check" class="w-3.5 h-3.5"></i>
+                        <span>Marcar Cumprido</span>
+                    </button>
+                </div>`;
+            }).join('');
+        }
+
+        // =====================================================================
+        // GESTÃO DE PROCESSOS
+        // =====================================================================
+        function renderCasesTable() {
+            const tbody = document.getElementById('cases-table-body');
+            const search = document.getElementById('filter-case-search').value.toLowerCase();
+            const areaFilter = document.getElementById('filter-case-area').value;
+            const statusFilter = document.getElementById('filter-case-status').value;
+
+            const filtered = appData.cases.filter(c => {
+                const matchSearch = c.cnj.toLowerCase().includes(search) || 
+                                    c.client.toLowerCase().includes(search) || 
+                                    c.opposing.toLowerCase().includes(search);
+                const matchArea = areaFilter === 'Todas' || c.area === areaFilter;
+                const matchStatus = statusFilter === 'Todos' || c.status === statusFilter;
+                return matchSearch && matchArea && matchStatus;
+            });
+
+            if (filtered.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="6" class="py-8 text-center text-slate-500 text-sm">Nenhum processo encontrado com os filtros aplicados.</td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = filtered.map(c => {
+                const statusColors = {
+                    'Ativo': 'bg-emerald-50 text-emerald-700 border-emerald-200',
+                    'Aguardando Julgamento': 'bg-amber-50 text-amber-800 border-amber-200',
+                    'Recursal': 'bg-blue-50 text-blue-700 border-blue-200',
+                    'Arquivado': 'bg-slate-100 text-slate-600 border-slate-200'
+                };
+                const badgeClass = statusColors[c.status] || statusColors['Ativo'];
+
+                return `
+                <tr class="hover:bg-slate-50/90 transition">
+                    <td class="py-3.5 px-4">
+                        <p class="font-mono text-xs font-semibold text-slate-900">${c.cnj}</p>
+                        <span class="inline-block mt-1 text-[11px] font-medium px-2 py-0.5 rounded bg-slate-100 text-slate-700">${c.area}</span>
+                    </td>
+                    <td class="py-3.5 px-4">
+                        <p class="font-semibold text-slate-900 text-xs sm:text-sm">${c.client}</p>
+                        <p class="text-xs text-slate-500">vs. ${c.opposing}</p>
+                    </td>
+                    <td class="py-3.5 px-4 text-xs text-slate-600">${c.court}</td>
+                    <td class="py-3.5 px-4 text-xs font-semibold text-amber-800">${formatDateBR(c.nextDeadline)}</td>
+                    <td class="py-3.5 px-4">
+                        <span class="text-xs font-semibold px-2.5 py-1 rounded-full border ${badgeClass}">${c.status}</span>
+                    </td>
+                    <td class="py-3.5 px-4 text-right">
+                        <button onclick="openCaseDetails(${c.id})" class="px-3 py-1.5 text-xs font-semibold text-slate-700 hover:text-slate-900 bg-slate-100 hover:bg-slate-200 rounded-lg transition">
+                            Detalhes / Editar
+                        </button>
+                    </td>
+                </tr>`;
+            }).join('');
+        }
+
+        function handleAddCase(e) {
+            e.preventDefault();
+            const newCase = {
+                id: Date.now(),
+                cnj: document.getElementById('case-cnj').value.trim(),
+                client: document.getElementById('case-client').value.trim(),
+                opposing: document.getElementById('case-opposing').value.trim(),
+                area: document.getElementById('case-area').value,
+                status: document.getElementById('case-status').value,
+                court: document.getElementById('case-court').value.trim(),
+                nextDeadline: document.getElementById('case-deadline').value,
+                notes: 'Processo distribuído e cadastrado no sistema AAB.'
+            };
+
+            appData.cases.unshift(newCase);
+            saveDataToStorage();
+            refreshAllViews();
+            closeModal('modal-new-case');
+            e.target.reset();
+            showToast('Processo cadastrado com sucesso!', 'success');
+        }
+
+        function openCaseDetails(caseId) {
+            const c = appData.cases.find(item => item.id === caseId);
+            if (!c) return;
+
+            const content = document.getElementById('case-details-content');
+            content.innerHTML = `
+                <div class="bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-2">
+                    <span class="text-xs font-semibold text-amber-800 uppercase">${c.area} • ${c.court}</span>
+                    <p class="font-mono text-sm font-bold text-slate-900">${c.cnj}</p>
+                    <p class="text-xs text-slate-600"><strong>Cliente:</strong> ${c.client}</p>
+                    <p class="text-xs text-slate-600"><strong>Parte Contrária:</strong> ${c.opposing}</p>
+                    <p class="text-xs text-slate-600"><strong>Observações:</strong> ${c.notes}</p>
+                </div>
+                <div class="space-y-3 pt-2">
+                    <label class="block text-xs font-semibold uppercase text-slate-600">Atualizar Status Processual</label>
+                    <select id="edit-case-status" class="w-full px-3.5 py-2 text-sm bg-slate-50 border border-slate-300 rounded-xl">
+                        <option value="Ativo" ${c.status === 'Ativo' ? 'selected' : ''}>Ativo</option>
+                        <option value="Aguardando Julgamento" ${c.status === 'Aguardando Julgamento' ? 'selected' : ''}>Aguardando Julgamento</option>
+                        <option value="Recursal" ${c.status === 'Recursal' ? 'selected' : ''}>Recursal</option>
+                        <option value="Arquivado" ${c.status === 'Arquivado' ? 'selected' : ''}>Arquivado</option>
+                    </select>
+                </div>
+                <div class="pt-3 flex justify-end gap-2">
+                    <button onclick="closeModal('modal-case-details')" class="px-4 py-2 text-sm text-slate-600 hover:bg-slate-100 rounded-xl">Fechar</button>
+                    <button onclick="saveCaseStatus(${c.id})" class="px-4 py-2 text-sm font-semibold bg-slate-900 text-white rounded-xl hover:bg-slate-800">Salvar Alteração</button>
+                </div>
+            `;
+            openModal('modal-case-details');
+        }
+
+        function saveCaseStatus(caseId) {
+            const c = appData.cases.find(item => item.id === caseId);
+            if (c) {
+                c.status = document.getElementById('edit-case-status').value;
+                saveDataToStorage();
+                refreshAllViews();
+                closeModal('modal-case-details');
+                showToast('Status processual atualizado.', 'success');
+            }
+        }
+
+        // =====================================================================
+        // CLIENTES & CRM JURÍDICO
+        // =====================================================================
+        function renderClientsGrid() {
+            const grid = document.getElementById('clients-grid');
+            grid.innerHTML = appData.clients.map(cli => {
+                const isPJ = cli.type === 'Pessoa Jurídica';
+                return `
+                <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-xs hover:shadow-md transition flex flex-col justify-between">
+                    <div>
+                        <div class="flex items-start justify-between gap-2 mb-3">
+                            <div class="w-10 h-10 rounded-xl ${isPJ ? 'bg-slate-900 text-amber-400' : 'bg-amber-50 text-amber-700'} flex items-center justify-center shrink-0">
+                                <i data-lucide="${isPJ ? 'building-2' : 'user'}" class="w-5 h-5"></i>
+                            </div>
+                            <span class="text-[11px] font-semibold px-2.5 py-0.5 rounded-full bg-slate-100 text-slate-700">${cli.type}</span>
+                        </div>
+                        <h3 class="font-serif text-base font-bold text-slate-900">${cli.name}</h3>
+                        <p class="text-xs font-mono text-slate-500 mt-0.5">${isPJ ? 'CNPJ' : 'CPF'}: ${cli.doc}</p>
+                        
+                        <div class="mt-4 pt-3 border-t border-slate-100 space-y-1.5 text-xs text-slate-600">
+                            <p class="flex items-center gap-2"><i data-lucide="phone" class="w-3.5 h-3.5 text-slate-400"></i> ${cli.phone}</p>
+                            <p class="flex items-center gap-2 truncate"><i data-lucide="mail" class="w-3.5 h-3.5 text-slate-400"></i> ${cli.email}</p>
+                        </div>
+                    </div>
+
+                    <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between">
+                        <span class="text-xs font-semibold text-slate-700">${cli.casesCount} processo(s) vinculado(s)</span>
+                        <button onclick="navigateTo('cases')" class="text-xs font-semibold text-amber-700 hover:text-amber-800">Ver pastas →</button>
+                    </div>
+                </div>`;
+            }).join('');
+        }
+
+        function handleAddClient(e) {
+            e.preventDefault();
+            const newClient = {
+                id: Date.now(),
+                name: document.getElementById('cli-name').value.trim(),
+                type: document.getElementById('cli-type').value,
+                doc: document.getElementById('cli-doc').value.trim(),
+                phone: document.getElementById('cli-phone').value.trim(),
+                email: document.getElementById('cli-email').value.trim(),
+                casesCount: 1
+            };
+
+            appData.clients.unshift(newClient);
+            saveDataToStorage();
+            refreshAllViews();
+            closeModal('modal-new-client');
+            e.target.reset();
+            showToast('Cliente cadastrado na carteira do escritório!', 'success');
+        }
+
+        // =====================================================================
+        // PRAZOS E AGENDA JURÍDICA
+        // =====================================================================
+        function setDeadlineFilter(filter) {
+            currentDeadlineFilter = filter;
+            document.querySelectorAll('.dl-filter-btn').forEach(btn => {
+                if (btn.dataset.filter === filter) {
+                    btn.className = 'dl-filter-btn px-3 py-1 text-xs font-semibold rounded-lg bg-slate-900 text-white';
+                } else {
+                    btn.className = 'dl-filter-btn px-3 py-1 text-xs font-medium rounded-lg bg-slate-100 text-slate-600 hover:bg-slate-200';
+                }
+            });
+            renderDeadlinesList();
+        }
+
+        function renderDeadlinesList() {
+            const container = document.getElementById('deadlines-full-list');
+            const filtered = appData.deadlines.filter(d => currentDeadlineFilter === 'Todos' || d.type === currentDeadlineFilter);
+
+            if (filtered.length === 0) {
+                container.innerHTML = `<p class="text-sm text-slate-500 text-center py-6">Nenhum compromisso encontrado nesta categoria.</p>`;
+                return;
+            }
+
+            container.innerHTML = filtered.map(d => {
+                const badgeStyle = d.type === 'Fatal' 
+                    ? 'bg-rose-100 text-rose-800' 
+                    : d.type === 'Audiência' 
+                    ? 'bg-amber-100 text-amber-800' 
+                    : 'bg-blue-50 text-blue-800';
+
+                return `
+                <div class="p-4 rounded-xl border ${d.completed ? 'bg-slate-50 border-slate-200 opacity-65' : 'bg-white border-slate-200'} flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                    <div>
+                        <div class="flex items-center gap-2 mb-1">
+                            <span class="text-[11px] font-bold px-2 py-0.5 rounded ${badgeStyle}">${d.type}</span>
+                            <span class="text-xs font-semibold text-slate-600">${formatDateBR(d.date)}</span>
+                            ${d.completed ? '<span class="text-[11px] font-semibold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded">Cumprido</span>' : ''}
+                        </div>
+                        <p class="text-sm font-semibold ${d.completed ? 'line-through text-slate-500' : 'text-slate-900'}">${d.title}</p>
+                        <p class="text-xs text-slate-500 font-mono mt-0.5">CNJ: ${d.caseCnj}</p>
+                    </div>
+                    <button onclick="toggleDeadlineComplete(${d.id})" class="px-3.5 py-2 rounded-xl text-xs font-semibold transition flex items-center gap-1.5 self-start sm:self-center ${d.completed ? 'bg-slate-200 text-slate-700 hover:bg-slate-300' : 'bg-emerald-600 text-white hover:bg-emerald-700'}">
+                        <i data-lucide="${d.completed ? 'rotate-ccw' : 'check'}" class="w-3.5 h-3.5"></i>
+                        <span>${d.completed ? 'Reabrir' : 'Concluir Prazo'}</span>
+                    </button>
+                </div>`;
+            }).join('');
+            lucide.createIcons();
+        }
+
+        function handleAddDeadline(e) {
+            e.preventDefault();
+            const newDl = {
+                id: Date.now(),
+                title: document.getElementById('dl-title').value.trim(),
+                caseCnj: document.getElementById('dl-case').value.trim(),
+                date: document.getElementById('dl-date').value,
+                type: document.getElementById('dl-type').value,
+                completed: false
+            };
+
+            appData.deadlines.unshift(newDl);
+            saveDataToStorage();
+            refreshAllViews();
+            e.target.reset();
+            showToast('Novo prazo adicionado à agenda jurídica!', 'success');
+        }
+
+        function toggleDeadlineComplete(id) {
+            const item = appData.deadlines.find(d => d.id === id);
+            if (item) {
+                item.completed = !item.completed;
+                saveDataToStorage();
+                refreshAllViews();
+                showToast(item.completed ? 'Prazo marcado como cumprido!' : 'Prazo reaberto na pauta.', 'success');
+            }
+        }
+
+        // =====================================================================
+        // FINANCEIRO & HONORÁRIOS
+        // =====================================================================
+        function renderFinanceTable() {
+            const tbody = document.getElementById('finance-table-body');
+            
+            let totalIncome = 0;
+            let totalExpense = 0;
+
+            appData.finances.forEach(f => {
+                if (f.kind === 'Receita' && f.status === 'Pago') totalIncome += Number(f.amount);
+                if (f.kind === 'Despesa' && f.status === 'Pago') totalExpense += Number(f.amount);
+            });
+
+            document.getElementById('fin-total-income').textContent = formatCurrency(totalIncome);
+            document.getElementById('fin-total-expense').textContent = formatCurrency(totalExpense);
+            document.getElementById('fin-balance').textContent = formatCurrency(totalIncome - totalExpense);
+
+            tbody.innerHTML = appData.finances.map(f => {
+                const statusBadge = f.status === 'Pago' 
+                    ? 'bg-emerald-50 text-emerald-700 border-emerald-200' 
+                    : f.status === 'Atrasado' 
+                    ? 'bg-rose-50 text-rose-700 border-rose-200' 
+                    : 'bg-amber-50 text-amber-800 border-amber-200';
+
+                const isIncome = f.kind === 'Receita';
+
+                return `
+                <tr class="hover:bg-slate-50 transition">
+                    <td class="py-3.5 px-4 font-medium text-slate-900">${f.description}</td>
+                    <td class="py-3.5 px-4 text-xs text-slate-600">${f.category}</td>
+                    <td class="py-3.5 px-4 text-xs text-slate-600">${formatDateBR(f.date)}</td>
+                    <td class="py-3.5 px-4 font-semibold ${isIncome ? 'text-emerald-700' : 'text-rose-700'}">
+                        ${isIncome ? '+' : '-'} ${formatCurrency(f.amount)}
+                    </td>
+                    <td class="py-3.5 px-4">
+                        <span class="text-xs font-semibold px-2.5 py-0.5 rounded-full border ${statusBadge}">${f.status}</span>
+                    </td>
+                    <td class="py-3.5 px-4 text-right">
+                        ${f.status !== 'Pago' ? `
+                            <button onclick="markFinancePaid(${f.id})" class="px-3 py-1 text-xs font-semibold bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg transition">
+                                Dar Baixa
+                            </button>
+                        ` : `<span class="text-xs text-slate-400">Liquidado</span>`}
+                    </td>
+                </tr>`;
+            }).join('');
+        }
+
+        function handleAddFinance(e) {
+            e.preventDefault();
+            const newFin = {
+                id: Date.now(),
+                description: document.getElementById('fin-desc').value.trim(),
+                kind: document.getElementById('fin-kind').value,
+                category: document.getElementById('fin-category').value,
+                amount: parseFloat(document.getElementById('fin-amount').value),
+                date: document.getElementById('fin-date').value,
+                status: document.getElementById('fin-status').value
+            };
+
+            appData.finances.unshift(newFin);
+            saveDataToStorage();
+            refreshAllViews();
+            closeModal('modal-new-finance');
+            e.target.reset();
+            showToast('Lançamento financeiro registrado!', 'success');
+        }
+
+        function markFinancePaid(id) {
+            const item = appData.finances.find(f => f.id === id);
+            if (item) {
+                item.status = 'Pago';
+                saveDataToStorage();
+                refreshAllViews();
+                showToast('Baixa financeira realizada com sucesso!', 'success');
+            }
+        }
+
+        // =====================================================================
+        // MODAIS E NOTIFICAÇÕES TOAST
+        // =====================================================================
+        function openModal(id) {
+            document.getElementById(id).classList.remove('hidden');
+            lucide.createIcons();
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).classList.add('hidden');
+        }
+
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            
+            const colors = {
+                success: 'bg-slate-900 text-white border-amber-500',
+                info: 'bg-slate-800 text-slate-100 border-slate-600'
+            };
+
+            toast.className = `pointer-events-auto flex items-center gap-3 px-4 py-3 rounded-xl shadow-lg border-l-4 text-xs sm:text-sm font-medium fade-in ${colors[type] || colors.success}`;
+            toast.innerHTML = `
+                <i data-lucide="${type === 'success' ? 'check-circle' : 'info'}" class="w-4 h-4 text-amber-400 shrink-0"></i>
+                <span>${message}</span>
+            `;
+
+            container.appendChild(toast);
+            lucide.createIcons();
+
+            setTimeout(() => {
+                toast.style.opacity = '0';
+                toast.style.transition = 'opacity 0.3s ease';
+                setTimeout(() => toast.remove(), 300);
+            }, 3200);
+        }
+    </script>
+</body>
+</html>
