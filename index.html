@@ -274,7 +274,10 @@
                     </div>
                     <div class="mt-2.5 pt-2 border-t border-slate-700/60 flex items-center justify-between text-[11px] text-slate-400">
                         <span id="sidebar-firm-name" class="truncate">Monteiro & Alencar Advogados</span>
-                        <span class="px-1.5 py-0.5 rounded bg-emerald-500/10 text-emerald-400 font-medium shrink-0">Ativo</span>
+                        <span id="cloud-status-badge" class="px-1.5 py-0.5 rounded bg-emerald-500/10 text-emerald-400 font-medium shrink-0 flex items-center gap-1">
+                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                            <span>Nuvem</span>
+                        </span>
                     </div>
                 </div>
 
@@ -311,9 +314,13 @@
 
             <!-- Rodapé Sidebar: Reset Demo & Logout -->
             <div class="p-4 border-t border-slate-800 space-y-2">
+                <button id="btn-migrate-local" onclick="migrateLocalStorageToFirebase()" class="hidden w-full flex items-center justify-center gap-2 px-3 py-2 rounded-xl text-xs font-semibold text-amber-300 bg-amber-950/50 hover:bg-amber-900/60 border border-amber-700/50 transition">
+                    <i data-lucide="cloud-upload" class="w-3.5 h-3.5"></i>
+                    <span>Importar Dados Locais</span>
+                </button>
                 <button onclick="resetDemoData()" class="w-full flex items-center justify-center gap-2 px-3 py-2 rounded-xl text-xs font-medium text-slate-400 hover:text-slate-200 hover:bg-slate-800/70 transition">
                     <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
-                    <span>Restaurar Dados Padrão</span>
+                    <span>Popular Dados Exemplo</span>
                 </button>
                 <button onclick="handleLogout()" class="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold text-rose-300 bg-rose-950/40 hover:bg-rose-900/60 border border-rose-900/50 transition">
                     <i data-lucide="log-out" class="w-4 h-4"></i>
@@ -351,6 +358,18 @@
 
             <!-- CONTEÚDO DINÂMICO DAS ABAS -->
             <main class="flex-1 p-4 sm:p-8 max-w-7xl w-full mx-auto">
+
+                <!-- BANNER DE AVISO FIREBASE (Regras / Serviços Pendentes) -->
+                <div id="firebase-alert-banner" class="hidden mb-6 p-4 rounded-2xl bg-amber-50 border border-amber-300 text-amber-950 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                    <div class="flex items-start gap-3">
+                        <i data-lucide="alert-circle" class="w-5 h-5 text-amber-700 shrink-0 mt-0.5"></i>
+                        <div class="text-xs space-y-1">
+                            <p id="firebase-alert-title" class="font-bold text-amber-900">Configuração Pendente no Console Firebase</p>
+                            <p id="firebase-alert-desc" class="text-amber-800">Ative Authentication (E-mail/Senha) e Cloud Firestore no projeto <strong>advocacia-6864f</strong>.</p>
+                        </div>
+                    </div>
+                    <button onclick="document.getElementById('firebase-alert-banner').classList.add('hidden')" class="text-xs font-semibold px-3 py-1.5 rounded-lg bg-amber-200/70 hover:bg-amber-200 text-amber-900 shrink-0">Dispensar</button>
+                </div>
 
                 <!-- ========================================================= -->
                 <!-- ABA A: VISÃO GERAL (DASHBOARD)                            -->
@@ -1225,11 +1244,52 @@
     <!-- ===================================================================== -->
     <!-- JAVASCRIPT: LÓGICA DE ESTADO, PERSISTÊNCIA E INTERATIVIDADE           -->
     <!-- ===================================================================== -->
-    <script>
-        // Chaves de armazenamento localStorage
-        const STORAGE_KEY_USER = 'aab_portal_user_v1';
-        const STORAGE_KEY_DATA = 'aab_portal_data_v1';
-        const STORAGE_KEY_BOOKINGS = 'aab_portal_coworking_v1';
+    <!-- JAVASCRIPT: INTEGRAÇÃO REAL COM FIREBASE AUTH & CLOUD FIRESTORE       -->
+    <!-- ===================================================================== -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import {
+            getAuth,
+            signInWithEmailAndPassword,
+            createUserWithEmailAndPassword,
+            signInAnonymously,
+            updateProfile,
+            onAuthStateChanged,
+            signOut
+        } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+        import {
+            getFirestore,
+            doc,
+            getDoc,
+            setDoc,
+            addDoc,
+            updateDoc,
+            deleteDoc,
+            collection,
+            onSnapshot,
+            serverTimestamp
+        } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+        // Configuração oficial do projeto Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyB3ZZaOmW-RtLhcfNRiS52PgEGtTVLXMtQ",
+            authDomain: "advocacia-6864f.firebaseapp.com",
+            projectId: "advocacia-6864f",
+            storageBucket: "advocacia-6864f.firebasestorage.app",
+            messagingSenderId: "308552640087",
+            appId: "1:308552640087:web:1b6b755767b0bd0304a512",
+            measurementId: "G-KJ3XP56KW7"
+        };
+
+        // Inicialização Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        // Chaves antigas do localStorage para migração opcional
+        const LEGACY_KEY_USER = 'aab_portal_user_v1';
+        const LEGACY_KEY_DATA = 'aab_portal_data_v1';
+        const LEGACY_KEY_BOOKINGS = 'aab_portal_coworking_v1';
 
         // Catálogo da Biblioteca & Doutrina AAB
         const libraryCatalog = [
@@ -1335,11 +1395,10 @@
             }
         ];
 
-        // Dados iniciais realistas para demonstração
+        // Dados iniciais para novos escritórios
         const defaultData = {
             cases: [
                 {
-                    id: 101,
                     cnj: '1048291-44.2025.8.26.0100',
                     client: 'Grupo Metalúrgico Vanguarda S.A.',
                     opposing: 'Fazenda Pública do Estado de São Paulo',
@@ -1350,7 +1409,6 @@
                     notes: 'Ação Anulatória de Débito Fiscal (ICMS). Liminar deferida suspendendo a exigibilidade.'
                 },
                 {
-                    id: 102,
                     cnj: '0010452-88.2025.5.02.0014',
                     client: 'Roberto Carlos Almeida',
                     opposing: 'Logística Rápida Express Ltda.',
@@ -1361,7 +1419,6 @@
                     notes: 'Reclamação Trabalhista pleiteando horas extras e equiparação salarial. Audiência de instrução marcada.'
                 },
                 {
-                    id: 103,
                     cnj: '1092834-19.2024.8.26.0002',
                     client: 'Construtora Horizonte Ltda.',
                     opposing: 'Condomínio Residencial Jardins',
@@ -1372,7 +1429,6 @@
                     notes: 'Ação de Cobrança de saldo contratual de obra. Perícia de engenharia concluída favoravelmente.'
                 },
                 {
-                    id: 104,
                     cnj: '5009123-12.2024.4.03.6100',
                     client: 'Dra. Beatriz Nogueira',
                     opposing: 'União Federal',
@@ -1385,7 +1441,6 @@
             ],
             clients: [
                 {
-                    id: 201,
                     name: 'Grupo Metalúrgico Vanguarda S.A.',
                     type: 'Pessoa Jurídica',
                     doc: '45.892.110/0001-88',
@@ -1394,7 +1449,6 @@
                     casesCount: 3
                 },
                 {
-                    id: 202,
                     name: 'Roberto Carlos Almeida',
                     type: 'Pessoa Física',
                     doc: '348.912.408-19',
@@ -1403,7 +1457,6 @@
                     casesCount: 1
                 },
                 {
-                    id: 203,
                     name: 'Construtora Horizonte Ltda.',
                     type: 'Pessoa Jurídica',
                     doc: '12.345.678/0001-99',
@@ -1412,7 +1465,6 @@
                     casesCount: 2
                 },
                 {
-                    id: 204,
                     name: 'Dra. Beatriz Nogueira',
                     type: 'Pessoa Física',
                     doc: '219.845.308-05',
@@ -1423,7 +1475,6 @@
             ],
             deadlines: [
                 {
-                    id: 301,
                     title: 'Protocolar Réplica à Contestação (Prazo Fatal)',
                     caseCnj: '1048291-44.2025.8.26.0100',
                     date: '2026-11-26',
@@ -1431,7 +1482,6 @@
                     completed: false
                 },
                 {
-                    id: 302,
                     title: 'Audiência de Instrução e Julgamento (TRT-2)',
                     caseCnj: '0010452-88.2025.5.02.0014',
                     date: '2026-11-27',
@@ -1439,7 +1489,6 @@
                     completed: false
                 },
                 {
-                    id: 303,
                     title: 'Reunião de Alinhamento Estratégico - Vanguarda S.A.',
                     caseCnj: '1048291-44.2025.8.26.0100',
                     date: '2026-11-28',
@@ -1447,7 +1496,6 @@
                     completed: false
                 },
                 {
-                    id: 304,
                     title: 'Despacho presencial com Juiz Titular - 8ª Vara Cível',
                     caseCnj: '1092834-19.2024.8.26.0002',
                     date: '2026-12-01',
@@ -1457,7 +1505,6 @@
             ],
             finances: [
                 {
-                    id: 401,
                     description: 'Honorários Mensais - Grupo Vanguarda S.A.',
                     kind: 'Receita',
                     category: 'Honorários Contratuais',
@@ -1466,7 +1513,6 @@
                     status: 'Pago'
                 },
                 {
-                    id: 402,
                     description: 'Honorários Sucumbenciais - Proc. 1092834-19',
                     kind: 'Receita',
                     category: 'Sucumbência',
@@ -1475,7 +1521,6 @@
                     status: 'Pendente'
                 },
                 {
-                    id: 403,
                     description: 'Custas de Preparo Recursal - TRF3',
                     kind: 'Despesa',
                     category: 'Custas Processuais',
@@ -1484,7 +1529,6 @@
                     status: 'Pago'
                 },
                 {
-                    id: 404,
                     description: 'Parcela 2/4 Honorários - Construtora Horizonte',
                     kind: 'Receita',
                     category: 'Honorários Contratuais',
@@ -1495,61 +1539,233 @@
             ]
         };
 
-        let appData = {};
+        // Estado reativo sincronizado com Firestore
+        let appData = {
+            cases: [],
+            clients: [],
+            deadlines: [],
+            finances: []
+        };
         let coworkingBookings = [];
         let currentUser = null;
+        let isDemoFallbackMode = false;
+        let firestoreUnsubscribers = [];
         let currentDeadlineFilter = 'Todos';
 
-        // Inicialização ao carregar a página
-        document.addEventListener('DOMContentLoaded', () => {
-            loadDataFromStorage();
-            checkAuthSession();
+        // =====================================================================
+        // MONITORAMENTO DE AUTENTICAÇÃO EM TEMPO REAL (FIREBASE AUTH)
+        // =====================================================================
+        onAuthStateChanged(auth, async (firebaseUser) => {
+            if (firebaseUser) {
+                isDemoFallbackMode = false;
+                await loadUserProfileAndListeners(firebaseUser);
+            } else if (!isDemoFallbackMode) {
+                cleanupFirestoreListeners();
+                currentUser = null;
+                document.getElementById('dashboard-screen').classList.add('hidden');
+                document.getElementById('auth-screen').classList.remove('hidden');
+            }
             lucide.createIcons();
         });
 
-        function loadDataFromStorage() {
-            const savedData = localStorage.getItem(STORAGE_KEY_DATA);
-            if (savedData) {
-                try {
-                    appData = JSON.parse(savedData);
-                } catch (e) {
-                    appData = JSON.parse(JSON.stringify(defaultData));
-                }
-            } else {
-                appData = JSON.parse(JSON.stringify(defaultData));
-                saveDataToStorage();
-            }
+        async function loadUserProfileAndListeners(firebaseUser) {
+            const uid = firebaseUser.uid;
+            let profileData = {
+                uid: uid,
+                name: firebaseUser.displayName || 'Dr(a). Associado AAB',
+                oab: sessionStorage.getItem('aab_pending_oab') || 'OAB/BR Ativa',
+                email: firebaseUser.email || 'associado@aab.org.br',
+                firm: 'Sociedade Individual de Advocacia'
+            };
 
-            const savedBookings = localStorage.getItem(STORAGE_KEY_BOOKINGS);
-            if (savedBookings) {
-                try {
-                    coworkingBookings = JSON.parse(savedBookings);
-                } catch (e) {
-                    coworkingBookings = [];
+            try {
+                const userDocRef = doc(db, 'usuarios', uid);
+                const userSnap = await getDoc(userDocRef);
+
+                if (userSnap.exists()) {
+                    profileData = { ...profileData, ...userSnap.data(), uid };
+                } else {
+                    // Cria documento inicial do usuário no Firestore se ainda não existir
+                    await setDoc(userDocRef, {
+                        name: profileData.name,
+                        oab: profileData.oab,
+                        email: profileData.email,
+                        firm: profileData.firm,
+                        createdAt: serverTimestamp()
+                    }, { merge: true });
                 }
-            } else {
-                coworkingBookings = [
-                    {
-                        id: 901,
-                        unit: 'Brasília - Asa Sul (Sede Nacional)',
-                        space: 'Cabine de Audiência Virtual (Acústica)',
-                        date: '2026-11-27',
-                        time: '14:00 às 16:00'
-                    }
-                ];
-                localStorage.setItem(STORAGE_KEY_BOOKINGS, JSON.stringify(coworkingBookings));
+
+                // Se usuário marcou OAB específica no formulário de login, atualiza
+                const pendingOab = sessionStorage.getItem('aab_pending_oab');
+                if (pendingOab) {
+                    profileData.oab = pendingOab;
+                    sessionStorage.removeItem('aab_pending_oab');
+                    await setDoc(userDocRef, { oab: pendingOab }, { merge: true });
+                }
+
+                // Verifica se o escritório já foi inicializado; se não, popula dados iniciais
+                const officeMetaRef = doc(db, 'escritorios', uid);
+                const officeMetaSnap = await getDoc(officeMetaRef);
+                if (!officeMetaSnap.exists()) {
+                    await seedDefaultDataToFirestore(uid);
+                }
+
+                currentUser = profileData;
+                applyUserProfileUI();
+                checkLegacyLocalStorageButton();
+
+                document.getElementById('auth-screen').classList.add('hidden');
+                document.getElementById('dashboard-screen').classList.remove('hidden');
+                setCloudBadgeStatus('connected');
+
+                setupFirestoreRealtimeListeners(uid);
+            } catch (err) {
+                console.error('Erro ao conectar Firestore:', err);
+                handleFirebasePermissionOrSetupError(err);
+                // Ainda exibe o painel com dados em memória para não bloquear o usuário
+                currentUser = profileData;
+                applyUserProfileUI();
+                document.getElementById('auth-screen').classList.add('hidden');
+                document.getElementById('dashboard-screen').classList.remove('hidden');
+                loadFallbackMemoryData();
             }
         }
 
-        function saveDataToStorage() {
-            localStorage.setItem(STORAGE_KEY_DATA, JSON.stringify(appData));
+        // =====================================================================
+        // LISTENERS EM TEMPO REAL DO CLOUD FIRESTORE (onSnapshot)
+        // =====================================================================
+        function cleanupFirestoreListeners() {
+            firestoreUnsubscribers.forEach(unsub => {
+                try { unsub(); } catch (e) {}
+            });
+            firestoreUnsubscribers = [];
         }
 
-        function resetDemoData() {
-            appData = JSON.parse(JSON.stringify(defaultData));
-            saveDataToStorage();
-            refreshAllViews();
-            showToast('Dados padrão do escritório restaurados com sucesso.', 'info');
+        function setupFirestoreRealtimeListeners(uid) {
+            cleanupFirestoreListeners();
+
+            const subcollections = [
+                { key: 'cases', path: `escritorios/${uid}/processos`, render: () => renderCasesTable() },
+                { key: 'clients', path: `escritorios/${uid}/clientes`, render: () => renderClientsGrid() },
+                { key: 'deadlines', path: `escritorios/${uid}/prazos`, render: () => { renderOverviewDeadlines(); renderDeadlinesList(); } },
+                { key: 'finances', path: `escritorios/${uid}/financeiro`, render: () => renderFinanceTable() }
+            ];
+
+            subcollections.forEach(({ key, path, render }) => {
+                const unsub = onSnapshot(collection(db, path), (snapshot) => {
+                    appData[key] = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
+                    updateKPIs();
+                    render();
+                    lucide.createIcons();
+                }, (error) => {
+                    console.error(`Erro no listener ${path}:`, error);
+                    handleFirebasePermissionOrSetupError(error);
+                });
+                firestoreUnsubscribers.push(unsub);
+            });
+
+            // Listener para reservas de Coworking
+            const unsubBookings = onSnapshot(collection(db, `escritorios/${uid}/reservas`), (snapshot) => {
+                coworkingBookings = snapshot.docs.map(d => ({ id: d.id, ...d.data() }));
+                renderCoworkingBookings();
+                lucide.createIcons();
+            });
+            firestoreUnsubscribers.push(unsubBookings);
+        }
+
+        async function seedDefaultDataToFirestore(uid) {
+            await setDoc(doc(db, 'escritorios', uid), {
+                initialized: true,
+                updatedAt: serverTimestamp()
+            }, { merge: true });
+
+            const promises = [
+                ...defaultData.cases.map(c => addDoc(collection(db, `escritorios/${uid}/processos`), { ...c, createdAt: serverTimestamp() })),
+                ...defaultData.clients.map(cl => addDoc(collection(db, `escritorios/${uid}/clientes`), { ...cl, createdAt: serverTimestamp() })),
+                ...defaultData.deadlines.map(dl => addDoc(collection(db, `escritorios/${uid}/prazos`), { ...dl, createdAt: serverTimestamp() })),
+                ...defaultData.finances.map(fn => addDoc(collection(db, `escritorios/${uid}/financeiro`), { ...fn, createdAt: serverTimestamp() })),
+                addDoc(collection(db, `escritorios/${uid}/reservas`), {
+                    unit: 'Brasília - Asa Sul (Sede Nacional)',
+                    space: 'Cabine de Audiência Virtual (Acústica)',
+                    date: '2026-11-27',
+                    time: '14:00 às 16:00',
+                    createdAt: serverTimestamp()
+                })
+            ];
+            await Promise.all(promises);
+        }
+
+        async function resetDemoData() {
+            if (!currentUser) return;
+            if (isDemoFallbackMode) {
+                loadFallbackMemoryData();
+                showToast('Dados padrão restaurados no modo demonstração.', 'info');
+                return;
+            }
+
+            try {
+                const uid = currentUser.uid;
+                showToast('Populando dados padrão na nuvem...', 'info');
+                await seedDefaultDataToFirestore(uid);
+                showToast('Dados exemplo adicionados ao Firestore!', 'success');
+            } catch (err) {
+                handleFirebasePermissionOrSetupError(err);
+            }
+        }
+
+        // =====================================================================
+        // MIGRAÇÃO DO LOCALSTORAGE ANTIGO PARA O FIRESTORE (1 CLIQUE)
+        // =====================================================================
+        function checkLegacyLocalStorageButton() {
+            const hasLegacyData = localStorage.getItem(LEGACY_KEY_DATA) || localStorage.getItem(LEGACY_KEY_USER);
+            const btn = document.getElementById('btn-migrate-local');
+            if (hasLegacyData && btn) {
+                btn.classList.remove('hidden');
+            }
+        }
+
+        async function migrateLocalStorageToFirebase() {
+            if (!currentUser || isDemoFallbackMode) {
+                showToast('Faça login com sua conta para importar dados para a nuvem.', 'info');
+                return;
+            }
+
+            try {
+                const uid = currentUser.uid;
+                const legacyUserRaw = localStorage.getItem(LEGACY_KEY_USER);
+                const legacyDataRaw = localStorage.getItem(LEGACY_KEY_DATA);
+                const legacyBookingsRaw = localStorage.getItem(LEGACY_KEY_BOOKINGS);
+
+                if (legacyUserRaw) {
+                    const legacyUser = JSON.parse(legacyUserRaw);
+                    await setDoc(doc(db, 'usuarios', uid), {
+                        name: legacyUser.name || currentUser.name,
+                        oab: legacyUser.oab || currentUser.oab,
+                        firm: legacyUser.firm || currentUser.firm
+                    }, { merge: true });
+                    currentUser = { ...currentUser, ...legacyUser };
+                    applyUserProfileUI();
+                }
+
+                const tasks = [];
+                if (legacyDataRaw) {
+                    const parsed = JSON.parse(legacyDataRaw);
+                    (parsed.cases || []).forEach(({ id, ...rest }) => tasks.push(addDoc(collection(db, `escritorios/${uid}/processos`), rest)));
+                    (parsed.clients || []).forEach(({ id, ...rest }) => tasks.push(addDoc(collection(db, `escritorios/${uid}/clientes`), rest)));
+                    (parsed.deadlines || []).forEach(({ id, ...rest }) => tasks.push(addDoc(collection(db, `escritorios/${uid}/prazos`), rest)));
+                    (parsed.finances || []).forEach(({ id, ...rest }) => tasks.push(addDoc(collection(db, `escritorios/${uid}/financeiro`), rest)));
+                }
+                if (legacyBookingsRaw) {
+                    const parsedBookings = JSON.parse(legacyBookingsRaw);
+                    parsedBookings.forEach(({ id, ...rest }) => tasks.push(addDoc(collection(db, `escritorios/${uid}/reservas`), rest)));
+                }
+
+                await Promise.all(tasks);
+                showToast('Dados locais importados para o Firebase com sucesso!', 'success');
+            } catch (err) {
+                console.error(err);
+                showToast('Não foi possível migrar os dados locais.', 'info');
+            }
         }
 
         // =====================================================================
@@ -1574,74 +1790,136 @@
             }
         }
 
-        function handleLogin(e) {
+        async function handleLogin(e) {
             e.preventDefault();
             const oab = document.getElementById('login-oab').value.trim();
             const email = document.getElementById('login-email').value.trim();
-            
-            // Extrai nome amigável a partir do e-mail se não houver cadastro prévio
-            const namePart = email.split('@')[0].replace(/[._]/g, ' ');
-            const formattedName = 'Dr(a). ' + namePart.replace(/\b\w/g, l => l.toUpperCase());
+            const password = document.getElementById('login-password').value;
 
-            const userObj = {
-                name: formattedName,
-                oab: oab || '312.845/SP',
-                email: email,
-                firm: 'Sociedade Individual de Advocacia'
-            };
-            completeAuthentication(userObj);
+            if (oab) {
+                sessionStorage.setItem('aab_pending_oab', oab);
+            }
+
+            try {
+                await signInWithEmailAndPassword(auth, email, password);
+                showToast('Autenticado na nuvem Firebase!', 'success');
+            } catch (err) {
+                sessionStorage.removeItem('aab_pending_oab');
+                showToast(translateFirebaseAuthError(err.code), 'info');
+            }
         }
 
-        function quickDemoLogin() {
-            document.getElementById('login-oab').value = '312.845/SP';
-            document.getElementById('login-email').value = 'helena.monteiro@aab.org.br';
-            document.getElementById('login-password').value = 'aab2026demo';
-
-            const demoUser = {
-                name: 'Dra. Helena Monteiro',
-                oab: '312.845/SP',
-                email: 'helena.monteiro@aab.org.br',
-                firm: 'Monteiro & Alencar Advogados'
-            };
-            completeAuthentication(demoUser);
-        }
-
-        function handleRegister(e) {
+        async function handleRegister(e) {
             e.preventDefault();
-            const newUser = {
-                name: document.getElementById('reg-name').value.trim(),
-                oab: document.getElementById('reg-oab').value.trim(),
-                firm: document.getElementById('reg-firm').value.trim(),
-                email: document.getElementById('reg-email').value.trim()
+            const name = document.getElementById('reg-name').value.trim();
+            const oab = document.getElementById('reg-oab').value.trim();
+            const firm = document.getElementById('reg-firm').value.trim();
+            const email = document.getElementById('reg-email').value.trim();
+            const password = document.getElementById('reg-password').value;
+
+            try {
+                const cred = await createUserWithEmailAndPassword(auth, email, password);
+                await updateProfile(cred.user, { displayName: name });
+
+                await setDoc(doc(db, 'usuarios', cred.user.uid), {
+                    name,
+                    oab,
+                    firm,
+                    email,
+                    createdAt: serverTimestamp()
+                }, { merge: true });
+
+                showToast(`Cadastro concluído! Bem-vindo(a), ${name}.`, 'success');
+            } catch (err) {
+                showToast(translateFirebaseAuthError(err.code), 'info');
+            }
+        }
+
+        async function quickDemoLogin() {
+            try {
+                await signInAnonymously(auth);
+                showToast('Conectado ao ambiente de demonstração na nuvem!', 'success');
+            } catch (err) {
+                // Fallback gracioso caso o login anônimo ainda não esteja habilitado no Console Firebase
+                isDemoFallbackMode = true;
+                currentUser = {
+                    uid: 'demo-local-session',
+                    name: 'Dra. Helena Monteiro',
+                    oab: '312.845/SP',
+                    email: 'helena.monteiro@aab.org.br',
+                    firm: 'Monteiro & Alencar Advogados'
+                };
+                applyUserProfileUI();
+                setCloudBadgeStatus('demo');
+                document.getElementById('auth-screen').classList.add('hidden');
+                document.getElementById('dashboard-screen').classList.remove('hidden');
+                loadFallbackMemoryData();
+                showToast('Modo Demonstração ativo (ative E-mail/Senha no Firebase para salvar na nuvem).', 'info');
+            }
+        }
+
+        function loadFallbackMemoryData() {
+            appData = {
+                cases: defaultData.cases.map((item, idx) => ({ id: 'demo-c-' + idx, ...item })),
+                clients: defaultData.clients.map((item, idx) => ({ id: 'demo-cl-' + idx, ...item })),
+                deadlines: defaultData.deadlines.map((item, idx) => ({ id: 'demo-dl-' + idx, ...item })),
+                finances: defaultData.finances.map((item, idx) => ({ id: 'demo-fn-' + idx, ...item }))
             };
-            completeAuthentication(newUser);
-        }
-
-        function completeAuthentication(userObj) {
-            currentUser = userObj;
-            localStorage.setItem(STORAGE_KEY_USER, JSON.stringify(userObj));
-            applyUserProfileUI();
-
-            document.getElementById('auth-screen').classList.add('hidden');
-            document.getElementById('dashboard-screen').classList.remove('hidden');
-            
-            navigateTo('overview');
+            coworkingBookings = [{
+                id: 'demo-cw-1',
+                unit: 'Brasília - Asa Sul (Sede Nacional)',
+                space: 'Cabine de Audiência Virtual (Acústica)',
+                date: '2026-11-27',
+                time: '14:00 às 16:00'
+            }];
             refreshAllViews();
-            showToast(`Bem-vindo(a), ${userObj.name}!`, 'success');
         }
 
-        function checkAuthSession() {
-            const savedUser = localStorage.getItem(STORAGE_KEY_USER);
-            if (savedUser) {
-                try {
-                    currentUser = JSON.parse(savedUser);
-                    applyUserProfileUI();
-                    document.getElementById('auth-screen').classList.add('hidden');
-                    document.getElementById('dashboard-screen').classList.remove('hidden');
-                    refreshAllViews();
-                } catch (e) {
-                    localStorage.removeItem(STORAGE_KEY_USER);
-                }
+        async function handleLogout() {
+            cleanupFirestoreListeners();
+            isDemoFallbackMode = false;
+            try {
+                await signOut(auth);
+            } catch (e) {}
+            currentUser = null;
+            document.getElementById('dashboard-screen').classList.add('hidden');
+            document.getElementById('auth-screen').classList.remove('hidden');
+            showToast('Sessão encerrada com segurança.', 'info');
+        }
+
+        function translateFirebaseAuthError(code) {
+            const map = {
+                'auth/invalid-credential': 'E-mail ou senha incorretos. Verifique suas credenciais ou clique em "Primeiro Acesso".',
+                'auth/user-not-found': 'Associado não encontrado. Utilize a aba "Primeiro Acesso" para habilitar sua conta.',
+                'auth/wrong-password': 'Senha incorreta. Tente novamente.',
+                'auth/email-already-in-use': 'Este e-mail já possui cadastro ativo. Faça login na aba "Acesso do Associado".',
+                'auth/weak-password': 'A senha deve conter pelo menos 6 caracteres.',
+                'auth/invalid-email': 'Informe um endereço de e-mail válido.',
+                'auth/operation-not-allowed': 'Ative o provedor "E-mail/Senha" em Authentication > Sign-in method no Console do Firebase.'
+            };
+            return map[code] || `Não foi possível autenticar (${code || 'erro de conexão'}).`;
+        }
+
+        function handleFirebasePermissionOrSetupError(err) {
+            const banner = document.getElementById('firebase-alert-banner');
+            const desc = document.getElementById('firebase-alert-desc');
+            if (banner && desc) {
+                desc.innerHTML = `Verifique se o <strong>Cloud Firestore</strong> foi criado e se as regras permitem leitura/gravação para usuários autenticados (<code>request.auth != null</code>). Detalhe: ${err.code || err.message}`;
+                banner.classList.remove('hidden');
+                lucide.createIcons();
+            }
+            setCloudBadgeStatus('warning');
+        }
+
+        function setCloudBadgeStatus(status) {
+            const badge = document.getElementById('cloud-status-badge');
+            if (!badge) return;
+            if (status === 'connected') {
+                badge.className = 'px-1.5 py-0.5 rounded bg-emerald-500/10 text-emerald-400 font-medium shrink-0 flex items-center gap-1';
+                badge.innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span><span>Firebase</span>';
+            } else {
+                badge.className = 'px-1.5 py-0.5 rounded bg-amber-500/10 text-amber-400 font-medium shrink-0 flex items-center gap-1';
+                badge.innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span><span>Demo</span>';
             }
         }
 
@@ -1654,19 +1932,10 @@
             document.getElementById('card-user-name').textContent = currentUser.name;
             document.getElementById('card-user-oab').textContent = currentUser.oab;
 
-            // Iniciais para avatar
             const cleanName = currentUser.name.replace(/^Dr\(a\)\.\s|^Dr\.\s|^Dra\.\s/i, '');
             const parts = cleanName.split(' ');
             const initials = (parts[0]?.[0] || 'A') + (parts[1]?.[0] || 'B');
             document.getElementById('user-avatar').textContent = initials.toUpperCase();
-        }
-
-        function handleLogout() {
-            localStorage.removeItem(STORAGE_KEY_USER);
-            currentUser = null;
-            document.getElementById('dashboard-screen').classList.add('hidden');
-            document.getElementById('auth-screen').classList.remove('hidden');
-            showToast('Sessão encerrada com segurança.', 'info');
         }
 
         // =====================================================================
@@ -1682,17 +1951,12 @@
         };
 
         function navigateTo(sectionId) {
-            // Esconde todas as seções
             document.querySelectorAll('.view-section').forEach(el => el.classList.add('hidden'));
-            
-            // Mostra a seção alvo
             const target = document.getElementById(`view-${sectionId}`);
             if (target) target.classList.remove('hidden');
 
-            // Atualiza título no Header
             document.getElementById('page-title').textContent = pageTitles[sectionId] || 'Portal AAB';
 
-            // Atualiza estilo ativo na Sidebar
             document.querySelectorAll('.nav-btn').forEach(btn => {
                 if (btn.dataset.nav === sectionId) {
                     btn.className = 'nav-btn w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all bg-amber-700 text-white shadow-sm';
@@ -1701,7 +1965,6 @@
                 }
             });
 
-            // Fecha sidebar no mobile após navegar
             const sidebar = document.getElementById('sidebar');
             if (!sidebar.classList.contains('-translate-x-full') && window.innerWidth < 1024) {
                 toggleMobileSidebar();
@@ -1727,6 +1990,7 @@
             renderClientsGrid();
             renderDeadlinesList();
             renderFinanceTable();
+            renderCoworkingBookings();
             lucide.createIcons();
         }
 
@@ -1741,23 +2005,19 @@
         }
 
         function updateKPIs() {
-            // Processos ativos
             const activeCases = appData.cases.filter(c => c.status !== 'Arquivado').length;
             document.getElementById('kpi-active-cases').textContent = activeCases;
             document.getElementById('badge-cases').textContent = activeCases;
 
-            // Prazos pendentes (próximos 7 dias ou não concluídos)
             const pendingDeadlines = appData.deadlines.filter(d => !d.completed);
             document.getElementById('kpi-urgent-deadlines').textContent = pendingDeadlines.length;
             document.getElementById('badge-deadlines').textContent = pendingDeadlines.length;
 
-            // Honorários a receber (Receitas Pendentes ou Atrasadas)
             const receivable = appData.finances
                 .filter(f => f.kind === 'Receita' && f.status !== 'Pago')
                 .reduce((acc, item) => acc + Number(item.amount), 0);
             document.getElementById('kpi-receivable').textContent = formatCurrency(receivable);
 
-            // Clientes ativos
             document.getElementById('kpi-active-clients').textContent = appData.clients.length;
         }
 
@@ -1794,12 +2054,444 @@
                         <p class="text-sm font-semibold text-slate-900">${item.title}</p>
                         <p class="text-xs text-slate-500 font-mono">Proc: ${item.caseCnj}</p>
                     </div>
-                    <button type="button" onclick="event.stopPropagation(); toggleDeadlineComplete(${item.id})" class="px-3 py-1.5 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200 text-xs font-semibold transition flex items-center gap-1.5 self-start sm:self-center shrink-0">
+                    <button type="button" onclick="event.stopPropagation(); toggleDeadlineComplete('${item.id}')" class="px-3 py-1.5 rounded-xl bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200 text-xs font-semibold transition flex items-center gap-1.5 self-start sm:self-center shrink-0">
                         <i data-lucide="check" class="w-3.5 h-3.5"></i>
                         <span>Marcar Cumprido</span>
                     </button>
                 </div>`;
             }).join('');
+        }
+
+        // =====================================================================
+        // GESTÃO DE PROCESSOS (CRUD FIRESTORE)
+        // =====================================================================
+        function renderCasesTable() {
+            const tbody = document.getElementById('cases-table-body');
+            const search = (document.getElementById('filter-case-search')?.value || '').toLowerCase();
+            const areaFilter = document.getElementById('filter-case-area')?.value || 'Todas';
+            const statusFilter = document.getElementById('filter-case-status')?.value || 'Todos';
+
+            const filtered = appData.cases.filter(c => {
+                const matchSearch = (c.cnj || '').toLowerCase().includes(search) ||
+                                    (c.client || '').toLowerCase().includes(search) ||
+                                    (c.opposing || '').toLowerCase().includes(search);
+                const matchArea = areaFilter === 'Todas' || c.area === areaFilter;
+                const matchStatus = statusFilter === 'Todos' || c.status === statusFilter;
+                return matchSearch && matchArea && matchStatus;
+            });
+
+            if (filtered.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="6" class="py-8 text-center text-slate-400">Nenhum processo encontrado com os filtros aplicados.</td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = filtered.map(c => {
+                const statusColors = {
+                    'Ativo': 'bg-emerald-50 text-emerald-700 border-emerald-200',
+                    'Aguardando Julgamento': 'bg-amber-50 text-amber-800 border-amber-200',
+                    'Recursal': 'bg-blue-50 text-blue-700 border-blue-200',
+                    'Arquivado': 'bg-slate-100 text-slate-600 border-slate-200'
+                };
+
+                return `
+                <tr class="hover:bg-slate-50/90 transition">
+                    <td class="py-3.5 px-4">
+                        <p class="font-mono text-xs font-bold text-slate-900">${c.cnj}</p>
+                        <span class="inline-block mt-1 text-[11px] font-semibold px-2 py-0.5 rounded bg-slate-100 text-slate-700">${c.area}</span>
+                    </td>
+                    <td class="py-3.5 px-4">
+                        <p class="font-semibold text-slate-900">${c.client}</p>
+                        <p class="text-xs text-slate-500">vs. ${c.opposing}</p>
+                    </td>
+                    <td class="py-3.5 px-4 text-xs text-slate-600">${c.court}</td>
+                    <td class="py-3.5 px-4 text-xs font-semibold text-amber-800">${formatDateBR(c.nextDeadline)}</td>
+                    <td class="py-3.5 px-4">
+                        <span class="text-xs font-semibold px-2.5 py-1 rounded-full border ${statusColors[c.status] || statusColors['Ativo']}">${c.status}</span>
+                    </td>
+                    <td class="py-3.5 px-4 text-right space-x-1">
+                        <button onclick="openCaseDetails('${c.id}')" title="Ver detalhes e alterar status" class="p-1.5 rounded-lg text-slate-600 hover:bg-slate-200/70 hover:text-slate-900 transition">
+                            <i data-lucide="eye" class="w-4 h-4"></i>
+                        </button>
+                        <button onclick="deleteCase('${c.id}')" title="Excluir processo" class="p-1.5 rounded-lg text-rose-600 hover:bg-rose-50 transition">
+                            <i data-lucide="trash-2" class="w-4 h-4"></i>
+                        </button>
+                    </td>
+                </tr>`;
+            }).join('');
+            lucide.createIcons();
+        }
+
+        async function handleAddCase(e) {
+            e.preventDefault();
+            const newCase = {
+                cnj: document.getElementById('case-cnj').value.trim(),
+                client: document.getElementById('case-client').value.trim(),
+                opposing: document.getElementById('case-opposing').value.trim(),
+                area: document.getElementById('case-area').value,
+                status: document.getElementById('case-status').value,
+                court: document.getElementById('case-court').value.trim(),
+                nextDeadline: document.getElementById('case-deadline').value,
+                notes: 'Processo cadastrado via Portal AAB.'
+            };
+
+            if (isDemoFallbackMode) {
+                appData.cases.unshift({ id: 'demo-' + Date.now(), ...newCase });
+                refreshAllViews();
+            } else {
+                await addDoc(collection(db, `escritorios/${currentUser.uid}/processos`), {
+                    ...newCase,
+                    createdAt: serverTimestamp()
+                });
+            }
+
+            e.target.reset();
+            closeModal('modal-new-case');
+            showToast('Processo cadastrado e sincronizado na nuvem!', 'success');
+        }
+
+        function openCaseDetails(id) {
+            const c = appData.cases.find(item => String(item.id) === String(id));
+            if (!c) return;
+
+            const container = document.getElementById('case-details-content');
+            container.innerHTML = `
+                <div class="space-y-3 text-sm">
+                    <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200">
+                        <span class="text-[11px] uppercase font-bold text-slate-400">Número CNJ</span>
+                        <p class="font-mono font-bold text-slate-900">${c.cnj}</p>
+                    </div>
+                    <div class="grid grid-cols-2 gap-3">
+                        <div>
+                            <span class="text-xs text-slate-500">Cliente</span>
+                            <p class="font-semibold text-slate-900">${c.client}</p>
+                        </div>
+                        <div>
+                            <span class="text-xs text-slate-500">Parte Contrária</span>
+                            <p class="font-semibold text-slate-900">${c.opposing}</p>
+                        </div>
+                    </div>
+                    <div>
+                        <span class="text-xs text-slate-500">Vara / Tribunal</span>
+                        <p class="font-medium text-slate-800">${c.court}</p>
+                    </div>
+                    <div>
+                        <span class="text-xs text-slate-500">Resumo / Andamento</span>
+                        <p class="text-xs text-slate-700 bg-amber-50/60 p-3 rounded-xl border border-amber-200/60 mt-1">${c.notes || 'Sem observações.'}</p>
+                    </div>
+                    <div class="pt-2 border-t border-slate-100">
+                        <label class="block text-xs font-semibold uppercase text-slate-600 mb-1.5">Atualizar Status Processual</label>
+                        <div class="flex gap-2">
+                            <select id="detail-status-select" class="flex-1 px-3 py-2 text-sm bg-slate-50 border border-slate-300 rounded-xl">
+                                <option value="Ativo" ${c.status === 'Ativo' ? 'selected' : ''}>Ativo</option>
+                                <option value="Aguardando Julgamento" ${c.status === 'Aguardando Julgamento' ? 'selected' : ''}>Aguardando Julgamento</option>
+                                <option value="Recursal" ${c.status === 'Recursal' ? 'selected' : ''}>Recursal</option>
+                                <option value="Arquivado" ${c.status === 'Arquivado' ? 'selected' : ''}>Arquivado</option>
+                            </select>
+                            <button onclick="updateCaseStatus('${c.id}')" class="px-4 py-2 bg-slate-900 text-white text-xs font-semibold rounded-xl hover:bg-slate-800">Atualizar</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            openModal('modal-case-details');
+        }
+
+        async function updateCaseStatus(id) {
+            const newStatus = document.getElementById('detail-status-select').value;
+            if (isDemoFallbackMode) {
+                const idx = appData.cases.findIndex(c => String(c.id) === String(id));
+                if (idx !== -1) appData.cases[idx].status = newStatus;
+                refreshAllViews();
+            } else {
+                await updateDoc(doc(db, `escritorios/${currentUser.uid}/processos`, String(id)), { status: newStatus });
+            }
+            closeModal('modal-case-details');
+            showToast('Status processual atualizado na nuvem.', 'success');
+        }
+
+        async function deleteCase(id) {
+            if (isDemoFallbackMode) {
+                appData.cases = appData.cases.filter(c => String(c.id) !== String(id));
+                refreshAllViews();
+            } else {
+                await deleteDoc(doc(db, `escritorios/${currentUser.uid}/processos`, String(id)));
+            }
+            showToast('Processo removido.', 'info');
+        }
+
+        // =====================================================================
+        // CLIENTES & CRM (CRUD FIRESTORE)
+        // =====================================================================
+        function renderClientsGrid() {
+            const grid = document.getElementById('clients-grid');
+            if (appData.clients.length === 0) {
+                grid.innerHTML = `<div class="col-span-full text-center py-10 text-slate-400">Nenhum cliente cadastrado ainda.</div>`;
+                return;
+            }
+
+            grid.innerHTML = appData.clients.map(cli => `
+                <div class="bg-white rounded-2xl p-5 border border-slate-200 shadow-xs hover:shadow-md transition flex flex-col justify-between gap-4">
+                    <div>
+                        <div class="flex items-start justify-between gap-2 mb-2">
+                            <span class="text-[11px] font-bold uppercase px-2.5 py-0.5 rounded-full ${cli.type === 'Pessoa Jurídica' ? 'bg-slate-900 text-amber-400' : 'bg-amber-100 text-amber-900'}">${cli.type}</span>
+                            <button onclick="deleteClient('${cli.id}')" title="Remover cliente" class="text-slate-400 hover:text-rose-600 transition">
+                                <i data-lucide="trash-2" class="w-4 h-4"></i>
+                            </button>
+                        </div>
+                        <h3 class="font-serif text-lg font-bold text-slate-900">${cli.name}</h3>
+                        <p class="text-xs font-mono text-slate-500 mt-0.5">${cli.doc}</p>
+                        <div class="mt-4 space-y-1.5 text-xs text-slate-600 border-t border-slate-100 pt-3">
+                            <p class="flex items-center gap-2"><i data-lucide="phone" class="w-3.5 h-3.5 text-amber-700"></i> ${cli.phone}</p>
+                            <p class="flex items-center gap-2"><i data-lucide="mail" class="w-3.5 h-3.5 text-amber-700"></i> ${cli.email}</p>
+                        </div>
+                    </div>
+                    <div class="pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
+                        <span class="text-slate-500 font-medium">${cli.casesCount || 1} processo(s) vinculado(s)</span>
+                        <button onclick="navigateTo('cases')" class="font-semibold text-amber-700 hover:text-amber-800">Ver processos →</button>
+                    </div>
+                </div>
+            `).join('');
+            lucide.createIcons();
+        }
+
+        async function handleAddClient(e) {
+            e.preventDefault();
+            const newClient = {
+                name: document.getElementById('cli-name').value.trim(),
+                type: document.getElementById('cli-type').value,
+                doc: document.getElementById('cli-doc').value.trim(),
+                phone: document.getElementById('cli-phone').value.trim(),
+                email: document.getElementById('cli-email').value.trim(),
+                casesCount: 1
+            };
+
+            if (isDemoFallbackMode) {
+                appData.clients.unshift({ id: 'demo-cli-' + Date.now(), ...newClient });
+                refreshAllViews();
+            } else {
+                await addDoc(collection(db, `escritorios/${currentUser.uid}/clientes`), {
+                    ...newClient,
+                    createdAt: serverTimestamp()
+                });
+            }
+
+            e.target.reset();
+            closeModal('modal-new-client');
+            showToast('Cliente salvo no banco de dados!', 'success');
+        }
+
+        async function deleteClient(id) {
+            if (isDemoFallbackMode) {
+                appData.clients = appData.clients.filter(c => String(c.id) !== String(id));
+                refreshAllViews();
+            } else {
+                await deleteDoc(doc(db, `escritorios/${currentUser.uid}/clientes`, String(id)));
+            }
+            showToast('Cliente removido.', 'info');
+        }
+
+        // =====================================================================
+        // PRAZOS & AGENDA (CRUD FIRESTORE)
+        // =====================================================================
+        function setDeadlineFilter(filter) {
+            currentDeadlineFilter = filter;
+            document.querySelectorAll('.dl-filter-btn').forEach(btn => {
+                if (btn.dataset.filter === filter) {
+                    btn.className = 'dl-filter-btn px-3 py-1 text-xs font-semibold rounded-lg bg-slate-900 text-white';
+                } else {
+                    btn.className = 'dl-filter-btn px-3 py-1 text-xs font-medium rounded-lg bg-slate-100 text-slate-600 hover:bg-slate-200';
+                }
+            });
+            renderDeadlinesList();
+        }
+
+        function renderDeadlinesList() {
+            const container = document.getElementById('deadlines-full-list');
+            const filtered = appData.deadlines.filter(d => currentDeadlineFilter === 'Todos' || d.type === currentDeadlineFilter);
+
+            if (filtered.length === 0) {
+                container.innerHTML = `<p class="text-sm text-slate-400 text-center py-8">Nenhum compromisso nesta categoria.</p>`;
+                return;
+            }
+
+            container.innerHTML = filtered.map(d => {
+                const badgeStyle = d.type === 'Fatal' 
+                    ? 'bg-rose-100 text-rose-800 border-rose-200' 
+                    : d.type === 'Audiência' 
+                    ? 'bg-amber-100 text-amber-800 border-amber-200'
+                    : 'bg-slate-100 text-slate-700 border-slate-200';
+
+                return `
+                <div class="p-4 rounded-xl border ${d.completed ? 'bg-slate-50 border-slate-200 opacity-65' : 'bg-white border-slate-200'} flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                    <div class="space-y-1">
+                        <div class="flex items-center gap-2">
+                            <span class="text-[11px] font-bold px-2 py-0.5 rounded border ${badgeStyle}">${d.type}</span>
+                            <span class="text-xs font-semibold text-slate-600">${formatDateBR(d.date)}</span>
+                            ${d.completed ? '<span class="text-[11px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded">Cumprido</span>' : ''}
+                        </div>
+                        <p class="text-sm font-semibold ${d.completed ? 'line-through text-slate-500' : 'text-slate-900'}">${d.title}</p>
+                        <p class="text-xs font-mono text-slate-500">Proc: ${d.caseCnj}</p>
+                    </div>
+                    <div class="flex items-center gap-2 self-start sm:self-center">
+                        <button onclick="toggleDeadlineComplete('${d.id}')" class="px-3 py-1.5 rounded-xl text-xs font-semibold border transition ${d.completed ? 'bg-slate-100 text-slate-600 border-slate-300' : 'bg-emerald-50 text-emerald-800 border-emerald-200 hover:bg-emerald-100'}">
+                            ${d.completed ? 'Reabrir' : 'Concluir'}
+                        </button>
+                        <button onclick="deleteDeadline('${d.id}')" class="p-1.5 rounded-lg text-rose-600 hover:bg-rose-50">
+                            <i data-lucide="trash-2" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                </div>`;
+            }).join('');
+            lucide.createIcons();
+        }
+
+        async function handleAddDeadline(e) {
+            e.preventDefault();
+            const newDl = {
+                title: document.getElementById('dl-title').value.trim(),
+                caseCnj: document.getElementById('dl-case').value.trim(),
+                date: document.getElementById('dl-date').value,
+                type: document.getElementById('dl-type').value,
+                completed: false
+            };
+
+            if (isDemoFallbackMode) {
+                appData.deadlines.unshift({ id: 'demo-dl-' + Date.now(), ...newDl });
+                refreshAllViews();
+            } else {
+                await addDoc(collection(db, `escritorios/${currentUser.uid}/prazos`), {
+                    ...newDl,
+                    createdAt: serverTimestamp()
+                });
+            }
+
+            e.target.reset();
+            showToast('Prazo registrado na agenda jurídica!', 'success');
+        }
+
+        async function toggleDeadlineComplete(id) {
+            const target = appData.deadlines.find(d => String(d.id) === String(id));
+            if (!target) return;
+            const nextState = !target.completed;
+
+            if (isDemoFallbackMode) {
+                target.completed = nextState;
+                refreshAllViews();
+            } else {
+                await updateDoc(doc(db, `escritorios/${currentUser.uid}/prazos`, String(id)), { completed: nextState });
+            }
+            showToast(nextState ? 'Prazo marcado como cumprido!' : 'Prazo reaberto.', 'success');
+        }
+
+        async function deleteDeadline(id) {
+            if (isDemoFallbackMode) {
+                appData.deadlines = appData.deadlines.filter(d => String(d.id) !== String(id));
+                refreshAllViews();
+            } else {
+                await deleteDoc(doc(db, `escritorios/${currentUser.uid}/prazos`, String(id)));
+            }
+            showToast('Compromisso removido.', 'info');
+        }
+
+        // =====================================================================
+        // FINANCEIRO & HONORÁRIOS (CRUD FIRESTORE)
+        // =====================================================================
+        function renderFinanceTable() {
+            const tbody = document.getElementById('finance-table-body');
+
+            const incomePaid = appData.finances
+                .filter(f => f.kind === 'Receita' && f.status === 'Pago')
+                .reduce((sum, item) => sum + Number(item.amount), 0);
+
+            const expensePaid = appData.finances
+                .filter(f => f.kind === 'Despesa' && f.status === 'Pago')
+                .reduce((sum, item) => sum + Number(item.amount), 0);
+
+            document.getElementById('fin-total-income').textContent = formatCurrency(incomePaid);
+            document.getElementById('fin-total-expense').textContent = formatCurrency(expensePaid);
+            document.getElementById('fin-balance').textContent = formatCurrency(incomePaid - expensePaid);
+
+            if (appData.finances.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="6" class="py-8 text-center text-slate-400">Nenhum lançamento financeiro registrado.</td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = appData.finances.map(f => {
+                const statusBadge = f.status === 'Pago'
+                    ? 'bg-emerald-50 text-emerald-700 border-emerald-200'
+                    : f.status === 'Atrasado'
+                    ? 'bg-rose-50 text-rose-700 border-rose-200'
+                    : 'bg-amber-50 text-amber-800 border-amber-200';
+
+                return `
+                <tr class="hover:bg-slate-50 transition">
+                    <td class="py-3.5 px-4 font-semibold text-slate-900">${f.description}</td>
+                    <td class="py-3.5 px-4 text-xs text-slate-600">${f.category}</td>
+                    <td class="py-3.5 px-4 text-xs text-slate-600">${formatDateBR(f.date)}</td>
+                    <td class="py-3.5 px-4 font-bold ${f.kind === 'Receita' ? 'text-emerald-700' : 'text-rose-700'}">
+                        ${f.kind === 'Receita' ? '+' : '-'} ${formatCurrency(f.amount)}
+                    </td>
+                    <td class="py-3.5 px-4">
+                        <span class="text-xs font-semibold px-2.5 py-0.5 rounded-full border ${statusBadge}">${f.status}</span>
+                    </td>
+                    <td class="py-3.5 px-4 text-right space-x-1">
+                        ${f.status !== 'Pago' ? `
+                            <button onclick="markFinancePaid('${f.id}')" class="px-2.5 py-1 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-emerald-800 text-xs font-semibold border border-emerald-200">
+                                Dar Baixa
+                            </button>` : ''}
+                        <button onclick="deleteFinance('${f.id}')" class="p-1.5 rounded-lg text-rose-600 hover:bg-rose-50">
+                            <i data-lucide="trash-2" class="w-4 h-4"></i>
+                        </button>
+                    </td>
+                </tr>`;
+            }).join('');
+            lucide.createIcons();
+        }
+
+        async function handleAddFinance(e) {
+            e.preventDefault();
+            const newFin = {
+                description: document.getElementById('fin-desc').value.trim(),
+                kind: document.getElementById('fin-kind').value,
+                category: document.getElementById('fin-category').value,
+                amount: parseFloat(document.getElementById('fin-amount').value),
+                date: document.getElementById('fin-date').value,
+                status: document.getElementById('fin-status').value
+            };
+
+            if (isDemoFallbackMode) {
+                appData.finances.unshift({ id: 'demo-fin-' + Date.now(), ...newFin });
+                refreshAllViews();
+            } else {
+                await addDoc(collection(db, `escritorios/${currentUser.uid}/financeiro`), {
+                    ...newFin,
+                    createdAt: serverTimestamp()
+                });
+            }
+
+            e.target.reset();
+            closeModal('modal-new-finance');
+            showToast('Lançamento financeiro registrado!', 'success');
+        }
+
+        async function markFinancePaid(id) {
+            if (isDemoFallbackMode) {
+                const item = appData.finances.find(f => String(f.id) === String(id));
+                if (item) item.status = 'Pago';
+                refreshAllViews();
+            } else {
+                await updateDoc(doc(db, `escritorios/${currentUser.uid}/financeiro`, String(id)), { status: 'Pago' });
+            }
+            showToast('Baixa financeira confirmada!', 'success');
+        }
+
+        async function deleteFinance(id) {
+            if (isDemoFallbackMode) {
+                appData.finances = appData.finances.filter(f => String(f.id) !== String(id));
+                refreshAllViews();
+            } else {
+                await deleteDoc(doc(db, `escritorios/${currentUser.uid}/financeiro`, String(id)));
+            }
+            showToast('Lançamento excluído.', 'info');
         }
 
         // =====================================================================
@@ -1831,18 +2523,31 @@
         }
 
         // 1. Certificado Digital A3
-        function handleCertificateSubmit(e) {
+        async function handleCertificateSubmit(e) {
             e.preventDefault();
             const media = document.querySelector('input[name="cert-media"]:checked')?.value || 'Nuvem BirdID / SafeID';
             const actionType = document.getElementById('cert-action-type').value;
+            const phone = document.getElementById('cert-phone').value;
             const randomCode = 'ICP-AAB-' + Math.floor(100000 + Math.random() * 900000);
+
+            if (!isDemoFallbackMode && currentUser) {
+                try {
+                    await addDoc(collection(db, `escritorios/${currentUser.uid}/solicitacoes_certificado`), {
+                        protocol: randomCode,
+                        media,
+                        actionType,
+                        phone,
+                        createdAt: serverTimestamp()
+                    });
+                } catch (err) {}
+            }
 
             document.getElementById('cert-protocol-code').textContent = randomCode;
             document.getElementById('cert-protocol-detail').textContent = `${actionType} (${media}) registrada para ${currentUser ? currentUser.name : 'Associado'}. Link de validação enviado ao e-mail cadastrado.`;
             document.getElementById('cert-protocol-box').classList.remove('hidden');
 
             lucide.createIcons();
-            showToast(`Protocolo ${randomCode} emitido com sucesso!`, 'success');
+            showToast(`Protocolo ${randomCode} emitido e salvo na nuvem!`, 'success');
         }
 
         // 2. Biblioteca & Doutrina AAB
@@ -1887,10 +2592,13 @@
             showToast(`Abrindo exemplar digital: "${title}"`, 'success');
         }
 
-        // 3. Salas de Apoio & Coworking
+        // 3. Salas de Apoio & Coworking (Firestore)
         function renderCoworkingBookings() {
             const list = document.getElementById('cw-bookings-list');
-            document.getElementById('cw-count-badge').textContent = coworkingBookings.length;
+            const badge = document.getElementById('cw-count-badge');
+            if (!list || !badge) return;
+
+            badge.textContent = coworkingBookings.length;
 
             if (coworkingBookings.length === 0) {
                 list.innerHTML = `<p class="text-xs text-slate-500 text-center py-6">Nenhuma reserva agendada no momento.</p>`;
@@ -1904,7 +2612,7 @@
                         <p class="text-xs font-bold text-slate-900">${b.space}</p>
                         <p class="text-[11px] text-slate-500">${b.unit}</p>
                     </div>
-                    <button type="button" onclick="cancelCoworkingBooking(${b.id})" title="Cancelar reserva" class="text-xs text-rose-600 hover:text-rose-800 p-1 rounded hover:bg-rose-50 transition">
+                    <button type="button" onclick="cancelCoworkingBooking('${b.id}')" title="Cancelar reserva" class="text-xs text-rose-600 hover:text-rose-800 p-1 rounded hover:bg-rose-50 transition">
                         <i data-lucide="trash-2" class="w-4 h-4"></i>
                     </button>
                 </div>
@@ -1912,26 +2620,34 @@
             lucide.createIcons();
         }
 
-        function handleAddCoworkingBooking(e) {
+        async function handleAddCoworkingBooking(e) {
             e.preventDefault();
             const booking = {
-                id: Date.now(),
                 unit: document.getElementById('cw-unit').value,
                 space: document.getElementById('cw-space').value,
                 date: document.getElementById('cw-date').value,
                 time: document.getElementById('cw-time').value
             };
 
-            coworkingBookings.unshift(booking);
-            localStorage.setItem(STORAGE_KEY_BOOKINGS, JSON.stringify(coworkingBookings));
-            renderCoworkingBookings();
-            showToast('Sala reservada com sucesso! Comprovante vinculado à sua Carteira AAB.', 'success');
+            if (isDemoFallbackMode) {
+                coworkingBookings.unshift({ id: 'demo-cw-' + Date.now(), ...booking });
+                renderCoworkingBookings();
+            } else {
+                await addDoc(collection(db, `escritorios/${currentUser.uid}/reservas`), {
+                    ...booking,
+                    createdAt: serverTimestamp()
+                });
+            }
+            showToast('Sala reservada e salva na sua Carteira AAB!', 'success');
         }
 
-        function cancelCoworkingBooking(id) {
-            coworkingBookings = coworkingBookings.filter(b => b.id !== id);
-            localStorage.setItem(STORAGE_KEY_BOOKINGS, JSON.stringify(coworkingBookings));
-            renderCoworkingBookings();
+        async function cancelCoworkingBooking(id) {
+            if (isDemoFallbackMode) {
+                coworkingBookings = coworkingBookings.filter(b => String(b.id) !== String(id));
+                renderCoworkingBookings();
+            } else {
+                await deleteDoc(doc(db, `escritorios/${currentUser.uid}/reservas`, String(id)));
+            }
             showToast('Reserva cancelada.', 'info');
         }
 
@@ -2021,6 +2737,46 @@
                 setTimeout(() => toast.remove(), 300);
             }, 3200);
         }
+
+        // Expondo funções para os eventos inline (onclick / onsubmit) do HTML
+        Object.assign(window, {
+            switchAuthTab,
+            handleLogin,
+            handleRegister,
+            quickDemoLogin,
+            handleLogout,
+            navigateTo,
+            toggleMobileSidebar,
+            resetDemoData,
+            migrateLocalStorageToFirebase,
+            renderCasesTable,
+            handleAddCase,
+            openCaseDetails,
+            updateCaseStatus,
+            deleteCase,
+            handleAddClient,
+            deleteClient,
+            setDeadlineFilter,
+            handleAddDeadline,
+            toggleDeadlineComplete,
+            deleteDeadline,
+            handleAddFinance,
+            markFinancePaid,
+            deleteFinance,
+            openBenefitModal,
+            handleCertificateSubmit,
+            renderLibraryCatalog,
+            downloadLibraryItem,
+            handleAddCoworkingBooking,
+            cancelCoworkingBooking,
+            renderHealthCatalog,
+            generateHealthVoucher,
+            openModal,
+            closeModal,
+            showToast
+        });
+
+        lucide.createIcons();
     </script>
 </body>
 </html>
