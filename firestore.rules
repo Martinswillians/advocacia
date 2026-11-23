@@ -1,0 +1,138 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function normalizedEmail() {
+      return isSignedIn() && request.auth.token.email != null
+        ? request.auth.token.email.lower()
+        : '';
+    }
+
+    function isMasterAdmin() {
+      return normalizedEmail() == 'willbrasilia@gmail.com';
+    }
+
+    function requesterProfilePath() {
+      return /databases/$(database)/documents/usuarios/$(request.auth.uid);
+    }
+
+    function hasRequesterProfile() {
+      return isSignedIn() && exists(requesterProfilePath());
+    }
+
+    function requesterProfile() {
+      return get(requesterProfilePath()).data;
+    }
+
+    function isBoardAdmin() {
+      return isMasterAdmin() || (
+        hasRequesterProfile() &&
+        requesterProfile().get('accountStatus', 'Ativo') != 'Suspenso' &&
+        requesterProfile().get('role', 'associado') == 'responsavel_aab' &&
+        requesterProfile().get('promotedByAdmin', false) == true
+      );
+    }
+
+    function canPublishBulletin() {
+      return isBoardAdmin() || (
+        hasRequesterProfile() &&
+        requesterProfile().get('accountStatus', 'Ativo') != 'Suspenso' &&
+        requesterProfile().get('permissions', {}).get('canPublish', false) == true
+      );
+    }
+
+    function isProtectedMasterDoc(userId, existingData, incomingData) {
+      return (existingData != null && existingData.get('email', '').lower() == 'willbrasilia@gmail.com') ||
+             (incomingData != null && incomingData.get('email', '').lower() == 'willbrasilia@gmail.com');
+    }
+
+    // Perfis de usuários e subcoleções privadas do escritório
+    match /usuarios/{userId} {
+      allow read: if isSignedIn();
+
+      allow create: if isSignedIn() && (
+        isBoardAdmin() || (
+          request.auth.uid == userId &&
+          (
+            isMasterAdmin() ||
+            (
+              request.resource.data.get('role', 'associado') == 'associado' &&
+              request.resource.data.get('promotedByAdmin', false) == false
+            )
+          )
+        )
+      );
+
+      allow update: if isSignedIn() && (
+        (
+          isProtectedMasterDoc(userId, resource.data, request.resource.data) &&
+          (
+            isMasterAdmin() &&
+            request.auth.uid == userId &&
+            request.resource.data.get('email', '').lower() == 'willbrasilia@gmail.com' &&
+            request.resource.data.get('role', 'responsavel_aab') == 'responsavel_aab' &&
+            request.resource.data.get('promotedByAdmin', true) == true &&
+            request.resource.data.get('accountStatus', 'Ativo') == 'Ativo'
+          )
+        ) || (
+          !isProtectedMasterDoc(userId, resource.data, request.resource.data) &&
+          (
+            isBoardAdmin() || (
+              request.auth.uid == userId &&
+              request.resource.data.get('role', resource.data.get('role', 'associado')) == resource.data.get('role', 'associado') &&
+              request.resource.data.get('promotedByAdmin', resource.data.get('promotedByAdmin', false)) == resource.data.get('promotedByAdmin', false) &&
+              request.resource.data.get('accountStatus', resource.data.get('accountStatus', 'Ativo')) == resource.data.get('accountStatus', 'Ativo')
+            )
+          )
+        )
+      );
+
+      allow delete: if isBoardAdmin() && !isProtectedMasterDoc(userId, resource.data, null);
+
+      // Subcoleções privadas de cada associado/responsável
+      match /processos/{docId} {
+        allow read, write: if isSignedIn() && request.auth.uid == userId;
+      }
+
+      match /clientes/{docId} {
+        allow read, write: if isSignedIn() && request.auth.uid == userId;
+      }
+
+      match /prazos/{docId} {
+        allow read, write: if isSignedIn() && request.auth.uid == userId;
+      }
+
+      match /financeiro/{docId} {
+        allow read, write: if isSignedIn() && request.auth.uid == userId;
+      }
+
+      match /reservas_salas/{docId} {
+        allow read, write: if isSignedIn() && request.auth.uid == userId;
+      }
+    }
+
+    // Mural institucional da AAB
+    match /publicacoes_aab/{bulletinId} {
+      allow read: if isSignedIn();
+      allow create, update, delete: if canPublishBulletin();
+    }
+
+    // E-mails previamente autorizados para primeiro acesso
+    match /emails_autorizados/{authDocId} {
+      allow read: if isSignedIn();
+      allow create, update: if isBoardAdmin();
+      allow delete: if isBoardAdmin() && resource.data.get('email', '').lower() != 'willbrasilia@gmail.com';
+    }
+
+    // Configurações institucionais (links de benefícios)
+    match /configuracoes/{configId} {
+      allow read: if isSignedIn();
+      allow write: if isBoardAdmin();
+    }
+  }
+}
