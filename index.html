@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AAB — Portal de Gestão Jurídica e Responsável Institucional</title>
+    <title>OAB — Ordem dos Advogados do Brasil | Portal de Gestão Jurídica</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -63,7 +63,7 @@
                     <i data-lucide="scale" class="w-6 h-6"></i>
                 </div>
                 <div>
-                    <p class="text-[11px] font-bold tracking-[0.2em] uppercase text-amber-300">AAB • Associação dos Advogados</p>
+                    <p class="text-[11px] font-bold tracking-[0.2em] uppercase text-amber-300">OAB • Ordem dos Advogados do Brasil</p>
                     <h2 class="font-juridica text-xl font-bold tracking-wide text-white">Portal Jurídico Institucional</h2>
                 </div>
             </div>
@@ -73,12 +73,12 @@
                     Excelência na gestão jurídica e defesa das prerrogativas.
                 </h1>
                 <p class="text-slate-300 text-sm sm:text-base leading-relaxed">
-                    Ambiente unificado para associados e responsáveis AAB. Gerencie processos, clientes, prazos, honorários e contas de demandas jurídicas com segurança.
+                    Ambiente unificado para inscritos e responsáveis da Ordem dos Advogados do Brasil. Gerencie processos, clientes, prazos, honorários e contas de demandas jurídicas com segurança.
                 </p>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
                     <div class="p-4 rounded-xl bg-white/5 border border-white/10">
                         <p class="text-xs font-bold uppercase tracking-wider text-amber-300">Acesso Autorizado</p>
-                        <p class="text-xs text-slate-300 mt-1">Cadastro validado por quadro na AAB (<strong>willbrasilia@gmail.com</strong>).</p>
+                        <p class="text-xs text-slate-300 mt-1">Cadastro validado por quadro na OAB (<strong>willbrasilia@gmail.com</strong>).</p>
                     </div>
                     <div class="p-4 rounded-xl bg-white/5 border border-white/10">
                         <p class="text-xs font-bold uppercase tracking-wider text-amber-300">Financeiro Jurídico</p>
@@ -88,7 +88,7 @@
             </div>
 
             <div class="relative z-10 flex flex-wrap items-center justify-between gap-2 text-xs text-slate-400 border-t border-white/10 pt-5">
-                <span>Estatuto da Advocacia • Lei nº 8.906/94</span>
+                <span>Estatuto da Advocacia e da OAB • Lei nº 8.906/94</span>
                 <span id="auth-sync-indicator" class="text-amber-300 font-medium">Conectando serviços...</span>
             </div>
         </div>
@@ -114,7 +114,7 @@
 
                     <div>
                         <label for="login-oab" class="block text-[11px] font-bold uppercase tracking-wider text-slate-600 mb-1">
-                            Inscrição OAB / Registro AAB <span class="font-normal lowercase text-slate-400">(Opcional se usar e-mail)</span>
+                            Inscrição OAB / Registro Institucional <span class="font-normal lowercase text-slate-400">(Opcional se usar e-mail)</span>
                         </label>
                         <input type="text" id="login-oab" placeholder="Ex: 1234 ou 248.910/DF" class="w-full px-3.5 py-2.5 rounded-xl border border-slate-200 text-sm focus:outline-none focus:border-amber-500">
                     </div>
@@ -153,7 +153,7 @@
                         <p class="text-[10px] font-bold uppercase tracking-widest text-center text-slate-400">Acesso Institucional &amp; Demonstração</p>
                         <button type="button" onclick="focusResponsibleLogin()" class="w-full py-2.5 px-4 rounded-xl bg-aab-navy hover:bg-aab-navyDark text-amber-300 font-semibold text-xs flex items-center justify-center gap-2 cursor-pointer transition-colors">
                             <i data-lucide="shield-check" class="w-4 h-4"></i>
-                            <span>Acesso Responsável AAB (willbrasilia@gmail.com)</span>
+                            <span>Acesso Responsável OAB (willbrasilia@gmail.com)</span>
                         </button>
                         <button type="button" onclick="enterDemoMode()" class="w-full py-2.5 px-4 rounded-xl bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-200 font-semibold text-xs flex items-center justify-center gap-2 cursor-pointer transition-colors">
                             <i data-lucide="zap" class="w-4 h-4"></i>
@@ -170,7 +170,7 @@
                 <form id="form-register" onsubmit="handleRegister(event)" class="space-y-3.5 hidden">
                     <div>
                         <h3 class="font-juridica text-3xl font-bold text-aab-navy">Ativar Primeiro Acesso</h3>
-                        <p class="text-xs text-slate-500 mt-1">Conclua seu cadastro com um e-mail previamente habilitado no Quadro de Associados ou no Quadro Adm.</p>
+                        <p class="text-xs text-slate-500 mt-1">Conclua seu cadastro com um e-mail previamente habilitado no Quadro de Inscritos OAB ou no Quadro Adm.</p>
                     </div>
 
                     <div>
@@ -221,8 +221,8 @@
                             <i data-lucide="scale" class="w-5 h-5"></i>
                         </div>
                         <div>
-                            <p class="text-sm font-bold tracking-wide text-white">AAB PORTAL</p>
-                            <p class="text-[10px] uppercase tracking-widest text-amber-300">Gestão Jurídica</p>
+                            <p class="text-sm font-bold tracking-wide text-white">OAB PORTAL</p>
+                            <p class="text-[10px] uppercase tracking-widest text-amber-300">Ordem dos Advogados</p>
                         </div>
                     </div>
                     <button type="button" onclick="toggleMobileSidebar(false)" class="lg:hidden p-1.5 rounded-lg text-slate-300 hover:bg-white/10">
@@ -274,7 +274,7 @@
                         <span class="flex items-center gap-2.5"><i data-lucide="award" class="w-4 h-4"></i>Benefícios &amp; Carteira</span>
                     </button>
                     <button type="button" id="nav-btn-admin" data-nav="admin" onclick="navigateTo('admin')" class="nav-item hidden items-center justify-between w-full px-3.5 py-2.5 rounded-xl text-xs font-semibold bg-amber-500/15 text-amber-300 border border-amber-400/30 hover:bg-amber-500/25 cursor-pointer mt-2" style="display: none;">
-                        <span class="flex items-center gap-2.5"><i data-lucide="shield" class="w-4 h-4"></i>Painel Responsável AAB</span>
+                        <span class="flex items-center gap-2.5"><i data-lucide="shield" class="w-4 h-4"></i>Painel Responsável OAB</span>
                         <span class="px-1.5 py-0.5 rounded text-[9px] font-bold bg-amber-400 text-aab-navy">ADMIN</span>
                     </button>
                 </nav>
@@ -323,7 +323,7 @@
                     </button>
                     <button type="button" id="btn-header-wallet" onclick="navigateTo('benefits')" class="px-3.5 py-2 rounded-xl bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-200 text-xs font-semibold flex items-center gap-1.5 cursor-pointer">
                         <i data-lucide="id-card" class="w-4 h-4"></i>
-                        <span>Carteira AAB</span>
+                        <span>Carteira OAB</span>
                     </button>
                 </div>
             </header>
@@ -334,10 +334,10 @@
                     <div id="non-associate-board-banner" class="hidden p-4 rounded-2xl bg-amber-50 border border-amber-300 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                         <div class="text-xs text-amber-950">
                             <p class="font-bold">Conta cadastrada exclusivamente no Quadro Adm</p>
-                            <p class="text-amber-800 mt-0.5">Para utilizar os módulos de Associado (processos, clientes, prazos, financeiro e carteira), o e-mail também deve ser incluído no Quadro Associados.</p>
+                            <p class="text-amber-800 mt-0.5">Para utilizar os módulos de Advogado Inscrito (processos, clientes, prazos, financeiro e carteira), o e-mail também deve ser incluído no Quadro Inscritos OAB.</p>
                         </div>
                         <button type="button" onclick="navigateTo('admin')" class="px-3.5 py-2 rounded-xl bg-aab-navy text-amber-300 text-xs font-semibold shrink-0 cursor-pointer">
-                            Abrir Painel Responsável AAB
+                            Abrir Painel Responsável OAB
                         </button>
                     </div>
 
@@ -368,8 +368,8 @@
                         <div class="lg:col-span-2 bg-white rounded-2xl border border-slate-200/80 p-6 space-y-4">
                             <div class="flex items-center justify-between gap-2">
                                 <div>
-                                    <h2 class="font-juridica text-2xl font-bold text-aab-navy">Mural Institucional AAB</h2>
-                                    <p class="text-xs text-slate-500">Comunicados, portarias e eventos oficiais da associação</p>
+                                    <h2 class="font-juridica text-2xl font-bold text-aab-navy">Mural Institucional OAB</h2>
+                                    <p class="text-xs text-slate-500">Comunicados, portarias e eventos oficiais da Ordem dos Advogados do Brasil</p>
                                 </div>
                                 <button type="button" id="btn-quick-publish-overview" onclick="navigateTo('admin')" class="hidden px-3 py-1.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-xs font-semibold cursor-pointer">
                                     Publicar Aviso
@@ -534,14 +534,14 @@
                     </div>
                 </section>
 
-                <!-- 6. BENEFÍCIOS & CARTEIRA DIGITAL AAB -->
+                <!-- 6. BENEFÍCIOS & CARTEIRA DIGITAL OAB -->
                 <section id="view-benefits" class="view-section hidden space-y-6">
                     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
                         <div class="bg-aab-navy text-white rounded-2xl p-6 flex flex-col justify-between space-y-6">
                             <div class="flex items-start justify-between">
                                 <div>
-                                    <p class="text-[10px] font-bold uppercase tracking-[0.2em] text-amber-300">AAB • Identidade Digital</p>
-                                    <h3 id="card-holder-name" class="font-juridica text-2xl font-bold mt-1">Associado AAB</h3>
+                                    <p class="text-[10px] font-bold uppercase tracking-[0.2em] text-amber-300">OAB • Identidade Digital</p>
+                                    <h3 id="card-holder-name" class="font-juridica text-2xl font-bold mt-1">Advogado(a) Inscrito(a) OAB</h3>
                                     <p id="card-holder-oab" class="text-xs text-slate-300 mt-0.5">Inscrição OAB</p>
                                 </div>
                                 <span class="px-2.5 py-1 rounded-full text-[10px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-400/30">REGULAR • ATIVO</span>
@@ -561,7 +561,7 @@
                         <div class="lg:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-4">
                             <div class="bg-white p-5 rounded-2xl border border-slate-200/80 flex flex-col justify-between space-y-3">
                                 <div>
-                                    <h4 class="font-bold text-aab-navy text-sm">Certificado Digital A3</h4>
+                                    <h4 class="font-bold text-aab-navy text-sm">Certificado Digital OAB (ICP-Brasil)</h4>
                                     <p class="text-xs text-slate-500 mt-1">Emissão e renovação de certificado em nuvem ou token para PJe, e-SAJ e e-Proc.</p>
                                 </div>
                                 <button type="button" onclick="openBenefitModal('certificado')" class="text-xs font-semibold text-amber-700 hover:underline text-left cursor-pointer">
@@ -571,7 +571,7 @@
 
                             <div class="bg-white p-5 rounded-2xl border border-slate-200/80 flex flex-col justify-between space-y-3">
                                 <div>
-                                    <h4 class="font-bold text-aab-navy text-sm">Biblioteca &amp; Doutrina AAB</h4>
+                                    <h4 class="font-bold text-aab-navy text-sm">Biblioteca &amp; Doutrina OAB</h4>
                                     <p class="text-xs text-slate-500 mt-1">Acervo digital de obras jurídicas, jurisprudência comentada e modelos de peças.</p>
                                 </div>
                                 <button type="button" onclick="openBenefitModal('biblioteca')" class="text-xs font-semibold text-amber-700 hover:underline text-left cursor-pointer">
@@ -581,7 +581,7 @@
 
                             <div class="bg-white p-5 rounded-2xl border border-slate-200/80 flex flex-col justify-between space-y-3">
                                 <div>
-                                    <h4 class="font-bold text-aab-navy text-sm">Salas de Apoio &amp; Coworking</h4>
+                                    <h4 class="font-bold text-aab-navy text-sm">Salas da OAB &amp; Coworking</h4>
                                     <p class="text-xs text-slate-500 mt-1">Estações de trabalho, salas de reunião, parlatório virtual e atendimento ao cliente.</p>
                                 </div>
                                 <button type="button" onclick="openRoomModal()" class="text-xs font-semibold text-amber-700 hover:underline text-left cursor-pointer">
@@ -591,8 +591,8 @@
 
                             <div class="bg-white p-5 rounded-2xl border border-slate-200/80 flex flex-col justify-between space-y-3">
                                 <div>
-                                    <h4 class="font-bold text-aab-navy text-sm">Caixa de Assistência &amp; Saúde</h4>
-                                    <p class="text-xs text-slate-500 mt-1">Planos de saúde corporativos, odontologia, previdência e convênios institucionais.</p>
+                                    <h4 class="font-bold text-aab-navy text-sm">CAAB / CAA • Assistência &amp; Saúde</h4>
+                                    <p class="text-xs text-slate-500 mt-1">Caixa de Assistência dos Advogados: planos de saúde, odontologia e convênios.</p>
                                 </div>
                                 <button type="button" onclick="openBenefitModal('saude')" class="text-xs font-semibold text-amber-700 hover:underline text-left cursor-pointer">
                                     <span id="benefit-link-label-saude">Consultar Convênios</span> ↗
@@ -610,11 +610,11 @@
                     </div>
                 </section>
 
-                <!-- 7. PAINEL DO RESPONSÁVEL AAB -->
+                <!-- 7. PAINEL DO RESPONSÁVEL OAB -->
                 <section id="view-admin" class="view-section hidden space-y-6">
                     <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
                         <div class="bg-white p-4 rounded-2xl border border-slate-200/80">
-                            <p class="text-[11px] font-bold uppercase text-slate-400">Associados</p>
+                            <p class="text-[11px] font-bold uppercase text-slate-400">Inscritos OAB</p>
                             <p id="admin-kpi-members" class="text-2xl font-bold text-aab-navy mt-1">0</p>
                         </div>
                         <div class="bg-white p-4 rounded-2xl border border-slate-200/80">
@@ -657,7 +657,7 @@
                                 </div>
                                 <div>
                                     <label class="block text-[11px] font-bold uppercase text-slate-500 mb-1">Conteúdo</label>
-                                    <textarea id="pub-content" rows="3" required placeholder="Detalhes do comunicado aos associados..." class="w-full px-3.5 py-2 rounded-xl border border-slate-200 text-xs sm:text-sm"></textarea>
+                                    <textarea id="pub-content" rows="3" required placeholder="Detalhes do comunicado aos inscritos na OAB..." class="w-full px-3.5 py-2 rounded-xl border border-slate-200 text-xs sm:text-sm"></textarea>
                                 </div>
                                 <button type="submit" class="w-full py-2.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-xs font-semibold cursor-pointer">
                                     Publicar no Mural
@@ -675,22 +675,22 @@
                     <!-- Editor de Links dos Benefícios -->
                     <div class="bg-white rounded-2xl border border-slate-200/80 p-6 space-y-4">
                         <div>
-                            <h3 class="font-juridica text-2xl font-bold text-aab-navy">Links Institucionais de Benefícios</h3>
-                            <p class="text-xs text-slate-500">Personalize rótulos e URLs exibidos aos associados na aba Benefícios &amp; Carteira.</p>
+                            <h3 class="font-juridica text-2xl font-bold text-aab-navy">Links Institucionais de Benefícios OAB</h3>
+                            <p class="text-xs text-slate-500">Personalize rótulos e URLs exibidos aos inscritos na aba Benefícios &amp; Carteira.</p>
                         </div>
                         <form onsubmit="handleSaveBenefitLinks(event)" class="grid grid-cols-1 md:grid-cols-3 gap-4">
                             <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200/70 space-y-2">
-                                <p class="text-xs font-bold text-aab-navy">Certificado Digital A3</p>
+                                <p class="text-xs font-bold text-aab-navy">Certificado Digital OAB</p>
                                 <input type="text" id="edit-link-cert-label" placeholder="Rótulo" class="w-full px-3 py-1.5 rounded-lg border border-slate-200 text-xs bg-white">
                                 <input type="url" id="edit-link-cert-url" placeholder="https://..." class="w-full px-3 py-1.5 rounded-lg border border-slate-200 text-xs bg-white">
                             </div>
                             <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200/70 space-y-2">
-                                <p class="text-xs font-bold text-aab-navy">Biblioteca &amp; Doutrina</p>
+                                <p class="text-xs font-bold text-aab-navy">Biblioteca &amp; Doutrina OAB</p>
                                 <input type="text" id="edit-link-bib-label" placeholder="Rótulo" class="w-full px-3 py-1.5 rounded-lg border border-slate-200 text-xs bg-white">
                                 <input type="url" id="edit-link-bib-url" placeholder="https://..." class="w-full px-3 py-1.5 rounded-lg border border-slate-200 text-xs bg-white">
                             </div>
                             <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200/70 space-y-2">
-                                <p class="text-xs font-bold text-aab-navy">Caixa de Assistência &amp; Saúde</p>
+                                <p class="text-xs font-bold text-aab-navy">Caixa de Assistência (CAA)</p>
                                 <input type="text" id="edit-link-sau-label" placeholder="Rótulo" class="w-full px-3 py-1.5 rounded-lg border border-slate-200 text-xs bg-white">
                                 <input type="url" id="edit-link-sau-url" placeholder="https://..." class="w-full px-3 py-1.5 rounded-lg border border-slate-200 text-xs bg-white">
                             </div>
@@ -716,35 +716,22 @@
                         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                             <div>
                                 <h3 class="font-juridica text-2xl font-bold text-aab-navy">Cadastrar em Quadro Específico</h3>
-                                <p class="text-xs text-slate-500">O sistema não converte um quadro em outro por dropdown. Para ter acesso ao Painel Adm, o e-mail deve ser cadastrado no <strong>Quadro Adm</strong>; para acessar a área de Associados, deve estar cadastrado no <strong>Quadro Associados</strong>.</p>
+                                <p class="text-xs text-slate-500">O sistema não converte um quadro em outro por dropdown. Para ter acesso ao Painel Adm, o e-mail deve ser cadastrado no <strong>Quadro Adm</strong>; para acessar a área de Inscritos OAB, deve estar cadastrado no <strong>Quadro Inscritos OAB</strong>.</p>
                             </div>
                             <span id="admin-operator-cap-badge" class="px-3 py-1 rounded-full text-[11px] font-semibold bg-amber-50 text-amber-900 border border-amber-200 self-start sm:self-auto">
                                 Escopo de permissões ativo
                             </span>
                         </div>
 
-                        <div id="auth-delegable-perms" class="p-3 rounded-xl bg-slate-50 border border-slate-200/70 flex flex-wrap items-center gap-4 text-xs text-slate-700">
-                            <span class="text-[11px] font-bold uppercase tracking-wider text-slate-500">Permissões iniciais (limitadas às suas):</span>
-                            <label class="inline-flex items-center gap-1.5 cursor-pointer">
-                                <input type="checkbox" id="auth-perm-portal" checked class="rounded border-slate-300 text-amber-600">
-                                <span>Acesso Portal</span>
-                            </label>
-                            <label class="inline-flex items-center gap-1.5 cursor-pointer">
-                                <input type="checkbox" id="auth-perm-publish" class="rounded border-slate-300 text-amber-600">
-                                <span>Publicar Mural</span>
-                            </label>
-                            <label class="inline-flex items-center gap-1.5 cursor-pointer">
-                                <input type="checkbox" id="auth-perm-rooms" checked class="rounded border-slate-300 text-amber-600">
-                                <span>Salas &amp; Coworking</span>
-                            </label>
-                            <label class="inline-flex items-center gap-1.5 cursor-pointer">
-                                <input type="checkbox" id="auth-perm-benefits" checked class="rounded border-slate-300 text-amber-600">
-                                <span>Benefícios &amp; Convênios</span>
-                            </label>
-                            <label id="auth-perm-manage-wrap" class="inline-flex items-center gap-1.5 cursor-pointer">
-                                <input type="checkbox" id="auth-perm-manage" class="rounded border-slate-300 text-amber-600">
-                                <span>Gerenciar Quadros</span>
-                            </label>
+                        <div id="auth-delegable-perms" class="p-3 rounded-xl bg-slate-50 border border-slate-200/70 space-y-3 text-xs text-slate-700">
+                            <div class="flex flex-wrap items-center justify-between gap-2">
+                                <span class="text-[11px] font-bold uppercase tracking-wider text-slate-500">Permissões de Tela e Sub-permissões (Inscritos OAB vêm com tudo marcado por padrão):</span>
+                                <div class="flex items-center gap-2">
+                                    <button type="button" onclick="setAuthFormAllPermissions(true)" class="px-2.5 py-1 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-emerald-800 text-[11px] font-semibold cursor-pointer">Marcar Todas</button>
+                                    <button type="button" onclick="setAuthFormAllPermissions(false)" class="px-2.5 py-1 rounded-lg bg-slate-200 hover:bg-slate-300 text-slate-700 text-[11px] font-semibold cursor-pointer">Desmarcar Todas</button>
+                                </div>
+                            </div>
+                            <div id="auth-matrix-container" class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-2.5"></div>
                         </div>
 
                         <div class="grid grid-cols-1 xl:grid-cols-2 gap-4">
@@ -752,7 +739,7 @@
                             <form onsubmit="handleAuthorizeInBoard(event, 'admin')" class="p-4 rounded-2xl border border-amber-300/80 bg-amber-50/30 space-y-3">
                                 <div class="flex items-center justify-between">
                                     <span class="px-2 py-0.5 rounded bg-aab-navy text-amber-300 text-[10px] font-bold uppercase">Quadro Adm</span>
-                                    <span class="text-[11px] font-semibold text-amber-900">Acesso ao Painel Responsável AAB</span>
+                                    <span class="text-[11px] font-semibold text-amber-900">Acesso ao Painel Responsável OAB</span>
                                 </div>
                                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
                                     <input type="text" id="adm-auth-name" required placeholder="Nome do Administrador" class="px-3 py-2 rounded-xl border border-slate-200 text-xs bg-white">
@@ -764,19 +751,19 @@
                                 </button>
                             </form>
 
-                            <!-- Form Quadro Associados -->
+                            <!-- Form Quadro Inscritos OAB -->
                             <form onsubmit="handleAuthorizeInBoard(event, 'associate')" class="p-4 rounded-2xl border border-slate-200 bg-slate-50/60 space-y-3">
                                 <div class="flex items-center justify-between">
-                                    <span class="px-2 py-0.5 rounded bg-slate-800 text-white text-[10px] font-bold uppercase">Quadro Associados</span>
-                                    <span class="text-[11px] font-semibold text-slate-700">Acesso à Área de Associados</span>
+                                    <span class="px-2 py-0.5 rounded bg-slate-800 text-white text-[10px] font-bold uppercase">Quadro Inscritos OAB</span>
+                                    <span class="text-[11px] font-semibold text-slate-700">Acesso à Área do Advogado Inscrito</span>
                                 </div>
                                 <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5">
-                                    <input type="text" id="assoc-auth-name" required placeholder="Nome do Associado" class="px-3 py-2 rounded-xl border border-slate-200 text-xs bg-white">
-                                    <input type="email" id="assoc-auth-email" required placeholder="associado@escritorio.adv.br" class="px-3 py-2 rounded-xl border border-slate-200 text-xs bg-white">
-                                    <input type="text" id="assoc-auth-oab" placeholder="OAB (Opcional)" class="px-3 py-2 rounded-xl border border-slate-200 text-xs bg-white">
+                                    <input type="text" id="assoc-auth-name" required placeholder="Nome do Advogado(a)" class="px-3 py-2 rounded-xl border border-slate-200 text-xs bg-white">
+                                    <input type="email" id="assoc-auth-email" required placeholder="advogado@escritorio.adv.br" class="px-3 py-2 rounded-xl border border-slate-200 text-xs bg-white">
+                                    <input type="text" id="assoc-auth-oab" placeholder="Inscrição OAB (Opcional)" class="px-3 py-2 rounded-xl border border-slate-200 text-xs bg-white">
                                 </div>
                                 <button type="submit" id="btn-authorize-assoc-board" class="w-full py-2 px-4 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-xs font-semibold cursor-pointer">
-                                    Cadastrar no Quadro Associados
+                                    Cadastrar no Quadro Inscritos OAB
                                 </button>
                             </form>
                         </div>
@@ -787,8 +774,8 @@
                     <!-- Busca dos Quadros -->
                     <div class="bg-white p-4 rounded-2xl border border-slate-200/80 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
                         <div>
-                            <h3 class="font-juridica text-xl font-bold text-aab-navy">Separação por Quadros: Administradores &amp; Associados</h3>
-                            <p id="admin-associates-summary" class="text-xs text-slate-500">Total de associados: 0 • Resumo de permissões em tempo real.</p>
+                            <h3 class="font-juridica text-xl font-bold text-aab-navy">Separação por Quadros: Administradores &amp; Inscritos OAB</h3>
+                            <p id="admin-associates-summary" class="text-xs text-slate-500">Total de inscritos OAB: 0 • Resumo de permissões em tempo real.</p>
                         </div>
                         <div class="relative w-full sm:w-72">
                             <i data-lucide="search" class="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2"></i>
@@ -802,9 +789,9 @@
                             <div>
                                 <div class="flex items-center gap-2">
                                     <span class="px-2 py-0.5 rounded bg-aab-navy text-amber-300 text-[10px] font-bold uppercase">Quadro Adm</span>
-                                    <h3 class="font-juridica text-2xl font-bold text-aab-navy">Administradores do Portal AAB</h3>
+                                    <h3 class="font-juridica text-2xl font-bold text-aab-navy">Administradores do Portal OAB</h3>
                                 </div>
-                                <p class="text-xs text-slate-500 mt-1">Somente usuários cadastrados neste quadro (ou <strong>willbrasilia@gmail.com</strong>) acessam o Painel do Responsável AAB.</p>
+                                <p class="text-xs text-slate-500 mt-1">Somente usuários cadastrados neste quadro (ou <strong>willbrasilia@gmail.com</strong>) acessam o Painel do Responsável OAB.</p>
                             </div>
                             <span id="admin-quadro-count" class="px-3 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-900 self-start sm:self-auto">0 Adm</span>
                         </div>
@@ -824,26 +811,26 @@
                         </div>
                     </div>
 
-                    <!-- Quadro 2: Associados -->
+                    <!-- Quadro 2: Inscritos OAB -->
                     <div class="bg-white rounded-2xl border border-slate-200/80 p-6 space-y-4">
                         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                             <div>
-                                <div class="flex items-center gap-2">
-                                    <span class="px-2 py-0.5 rounded bg-slate-100 text-slate-700 text-[10px] font-bold uppercase">Quadro Associados</span>
-                                    <h3 class="font-juridica text-2xl font-bold text-aab-navy">Associados Cadastrados &amp; Permissões</h3>
+                                <div class="flex flex-wrap items-center gap-2">
+                                    <span class="px-2 py-0.5 rounded bg-slate-100 text-slate-700 text-[10px] font-bold uppercase">Quadro Inscritos OAB</span>
+                                    <h3 class="font-juridica text-2xl font-bold text-aab-navy">Advogados Inscritos &amp; Permissões por Tela</h3>
                                 </div>
-                                <p id="associates-permissions-overview" class="text-xs text-slate-500 mt-1">Quantidade de associados e visão consolidada das permissões ativas.</p>
+                                <p id="associates-permissions-overview" class="text-xs text-slate-500 mt-1">Quantidade de inscritos OAB e visão consolidada das permissões ativas.</p>
                             </div>
-                            <span id="associates-quadro-count" class="px-3 py-1 rounded-full text-xs font-bold bg-slate-100 text-aab-navy self-start sm:self-auto">0 Associados</span>
+                            <span id="associates-quadro-count" class="px-3 py-1 rounded-full text-xs font-bold bg-slate-100 text-aab-navy self-start sm:self-auto">0 Inscritos OAB</span>
                         </div>
                         <div class="overflow-x-auto">
                             <table class="w-full text-left border-collapse">
                                 <thead>
                                     <tr class="border-b border-slate-200 bg-slate-50/80 text-[11px] font-bold uppercase tracking-wider text-slate-500">
-                                        <th class="py-3 px-3.5">Associado / OAB</th>
+                                        <th class="py-3 px-3.5">Advogado(a) / OAB</th>
                                         <th class="py-3 px-3.5">Presença</th>
                                         <th class="py-3 px-3.5">Site / Página</th>
-                                        <th class="py-3 px-3.5">Permissões no Portal</th>
+                                        <th class="py-3 px-3.5">Telas e Sub-permissões</th>
                                         <th class="py-3 px-3.5 text-right">Quadro / Conta</th>
                                     </tr>
                                 </thead>
@@ -853,6 +840,31 @@
                     </div>
                 </section>
             </main>
+        </div>
+    </div>
+
+    <!-- Modal Editor Granular de Permissões do Inscrito OAB -->
+    <div id="modal-member-perms" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-950/60 p-4">
+        <div class="bg-white rounded-2xl max-w-4xl w-full p-6 space-y-4 shadow-2xl max-h-[90vh] flex flex-col">
+            <div class="flex items-center justify-between border-b border-slate-100 pb-3">
+                <div>
+                    <h3 id="modal-member-perms-title" class="font-juridica text-2xl font-bold text-aab-navy">Permissões do Inscrito OAB</h3>
+                    <p id="modal-member-perms-subtitle" class="text-xs text-slate-500">Desmarcar uma tela bloqueia automaticamente todas as suas sub-permissões.</p>
+                </div>
+                <button type="button" onclick="closeModal('modal-member-perms')" class="p-1 text-slate-400 hover:text-slate-700 cursor-pointer"><i data-lucide="x" class="w-5 h-5"></i></button>
+            </div>
+            <div class="flex flex-wrap items-center justify-between gap-2">
+                <div class="flex items-center gap-2">
+                    <button type="button" onclick="setModalMemberAllPermissions(true)" class="px-3 py-1.5 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-emerald-800 text-xs font-semibold cursor-pointer">Marcar Todas as Telas e Sub-permissões</button>
+                    <button type="button" onclick="setModalMemberAllPermissions(false)" class="px-3 py-1.5 rounded-lg bg-rose-50 hover:bg-rose-100 text-rose-800 text-xs font-semibold cursor-pointer">Desmarcar Tudo</button>
+                </div>
+                <span class="text-[11px] text-slate-500">As alterações são aplicadas em tempo real ao advogado inscrito.</span>
+            </div>
+            <div id="modal-member-perms-body" class="overflow-y-auto grid grid-cols-1 md:grid-cols-2 gap-3 pr-1"></div>
+            <div class="flex justify-end gap-2 pt-3 border-t border-slate-100">
+                <button type="button" onclick="closeModal('modal-member-perms')" class="px-4 py-2 rounded-xl bg-slate-100 text-slate-700 text-xs font-semibold cursor-pointer">Cancelar</button>
+                <button type="button" onclick="saveModalMemberPermissions()" class="px-4 py-2 rounded-xl bg-aab-navy text-amber-300 text-xs font-semibold cursor-pointer">Salvar Permissões</button>
+            </div>
         </div>
     </div>
 
@@ -1049,16 +1061,16 @@
     <div id="modal-room" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-950/60 p-4">
         <div class="bg-white rounded-2xl max-w-md w-full p-6 space-y-4 shadow-2xl">
             <div class="flex items-center justify-between">
-                <h3 class="font-juridica text-2xl font-bold text-aab-navy">Reservar Sala AAB</h3>
+                <h3 class="font-juridica text-2xl font-bold text-aab-navy">Reservar Sala OAB</h3>
                 <button type="button" onclick="closeModal('modal-room')" class="p-1 text-slate-400 hover:text-slate-700 cursor-pointer"><i data-lucide="x" class="w-5 h-5"></i></button>
             </div>
             <form onsubmit="handleSaveRoomReservation(event)" class="space-y-3">
                 <div>
                     <label class="block text-[11px] font-bold uppercase text-slate-500 mb-1">Espaço / Sala</label>
                     <select id="room-name" class="w-full px-3 py-2 rounded-xl border border-slate-200 text-sm bg-white">
-                        <option value="Sala de Reunião Executiva 01">Sala de Reunião Executiva 01</option>
-                        <option value="Parlatório Virtual & Sustentação">Parlatório Virtual &amp; Sustentação</option>
-                        <option value="Estação Coworking Jurídico">Estação Coworking Jurídico</option>
+                        <option value="Sala da OAB • Reunião Executiva 01">Sala da OAB • Reunião Executiva 01</option>
+                        <option value="Parlatório Virtual & Sustentação OAB">Parlatório Virtual &amp; Sustentação OAB</option>
+                        <option value="Estação Coworking Jurídico OAB">Estação Coworking Jurídico OAB</option>
                     </select>
                 </div>
                 <div class="grid grid-cols-2 gap-3">
@@ -1083,7 +1095,7 @@
     <div id="modal-benefit" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-950/60 p-4">
         <div class="bg-white rounded-2xl max-w-lg w-full p-6 space-y-4 shadow-2xl">
             <div class="flex items-center justify-between">
-                <h3 id="benefit-modal-title" class="font-juridica text-2xl font-bold text-aab-navy">Benefício AAB</h3>
+                <h3 id="benefit-modal-title" class="font-juridica text-2xl font-bold text-aab-navy">Benefício OAB</h3>
                 <button type="button" onclick="closeModal('modal-benefit')" class="p-1 text-slate-400 hover:text-slate-700 cursor-pointer"><i data-lucide="x" class="w-5 h-5"></i></button>
             </div>
             <div id="benefit-modal-body" class="space-y-3 text-xs sm:text-sm text-slate-600"></div>
@@ -1207,13 +1219,252 @@
         const MASTER_ADMIN_EMAIL = 'willbrasilia@gmail.com';
         const LOCAL_STORAGE_KEY = 'aab_portal_state_v3';
 
-        const defaultPermissions = {
-            portalAccess: true,
-            canPublish: false,
-            canBookRooms: true,
-            canUseBenefits: true,
-            canManageUsers: false
-        };
+        // Definição completa de Telas e Sub-permissões para o Quadro de Associados
+        const PERMISSION_SCREENS_SCHEMA = [
+            {
+                id: 'profile',
+                title: 'Tela Editar Perfil',
+                viewId: null,
+                subPermissions: [
+                    { key: 'profile_edit', label: 'Editar Perfil' }
+                ]
+            },
+            {
+                id: 'overview',
+                title: 'Tela Visão Geral',
+                viewId: 'overview',
+                subPermissions: [
+                    { key: 'overview_active_cases', label: 'Processos Ativos' },
+                    { key: 'overview_pending_deadlines', label: 'Prazos Pendentes' },
+                    { key: 'overview_pending_receivables', label: 'Honorários a Receber' },
+                    { key: 'overview_clients_count', label: 'Clientes Cadastrados' },
+                    { key: 'overview_bulletin', label: 'Mural Institucional OAB' },
+                    { key: 'overview_upcoming_deadlines', label: 'Próximos Prazos' }
+                ]
+            },
+            {
+                id: 'cases',
+                title: 'Tela Gestão de Processos',
+                viewId: 'cases',
+                subPermissions: [
+                    { key: 'cases_view', label: 'Visualizar' },
+                    { key: 'cases_search', label: 'Pesquisar' },
+                    { key: 'cases_create', label: 'Cadastrar' },
+                    { key: 'cases_edit', label: 'Editar' },
+                    { key: 'cases_delete', label: 'Excluir' }
+                ]
+            },
+            {
+                id: 'clients',
+                title: 'Tela Clientes & CRM',
+                viewId: 'clients',
+                subPermissions: [
+                    { key: 'clients_view', label: 'Visualizar' },
+                    { key: 'clients_search', label: 'Pesquisar' },
+                    { key: 'clients_create', label: 'Cadastrar' },
+                    { key: 'clients_edit', label: 'Editar' },
+                    { key: 'clients_delete', label: 'Excluir' }
+                ]
+            },
+            {
+                id: 'deadlines',
+                title: 'Tela Prazos & Agenda',
+                viewId: 'deadlines',
+                subPermissions: [
+                    { key: 'deadlines_view', label: 'Visualizar' },
+                    { key: 'deadlines_search', label: 'Pesquisar' },
+                    { key: 'deadlines_create', label: 'Cadastrar' },
+                    { key: 'deadlines_edit', label: 'Editar' },
+                    { key: 'deadlines_delete', label: 'Excluir' },
+                    { key: 'deadlines_complete', label: 'Marcar Cumprido' }
+                ]
+            },
+            {
+                id: 'financial',
+                title: 'Tela Financeiro & Honorários',
+                viewId: 'financial',
+                subPermissions: [
+                    { key: 'financial_view', label: 'Visualizar' },
+                    { key: 'financial_view_metrics', label: 'Visualizar: A Receber (Pendente), Recebido no Período, Saldo Líquido, Demandas Jurídicas (Filtro)' },
+                    { key: 'financial_search', label: 'Pesquisar' },
+                    { key: 'financial_create', label: 'Cadastrar' },
+                    { key: 'financial_edit', label: 'Editar' },
+                    { key: 'financial_delete', label: 'Excluir' },
+                    { key: 'financial_mark_pending', label: 'Marcar Pendente' },
+                    { key: 'financial_confirm_receipt', label: 'Confirmar Recebimento' }
+                ]
+            },
+            {
+                id: 'benefits',
+                title: 'Tela Benefícios & Carteira Digital OAB',
+                viewId: 'benefits',
+                subPermissions: [
+                    { key: 'benefits_certificado', label: 'Certificado Digital OAB' },
+                    { key: 'benefits_biblioteca', label: 'Biblioteca & Doutrina OAB' },
+                    { key: 'benefits_salas', label: 'Salas da OAB & Coworking' },
+                    { key: 'benefits_saude', label: 'Caixa de Assistência (CAA) & Saúde' },
+                    { key: 'benefits_reservas', label: 'Minhas Reservas de Salas' }
+                ]
+            }
+        ];
+
+        function buildAllAssociatePermissions(enabled = true) {
+            const val = Boolean(enabled);
+            const screens = {};
+            const subs = {};
+            PERMISSION_SCREENS_SCHEMA.forEach(scr => {
+                screens[scr.id] = val;
+                scr.subPermissions.forEach(sub => {
+                    subs[sub.key] = val;
+                });
+            });
+            return {
+                portalAccess: val,
+                canPublish: false,
+                canBookRooms: val,
+                canUseBenefits: val,
+                canManageUsers: false,
+                screens,
+                subs
+            };
+        }
+
+        function normalizeScreenAndSubPermissions(rawPerms = {}, isMaster = false) {
+            if (isMaster) {
+                const full = buildAllAssociatePermissions(true);
+                full.canPublish = true;
+                full.canManageUsers = true;
+                return full;
+            }
+            // Por padrão, associados vêm com todas as permissões marcadas quando não há estrutura explícita
+            const hasExplicitScreens = rawPerms && typeof rawPerms.screens === 'object' && rawPerms.screens !== null;
+            const hasExplicitSubs = rawPerms && typeof rawPerms.subs === 'object' && rawPerms.subs !== null;
+            const defaultScreenVal = hasExplicitScreens ? true : (rawPerms?.portalAccess !== false);
+
+            const screens = {};
+            const subs = {};
+
+            PERMISSION_SCREENS_SCHEMA.forEach(scr => {
+                let screenActive = hasExplicitScreens
+                    ? (typeof rawPerms.screens[scr.id] === 'boolean' ? rawPerms.screens[scr.id] : true)
+                    : defaultScreenVal;
+
+                if (scr.id === 'benefits' && rawPerms?.canUseBenefits === false && rawPerms?.canBookRooms === false) {
+                    screenActive = false;
+                }
+
+                screens[scr.id] = screenActive;
+
+                scr.subPermissions.forEach(sub => {
+                    let subActive = hasExplicitSubs && typeof rawPerms.subs[sub.key] === 'boolean'
+                        ? rawPerms.subs[sub.key]
+                        : true;
+
+                    if (scr.id === 'benefits') {
+                        if (sub.key === 'benefits_salas' || sub.key === 'benefits_reservas') {
+                            if (rawPerms?.canBookRooms === false && !(hasExplicitSubs && typeof rawPerms.subs[sub.key] === 'boolean')) {
+                                subActive = false;
+                            }
+                        } else if (rawPerms?.canUseBenefits === false && !(hasExplicitSubs && typeof rawPerms.subs[sub.key] === 'boolean')) {
+                            subActive = false;
+                        }
+                    }
+
+                    // Regra obrigatória: se não tiver permissão para a tela, não tem nenhuma sub-permissão da tela
+                    subs[sub.key] = screenActive ? subActive : false;
+                });
+            });
+
+            return {
+                portalAccess: Object.values(screens).some(Boolean),
+                canPublish: Boolean(rawPerms?.canPublish),
+                canBookRooms: Boolean(screens.benefits && (subs.benefits_salas || subs.benefits_reservas)),
+                canUseBenefits: Boolean(screens.benefits && (subs.benefits_certificado || subs.benefits_biblioteca || subs.benefits_saude)),
+                canManageUsers: Boolean(rawPerms?.canManageUsers),
+                screens,
+                subs
+            };
+        }
+
+        function getEffectivePermissions(userObj = currentUser) {
+            if (!userObj) return buildAllAssociatePermissions(true);
+            if (isMasterAdminEmail(userObj.email)) {
+                return normalizeScreenAndSubPermissions({}, true);
+            }
+            const base = normalizeScreenAndSubPermissions(userObj.permissions || {}, false);
+            if (hasAdminBoardAccess(userObj)) {
+                if (typeof userObj.permissions?.canPublish !== 'boolean') base.canPublish = true;
+                if (typeof userObj.permissions?.canManageUsers !== 'boolean') base.canManageUsers = true;
+            }
+            return base;
+        }
+
+        function hasScreenPerm(screenId, userObj = currentUser) {
+            if (!userObj) return false;
+            if (isMasterAdminEmail(userObj.email)) return true;
+            const perms = getEffectivePermissions(userObj);
+            return Boolean(perms.screens?.[screenId]);
+        }
+
+        function hasSubPerm(screenId, subKey, userObj = currentUser) {
+            if (!userObj) return false;
+            if (isMasterAdminEmail(userObj.email)) return true;
+            const perms = getEffectivePermissions(userObj);
+            if (!perms.screens?.[screenId]) return false;
+            return Boolean(perms.subs?.[subKey]);
+        }
+
+        function clampPermissionsToOperator(desiredPerms) {
+            const normalized = normalizeScreenAndSubPermissions(desiredPerms, false);
+            if (isMasterAdminEmail(currentUser?.email)) return normalized;
+            const opPerms = getEffectivePermissions(currentUser);
+            const screens = {};
+            const subs = {};
+            PERMISSION_SCREENS_SCHEMA.forEach(scr => {
+                const scrAllowed = Boolean(normalized.screens?.[scr.id] && opPerms.screens?.[scr.id]);
+                screens[scr.id] = scrAllowed;
+                scr.subPermissions.forEach(sub => {
+                    subs[sub.key] = scrAllowed && Boolean(normalized.subs?.[sub.key] && opPerms.subs?.[sub.key]);
+                });
+            });
+            return {
+                portalAccess: Object.values(screens).some(Boolean),
+                canPublish: Boolean(normalized.canPublish && opPerms.canPublish),
+                canBookRooms: Boolean(screens.benefits && (subs.benefits_salas || subs.benefits_reservas)),
+                canUseBenefits: Boolean(screens.benefits && (subs.benefits_certificado || subs.benefits_biblioteca || subs.benefits_saude)),
+                canManageUsers: Boolean(normalized.canManageUsers && opPerms.canManageUsers),
+                screens,
+                subs
+            };
+        }
+
+        function buildScreenMatrixHtml(permsObj, idPrefix, screenHandlerName, subHandlerName) {
+            const norm = normalizeScreenAndSubPermissions(permsObj, false);
+            return PERMISSION_SCREENS_SCHEMA.map(scr => {
+                const scrChecked = Boolean(norm.screens[scr.id]);
+                const scrInputId = `${idPrefix}_scr_${scr.id}`;
+                const subsHtml = scr.subPermissions.map(sub => {
+                    const subChecked = scrChecked && Boolean(norm.subs[sub.key]);
+                    const subInputId = `${idPrefix}_sub_${sub.key}`;
+                    return `
+                        <label for="${subInputId}" class="flex items-start gap-2 text-[11px] leading-snug ${scrChecked ? 'text-slate-700 cursor-pointer' : 'text-slate-400 cursor-not-allowed'}">
+                            <input type="checkbox" id="${subInputId}" ${subChecked ? 'checked' : ''} ${scrChecked ? '' : 'disabled'} onchange="${subHandlerName}('${scr.id}', '${sub.key}', this.checked)" class="mt-0.5 rounded border-slate-300 text-amber-600">
+                            <span>${escapeHtml(sub.label)}</span>
+                        </label>
+                    `;
+                }).join('');
+
+                return `
+                    <div class="p-3 rounded-xl border ${scrChecked ? 'border-amber-200 bg-white' : 'border-slate-200 bg-slate-100/70'} space-y-2">
+                        <label for="${scrInputId}" class="flex items-center gap-2 font-bold text-xs text-aab-navy cursor-pointer pb-1.5 border-b border-slate-100">
+                            <input type="checkbox" id="${scrInputId}" ${scrChecked ? 'checked' : ''} onchange="${screenHandlerName}('${scr.id}', this.checked)" class="rounded border-slate-300 text-amber-600">
+                            <span>${escapeHtml(scr.title)}</span>
+                        </label>
+                        <div class="space-y-1.5 pl-1">${subsHtml}</div>
+                    </div>
+                `;
+            }).join('');
+        }
 
         const defaultBenefitLinks = {
             certificado: {
@@ -1249,6 +1500,9 @@
         let authorizedEmailsList = [];
         let adminMembersList = [];
         let benefitLinks = JSON.parse(JSON.stringify(defaultBenefitLinks));
+        let authFormDraftPerms = buildAllAssociatePermissions(true);
+        let editingMemberUid = null;
+        let editingMemberDraftPerms = null;
 
         let caseFilter = 'Todos';
         let deadlineFilter = 'Todos';
@@ -1346,7 +1600,7 @@
             if (Array.isArray(userObj.boards) && userObj.boards.length) {
                 return Array.from(new Set(userObj.boards.filter(b => b === 'admin' || b === 'associate')));
             }
-            if (userObj.role === 'responsavel_aab' && userObj.promotedByAdmin === true) return ['admin'];
+            if (userObj.role === 'responsavel_aab' && userObj.promotedByAdmin) return ['admin'];
             return ['associate'];
         }
 
@@ -1364,28 +1618,16 @@
             return getUserBoards(userObj).includes('associate');
         }
 
-        function getEffectivePermissions(userObj = currentUser) {
-            if (!userObj) return { ...defaultPermissions };
-            if (isMasterAdminEmail(userObj.email)) {
-                return { portalAccess: true, canPublish: true, canBookRooms: true, canUseBenefits: true, canManageUsers: true };
+        function enforceScreenSubConsistency(permsObj, screenId, checked) {
+            const norm = normalizeScreenAndSubPermissions(permsObj, false);
+            norm.screens[screenId] = Boolean(checked);
+            const screenDef = PERMISSION_SCREENS_SCHEMA.find(s => s.id === screenId);
+            if (screenDef) {
+                screenDef.subPermissions.forEach(sub => {
+                    norm.subs[sub.key] = Boolean(checked);
+                });
             }
-            const base = { ...defaultPermissions, ...(userObj.permissions || {}) };
-            if (hasAdminBoardAccess(userObj)) {
-                if (typeof userObj.permissions?.canPublish !== 'boolean') base.canPublish = true;
-            }
-            return base;
-        }
-
-        function clampPermissionsToOperator(desiredPerms) {
-            const opPerms = getEffectivePermissions(currentUser);
-            if (isMasterAdminEmail(currentUser?.email)) return { ...defaultPermissions, ...desiredPerms };
-            return {
-                portalAccess: Boolean(desiredPerms.portalAccess && opPerms.portalAccess),
-                canPublish: Boolean(desiredPerms.canPublish && opPerms.canPublish),
-                canBookRooms: Boolean(desiredPerms.canBookRooms && opPerms.canBookRooms),
-                canUseBenefits: Boolean(desiredPerms.canUseBenefits && opPerms.canUseBenefits),
-                canManageUsers: Boolean(desiredPerms.canManageUsers && opPerms.canManageUsers)
-            };
+            return normalizeScreenAndSubPermissions(norm, false);
         }
 
         function openModal(id) {
@@ -1448,15 +1690,15 @@
             loadLocalState();
             const norm = normalizeEmail(email);
             if (!norm) {
-                return { authorized: false, boards: [], name: '', oab: '', permissions: { ...defaultPermissions } };
+                return { authorized: false, boards: [], name: '', oab: '', permissions: buildAllAssociatePermissions(true) };
             }
             if (isMasterAdminEmail(norm)) {
                 return {
                     authorized: true,
                     boards: ['admin', 'associate'],
-                    name: 'Responsável Master AAB',
+                    name: 'Responsável Master OAB',
                     oab: 'OAB 1234',
-                    permissions: { portalAccess: true, canPublish: true, canBookRooms: true, canUseBenefits: true, canManageUsers: true }
+                    permissions: normalizeScreenAndSubPermissions({}, true)
                 };
             }
 
@@ -1473,7 +1715,7 @@
                             boards,
                             name: d.name || '',
                             oab: d.oab || '',
-                            permissions: { ...defaultPermissions, ...(d.permissions || {}) }
+                            permissions: normalizeScreenAndSubPermissions(d.permissions || {}, false)
                         };
                     }
                 } catch (err) {
@@ -1491,7 +1733,7 @@
                     boards,
                     name: localMatch.name || '',
                     oab: localMatch.oab || '',
-                    permissions: { ...defaultPermissions, ...(localMatch.permissions || {}) }
+                    permissions: normalizeScreenAndSubPermissions(localMatch.permissions || {}, false)
                 };
             }
 
@@ -1503,15 +1745,14 @@
                     boards: boards.length ? boards : ['associate'],
                     name: savedMember.name || '',
                     oab: savedMember.oab || '',
-                    permissions: { ...defaultPermissions, ...(savedMember.permissions || {}) }
+                    permissions: normalizeScreenAndSubPermissions(savedMember.permissions || {}, false)
                 };
             }
 
-            return { authorized: false, boards: [], name: '', oab: '', permissions: { ...defaultPermissions } };
+            return { authorized: false, boards: [], name: '', oab: '', permissions: buildAllAssociatePermissions(true) };
         }
 
         async function resolveEmailByOab(oabInput) {
-            loadLocalState();
             const clean = String(oabInput || '').trim().toLowerCase();
             if (!clean) return '';
             if (clean === '1234' || clean === 'oab 1234') return MASTER_ADMIN_EMAIL;
@@ -1542,7 +1783,6 @@
 
         async function handleLogin(event) {
             event.preventDefault();
-            loadLocalState();
             const oabVal = document.getElementById('login-oab')?.value.trim() || '';
             let emailVal = normalizeEmail(document.getElementById('login-email')?.value || '');
             const passwordVal = document.getElementById('login-password')?.value || '';
@@ -1558,16 +1798,16 @@
 
             if (!isFirebaseConfigured || !auth) {
                 const authInfo = await checkEmailAuthorization(emailVal);
-                const savedProfile = adminMembersList.find(m => normalizeEmail(m.email) === emailVal);
-                if (!authInfo.authorized && !isMasterAdminEmail(emailVal) && !savedProfile) {
-                    showToast('E-mail não habilitado nos quadros da AAB. Cadastre-o primeiro no Painel Responsável AAB.', 'error');
+                if (!authInfo.authorized && !isMasterAdminEmail(emailVal)) {
+                    showToast('E-mail não habilitado nos quadros da OAB. Cadastre-o primeiro no Painel Responsável OAB.', 'error');
                     return;
                 }
+                const savedProfile = adminMembersList.find(m => normalizeEmail(m.email) === emailVal);
                 enterDemoMode({
                     email: emailVal,
                     oab: savedProfile?.oab || authInfo.oab || oabVal || (isMasterAdminEmail(emailVal) ? 'OAB 1234' : 'OAB/DF 54.321'),
-                    name: savedProfile?.name || authInfo.name || (isMasterAdminEmail(emailVal) ? 'Responsável Master AAB' : 'Dr(a). Associado AAB'),
-                    firm: savedProfile?.firm || 'Escritório Associado AAB',
+                    name: savedProfile?.name || authInfo.name || (isMasterAdminEmail(emailVal) ? 'Responsável Master OAB' : 'Dr(a). Advogado(a) OAB'),
+                    firm: savedProfile?.firm || 'Escritório Inscrito OAB',
                     boards: savedProfile?.boards || authInfo.boards,
                     permissions: savedProfile?.permissions || authInfo.permissions
                 });
@@ -1609,7 +1849,7 @@
             const savedProfile = adminMembersList.find(m => normalizeEmail(m.email) === email);
             if (!authInfo.authorized && !savedProfile) {
                 const modeHint = isFirebaseConfigured
-                    ? 'Verifique se o Responsável AAB salvou este e-mail no Quadro com o Firebase conectado.'
+                    ? 'Verifique se o Responsável OAB salvou este e-mail no Quadro com o Firebase conectado.'
                     : 'Este navegador está em Modo Local e não enxerga cadastros feitos em outro navegador. Conecte o Firebase do projeto.';
                 showToast(`E-mail não habilitado. ${modeHint}`, 'error');
                 return;
@@ -1630,9 +1870,10 @@
                     promotedByAdmin: boards.includes('admin'),
                     accountStatus: 'Ativo',
                     isOnline: true,
-                    permissions: isMaster
-                        ? { portalAccess: true, canPublish: true, canBookRooms: true, canUseBenefits: true, canManageUsers: true }
-                        : { ...defaultPermissions, ...(authInfo.permissions || {}), ...(savedProfile?.permissions || {}) }
+                    permissions: normalizeScreenAndSubPermissions(
+                        isMaster ? {} : { ...(authInfo.permissions || {}), ...(savedProfile?.permissions || {}) },
+                        isMaster
+                    )
                 };
                 adminMembersList = [
                     newMember,
@@ -1670,9 +1911,10 @@
                     role: boards.includes('admin') ? 'responsavel_aab' : 'associado',
                     promotedByAdmin: boards.includes('admin'),
                     accountStatus: 'Ativo',
-                    permissions: isMaster
-                        ? { portalAccess: true, canPublish: true, canBookRooms: true, canUseBenefits: true, canManageUsers: true }
-                        : { ...defaultPermissions, ...(authInfo.permissions || {}), ...(savedProfile?.permissions || {}) },
+                    permissions: normalizeScreenAndSubPermissions(
+                        isMaster ? {} : { ...(authInfo.permissions || {}), ...(savedProfile?.permissions || {}) },
+                        isMaster
+                    ),
                     isOnline: true,
                     lastSeenAt: serverTimestamp(),
                     createdAt: serverTimestamp()
@@ -1726,7 +1968,7 @@
 
                 if (!isMasterAdminEmail(email) && !authInfo.authorized && !savedProfile) {
                     await signOut(auth);
-                    showToast('Esta conta Google ainda não foi cadastrada nos quadros pela administração da AAB.', 'error');
+                    showToast('Esta conta Google ainda não foi cadastrada nos quadros pela administração da OAB.', 'error');
                     return;
                 }
 
@@ -1755,7 +1997,15 @@
         function renderCasesTable() {
             const tbody = document.getElementById('cases-tbody');
             if (!tbody) return;
-            const term = (document.getElementById('case-search')?.value || '').trim().toLowerCase();
+            if (!hasScreenPerm('cases') || !hasSubPerm('cases', 'cases_view')) {
+                tbody.innerHTML = '<tr><td colspan="6" class="py-8 text-center text-xs text-rose-600 font-medium">Acesso à visualização de processos bloqueado nas permissões do seu perfil.</td></tr>';
+                return;
+            }
+            const canSearch = hasSubPerm('cases', 'cases_search');
+            const canEdit = hasSubPerm('cases', 'cases_edit');
+            const canDelete = hasSubPerm('cases', 'cases_delete');
+
+            const term = canSearch ? (document.getElementById('case-search')?.value || '').trim().toLowerCase() : '';
             const filtered = casesList.filter(c => {
                 if (caseFilter !== 'Todos' && c.status !== caseFilter) return false;
                 if (!term) return true;
@@ -1777,8 +2027,9 @@
                     </td>
                     <td class="py-3.5 px-4 font-semibold text-slate-700">${formatCurrency(c.value)}</td>
                     <td class="py-3.5 px-4 text-right space-x-1.5">
-                        <button type="button" onclick="openCaseModal('${c.id}')" class="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-xs font-semibold text-slate-700 cursor-pointer">Editar</button>
-                        <button type="button" onclick="deleteCase('${c.id}')" class="px-2.5 py-1 rounded-lg bg-rose-50 hover:bg-rose-100 text-xs font-semibold text-rose-700 cursor-pointer">Excluir</button>
+                        ${canEdit ? `<button type="button" onclick="openCaseModal('${c.id}')" class="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-xs font-semibold text-slate-700 cursor-pointer">Editar</button>` : ''}
+                        ${canDelete ? `<button type="button" onclick="deleteCase('${c.id}')" class="px-2.5 py-1 rounded-lg bg-rose-50 hover:bg-rose-100 text-xs font-semibold text-rose-700 cursor-pointer">Excluir</button>` : ''}
+                        ${(!canEdit && !canDelete) ? '<span class="text-[11px] text-slate-400">Somente leitura</span>' : ''}
                     </td>
                 </tr>
             `).join('');
@@ -1786,6 +2037,14 @@
 
         function openCaseModal(id = '') {
             const item = casesList.find(c => c.id === id);
+            if (item && !hasSubPerm('cases', 'cases_edit')) {
+                showToast('Você não possui permissão para editar processos.', 'error');
+                return;
+            }
+            if (!item && !hasSubPerm('cases', 'cases_create')) {
+                showToast('Você não possui permissão para cadastrar processos.', 'error');
+                return;
+            }
             document.getElementById('modal-case-title').textContent = item ? 'Editar Processo' : 'Novo Processo';
             document.getElementById('case-edit-id').value = item?.id || '';
             document.getElementById('case-cnj').value = item?.cnj || '';
@@ -1857,7 +2116,15 @@
         function renderClientsGrid() {
             const grid = document.getElementById('clients-grid');
             if (!grid) return;
-            const term = (document.getElementById('client-search')?.value || '').trim().toLowerCase();
+            if (!hasScreenPerm('clients') || !hasSubPerm('clients', 'clients_view')) {
+                grid.innerHTML = '<div class="col-span-full bg-white p-8 rounded-2xl border border-slate-200/80 text-center text-xs text-rose-600 font-medium">Acesso à visualização de clientes bloqueado nas permissões do seu perfil.</div>';
+                return;
+            }
+            const canSearch = hasSubPerm('clients', 'clients_search');
+            const canEdit = hasSubPerm('clients', 'clients_edit');
+            const canDelete = hasSubPerm('clients', 'clients_delete');
+
+            const term = canSearch ? (document.getElementById('client-search')?.value || '').trim().toLowerCase() : '';
             const filtered = clientsList.filter(cl => {
                 if (!term) return true;
                 return [cl.name, cl.document, cl.email, cl.phone].some(v => String(v || '').toLowerCase().includes(term));
@@ -1876,8 +2143,9 @@
                         <p class="text-xs text-slate-600 pt-1">${escapeHtml(cl.email || '—')} • ${escapeHtml(cl.phone || '—')}</p>
                     </div>
                     <div class="flex justify-end gap-2 pt-2 border-t border-slate-100">
-                        <button type="button" onclick="openClientModal('${cl.id}')" class="px-3 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-xs font-semibold text-slate-700 cursor-pointer">Editar</button>
-                        <button type="button" onclick="deleteClient('${cl.id}')" class="px-3 py-1 rounded-lg bg-rose-50 hover:bg-rose-100 text-xs font-semibold text-rose-700 cursor-pointer">Excluir</button>
+                        ${canEdit ? `<button type="button" onclick="openClientModal('${cl.id}')" class="px-3 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-xs font-semibold text-slate-700 cursor-pointer">Editar</button>` : ''}
+                        ${canDelete ? `<button type="button" onclick="deleteClient('${cl.id}')" class="px-3 py-1 rounded-lg bg-rose-50 hover:bg-rose-100 text-xs font-semibold text-rose-700 cursor-pointer">Excluir</button>` : ''}
+                        ${(!canEdit && !canDelete) ? '<span class="text-[11px] text-slate-400">Somente leitura</span>' : ''}
                     </div>
                 </div>
             `).join('');
@@ -1885,6 +2153,14 @@
 
         function openClientModal(id = '') {
             const item = clientsList.find(c => c.id === id);
+            if (item && !hasSubPerm('clients', 'clients_edit')) {
+                showToast('Você não possui permissão para editar clientes.', 'error');
+                return;
+            }
+            if (!item && !hasSubPerm('clients', 'clients_create')) {
+                showToast('Você não possui permissão para cadastrar clientes.', 'error');
+                return;
+            }
             document.getElementById('modal-client-title').textContent = item ? 'Editar Cliente' : 'Novo Cliente';
             document.getElementById('client-edit-id').value = item?.id || '';
             document.getElementById('client-name').value = item?.name || '';
@@ -1964,7 +2240,16 @@
         function renderDeadlinesList() {
             const box = document.getElementById('deadlines-list');
             if (!box) return;
-            const term = (document.getElementById('deadline-search')?.value || '').trim().toLowerCase();
+            if (!hasScreenPerm('deadlines') || !hasSubPerm('deadlines', 'deadlines_view')) {
+                box.innerHTML = '<div class="bg-white p-8 rounded-2xl border border-slate-200/80 text-center text-xs text-rose-600 font-medium">Acesso à visualização de prazos e agenda bloqueado nas permissões do seu perfil.</div>';
+                return;
+            }
+            const canSearch = hasSubPerm('deadlines', 'deadlines_search');
+            const canComplete = hasSubPerm('deadlines', 'deadlines_complete');
+            const canEdit = hasSubPerm('deadlines', 'deadlines_edit');
+            const canDelete = hasSubPerm('deadlines', 'deadlines_delete');
+
+            const term = canSearch ? (document.getElementById('deadline-search')?.value || '').trim().toLowerCase() : '';
             const filtered = deadlinesList.filter(d => {
                 if (deadlineFilter !== 'Todos' && (d.status || 'Pendente') !== deadlineFilter) return false;
                 if (!term) return true;
@@ -1989,11 +2274,13 @@
                             ${d.cnj ? `<p class="text-[11px] font-mono text-slate-500">CNJ: ${escapeHtml(d.cnj)}</p>` : ''}
                         </div>
                         <div class="flex flex-wrap items-center gap-2">
-                            <button type="button" onclick="toggleDeadlineStatus('${d.id}')" class="px-3 py-1.5 rounded-lg text-xs font-semibold cursor-pointer ${done ? 'bg-slate-100 text-slate-600' : 'bg-emerald-50 text-emerald-700 hover:bg-emerald-100'}">
-                                ${done ? 'Reabrir' : 'Marcar Cumprido'}
-                            </button>
-                            <button type="button" onclick="openDeadlineModal('${d.id}')" class="px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-xs font-semibold text-slate-700 cursor-pointer">Editar</button>
-                            <button type="button" onclick="deleteDeadline('${d.id}')" class="px-3 py-1.5 rounded-lg bg-rose-50 hover:bg-rose-100 text-xs font-semibold text-rose-700 cursor-pointer">Excluir</button>
+                            ${canComplete ? `
+                                <button type="button" onclick="toggleDeadlineStatus('${d.id}')" class="px-3 py-1.5 rounded-lg text-xs font-semibold cursor-pointer ${done ? 'bg-slate-100 text-slate-600' : 'bg-emerald-50 text-emerald-700 hover:bg-emerald-100'}">
+                                    ${done ? 'Reabrir' : 'Marcar Cumprido'}
+                                </button>
+                            ` : ''}
+                            ${canEdit ? `<button type="button" onclick="openDeadlineModal('${d.id}')" class="px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-xs font-semibold text-slate-700 cursor-pointer">Editar</button>` : ''}
+                            ${canDelete ? `<button type="button" onclick="deleteDeadline('${d.id}')" class="px-3 py-1.5 rounded-lg bg-rose-50 hover:bg-rose-100 text-xs font-semibold text-rose-700 cursor-pointer">Excluir</button>` : ''}
                         </div>
                     </div>
                 `;
@@ -2002,6 +2289,14 @@
 
         function openDeadlineModal(id = '') {
             const item = deadlinesList.find(d => d.id === id);
+            if (item && !hasSubPerm('deadlines', 'deadlines_edit')) {
+                showToast('Você não possui permissão para editar prazos.', 'error');
+                return;
+            }
+            if (!item && !hasSubPerm('deadlines', 'deadlines_create')) {
+                showToast('Você não possui permissão para cadastrar prazos.', 'error');
+                return;
+            }
             document.getElementById('modal-deadline-title').textContent = item ? 'Editar Prazo' : 'Novo Prazo / Audiência';
             document.getElementById('deadline-edit-id').value = item?.id || '';
             document.getElementById('deadline-title').value = item?.title || '';
@@ -2112,8 +2407,16 @@
         function renderFinancialTable() {
             const tbody = document.getElementById('financial-tbody');
             if (!tbody) return;
-            const term = (document.getElementById('financial-search')?.value || '').trim().toLowerCase();
-            const demandFilter = document.getElementById('financial-demand-filter')?.value || 'Todas';
+            const canView = hasScreenPerm('financial') && hasSubPerm('financial', 'financial_view');
+            const canMetrics = hasSubPerm('financial', 'financial_view_metrics');
+            const canSearch = hasSubPerm('financial', 'financial_search');
+            const canEdit = hasSubPerm('financial', 'financial_edit');
+            const canDelete = hasSubPerm('financial', 'financial_delete');
+            const canMarkPending = hasSubPerm('financial', 'financial_mark_pending');
+            const canConfirmReceipt = hasSubPerm('financial', 'financial_confirm_receipt');
+
+            const term = canSearch ? (document.getElementById('financial-search')?.value || '').trim().toLowerCase() : '';
+            const demandFilter = canMetrics ? (document.getElementById('financial-demand-filter')?.value || 'Todas') : 'Todas';
 
             const filtered = financialList.filter(f => {
                 if (!matchesFinancialPeriod(f.dueDate)) return false;
@@ -2132,9 +2435,14 @@
                 .filter(f => f.type === 'despesa' && f.status === 'Pago')
                 .reduce((acc, f) => acc + (Number(f.amount) || 0), 0);
 
-            document.getElementById('fin-kpi-pending').textContent = formatCurrency(pendingSum);
-            document.getElementById('fin-kpi-received').textContent = formatCurrency(receivedSum);
-            document.getElementById('fin-kpi-net').textContent = formatCurrency(receivedSum - paidExpenses);
+            document.getElementById('fin-kpi-pending').textContent = canMetrics ? formatCurrency(pendingSum) : 'Restrito';
+            document.getElementById('fin-kpi-received').textContent = canMetrics ? formatCurrency(receivedSum) : 'Restrito';
+            document.getElementById('fin-kpi-net').textContent = canMetrics ? formatCurrency(receivedSum - paidExpenses) : 'Restrito';
+
+            if (!canView) {
+                tbody.innerHTML = '<tr><td colspan="5" class="py-8 text-center text-xs text-rose-600 font-medium">Acesso à visualização financeira bloqueado nas permissões do seu perfil.</td></tr>';
+                return;
+            }
 
             if (!filtered.length) {
                 tbody.innerHTML = '<tr><td colspan="5" class="py-8 text-center text-xs text-slate-400">Nenhum lançamento encontrado no período selecionado.</td></tr>';
@@ -2144,6 +2452,7 @@
             tbody.innerHTML = filtered.map(f => {
                 const isExpense = f.type === 'despesa';
                 const isPaid = f.status === 'Pago';
+                const statusBtnAllowed = isPaid ? canMarkPending : canConfirmReceipt;
                 return `
                     <tr class="hover:bg-slate-50/70">
                         <td class="py-3.5 px-4">
@@ -2158,11 +2467,13 @@
                             <span class="px-2.5 py-1 rounded-full text-[11px] font-semibold ${isPaid ? 'bg-emerald-50 text-emerald-700' : 'bg-amber-50 text-amber-800'}">${escapeHtml(f.status || 'Pendente')}</span>
                         </td>
                         <td class="py-3.5 px-4 text-right space-x-1.5">
-                            <button type="button" onclick="toggleFinancialStatus('${f.id}')" class="px-2.5 py-1 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-xs font-semibold text-emerald-800 cursor-pointer">
-                                ${isPaid ? 'Marcar Pendente' : 'Confirmar Recebimento'}
-                            </button>
-                            <button type="button" onclick="openFinancialModal('${f.id}')" class="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-xs font-semibold text-slate-700 cursor-pointer">Editar</button>
-                            <button type="button" onclick="deleteFinancial('${f.id}')" class="px-2.5 py-1 rounded-lg bg-rose-50 hover:bg-rose-100 text-xs font-semibold text-rose-700 cursor-pointer">Excluir</button>
+                            ${statusBtnAllowed ? `
+                                <button type="button" onclick="toggleFinancialStatus('${f.id}')" class="px-2.5 py-1 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-xs font-semibold text-emerald-800 cursor-pointer">
+                                    ${isPaid ? 'Marcar Pendente' : 'Confirmar Recebimento'}
+                                </button>
+                            ` : ''}
+                            ${canEdit ? `<button type="button" onclick="openFinancialModal('${f.id}')" class="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-xs font-semibold text-slate-700 cursor-pointer">Editar</button>` : ''}
+                            ${canDelete ? `<button type="button" onclick="deleteFinancial('${f.id}')" class="px-2.5 py-1 rounded-lg bg-rose-50 hover:bg-rose-100 text-xs font-semibold text-rose-700 cursor-pointer">Excluir</button>` : ''}
                         </td>
                     </tr>
                 `;
@@ -2171,6 +2482,14 @@
 
         function openFinancialModal(id = '') {
             const item = financialList.find(f => f.id === id);
+            if (item && !hasSubPerm('financial', 'financial_edit')) {
+                showToast('Você não possui permissão para editar lançamentos financeiros.', 'error');
+                return;
+            }
+            if (!item && !hasSubPerm('financial', 'financial_create')) {
+                showToast('Você não possui permissão para cadastrar lançamentos financeiros.', 'error');
+                return;
+            }
             document.getElementById('modal-financial-title').textContent = item ? 'Editar Lançamento Jurídico' : 'Cadastrar Conta Jurídica';
             document.getElementById('fin-edit-id').value = item?.id || '';
             document.getElementById('fin-description').value = item?.description || '';
@@ -2283,13 +2602,22 @@
         }
 
         function openBenefitModal(key) {
+            const permMap = {
+                certificado: 'benefits_certificado',
+                biblioteca: 'benefits_biblioteca',
+                saude: 'benefits_saude'
+            };
+            if (!hasScreenPerm('benefits') || !hasSubPerm('benefits', permMap[key])) {
+                showToast('Você não possui permissão para acessar este benefício.', 'error');
+                return;
+            }
             const info = benefitLinks[key] || defaultBenefitLinks[key];
             const titles = {
-                certificado: 'Certificado Digital A3 — AAB',
-                biblioteca: 'Biblioteca & Doutrina Digital AAB',
-                saude: 'Caixa de Assistência & Saúde — AAB'
+                certificado: 'Certificado Digital OAB (ICP-Brasil)',
+                biblioteca: 'Biblioteca & Doutrina Digital OAB',
+                saude: 'Caixa de Assistência dos Advogados (CAA) & Saúde'
             };
-            document.getElementById('benefit-modal-title').textContent = titles[key] || 'Benefício AAB';
+            document.getElementById('benefit-modal-title').textContent = titles[key] || 'Benefício OAB';
             document.getElementById('benefit-modal-body').innerHTML = `
                 <p>${escapeHtml(info?.description || '')}</p>
                 <div class="p-3.5 rounded-xl bg-amber-50 border border-amber-200 flex items-center justify-between gap-3">
@@ -2306,12 +2634,20 @@
         }
 
         function openRoomModal() {
+            if (!hasScreenPerm('benefits') || !hasSubPerm('benefits', 'benefits_salas')) {
+                showToast('Você não possui permissão para reservar salas e coworking.', 'error');
+                return;
+            }
             document.getElementById('room-date').value = new Date().toISOString().split('T')[0];
             openModal('modal-room');
         }
 
         async function handleSaveRoomReservation(event) {
             event.preventDefault();
+            if (!hasScreenPerm('benefits') || !hasSubPerm('benefits', 'benefits_salas')) {
+                showToast('Você não possui permissão para reservar salas.', 'error');
+                return;
+            }
             const payload = {
                 room: document.getElementById('room-name').value,
                 date: document.getElementById('room-date').value,
@@ -2338,6 +2674,10 @@
         function renderRoomReservations() {
             const box = document.getElementById('room-reservations-list');
             if (!box) return;
+            if (!hasScreenPerm('benefits') || !hasSubPerm('benefits', 'benefits_reservas')) {
+                box.innerHTML = '<p class="text-rose-600 font-medium">Acesso às reservas de salas bloqueado nas permissões do seu perfil.</p>';
+                return;
+            }
             if (!roomsList.length) {
                 box.innerHTML = '<p class="text-slate-400">Nenhuma reserva de sala registrada.</p>';
                 return;
@@ -2356,6 +2696,10 @@
         // PERFIL
         function openProfileModal() {
             if (!currentUser) return;
+            if (!hasScreenPerm('profile') || !hasSubPerm('profile', 'profile_edit')) {
+                showToast('A tela Editar Perfil está bloqueada nas permissões do seu usuário.', 'error');
+                return;
+            }
             document.getElementById('profile-name').value = currentUser.name || '';
             document.getElementById('profile-oab').value = currentUser.oab || '';
             document.getElementById('profile-firm').value = currentUser.firm || '';
@@ -2498,6 +2842,104 @@
             showToast('Links de benefícios atualizados!', 'success');
         }
 
+        function renderAuthFormPermissionMatrix() {
+            const container = document.getElementById('auth-matrix-container');
+            if (!container) return;
+            authFormDraftPerms = normalizeScreenAndSubPermissions(authFormDraftPerms, false);
+            container.innerHTML = buildScreenMatrixHtml(
+                authFormDraftPerms,
+                'auth_form',
+                'onAuthFormScreenToggle',
+                'onAuthFormSubToggle'
+            );
+        }
+
+        function onAuthFormScreenToggle(screenId, checked) {
+            authFormDraftPerms = enforceScreenSubConsistency(authFormDraftPerms, screenId, checked);
+            renderAuthFormPermissionMatrix();
+        }
+
+        function onAuthFormSubToggle(screenId, subKey, checked) {
+            if (!authFormDraftPerms.screens?.[screenId]) return;
+            authFormDraftPerms.subs = { ...(authFormDraftPerms.subs || {}), [subKey]: Boolean(checked) };
+            renderAuthFormPermissionMatrix();
+        }
+
+        function setAuthFormAllPermissions(enabled) {
+            authFormDraftPerms = buildAllAssociatePermissions(Boolean(enabled));
+            renderAuthFormPermissionMatrix();
+        }
+
+        function openMemberPermissionsModal(uid) {
+            const member = adminMembersList.find(m => m.uid === uid);
+            if (!member || isMasterAdminEmail(member.email)) return;
+            editingMemberUid = uid;
+            editingMemberDraftPerms = getEffectivePermissions(member);
+            document.getElementById('modal-member-perms-title').textContent = `Permissões — ${member.name || member.email}`;
+            document.getElementById('modal-member-perms-subtitle').textContent = `${member.email} • Desmarcar uma tela remove todas as suas sub-permissões.`;
+            renderMemberPermissionsModalBody();
+            openModal('modal-member-perms');
+            if (window.lucide) window.lucide.createIcons();
+        }
+
+        function renderMemberPermissionsModalBody() {
+            const body = document.getElementById('modal-member-perms-body');
+            if (!body || !editingMemberDraftPerms) return;
+            editingMemberDraftPerms = normalizeScreenAndSubPermissions(editingMemberDraftPerms, false);
+            body.innerHTML = buildScreenMatrixHtml(
+                editingMemberDraftPerms,
+                'modal_perms',
+                'onModalMemberScreenToggle',
+                'onModalMemberSubToggle'
+            );
+        }
+
+        function onModalMemberScreenToggle(screenId, checked) {
+            editingMemberDraftPerms = enforceScreenSubConsistency(editingMemberDraftPerms, screenId, checked);
+            renderMemberPermissionsModalBody();
+        }
+
+        function onModalMemberSubToggle(screenId, subKey, checked) {
+            if (!editingMemberDraftPerms.screens?.[screenId]) return;
+            editingMemberDraftPerms.subs = { ...(editingMemberDraftPerms.subs || {}), [subKey]: Boolean(checked) };
+            renderMemberPermissionsModalBody();
+        }
+
+        function setModalMemberAllPermissions(enabled) {
+            editingMemberDraftPerms = buildAllAssociatePermissions(Boolean(enabled));
+            renderMemberPermissionsModalBody();
+        }
+
+        async function saveModalMemberPermissions() {
+            if (!editingMemberUid || !editingMemberDraftPerms) return;
+            const uid = editingMemberUid;
+            const member = adminMembersList.find(m => m.uid === uid);
+            if (!member || isMasterAdminEmail(member.email)) return;
+
+            const nextPerms = normalizeScreenAndSubPermissions(editingMemberDraftPerms, false);
+            adminMembersList = adminMembersList.map(m => m.uid === uid ? { ...m, permissions: nextPerms } : m);
+            if (currentUser && currentUser.uid === uid) {
+                currentUser = { ...currentUser, permissions: nextPerms };
+                applyUserProfileUI();
+                renderAll();
+            }
+            saveLocalState();
+            renderAdminMembersTable();
+            closeModal('modal-member-perms');
+
+            if (db && isFirebaseConfigured && !isDemoFallbackMode) {
+                try {
+                    await updateDoc(doc(db, 'usuarios', uid), { permissions: nextPerms });
+                    if (member.email) {
+                        await setDoc(doc(db, 'emails_autorizados', sanitizeAuthDocId(member.email)), { permissions: nextPerms }, { merge: true });
+                    }
+                } catch (err) {
+                    showToast('Erro ao salvar permissões no Firestore: ' + err.message, 'error');
+                }
+            }
+            showToast('Permissões de tela e sub-permissões salvas!', 'success');
+        }
+
         async function handleAuthorizeInBoard(event, boardType) {
             event.preventDefault();
             const opPerms = getEffectivePermissions(currentUser);
@@ -2516,13 +2958,11 @@
                 return;
             }
 
-            const desiredPerms = {
-                portalAccess: Boolean(document.getElementById('auth-perm-portal')?.checked),
-                canPublish: Boolean(document.getElementById('auth-perm-publish')?.checked),
-                canBookRooms: Boolean(document.getElementById('auth-perm-rooms')?.checked),
-                canUseBenefits: Boolean(document.getElementById('auth-perm-benefits')?.checked),
-                canManageUsers: Boolean(document.getElementById('auth-perm-manage')?.checked)
-            };
+            const desiredPerms = normalizeScreenAndSubPermissions({
+                ...authFormDraftPerms,
+                canPublish: isAdmBoard ? true : false,
+                canManageUsers: isAdmBoard ? true : false
+            }, false);
             const clampedPerms = clampPermissionsToOperator(desiredPerms);
 
             const existingAuth = authorizedEmailsList.find(a => normalizeEmail(a.email) === email);
@@ -2569,9 +3009,11 @@
 
                 saveLocalState();
                 event.target.reset();
+                authFormDraftPerms = buildAllAssociatePermissions(true);
+                renderAuthFormPermissionMatrix();
                 renderAuthorizedEmailsList();
                 renderAdminMembersTable();
-                showToast(`E-mail cadastrado no ${isAdmBoard ? 'Quadro Adm' : 'Quadro Associados'} e salvo!`, 'success');
+                showToast(`E-mail cadastrado no ${isAdmBoard ? 'Quadro Adm' : 'Quadro Inscritos OAB'} e salvo!`, 'success');
                 return;
             }
 
@@ -2601,7 +3043,9 @@
                     }, { merge: true });
                 }
                 event.target.reset();
-                showToast(`Cadastro gravado no Firebase (${isAdmBoard ? 'Quadro Adm' : 'Quadro Associados'})!`, 'success');
+                authFormDraftPerms = buildAllAssociatePermissions(true);
+                renderAuthFormPermissionMatrix();
+                showToast(`Cadastro gravado no Firebase (${isAdmBoard ? 'Quadro Adm' : 'Quadro Inscritos OAB'})!`, 'success');
             } catch (err) {
                 console.error('Erro Firestore ao autorizar:', err);
                 showToast('Erro de permissão/conexão no Firestore: ' + (err.message || ''), 'error');
@@ -2622,7 +3066,7 @@
                         <strong>${escapeHtml(a.name || a.email)}</strong>
                         <span class="text-[11px] text-slate-500">(${escapeHtml(a.email)})</span>
                         ${boards.includes('admin') ? '<span class="px-1.5 py-0.5 rounded bg-aab-navy text-amber-300 text-[9px] font-bold">ADM</span>' : ''}
-                        ${boards.includes('associate') ? '<span class="px-1.5 py-0.5 rounded bg-amber-200 text-amber-950 text-[9px] font-bold">ASSOCIADO</span>' : ''}
+                        ${boards.includes('associate') ? '<span class="px-1.5 py-0.5 rounded bg-amber-200 text-amber-950 text-[9px] font-bold">INSCRITO OAB</span>' : ''}
                     </span>
                 `;
             }).join('');
@@ -2634,8 +3078,6 @@
             if (!admTbody || !assocTbody) return;
 
             const term = (document.getElementById('admin-member-search')?.value || '').trim().toLowerCase();
-            const opPerms = getEffectivePermissions(currentUser);
-            const isMasterOp = isMasterAdminEmail(currentUser?.email);
 
             const filtered = adminMembersList.filter(m => {
                 if (!term) return true;
@@ -2650,16 +3092,23 @@
             document.getElementById('admin-kpi-online').textContent = String(adminMembersList.filter(m => m.isOnline).length);
             document.getElementById('admin-kpi-sites').textContent = String(adminMembersList.filter(m => m.website).length);
             document.getElementById('admin-quadro-count').textContent = `${admMembers.length} Adm`;
-            document.getElementById('associates-quadro-count').textContent = `${assocMembers.length} Associados`;
+            document.getElementById('associates-quadro-count').textContent = `${allAssociates.length} Inscrito${allAssociates.length === 1 ? '' : 's'} OAB`;
 
-            const permCounts = {
-                portalAccess: allAssociates.filter(m => getEffectivePermissions(m).portalAccess).length,
-                canPublish: allAssociates.filter(m => getEffectivePermissions(m).canPublish).length,
-                canBookRooms: allAssociates.filter(m => getEffectivePermissions(m).canBookRooms).length,
-                canUseBenefits: allAssociates.filter(m => getEffectivePermissions(m).canUseBenefits).length,
-                canManageUsers: allAssociates.filter(m => getEffectivePermissions(m).canManageUsers).length
-            };
-            const summaryText = `Total: ${allAssociates.length} associado(s) — Permissões ativas: Portal (${permCounts.portalAccess}), Mural (${permCounts.canPublish}), Salas (${permCounts.canBookRooms}), Convênios (${permCounts.canUseBenefits}), Quadros (${permCounts.canManageUsers}).`;
+            const screenActiveCounts = {};
+            let totalSubActive = 0;
+            let totalSubPossible = 0;
+            PERMISSION_SCREENS_SCHEMA.forEach(scr => {
+                screenActiveCounts[scr.id] = allAssociates.filter(m => getEffectivePermissions(m).screens?.[scr.id]).length;
+                allAssociates.forEach(m => {
+                    const p = getEffectivePermissions(m);
+                    scr.subPermissions.forEach(sub => {
+                        totalSubPossible++;
+                        if (p.screens?.[scr.id] && p.subs?.[sub.key]) totalSubActive++;
+                    });
+                });
+            });
+
+            const summaryText = `Quantidade de inscritos OAB: ${allAssociates.length} • Sub-permissões ativas: ${totalSubActive}/${totalSubPossible} • Telas habilitadas: Perfil (${screenActiveCounts.profile}), Visão Geral (${screenActiveCounts.overview}), Processos (${screenActiveCounts.cases}), Clientes (${screenActiveCounts.clients}), Prazos (${screenActiveCounts.deadlines}), Financeiro (${screenActiveCounts.financial}), Benefícios (${screenActiveCounts.benefits}).`;
             const sumEl = document.getElementById('admin-associates-summary');
             const overEl = document.getElementById('associates-permissions-overview');
             if (sumEl) sumEl.textContent = summaryText;
@@ -2668,20 +3117,19 @@
             const buildRow = (m, boardLabel) => {
                 const isTargetMaster = isMasterAdminEmail(m.email);
                 const mPerms = getEffectivePermissions(m);
-                const permDefs = [
-                    ['portalAccess', 'Portal'],
-                    ['canPublish', 'Mural'],
-                    ['canBookRooms', 'Salas'],
-                    ['canUseBenefits', 'Convênios'],
-                    ['canManageUsers', 'Quadros']
-                ];
-                const checkboxes = permDefs.map(([key, label]) => {
-                    const disabled = isTargetMaster || (!isMasterOp && (!opPerms.canManageUsers || !opPerms[key]));
+
+                const screenChips = PERMISSION_SCREENS_SCHEMA.map(scr => {
+                    const isScrOn = Boolean(mPerms.screens?.[scr.id]);
+                    const activeSubsCount = isScrOn
+                        ? scr.subPermissions.filter(sub => Boolean(mPerms.subs?.[sub.key])).length
+                        : 0;
+                    const shortName = scr.title.replace(/^Tela\s+/i, '');
                     return `
-                        <label class="inline-flex items-center gap-1 mr-2.5 ${disabled ? 'opacity-60' : 'cursor-pointer'}">
-                            <input type="checkbox" ${mPerms[key] ? 'checked' : ''} ${disabled ? 'disabled' : ''} onchange="toggleMemberPermission('${m.uid}', '${key}', this.checked)" class="rounded border-slate-300 text-amber-600">
-                            <span>${label}</span>
-                        </label>
+                        <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[10px] font-semibold ${isScrOn ? 'bg-emerald-50 text-emerald-800 border border-emerald-200' : 'bg-slate-100 text-slate-400 border border-slate-200'}">
+                            <span>${isScrOn ? '✓' : '✕'}</span>
+                            <span>${escapeHtml(shortName)}</span>
+                            <span class="opacity-75">(${activeSubsCount}/${scr.subPermissions.length})</span>
+                        </span>
                     `;
                 }).join('');
 
@@ -2699,7 +3147,14 @@
                         <td class="py-3 px-3.5 text-[11px] text-slate-500">
                             ${m.website ? `<a href="${escapeHtml(m.website)}" target="_blank" class="text-blue-700 hover:underline">${escapeHtml(m.website)}</a>` : '<em>Sem site</em>'}
                         </td>
-                        <td class="py-3 px-3.5">${checkboxes}</td>
+                        <td class="py-3 px-3.5 space-y-1.5">
+                            <div class="flex flex-wrap gap-1">${screenChips}</div>
+                            ${!isTargetMaster ? `
+                                <button type="button" onclick="openMemberPermissionsModal('${m.uid}')" class="px-2.5 py-1 rounded-lg bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-200 text-[10px] font-semibold cursor-pointer">
+                                    Selecionar Telas e Sub-permissões
+                                </button>
+                            ` : '<span class="text-[10px] text-amber-700 font-semibold">Acesso total Master</span>'}
+                        </td>
                         <td class="py-3 px-3.5 text-right space-y-1">
                             <div><span class="px-2 py-0.5 rounded bg-slate-100 text-slate-700 text-[10px] font-bold">${boardLabel}</span></div>
                             ${isTargetMaster
@@ -2716,8 +3171,8 @@
                 : '<tr><td colspan="5" class="py-6 text-center text-slate-400">Nenhum administrador encontrado.</td></tr>';
 
             assocTbody.innerHTML = assocMembers.length
-                ? assocMembers.map(m => buildRow(m, 'Quadro Associados')).join('')
-                : '<tr><td colspan="5" class="py-6 text-center text-slate-400">Nenhum associado cadastrado.</td></tr>';
+                ? assocMembers.map(m => buildRow(m, 'Quadro Inscritos OAB')).join('')
+                : '<tr><td colspan="5" class="py-6 text-center text-slate-400">Nenhum advogado inscrito cadastrado.</td></tr>';
         }
 
         async function toggleMemberPermission(uid, permKey, checked) {
@@ -2782,9 +3237,7 @@
                     role: boards.includes('admin') ? 'responsavel_aab' : 'associado',
                     promotedByAdmin: boards.includes('admin'),
                     accountStatus: 'Ativo',
-                    permissions: isMaster
-                        ? { portalAccess: true, canPublish: true, canBookRooms: true, canUseBenefits: true, canManageUsers: true }
-                        : { ...defaultPermissions, ...(authInfo.permissions || {}) }
+                    permissions: normalizeScreenAndSubPermissions(isMaster ? {} : (authInfo.permissions || {}), isMaster)
                 };
                 await setDoc(userRef, { ...profile, createdAt: serverTimestamp() }, { merge: true });
             } else if (isMaster) {
@@ -2792,11 +3245,11 @@
                 profile.role = 'responsavel_aab';
                 profile.promotedByAdmin = true;
                 profile.accountStatus = 'Ativo';
-                profile.permissions = { portalAccess: true, canPublish: true, canBookRooms: true, canUseBenefits: true, canManageUsers: true };
+                profile.permissions = normalizeScreenAndSubPermissions({}, true);
             }
 
             if (profile.accountStatus === 'Suspenso' && !isMaster) {
-                showToast('Sua conta está suspensa pela administração da AAB.', 'error');
+                showToast('Sua conta está suspensa pela administração da OAB.', 'error');
                 await signOut(auth);
                 return;
             }
@@ -2837,34 +3290,35 @@
 
             currentUser = {
                 uid: savedProfile?.uid || ('demo_' + email.replace(/[^a-z0-9]/g, '_')),
-                name: overrides.name || savedProfile?.name || authRecord?.name || (isMaster ? 'Responsável Master AAB' : 'Dr(a). Associado AAB'),
+                name: overrides.name || savedProfile?.name || authRecord?.name || (isMaster ? 'Responsável Master OAB' : 'Dr(a). Advogado(a) OAB'),
                 email,
                 oab: overrides.oab || savedProfile?.oab || authRecord?.oab || (isMaster ? 'OAB 1234' : 'OAB/DF 54.321'),
-                firm: overrides.firm || savedProfile?.firm || 'Escritório Associado AAB',
+                firm: overrides.firm || savedProfile?.firm || 'Escritório Inscrito OAB',
                 phone: savedProfile?.phone || '(61) 99999-0000',
-                website: savedProfile?.website || 'https://aab.adv.br',
+                website: savedProfile?.website || 'https://www.oab.org.br',
                 boards,
                 role: boards.includes('admin') ? 'responsavel_aab' : 'associado',
                 promotedByAdmin: boards.includes('admin'),
                 accountStatus: 'Ativo',
                 isOnline: true,
-                permissions: isMaster
-                    ? { portalAccess: true, canPublish: true, canBookRooms: true, canUseBenefits: true, canManageUsers: true }
-                    : { ...defaultPermissions, ...(authRecord?.permissions || {}), ...(savedProfile?.permissions || {}), ...(overrides.permissions || {}) }
+                permissions: normalizeScreenAndSubPermissions(
+                    isMaster ? {} : { ...(authRecord?.permissions || {}), ...(savedProfile?.permissions || {}), ...(overrides.permissions || {}) },
+                    isMaster
+                )
             };
 
             const masterEntry = {
                 uid: 'demo_master',
-                name: 'Responsável Master AAB',
+                name: 'Responsável Master OAB',
                 email: MASTER_ADMIN_EMAIL,
                 oab: 'OAB 1234',
-                firm: 'Diretoria AAB',
+                firm: 'Conselho Federal / Diretoria OAB',
                 boards: ['admin', 'associate'],
                 role: 'responsavel_aab',
                 promotedByAdmin: true,
                 accountStatus: 'Ativo',
                 isOnline: true,
-                permissions: { portalAccess: true, canPublish: true, canBookRooms: true, canUseBenefits: true, canManageUsers: true }
+                permissions: normalizeScreenAndSubPermissions({}, true)
             };
 
             const mergedMembers = [masterEntry, currentUser, ...adminMembersList];
@@ -3010,7 +3464,7 @@
             const photoEl = document.getElementById('user-photo-img');
             const boardsEl = document.getElementById('sidebar-user-boards');
 
-            if (nameEl) nameEl.textContent = currentUser.name || 'Associado AAB';
+            if (nameEl) nameEl.textContent = currentUser.name || 'Advogado(a) OAB';
             if (oabEl) oabEl.textContent = `${currentUser.oab || 'OAB'} • ${currentUser.firm || 'Escritório'}`;
             if (emailEl) emailEl.textContent = currentUser.email || '';
 
@@ -3029,11 +3483,12 @@
 
             const isAdm = hasAdminBoardAccess(currentUser);
             const isAssoc = hasAssociateBoardAccess(currentUser);
+            const perms = getEffectivePermissions(currentUser);
 
             if (boardsEl) {
                 const badges = [];
                 if (isAdm) badges.push('<span class="px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 text-[10px] font-bold">QUADRO ADM</span>');
-                if (isAssoc) badges.push('<span class="px-2 py-0.5 rounded bg-white/10 text-slate-200 text-[10px] font-bold">ASSOCIADO</span>');
+                if (isAssoc) badges.push('<span class="px-2 py-0.5 rounded bg-white/10 text-slate-200 text-[10px] font-bold">INSCRITO OAB</span>');
                 boardsEl.innerHTML = badges.join('');
             }
 
@@ -3044,24 +3499,76 @@
                 adminBtn.style.display = isAdm ? 'flex' : 'none';
             }
 
-            const assocOnlyNavs = ['nav-btn-cases', 'nav-btn-clients', 'nav-btn-deadlines', 'nav-btn-financial', 'nav-btn-benefits'];
-            assocOnlyNavs.forEach(id => {
-                const btn = document.getElementById(id);
-                if (btn) btn.classList.toggle('hidden', !isAssoc);
+            const screenNavMap = {
+                overview: 'nav-btn-overview',
+                cases: 'nav-btn-cases',
+                clients: 'nav-btn-clients',
+                deadlines: 'nav-btn-deadlines',
+                financial: 'nav-btn-financial',
+                benefits: 'nav-btn-benefits'
+            };
+            Object.entries(screenNavMap).forEach(([screenId, navBtnId]) => {
+                const btn = document.getElementById(navBtnId);
+                const allowed = isAssoc && hasScreenPerm(screenId, currentUser);
+                if (btn) btn.classList.toggle('hidden', !allowed);
             });
 
-            document.getElementById('btn-header-new-case')?.classList.toggle('hidden', !isAssoc);
-            document.getElementById('btn-header-wallet')?.classList.toggle('hidden', !isAssoc);
+            const canCreateCase = isAssoc && hasScreenPerm('cases', currentUser) && hasSubPerm('cases', 'cases_create', currentUser);
+            const canSeeBenefits = isAssoc && hasScreenPerm('benefits', currentUser);
+            document.getElementById('btn-header-new-case')?.classList.toggle('hidden', !canCreateCase);
+            document.getElementById('btn-header-wallet')?.classList.toggle('hidden', !canSeeBenefits);
             document.getElementById('non-associate-board-banner')?.classList.toggle('hidden', isAssoc);
             document.getElementById('admin-local-warning-banner')?.classList.toggle('hidden', isFirebaseConfigured && !isDemoFallbackMode);
 
-            const perms = getEffectivePermissions(currentUser);
             document.getElementById('btn-quick-publish-overview')?.classList.toggle('hidden', !(isAdm && perms.canPublish));
+
+            // Sub-permissões de Visão Geral
+            const showOvCases = hasSubPerm('overview', 'overview_active_cases');
+            const showOvDeadlines = hasSubPerm('overview', 'overview_pending_deadlines');
+            const showOvReceivables = hasSubPerm('overview', 'overview_pending_receivables');
+            const showOvClients = hasSubPerm('overview', 'overview_clients_count');
+            const showOvBulletin = hasSubPerm('overview', 'overview_bulletin');
+            const showOvUpcoming = hasSubPerm('overview', 'overview_upcoming_deadlines');
+
+            document.getElementById('kpi-active-cases')?.closest('.bg-white')?.classList.toggle('hidden', !showOvCases);
+            document.getElementById('kpi-pending-deadlines')?.closest('.bg-white')?.classList.toggle('hidden', !showOvDeadlines);
+            document.getElementById('kpi-pending-receivables')?.closest('.bg-white')?.classList.toggle('hidden', !showOvReceivables);
+            document.getElementById('kpi-clients-count')?.closest('.bg-white')?.classList.toggle('hidden', !showOvClients);
+            document.getElementById('overview-bulletins-list')?.closest('.bg-white')?.classList.toggle('hidden', !showOvBulletin);
+            document.getElementById('overview-deadlines-list')?.closest('.bg-white')?.classList.toggle('hidden', !showOvUpcoming);
+
+            // Sub-permissões de Gestão de Processos
+            document.getElementById('case-search')?.closest('.relative')?.classList.toggle('hidden', !hasSubPerm('cases', 'cases_search'));
+            document.querySelector('#view-cases button[onclick="openCaseModal()"]')?.classList.toggle('hidden', !hasSubPerm('cases', 'cases_create'));
+
+            // Sub-permissões de Clientes & CRM
+            document.getElementById('client-search')?.closest('.relative')?.classList.toggle('hidden', !hasSubPerm('clients', 'clients_search'));
+            document.querySelector('#view-clients button[onclick="openClientModal()"]')?.classList.toggle('hidden', !hasSubPerm('clients', 'clients_create'));
+
+            // Sub-permissões de Prazos & Agenda
+            document.getElementById('deadline-search')?.closest('.relative')?.classList.toggle('hidden', !hasSubPerm('deadlines', 'deadlines_search'));
+            document.querySelector('#view-deadlines button[onclick="openDeadlineModal()"]')?.classList.toggle('hidden', !hasSubPerm('deadlines', 'deadlines_create'));
+
+            // Sub-permissões de Financeiro & Honorários
+            const showFinMetrics = hasSubPerm('financial', 'financial_view_metrics');
+            document.getElementById('fin-kpi-pending')?.closest('.bg-white')?.classList.toggle('hidden', !showFinMetrics);
+            document.getElementById('fin-kpi-received')?.closest('.bg-white')?.classList.toggle('hidden', !showFinMetrics);
+            document.getElementById('fin-kpi-net')?.closest('.bg-white')?.classList.toggle('hidden', !showFinMetrics);
+            document.getElementById('financial-demand-filter')?.classList.toggle('hidden', !showFinMetrics);
+            document.getElementById('financial-search')?.closest('.relative')?.classList.toggle('hidden', !hasSubPerm('financial', 'financial_search'));
+            document.querySelector('#view-financial button[onclick="openFinancialModal()"]')?.classList.toggle('hidden', !hasSubPerm('financial', 'financial_create'));
+
+            // Sub-permissões de Benefícios & Carteira Digital AAB
+            document.getElementById('benefit-link-label-certificado')?.closest('.bg-white')?.classList.toggle('hidden', !hasSubPerm('benefits', 'benefits_certificado'));
+            document.getElementById('benefit-link-label-biblioteca')?.closest('.bg-white')?.classList.toggle('hidden', !hasSubPerm('benefits', 'benefits_biblioteca'));
+            document.querySelector('#view-benefits button[onclick="openRoomModal()"]')?.closest('.bg-white')?.classList.toggle('hidden', !hasSubPerm('benefits', 'benefits_salas'));
+            document.getElementById('benefit-link-label-saude')?.closest('.bg-white')?.classList.toggle('hidden', !hasSubPerm('benefits', 'benefits_saude'));
+            document.getElementById('room-reservations-list')?.closest('.bg-white')?.classList.toggle('hidden', !hasSubPerm('benefits', 'benefits_reservas'));
 
             const cardName = document.getElementById('card-holder-name');
             const cardOab = document.getElementById('card-holder-oab');
             const cardFirm = document.getElementById('card-holder-firm');
-            if (cardName) cardName.textContent = currentUser.name || 'Associado AAB';
+            if (cardName) cardName.textContent = currentUser.name || 'Advogado(a) OAB';
             if (cardOab) cardOab.textContent = currentUser.oab || 'Inscrição OAB';
             if (cardFirm) cardFirm.textContent = currentUser.firm || 'Sociedade de Advocacia';
 
@@ -3069,27 +3576,14 @@
         }
 
         function syncOperatorDelegationUI() {
-            const perms = getEffectivePermissions(currentUser);
             const isMaster = isMasterAdminEmail(currentUser?.email);
             const badge = document.getElementById('admin-operator-cap-badge');
             if (badge) {
                 badge.textContent = isMaster
-                    ? 'Master AAB • Controle irrestrito de quadros'
+                    ? 'Master OAB • Controle irrestrito de telas e sub-permissões'
                     : 'Operador • Delegação limitada às suas permissões';
             }
-            const map = [
-                ['auth-perm-portal', perms.portalAccess],
-                ['auth-perm-publish', perms.canPublish],
-                ['auth-perm-rooms', perms.canBookRooms],
-                ['auth-perm-benefits', perms.canUseBenefits],
-                ['auth-perm-manage', perms.canManageUsers]
-            ];
-            map.forEach(([id, allowed]) => {
-                const cb = document.getElementById(id);
-                if (!cb) return;
-                cb.disabled = !isMaster && !allowed;
-                if (!isMaster && !allowed) cb.checked = false;
-            });
+            renderAuthFormPermissionMatrix();
         }
 
         function navigateTo(viewId) {
@@ -3103,27 +3597,26 @@
                 showToast('Acesso restrito aos usuários cadastrados no Quadro Adm.', 'error');
                 return;
             }
-            if (['cases', 'clients', 'deadlines', 'financial', 'benefits'].includes(viewId) && !hasAssociateBoardAccess(currentUser)) {
-                showToast('Para acessar esta área, seu e-mail deve estar cadastrado no Quadro Associados.', 'error');
-                return;
+            if (['overview', 'cases', 'clients', 'deadlines', 'financial', 'benefits'].includes(viewId)) {
+                if (!hasAssociateBoardAccess(currentUser)) {
+                    showToast('Para acessar esta área, seu e-mail deve estar cadastrado no Quadro Inscritos OAB.', 'error');
+                    return;
+                }
+                if (!hasScreenPerm(viewId, currentUser)) {
+                    showToast('Você não possui permissão para acessar esta tela.', 'error');
+                    return;
+                }
             }
 
             document.querySelectorAll('.view-section').forEach(sec => sec.classList.add('hidden'));
             document.getElementById('view-' + viewId)?.classList.remove('hidden');
 
             document.querySelectorAll('.nav-item').forEach(btn => {
-                if (btn.dataset.nav === 'admin' && !hasAdminBoardAccess(currentUser)) {
-                    btn.classList.add('hidden');
-                    btn.classList.remove('flex');
-                    btn.style.display = 'none';
-                    return;
-                }
                 const active = btn.dataset.nav === viewId;
                 if (btn.dataset.nav === 'admin') {
                     btn.className = active
                         ? 'nav-item w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-semibold bg-amber-400/20 text-amber-200 border border-amber-400/50 cursor-pointer mt-2'
                         : 'nav-item w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-semibold bg-amber-500/10 text-amber-300 border border-amber-400/25 hover:bg-amber-500/20 cursor-pointer mt-2';
-                    btn.style.display = 'flex';
                 } else {
                     btn.className = active
                         ? 'nav-item w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-semibold bg-amber-400/15 text-amber-200 border border-amber-400/35 cursor-pointer'
@@ -3137,11 +3630,11 @@
                 clients: 'Clientes & CRM',
                 deadlines: 'Prazos & Agenda',
                 financial: 'Financeiro & Honorários',
-                benefits: 'Benefícios & Carteira Digital AAB',
-                admin: 'Painel do Responsável AAB'
+                benefits: 'Benefícios & Carteira Digital OAB',
+                admin: 'Painel do Responsável OAB'
             };
             const headerTitle = document.getElementById('header-title');
-            if (headerTitle) headerTitle.textContent = titles[viewId] || 'Portal AAB';
+            if (headerTitle) headerTitle.textContent = titles[viewId] || 'Portal OAB';
             toggleMobileSidebar(false);
         }
 
@@ -3170,6 +3663,7 @@
             if (window.lucide) window.lucide.createIcons();
         }
 
+        // VISÃO GERAL
         function renderOverview() {
             const activeCases = casesList.filter(c => c.status !== 'Concluído').length;
             const pendingDeadlines = deadlinesList.filter(d => d.status !== 'Concluído').length;
@@ -3330,7 +3824,7 @@
                         boards: Array.isArray(item.boards) && item.boards.length ? item.boards : ['associate'],
                         role: item.role || 'associado',
                         promotedByAdmin: Boolean(item.promotedByAdmin),
-                        permissions: { ...defaultPermissions, ...(item.permissions || {}) },
+                        permissions: normalizeScreenAndSubPermissions(item.permissions || {}, false),
                         active: item.active !== false
                     }, { merge: true });
                     syncedCount++;
@@ -3365,18 +3859,20 @@
             loadLocalState();
             const syncIndicator = document.getElementById('auth-sync-indicator');
             const cfgBtnLabel = document.getElementById('btn-firebase-config-label');
-            let firebaseConfig = EMBEDDED_FIREBASE_CONFIG;
+            let firebaseConfig = null;
 
             try {
                 const storedCfg = localStorage.getItem('aab_firebase_config');
-                if (!firebaseConfig && typeof window.__firebase_config === 'string' && window.__firebase_config.trim()) {
-                    firebaseConfig = parseFirebaseConfigInput(window.__firebase_config);
-                } else if (!firebaseConfig && window.__firebase_config && typeof window.__firebase_config === 'object') {
-                    firebaseConfig = window.__firebase_config;
-                } else if (!firebaseConfig && window.firebaseConfig && typeof window.firebaseConfig === 'object') {
-                    firebaseConfig = window.firebaseConfig;
-                } else if (!firebaseConfig && storedCfg) {
+                if (storedCfg) {
                     firebaseConfig = parseFirebaseConfigInput(storedCfg);
+                } else if (typeof window.__firebase_config === 'string' && window.__firebase_config.trim()) {
+                    firebaseConfig = parseFirebaseConfigInput(window.__firebase_config);
+                } else if (window.__firebase_config && typeof window.__firebase_config === 'object') {
+                    firebaseConfig = window.__firebase_config;
+                } else if (window.firebaseConfig && typeof window.firebaseConfig === 'object') {
+                    firebaseConfig = window.firebaseConfig;
+                } else if (EMBEDDED_FIREBASE_CONFIG) {
+                    firebaseConfig = EMBEDDED_FIREBASE_CONFIG;
                 }
             } catch (err) {
                 console.warn('Configuração Firebase inválida:', err);
@@ -3454,6 +3950,14 @@
             deleteBulletin,
             handleSaveBenefitLinks,
             handleAuthorizeInBoard,
+            onAuthFormScreenToggle,
+            onAuthFormSubToggle,
+            setAuthFormAllPermissions,
+            openMemberPermissionsModal,
+            onModalMemberScreenToggle,
+            onModalMemberSubToggle,
+            setModalMemberAllPermissions,
+            saveModalMemberPermissions,
             toggleMemberPermission,
             toggleMemberSuspend,
             renderAdminMembersTable,
@@ -3462,6 +3966,7 @@
         });
 
         setHeaderDate();
+        renderAuthFormPermissionMatrix();
         if (window.lucide) window.lucide.createIcons();
         initFirebaseServices();
     </script>
