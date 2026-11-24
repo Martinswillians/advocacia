@@ -44,7 +44,6 @@ service cloud.firestore {
       );
     }
 
-    // Verifica se o usuário possui a Tela e a Sub-permissão específicas no Firestore
     function hasPerm(screenId, subKey) {
       return isMasterAdmin() || (
         isActiveAccount()
@@ -60,9 +59,10 @@ service cloud.firestore {
       );
     }
 
-    // Perfis de usuários (Inscritos OAB e Administradores)
+    // Perfis de usuários / Webpages dos advogados
+    // Leitura liberada para permitir diretório público e webpages individuais de advogados
     match /usuarios/{uid} {
-      allow read: if isSignedIn();
+      allow read: if true;
 
       allow create: if isSignedIn() && (
         request.auth.uid == uid
@@ -73,15 +73,13 @@ service cloud.firestore {
         (
           request.auth.uid == uid
           && (!('email' in resource.data) || resource.data.email.lower() != 'willbrasilia@gmail.com' || isMasterAdmin())
-          // Usuário comum não pode auto-alterar seu quadro, status de conta ou suas próprias permissões
           && (
             isBoardAdmin()
             || !request.resource.data.diff(resource.data).affectedKeys().hasAny(['boards', 'role', 'promotedByAdmin', 'accountStatus', 'permissions'])
           )
-          // Se alterar dados do perfil (nome, OAB, escritório, telefone, site, foto), exige permissão de editar perfil
           && (
             isBoardAdmin()
-            || !request.resource.data.diff(resource.data).affectedKeys().hasAny(['name', 'oab', 'firm', 'phone', 'website', 'photoUrl'])
+            || !request.resource.data.diff(resource.data).affectedKeys().hasAny(['name', 'oab', 'firm', 'phone', 'website', 'photoUrl', 'webpage'])
             || hasPerm('profile', 'profile_edit')
           )
         )
@@ -93,6 +91,15 @@ service cloud.firestore {
 
       allow delete: if isBoardAdmin()
         && (!('email' in resource.data) || resource.data.email.lower() != 'willbrasilia@gmail.com');
+
+      // Mensagens enviadas por clientes na webpage do advogado (subcoleção)
+      match /contatos_webpage/{msgId} {
+        allow create: if request.resource.data.keys().hasAll(['clientName', 'clientEmail', 'message'])
+          && request.resource.data.clientName is string
+          && request.resource.data.clientEmail is string
+          && request.resource.data.message is string;
+        allow read, update, delete: if isSignedIn() && (request.auth.uid == uid || isBoardAdmin());
+      }
 
       // Subcoleção: Gestão de Processos
       match /processos/{caseId} {
@@ -148,13 +155,25 @@ service cloud.firestore {
       }
     }
 
-    // Mural Institucional OAB
+    // Coleção raiz alternativa caso mensagens de contato sejam gravadas em /contatos_webpage
+    match /contatos_webpage/{msgId} {
+      allow create: if request.resource.data.keys().hasAll(['clientName', 'clientEmail', 'message'])
+        && request.resource.data.clientName is string
+        && request.resource.data.clientEmail is string
+        && request.resource.data.message is string;
+      allow read, update, delete: if isSignedIn() && (
+        isBoardAdmin()
+        || (resource.data.lawyerUid != null && resource.data.lawyerUid == request.auth.uid)
+      );
+    }
+
+    // Mural Institucional OAB (leitura pública permitida para visitantes)
     match /publicacoes_aab/{bulletinId} {
-      allow read: if isSignedIn();
+      allow read: if true;
       allow create, update, delete: if canPublishMural();
     }
 
-    // E-mails previamente autorizados nos quadros (Quadro Adm / Quadro Inscritos OAB)
+    // E-mails previamente autorizados nos quadros
     match /emails_autorizados/{authDocId} {
       allow get: if true;
       allow list: if isSignedIn();
@@ -163,9 +182,9 @@ service cloud.firestore {
         && (!('email' in resource.data) || resource.data.email.lower() != 'willbrasilia@gmail.com');
     }
 
-    // Configurações institucionais (links de benefícios)
+    // Configurações institucionais
     match /configuracoes/{configId} {
-      allow read: if isSignedIn();
+      allow read: if true;
       allow create, update, delete: if isBoardAdmin();
     }
   }
