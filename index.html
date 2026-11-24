@@ -139,6 +139,16 @@
                         <i data-lucide="arrow-right" class="w-4 h-4"></i>
                     </button>
 
+                    <button type="button" onclick="handleGoogleLogin()" class="w-full py-2.5 px-4 rounded-xl bg-white hover:bg-slate-50 text-slate-700 border border-slate-300 font-semibold text-xs flex items-center justify-center gap-2 cursor-pointer transition-colors shadow-xs">
+                        <svg class="w-4 h-4" viewBox="0 0 24 24" aria-hidden="true">
+                            <path fill="#EA4335" d="M12 5c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 1.77 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                            <path fill="#4285F4" d="M23.49 12.27c0-.79-.07-1.54-.19-2.27H12v4.51h6.47c-.29 1.48-1.14 2.73-2.4 3.58v3h3.86c2.26-2.09 3.56-5.17 3.56-8.82z"/>
+                            <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/>
+                            <path fill="#34A853" d="M12 23c3.24 0 5.95-1.08 7.93-2.91l-3.86-3c-1.08.72-2.45 1.16-4.07 1.16-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                        </svg>
+                        <span>Entrar com Conta Google</span>
+                    </button>
+
                     <div class="pt-3 border-t border-slate-100 space-y-2.5">
                         <p class="text-[10px] font-bold uppercase tracking-widest text-center text-slate-400">Acesso Institucional &amp; Demonstração</p>
                         <button type="button" onclick="focusResponsibleLogin()" class="w-full py-2.5 px-4 rounded-xl bg-aab-navy hover:bg-aab-navyDark text-amber-300 font-semibold text-xs flex items-center justify-center gap-2 cursor-pointer transition-colors">
@@ -149,9 +159,9 @@
                             <i data-lucide="zap" class="w-4 h-4"></i>
                             <span>Acesso Rápido (Demonstração Local)</span>
                         </button>
-                        <button type="button" onclick="openModal('modal-firebase-setup')" class="w-full py-2 px-4 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-[11px] flex items-center justify-center gap-1.5 cursor-pointer transition-colors">
+                        <button type="button" onclick="openFirebaseSetupModal()" class="w-full py-2 px-4 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-[11px] flex items-center justify-center gap-1.5 cursor-pointer transition-colors">
                             <i data-lucide="cloud" class="w-3.5 h-3.5 text-amber-700"></i>
-                            <span id="btn-firebase-config-label">Conectar Firebase do Projeto (GitHub Pages)</span>
+                            <span id="btn-firebase-config-label">Conectar Firebase do Projeto (advocacia-6864f)</span>
                         </button>
                     </div>
                 </form>
@@ -694,6 +704,15 @@
 
                     <!-- Autorização Dedicada por Quadro -->
                     <div class="bg-white rounded-2xl border border-slate-200/80 p-6 space-y-4">
+                        <div id="admin-local-warning-banner" class="hidden p-3.5 rounded-xl bg-rose-50 border border-rose-300 text-xs text-rose-900 flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                            <div>
+                                <p class="font-bold">Atenção: Você está operando em Modo Local (sem Firebase conectado)!</p>
+                                <p class="text-rose-700 mt-0.5">Os e-mails cadastrados agora ficam apenas neste navegador e não vão para o banco do Firebase. Conecte o Firebase para sincronizar em nuvem.</p>
+                            </div>
+                            <button type="button" onclick="openFirebaseSetupModal()" class="px-3 py-1.5 rounded-lg bg-aab-navy text-amber-300 font-semibold shrink-0 cursor-pointer">
+                                Conectar Firebase
+                            </button>
+                        </div>
                         <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
                             <div>
                                 <h3 class="font-juridica text-2xl font-bold text-aab-navy">Cadastrar em Quadro Específico</h3>
@@ -1122,29 +1141,41 @@
     <div id="modal-firebase-setup" class="fixed inset-0 z-50 hidden items-center justify-center bg-slate-950/60 p-4">
         <div class="bg-white rounded-2xl max-w-lg w-full p-6 space-y-4 shadow-2xl">
             <div class="flex items-center justify-between">
-                <h3 class="font-juridica text-2xl font-bold text-aab-navy">Conectar Firebase Cloud</h3>
+                <h3 class="font-juridica text-2xl font-bold text-aab-navy">Conectar Firebase (advocacia-6864f)</h3>
                 <button type="button" onclick="closeModal('modal-firebase-setup')" class="p-1 text-slate-400 hover:text-slate-700 cursor-pointer"><i data-lucide="x" class="w-5 h-5"></i></button>
             </div>
             <p class="text-xs text-slate-600 leading-relaxed">
-                Cole o objeto JSON <code class="px-1 py-0.5 bg-slate-100 rounded">firebaseConfig</code> do Console do Firebase (Configurações do Projeto &gt; Seus aplicativos &gt; Web) para sincronizar Authentication e Firestore no navegador.
+                Cole abaixo o objeto <code class="px-1 py-0.5 bg-slate-100 rounded">firebaseConfig</code> (pode colar o trecho completo <code class="px-1 py-0.5 bg-slate-100 rounded">const firebaseConfig = { ... };</code> direto do Console do Firebase &gt; Configurações do Projeto &gt; <strong>advocacia-6864f</strong>).
             </p>
             <form onsubmit="handleSaveFirebaseConfig(event)" class="space-y-3">
-                <textarea id="firebase-config-json" rows="6" required placeholder='{"apiKey":"...","authDomain":"...","projectId":"...","storageBucket":"...","messagingSenderId":"...","appId":"..."}' class="w-full px-3.5 py-2 rounded-xl border border-slate-200 text-xs font-mono"></textarea>
-                <div class="flex justify-end gap-2 pt-1">
-                    <button type="button" onclick="closeModal('modal-firebase-setup')" class="px-4 py-2 rounded-xl bg-slate-100 text-slate-700 text-xs font-semibold cursor-pointer">Cancelar</button>
-                    <button type="submit" class="px-4 py-2 rounded-xl bg-aab-navy text-amber-300 text-xs font-semibold cursor-pointer">Salvar e Conectar</button>
+                <textarea id="firebase-config-json" rows="7" required placeholder='const firebaseConfig = {
+  apiKey: "AIzaSy...",
+  authDomain: "advocacia-6864f.firebaseapp.com",
+  projectId: "advocacia-6864f",
+  storageBucket: "advocacia-6864f.firebasestorage.app",
+  messagingSenderId: "...",
+  appId: "..."
+};' class="w-full px-3.5 py-2 rounded-xl border border-slate-200 text-xs font-mono"></textarea>
+                <div class="flex flex-wrap items-center justify-between gap-2 pt-1">
+                    <button type="button" onclick="clearSavedFirebaseConfig()" class="px-3 py-2 rounded-xl bg-rose-50 text-rose-700 text-xs font-semibold cursor-pointer">Limpar Config</button>
+                    <div class="flex gap-2">
+                        <button type="button" onclick="closeModal('modal-firebase-setup')" class="px-4 py-2 rounded-xl bg-slate-100 text-slate-700 text-xs font-semibold cursor-pointer">Cancelar</button>
+                        <button type="submit" class="px-4 py-2 rounded-xl bg-aab-navy text-amber-300 text-xs font-semibold cursor-pointer">Salvar e Conectar</button>
+                    </div>
                 </div>
             </form>
         </div>
     </div>
 
     <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+        import { initializeApp, getApps } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
         import {
             getAuth,
             onAuthStateChanged,
             signInWithEmailAndPassword,
             createUserWithEmailAndPassword,
+            GoogleAuthProvider,
+            signInWithPopup,
             signOut,
             sendPasswordResetEmail
         } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
@@ -1161,6 +1192,17 @@
             onSnapshot,
             serverTimestamp
         } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-firestore.js";
+
+        // Configuração oficial do projeto Firebase (advocacia-6864f) ativa por padrão
+        const EMBEDDED_FIREBASE_CONFIG = {
+            apiKey: "AIzaSyB3ZZaOmW-RtLhcfNRiS52PgEGtTVLXMtQ",
+            authDomain: "advocacia-6864f.firebaseapp.com",
+            projectId: "advocacia-6864f",
+            storageBucket: "advocacia-6864f.firebasestorage.app",
+            messagingSenderId: "308552640087",
+            appId: "1:308552640087:web:1b6b755767b0bd0304a512",
+            measurementId: "G-KJ3XP56KW7"
+        };
 
         const MASTER_ADMIN_EMAIL = 'willbrasilia@gmail.com';
         const LOCAL_STORAGE_KEY = 'aab_portal_state_v3';
@@ -1418,20 +1460,6 @@
                 };
             }
 
-            const localMatch = authorizedEmailsList.find(a => normalizeEmail(a.email) === norm && a.active !== false);
-            if (localMatch) {
-                const boards = Array.isArray(localMatch.boards) && localMatch.boards.length
-                    ? localMatch.boards
-                    : (localMatch.role === 'responsavel_aab' ? ['admin'] : ['associate']);
-                return {
-                    authorized: true,
-                    boards,
-                    name: localMatch.name || '',
-                    oab: localMatch.oab || '',
-                    permissions: { ...defaultPermissions, ...(localMatch.permissions || {}) }
-                };
-            }
-
             if (db && isFirebaseConfigured) {
                 try {
                     const snap = await getDoc(doc(db, 'emails_autorizados', sanitizeAuthDocId(norm)));
@@ -1449,8 +1477,34 @@
                         };
                     }
                 } catch (err) {
-                    console.warn('Falha ao consultar emails_autorizados:', err);
+                    console.warn('Falha ao consultar emails_autorizados no Firestore:', err);
                 }
+            }
+
+            const localMatch = authorizedEmailsList.find(a => normalizeEmail(a.email) === norm && a.active !== false);
+            if (localMatch) {
+                const boards = Array.isArray(localMatch.boards) && localMatch.boards.length
+                    ? localMatch.boards
+                    : (localMatch.role === 'responsavel_aab' ? ['admin'] : ['associate']);
+                return {
+                    authorized: true,
+                    boards,
+                    name: localMatch.name || '',
+                    oab: localMatch.oab || '',
+                    permissions: { ...defaultPermissions, ...(localMatch.permissions || {}) }
+                };
+            }
+
+            const savedMember = adminMembersList.find(m => normalizeEmail(m.email) === norm && m.accountStatus !== 'Suspenso');
+            if (savedMember) {
+                const boards = getUserBoards(savedMember);
+                return {
+                    authorized: true,
+                    boards: boards.length ? boards : ['associate'],
+                    name: savedMember.name || '',
+                    oab: savedMember.oab || '',
+                    permissions: { ...defaultPermissions, ...(savedMember.permissions || {}) }
+                };
             }
 
             return { authorized: false, boards: [], name: '', oab: '', permissions: { ...defaultPermissions } };
@@ -1554,7 +1608,10 @@
             const authInfo = await checkEmailAuthorization(email);
             const savedProfile = adminMembersList.find(m => normalizeEmail(m.email) === email);
             if (!authInfo.authorized && !savedProfile) {
-                showToast('Este e-mail ainda não foi habilitado em nenhum quadro pela administração da AAB.', 'error');
+                const modeHint = isFirebaseConfigured
+                    ? 'Verifique se o Responsável AAB salvou este e-mail no Quadro com o Firebase conectado.'
+                    : 'Este navegador está em Modo Local e não enxerga cadastros feitos em outro navegador. Conecte o Firebase do projeto.';
+                showToast(`E-mail não habilitado. ${modeHint}`, 'error');
                 return;
             }
 
@@ -1655,440 +1712,30 @@
             }
         }
 
-        async function hydrateAuthenticatedUser(fbUser, options = {}) {
-            isDemoFallbackMode = false;
-            const email = normalizeEmail(fbUser.email);
-            const isMaster = isMasterAdminEmail(email);
-            const userRef = doc(db, 'usuarios', fbUser.uid);
-            const snap = await getDoc(userRef);
-            const authInfo = await checkEmailAuthorization(email);
-
-            let profile = snap.exists() ? snap.data() : null;
-            if (!profile) {
-                const boards = isMaster ? ['admin', 'associate'] : (authInfo.authorized ? authInfo.boards : ['associate']);
-                profile = {
-                    uid: fbUser.uid,
-                    name: fbUser.displayName || authInfo.name || (isMaster ? 'Responsável Master AAB' : 'Associado AAB'),
-                    email,
-                    oab: authInfo.oab || options.oabFallback || (isMaster ? 'OAB 1234' : 'OAB/DF'),
-                    firm: 'Sociedade de Advocacia',
-                    boards,
-                    role: boards.includes('admin') ? 'responsavel_aab' : 'associado',
-                    promotedByAdmin: boards.includes('admin'),
-                    accountStatus: 'Ativo',
-                    permissions: isMaster
-                        ? { portalAccess: true, canPublish: true, canBookRooms: true, canUseBenefits: true, canManageUsers: true }
-                        : { ...defaultPermissions, ...(authInfo.permissions || {}) }
-                };
-                await setDoc(userRef, { ...profile, createdAt: serverTimestamp() }, { merge: true });
-            } else if (isMaster) {
-                profile.boards = ['admin', 'associate'];
-                profile.role = 'responsavel_aab';
-                profile.promotedByAdmin = true;
-                profile.accountStatus = 'Ativo';
-                profile.permissions = { portalAccess: true, canPublish: true, canBookRooms: true, canUseBenefits: true, canManageUsers: true };
-            }
-
-            if (profile.accountStatus === 'Suspenso' && !isMaster) {
-                showToast('Sua conta está suspensa pela administração da AAB.', 'error');
-                await signOut(auth);
+        async function handleGoogleLogin() {
+            if (!isFirebaseConfigured || !auth) {
+                showToast('Firebase não conectado neste ambiente.', 'error');
                 return;
             }
+            try {
+                const provider = new GoogleAuthProvider();
+                const result = await signInWithPopup(auth, provider);
+                const email = normalizeEmail(result.user?.email || '');
+                const authInfo = await checkEmailAuthorization(email);
+                const savedProfile = adminMembersList.find(m => normalizeEmail(m.email) === email);
 
-            currentUser = { uid: fbUser.uid, ...profile };
-            await setDoc(userRef, { isOnline: true, lastSeenAt: serverTimestamp() }, { merge: true });
-
-            startPresenceHeartbeat();
-            attachRealtimeListeners(fbUser.uid);
-            showAppShell();
-            applyUserProfileUI();
-            renderAll();
-
-            if (hasAssociateBoardAccess(currentUser)) {
-                navigateTo('overview');
-            } else if (hasAdminBoardAccess(currentUser)) {
-                navigateTo('admin');
-            } else {
-                navigateTo('overview');
-            }
-        }
-
-        function enterDemoMode(overrides = {}) {
-            isDemoFallbackMode = true;
-            clearRealtimeListeners();
-            loadLocalState();
-            const email = normalizeEmail(overrides.email || 'associado@escritorio.adv.br');
-            const isMaster = isMasterAdminEmail(email);
-            const savedProfile = adminMembersList.find(m => normalizeEmail(m.email) === email);
-            const authRecord = authorizedEmailsList.find(a => normalizeEmail(a.email) === email);
-            const boards = Array.isArray(overrides.boards)
-                ? overrides.boards
-                : (isMaster ? ['admin', 'associate'] : (savedProfile?.boards || authRecord?.boards || ['associate']));
-
-            currentUser = {
-                uid: savedProfile?.uid || ('demo_' + email.replace(/[^a-z0-9]/g, '_')),
-                name: overrides.name || savedProfile?.name || authRecord?.name || (isMaster ? 'Responsável Master AAB' : 'Dr(a). Associado AAB'),
-                email,
-                oab: overrides.oab || savedProfile?.oab || authRecord?.oab || (isMaster ? 'OAB 1234' : 'OAB/DF 54.321'),
-                firm: overrides.firm || savedProfile?.firm || 'Escritório Associado AAB',
-                phone: savedProfile?.phone || '(61) 99999-0000',
-                website: savedProfile?.website || 'https://aab.adv.br',
-                boards,
-                role: boards.includes('admin') ? 'responsavel_aab' : 'associado',
-                promotedByAdmin: boards.includes('admin'),
-                accountStatus: 'Ativo',
-                isOnline: true,
-                permissions: isMaster
-                    ? { portalAccess: true, canPublish: true, canBookRooms: true, canUseBenefits: true, canManageUsers: true }
-                    : { ...defaultPermissions, ...(authRecord?.permissions || {}), ...(savedProfile?.permissions || {}), ...(overrides.permissions || {}) }
-            };
-
-            const masterEntry = {
-                uid: 'demo_master',
-                name: 'Responsável Master AAB',
-                email: MASTER_ADMIN_EMAIL,
-                oab: 'OAB 1234',
-                firm: 'Diretoria AAB',
-                boards: ['admin', 'associate'],
-                role: 'responsavel_aab',
-                promotedByAdmin: true,
-                accountStatus: 'Ativo',
-                isOnline: true,
-                permissions: { portalAccess: true, canPublish: true, canBookRooms: true, canUseBenefits: true, canManageUsers: true }
-            };
-
-            const mergedMembers = [masterEntry, currentUser, ...adminMembersList];
-            adminMembersList = mergedMembers.filter((v, idx, arr) =>
-                arr.findIndex(x => normalizeEmail(x.email) === normalizeEmail(v.email)) === idx
-            );
-
-            saveLocalState();
-            updateSyncStatus('Sincronizado', 'Local / Navegador');
-            if (!casesList.length && !clientsList.length && !deadlinesList.length && !financialList.length) {
-                seedSampleData(false);
-            }
-            showAppShell();
-            applyUserProfileUI();
-            renderAll();
-            navigateTo(boards.includes('associate') ? 'overview' : 'admin');
-            showToast('Modo local ativo com persistência no navegador.', 'info');
-        }
-
-        async function handleLogout() {
-            clearRealtimeListeners();
-            if (heartbeatInterval) clearInterval(heartbeatInterval);
-            if (db && currentUser?.uid && isFirebaseConfigured && !isDemoFallbackMode) {
-                try {
-                    await updateDoc(doc(db, 'usuarios', currentUser.uid), { isOnline: false, lastSeenAt: serverTimestamp() });
-                } catch (_) {}
-            }
-            if (auth && isFirebaseConfigured && !isDemoFallbackMode) {
-                try { await signOut(auth); } catch (_) {}
-            }
-            currentUser = null;
-            isDemoFallbackMode = false;
-            showAuthScreen();
-        }
-
-        function showAuthScreen() {
-            document.getElementById('auth-screen')?.classList.remove('hidden');
-            document.getElementById('app-shell')?.classList.add('hidden');
-        }
-
-        function showAppShell() {
-            document.getElementById('auth-screen')?.classList.add('hidden');
-            document.getElementById('app-shell')?.classList.remove('hidden');
-        }
-
-        function startPresenceHeartbeat() {
-            if (heartbeatInterval) clearInterval(heartbeatInterval);
-            heartbeatInterval = setInterval(async () => {
-                if (db && currentUser?.uid && isFirebaseConfigured && !isDemoFallbackMode) {
-                    try {
-                        await updateDoc(doc(db, 'usuarios', currentUser.uid), { isOnline: true, lastSeenAt: serverTimestamp() });
-                    } catch (_) {}
+                if (!isMasterAdminEmail(email) && !authInfo.authorized && !savedProfile) {
+                    await signOut(auth);
+                    showToast('Esta conta Google ainda não foi cadastrada nos quadros pela administração da AAB.', 'error');
+                    return;
                 }
-            }, 60000);
-        }
 
-        function clearRealtimeListeners() {
-            firestoreUnsubscribers.forEach(unsub => {
-                try { unsub(); } catch (_) {}
-            });
-            firestoreUnsubscribers = [];
-        }
-
-        function attachRealtimeListeners(uid) {
-            clearRealtimeListeners();
-            if (!db || !isFirebaseConfigured) return;
-
-            updateSyncStatus('Sincronizado', 'Firestore');
-
-            firestoreUnsubscribers.push(
-                onSnapshot(collection(db, 'usuarios', uid, 'processos'), snap => {
-                    casesList = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-                    renderOverview();
-                    renderCasesTable();
-                }),
-                onSnapshot(collection(db, 'usuarios', uid, 'clientes'), snap => {
-                    clientsList = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-                    renderOverview();
-                    renderClientsGrid();
-                }),
-                onSnapshot(collection(db, 'usuarios', uid, 'prazos'), snap => {
-                    deadlinesList = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-                    renderOverview();
-                    renderDeadlinesList();
-                }),
-                onSnapshot(collection(db, 'usuarios', uid, 'financeiro'), snap => {
-                    financialList = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-                    renderOverview();
-                    renderFinancialTable();
-                }),
-                onSnapshot(collection(db, 'usuarios', uid, 'reservas_salas'), snap => {
-                    roomsList = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-                    renderRoomReservations();
-                }),
-                onSnapshot(collection(db, 'publicacoes_aab'), snap => {
-                    bulletinsList = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-                    renderOverview();
-                    renderAdminBulletins();
-                }),
-                onSnapshot(collection(db, 'emails_autorizados'), snap => {
-                    authorizedEmailsList = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-                    renderAuthorizedEmailsList();
-                }),
-                onSnapshot(collection(db, 'usuarios'), snap => {
-                    adminMembersList = snap.docs.map(d => ({ uid: d.id, ...d.data() }));
-                    const selfUpdated = adminMembersList.find(m => m.uid === uid);
-                    if (selfUpdated && !isMasterAdminEmail(currentUser?.email)) {
-                        currentUser = { ...currentUser, ...selfUpdated };
-                        applyUserProfileUI();
-                    }
-                    renderAdminMembersTable();
-                }),
-                onSnapshot(doc(db, 'configuracoes', 'beneficios_aab'), snap => {
-                    if (snap.exists()) {
-                        benefitLinks = { ...benefitLinks, ...snap.data() };
-                        applyBenefitLinksUI();
-                    }
-                })
-            );
-        }
-
-        function updateSyncStatus(text, mode) {
-            const st = document.getElementById('sync-status-text');
-            const md = document.getElementById('sync-mode-label');
-            if (st) st.textContent = text;
-            if (md) md.textContent = mode;
-        }
-
-        function applyUserProfileUI() {
-            if (!currentUser) return;
-            const nameEl = document.getElementById('sidebar-user-name');
-            const oabEl = document.getElementById('sidebar-user-oab');
-            const emailEl = document.getElementById('sidebar-user-email');
-            const initialsEl = document.getElementById('user-initials');
-            const photoEl = document.getElementById('user-photo-img');
-            const boardsEl = document.getElementById('sidebar-user-boards');
-
-            if (nameEl) nameEl.textContent = currentUser.name || 'Associado AAB';
-            if (oabEl) oabEl.textContent = `${currentUser.oab || 'OAB'} • ${currentUser.firm || 'Escritório'}`;
-            if (emailEl) emailEl.textContent = currentUser.email || '';
-
-            const parts = String(currentUser.name || 'AA').trim().split(/\s+/);
-            const initials = ((parts[0]?.[0] || '') + (parts[parts.length - 1]?.[0] || '')).toUpperCase() || 'AA';
-            if (initialsEl) initialsEl.textContent = initials;
-
-            if (photoEl) {
-                if (currentUser.photoUrl) {
-                    photoEl.src = currentUser.photoUrl;
-                    photoEl.classList.remove('hidden');
-                } else {
-                    photoEl.classList.add('hidden');
-                }
-            }
-
-            const isAdm = hasAdminBoardAccess(currentUser);
-            const isAssoc = hasAssociateBoardAccess(currentUser);
-
-            if (boardsEl) {
-                const badges = [];
-                if (isAdm) badges.push('<span class="px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 text-[10px] font-bold">QUADRO ADM</span>');
-                if (isAssoc) badges.push('<span class="px-2 py-0.5 rounded bg-white/10 text-slate-200 text-[10px] font-bold">ASSOCIADO</span>');
-                boardsEl.innerHTML = badges.join('');
-            }
-
-            const adminBtn = document.getElementById('nav-btn-admin');
-            if (adminBtn) {
-                adminBtn.classList.toggle('hidden', !isAdm);
-                adminBtn.classList.toggle('flex', isAdm);
-            }
-
-            const assocOnlyNavs = ['nav-btn-cases', 'nav-btn-clients', 'nav-btn-deadlines', 'nav-btn-financial', 'nav-btn-benefits'];
-            assocOnlyNavs.forEach(id => {
-                const btn = document.getElementById(id);
-                if (btn) btn.classList.toggle('hidden', !isAssoc);
-            });
-
-            document.getElementById('btn-header-new-case')?.classList.toggle('hidden', !isAssoc);
-            document.getElementById('btn-header-wallet')?.classList.toggle('hidden', !isAssoc);
-            document.getElementById('non-associate-board-banner')?.classList.toggle('hidden', isAssoc);
-
-            const perms = getEffectivePermissions(currentUser);
-            document.getElementById('btn-quick-publish-overview')?.classList.toggle('hidden', !(isAdm && perms.canPublish));
-
-            const cardName = document.getElementById('card-holder-name');
-            const cardOab = document.getElementById('card-holder-oab');
-            const cardFirm = document.getElementById('card-holder-firm');
-            if (cardName) cardName.textContent = currentUser.name || 'Associado AAB';
-            if (cardOab) cardOab.textContent = currentUser.oab || 'Inscrição OAB';
-            if (cardFirm) cardFirm.textContent = currentUser.firm || 'Sociedade de Advocacia';
-
-            syncOperatorDelegationUI();
-        }
-
-        function syncOperatorDelegationUI() {
-            const perms = getEffectivePermissions(currentUser);
-            const isMaster = isMasterAdminEmail(currentUser?.email);
-            const badge = document.getElementById('admin-operator-cap-badge');
-            if (badge) {
-                badge.textContent = isMaster
-                    ? 'Master AAB • Controle irrestrito de quadros'
-                    : 'Operador • Delegação limitada às suas permissões';
-            }
-            const map = [
-                ['auth-perm-portal', perms.portalAccess],
-                ['auth-perm-publish', perms.canPublish],
-                ['auth-perm-rooms', perms.canBookRooms],
-                ['auth-perm-benefits', perms.canUseBenefits],
-                ['auth-perm-manage', perms.canManageUsers]
-            ];
-            map.forEach(([id, allowed]) => {
-                const cb = document.getElementById(id);
-                if (!cb) return;
-                cb.disabled = !isMaster && !allowed;
-                if (!isMaster && !allowed) cb.checked = false;
-            });
-        }
-
-        function navigateTo(viewId) {
-            if (viewId === 'admin' && !hasAdminBoardAccess(currentUser)) {
-                showToast('Acesso restrito aos usuários cadastrados no Quadro Adm.', 'error');
-                return;
-            }
-            if (['cases', 'clients', 'deadlines', 'financial', 'benefits'].includes(viewId) && !hasAssociateBoardAccess(currentUser)) {
-                showToast('Para acessar esta área, seu e-mail deve estar cadastrado no Quadro Associados.', 'error');
-                return;
-            }
-
-            document.querySelectorAll('.view-section').forEach(sec => sec.classList.add('hidden'));
-            document.getElementById('view-' + viewId)?.classList.remove('hidden');
-
-            document.querySelectorAll('.nav-item').forEach(btn => {
-                const active = btn.dataset.nav === viewId;
-                if (btn.dataset.nav === 'admin') {
-                    btn.className = active
-                        ? 'nav-item w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-semibold bg-amber-400/20 text-amber-200 border border-amber-400/50 cursor-pointer mt-2'
-                        : 'nav-item w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-semibold bg-amber-500/10 text-amber-300 border border-amber-400/25 hover:bg-amber-500/20 cursor-pointer mt-2';
-                } else {
-                    btn.className = active
-                        ? 'nav-item w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-semibold bg-amber-400/15 text-amber-200 border border-amber-400/35 cursor-pointer'
-                        : 'nav-item w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-semibold text-slate-300 hover:bg-white/10 cursor-pointer';
-                }
-            });
-
-            const titles = {
-                overview: 'Visão Geral',
-                cases: 'Gestão de Processos',
-                clients: 'Clientes & CRM',
-                deadlines: 'Prazos & Agenda',
-                financial: 'Financeiro & Honorários',
-                benefits: 'Benefícios & Carteira Digital AAB',
-                admin: 'Painel do Responsável AAB'
-            };
-            const headerTitle = document.getElementById('header-title');
-            if (headerTitle) headerTitle.textContent = titles[viewId] || 'Portal AAB';
-            toggleMobileSidebar(false);
-        }
-
-        function setHeaderDate() {
-            const el = document.getElementById('header-date');
-            if (!el) return;
-            el.textContent = new Date().toLocaleDateString('pt-BR', {
-                weekday: 'long',
-                day: '2-digit',
-                month: 'long',
-                year: 'numeric'
-            });
-        }
-
-        function renderAll() {
-            renderOverview();
-            renderCasesTable();
-            renderClientsGrid();
-            renderDeadlinesList();
-            renderFinancialTable();
-            renderRoomReservations();
-            renderAdminBulletins();
-            renderAuthorizedEmailsList();
-            renderAdminMembersTable();
-            applyBenefitLinksUI();
-            if (window.lucide) window.lucide.createIcons();
-        }
-
-        // VISÃO GERAL
-        function renderOverview() {
-            const activeCases = casesList.filter(c => c.status !== 'Concluído').length;
-            const pendingDeadlines = deadlinesList.filter(d => d.status !== 'Concluído').length;
-            const pendingReceivables = financialList
-                .filter(f => (f.type || 'receita') === 'receita' && f.status !== 'Pago')
-                .reduce((acc, f) => acc + (Number(f.amount) || 0), 0);
-
-            document.getElementById('kpi-active-cases').textContent = String(activeCases);
-            document.getElementById('kpi-pending-deadlines').textContent = String(pendingDeadlines);
-            document.getElementById('kpi-pending-receivables').textContent = formatCurrency(pendingReceivables);
-            document.getElementById('kpi-clients-count').textContent = String(clientsList.length);
-            document.getElementById('badge-cases-count').textContent = String(casesList.length);
-            document.getElementById('badge-deadlines-count').textContent = String(pendingDeadlines);
-
-            const bulletinsBox = document.getElementById('overview-bulletins-list');
-            if (bulletinsBox) {
-                const sorted = [...bulletinsList].sort((a, b) => (b.pinned ? 1 : 0) - (a.pinned ? 1 : 0));
-                if (!sorted.length) {
-                    bulletinsBox.innerHTML = '<p class="text-xs text-slate-400">Nenhum comunicado publicado no mural institucional.</p>';
-                } else {
-                    bulletinsBox.innerHTML = sorted.map(b => `
-                        <div class="p-4 rounded-xl border ${b.pinned ? 'border-amber-300 bg-amber-50/40' : 'border-slate-200/80 bg-slate-50/50'} space-y-1.5">
-                            <div class="flex items-center gap-2">
-                                <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-aab-navy text-white">${escapeHtml(b.category || 'Comunicado')}</span>
-                                ${b.pinned ? '<span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-amber-200 text-amber-900">Fixado</span>' : ''}
-                            </div>
-                            <h4 class="font-bold text-sm text-aab-navy">${escapeHtml(b.title)}</h4>
-                            <p class="text-xs text-slate-600 leading-relaxed">${escapeHtml(b.content)}</p>
-                        </div>
-                    `).join('');
-                }
-            }
-
-            const deadlinesBox = document.getElementById('overview-deadlines-list');
-            if (deadlinesBox) {
-                const upcoming = deadlinesList
-                    .filter(d => d.status !== 'Concluído')
-                    .sort((a, b) => String(a.dueDate || '').localeCompare(String(b.dueDate || '')))
-                    .slice(0, 5);
-                if (!upcoming.length) {
-                    deadlinesBox.innerHTML = '<p class="text-xs text-slate-400">Nenhum prazo pendente na agenda.</p>';
-                } else {
-                    deadlinesBox.innerHTML = upcoming.map(d => `
-                        <div class="p-3 rounded-xl border border-slate-200/80 flex items-center justify-between gap-2">
-                            <div class="min-w-0">
-                                <p class="text-xs font-bold text-aab-navy truncate">${escapeHtml(d.title)}</p>
-                                <p class="text-[11px] text-slate-500">${escapeHtml(d.type || 'Prazo')} • ${formatDateBR(d.dueDate)}</p>
-                            </div>
-                            <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-100 text-amber-800 shrink-0">Pendente</span>
-                        </div>
-                    `).join('');
+                await hydrateAuthenticatedUser(result.user);
+                showToast('Acesso via Google confirmado com sucesso!', 'success');
+            } catch (err) {
+                console.error('Erro no login Google:', err);
+                if (err?.code !== 'auth/popup-closed-by-user') {
+                    showToast('Não foi possível entrar com Google: ' + (err.message || ''), 'error');
                 }
             }
         }
@@ -2954,9 +2601,10 @@
                     }, { merge: true });
                 }
                 event.target.reset();
-                showToast(`Cadastro realizado no ${isAdmBoard ? 'Quadro Adm' : 'Quadro Associados'}!`, 'success');
+                showToast(`Cadastro gravado no Firebase (${isAdmBoard ? 'Quadro Adm' : 'Quadro Associados'})!`, 'success');
             } catch (err) {
-                showToast('Erro ao cadastrar no quadro: ' + (err.message || ''), 'error');
+                console.error('Erro Firestore ao autorizar:', err);
+                showToast('Erro de permissão/conexão no Firestore: ' + (err.message || ''), 'error');
             }
         }
 
@@ -3107,54 +2755,569 @@
                 try {
                     await updateDoc(doc(db, 'usuarios', uid), { accountStatus: nextStatus });
                 } catch (err) {
-                    showToast('Erro ao alterar status da conta: ' + err.message, 'error');
+                    showToast('Erro ao atualizar status da conta: ' + err.message, 'error');
+                }
+            }
+            showToast(`Conta ${nextStatus === 'Suspenso' ? 'suspensa' : 'reativada'} com sucesso.`, 'info');
+        }
+
+        async function hydrateAuthenticatedUser(fbUser, options = {}) {
+            isDemoFallbackMode = false;
+            const email = normalizeEmail(fbUser.email);
+            const isMaster = isMasterAdminEmail(email);
+            const userRef = doc(db, 'usuarios', fbUser.uid);
+            const snap = await getDoc(userRef);
+            const authInfo = await checkEmailAuthorization(email);
+
+            let profile = snap.exists() ? snap.data() : null;
+            if (!profile) {
+                const boards = isMaster ? ['admin', 'associate'] : (authInfo.authorized ? authInfo.boards : ['associate']);
+                profile = {
+                    uid: fbUser.uid,
+                    name: fbUser.displayName || authInfo.name || (isMaster ? 'Responsável Master AAB' : 'Associado AAB'),
+                    email,
+                    oab: authInfo.oab || options.oabFallback || (isMaster ? 'OAB 1234' : 'OAB/DF'),
+                    firm: 'Sociedade de Advocacia',
+                    boards,
+                    role: boards.includes('admin') ? 'responsavel_aab' : 'associado',
+                    promotedByAdmin: boards.includes('admin'),
+                    accountStatus: 'Ativo',
+                    permissions: isMaster
+                        ? { portalAccess: true, canPublish: true, canBookRooms: true, canUseBenefits: true, canManageUsers: true }
+                        : { ...defaultPermissions, ...(authInfo.permissions || {}) }
+                };
+                await setDoc(userRef, { ...profile, createdAt: serverTimestamp() }, { merge: true });
+            } else if (isMaster) {
+                profile.boards = ['admin', 'associate'];
+                profile.role = 'responsavel_aab';
+                profile.promotedByAdmin = true;
+                profile.accountStatus = 'Ativo';
+                profile.permissions = { portalAccess: true, canPublish: true, canBookRooms: true, canUseBenefits: true, canManageUsers: true };
+            }
+
+            if (profile.accountStatus === 'Suspenso' && !isMaster) {
+                showToast('Sua conta está suspensa pela administração da AAB.', 'error');
+                await signOut(auth);
+                return;
+            }
+
+            currentUser = { uid: fbUser.uid, ...profile };
+            await setDoc(userRef, { isOnline: true, lastSeenAt: serverTimestamp() }, { merge: true });
+
+            if (isMaster) {
+                await syncLocalAuthorizationsToFirestore();
+            }
+
+            startPresenceHeartbeat();
+            attachRealtimeListeners(fbUser.uid);
+            showAppShell();
+            applyUserProfileUI();
+            renderAll();
+
+            if (hasAssociateBoardAccess(currentUser)) {
+                navigateTo('overview');
+            } else if (hasAdminBoardAccess(currentUser)) {
+                navigateTo('admin');
+            } else {
+                navigateTo('overview');
+            }
+        }
+
+        function enterDemoMode(overrides = {}) {
+            isDemoFallbackMode = true;
+            clearRealtimeListeners();
+            loadLocalState();
+            const email = normalizeEmail(overrides.email || 'associado@escritorio.adv.br');
+            const isMaster = isMasterAdminEmail(email);
+            const savedProfile = adminMembersList.find(m => normalizeEmail(m.email) === email);
+            const authRecord = authorizedEmailsList.find(a => normalizeEmail(a.email) === email);
+            const boards = Array.isArray(overrides.boards)
+                ? overrides.boards
+                : (isMaster ? ['admin', 'associate'] : (savedProfile?.boards || authRecord?.boards || ['associate']));
+
+            currentUser = {
+                uid: savedProfile?.uid || ('demo_' + email.replace(/[^a-z0-9]/g, '_')),
+                name: overrides.name || savedProfile?.name || authRecord?.name || (isMaster ? 'Responsável Master AAB' : 'Dr(a). Associado AAB'),
+                email,
+                oab: overrides.oab || savedProfile?.oab || authRecord?.oab || (isMaster ? 'OAB 1234' : 'OAB/DF 54.321'),
+                firm: overrides.firm || savedProfile?.firm || 'Escritório Associado AAB',
+                phone: savedProfile?.phone || '(61) 99999-0000',
+                website: savedProfile?.website || 'https://aab.adv.br',
+                boards,
+                role: boards.includes('admin') ? 'responsavel_aab' : 'associado',
+                promotedByAdmin: boards.includes('admin'),
+                accountStatus: 'Ativo',
+                isOnline: true,
+                permissions: isMaster
+                    ? { portalAccess: true, canPublish: true, canBookRooms: true, canUseBenefits: true, canManageUsers: true }
+                    : { ...defaultPermissions, ...(authRecord?.permissions || {}), ...(savedProfile?.permissions || {}), ...(overrides.permissions || {}) }
+            };
+
+            const masterEntry = {
+                uid: 'demo_master',
+                name: 'Responsável Master AAB',
+                email: MASTER_ADMIN_EMAIL,
+                oab: 'OAB 1234',
+                firm: 'Diretoria AAB',
+                boards: ['admin', 'associate'],
+                role: 'responsavel_aab',
+                promotedByAdmin: true,
+                accountStatus: 'Ativo',
+                isOnline: true,
+                permissions: { portalAccess: true, canPublish: true, canBookRooms: true, canUseBenefits: true, canManageUsers: true }
+            };
+
+            const mergedMembers = [masterEntry, currentUser, ...adminMembersList];
+            adminMembersList = mergedMembers.filter((v, idx, arr) =>
+                arr.findIndex(x => normalizeEmail(x.email) === normalizeEmail(v.email)) === idx
+            );
+
+            saveLocalState();
+            updateSyncStatus('Sincronizado', 'Local / Navegador');
+            if (!casesList.length && !clientsList.length && !deadlinesList.length && !financialList.length) {
+                seedSampleData(false);
+            }
+            showAppShell();
+            applyUserProfileUI();
+            renderAll();
+            navigateTo(boards.includes('associate') ? 'overview' : 'admin');
+            showToast('Modo local ativo com persistência no navegador.', 'info');
+        }
+
+        async function handleLogout() {
+            clearRealtimeListeners();
+            if (heartbeatInterval) clearInterval(heartbeatInterval);
+            if (db && currentUser?.uid && isFirebaseConfigured && !isDemoFallbackMode) {
+                try {
+                    await updateDoc(doc(db, 'usuarios', currentUser.uid), { isOnline: false, lastSeenAt: serverTimestamp() });
+                } catch (_) {}
+            }
+            if (auth && isFirebaseConfigured && !isDemoFallbackMode) {
+                try { await signOut(auth); } catch (_) {}
+            }
+            currentUser = null;
+            isDemoFallbackMode = false;
+            showAuthScreen();
+        }
+
+        function showAuthScreen() {
+            document.getElementById('auth-screen')?.classList.remove('hidden');
+            document.getElementById('app-shell')?.classList.add('hidden');
+        }
+
+        function showAppShell() {
+            document.getElementById('auth-screen')?.classList.add('hidden');
+            document.getElementById('app-shell')?.classList.remove('hidden');
+        }
+
+        function startPresenceHeartbeat() {
+            if (heartbeatInterval) clearInterval(heartbeatInterval);
+            heartbeatInterval = setInterval(async () => {
+                if (db && currentUser?.uid && isFirebaseConfigured && !isDemoFallbackMode) {
+                    try {
+                        await updateDoc(doc(db, 'usuarios', currentUser.uid), { isOnline: true, lastSeenAt: serverTimestamp() });
+                    } catch (_) {}
+                }
+            }, 60000);
+        }
+
+        function clearRealtimeListeners() {
+            firestoreUnsubscribers.forEach(unsub => {
+                try { unsub(); } catch (_) {}
+            });
+            firestoreUnsubscribers = [];
+        }
+
+        function attachRealtimeListeners(uid) {
+            clearRealtimeListeners();
+            if (!db || !isFirebaseConfigured) return;
+
+            updateSyncStatus('Sincronizado', 'Firestore');
+
+            firestoreUnsubscribers.push(
+                onSnapshot(collection(db, 'usuarios', uid, 'processos'), snap => {
+                    casesList = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+                    renderOverview();
+                    renderCasesTable();
+                }),
+                onSnapshot(collection(db, 'usuarios', uid, 'clientes'), snap => {
+                    clientsList = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+                    renderOverview();
+                    renderClientsGrid();
+                }),
+                onSnapshot(collection(db, 'usuarios', uid, 'prazos'), snap => {
+                    deadlinesList = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+                    renderOverview();
+                    renderDeadlinesList();
+                }),
+                onSnapshot(collection(db, 'usuarios', uid, 'financeiro'), snap => {
+                    financialList = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+                    renderOverview();
+                    renderFinancialTable();
+                }),
+                onSnapshot(collection(db, 'usuarios', uid, 'reservas_salas'), snap => {
+                    roomsList = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+                    renderRoomReservations();
+                }),
+                onSnapshot(collection(db, 'publicacoes_aab'), snap => {
+                    bulletinsList = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+                    renderOverview();
+                    renderAdminBulletins();
+                }),
+                onSnapshot(collection(db, 'emails_autorizados'), snap => {
+                    authorizedEmailsList = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+                    renderAuthorizedEmailsList();
+                }),
+                onSnapshot(collection(db, 'usuarios'), snap => {
+                    adminMembersList = snap.docs.map(d => ({ uid: d.id, ...d.data() }));
+                    const selfUpdated = adminMembersList.find(m => m.uid === uid);
+                    if (selfUpdated && !isMasterAdminEmail(currentUser?.email)) {
+                        currentUser = { ...currentUser, ...selfUpdated };
+                        applyUserProfileUI();
+                    }
+                    renderAdminMembersTable();
+                }),
+                onSnapshot(doc(db, 'configuracoes', 'beneficios_aab'), snap => {
+                    if (snap.exists()) {
+                        benefitLinks = { ...benefitLinks, ...snap.data() };
+                        applyBenefitLinksUI();
+                    }
+                })
+            );
+        }
+
+        function updateSyncStatus(text, mode) {
+            const st = document.getElementById('sync-status-text');
+            const md = document.getElementById('sync-mode-label');
+            if (st) st.textContent = text;
+            if (md) md.textContent = mode;
+        }
+
+        function applyUserProfileUI() {
+            if (!currentUser) return;
+            const nameEl = document.getElementById('sidebar-user-name');
+            const oabEl = document.getElementById('sidebar-user-oab');
+            const emailEl = document.getElementById('sidebar-user-email');
+            const initialsEl = document.getElementById('user-initials');
+            const photoEl = document.getElementById('user-photo-img');
+            const boardsEl = document.getElementById('sidebar-user-boards');
+
+            if (nameEl) nameEl.textContent = currentUser.name || 'Associado AAB';
+            if (oabEl) oabEl.textContent = `${currentUser.oab || 'OAB'} • ${currentUser.firm || 'Escritório'}`;
+            if (emailEl) emailEl.textContent = currentUser.email || '';
+
+            const parts = String(currentUser.name || 'AA').trim().split(/\s+/);
+            const initials = ((parts[0]?.[0] || '') + (parts[parts.length - 1]?.[0] || '')).toUpperCase() || 'AA';
+            if (initialsEl) initialsEl.textContent = initials;
+
+            if (photoEl) {
+                if (currentUser.photoUrl) {
+                    photoEl.src = currentUser.photoUrl;
+                    photoEl.classList.remove('hidden');
+                } else {
+                    photoEl.classList.add('hidden');
+                }
+            }
+
+            const isAdm = hasAdminBoardAccess(currentUser);
+            const isAssoc = hasAssociateBoardAccess(currentUser);
+
+            if (boardsEl) {
+                const badges = [];
+                if (isAdm) badges.push('<span class="px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 text-[10px] font-bold">QUADRO ADM</span>');
+                if (isAssoc) badges.push('<span class="px-2 py-0.5 rounded bg-white/10 text-slate-200 text-[10px] font-bold">ASSOCIADO</span>');
+                boardsEl.innerHTML = badges.join('');
+            }
+
+            const adminBtn = document.getElementById('nav-btn-admin');
+            if (adminBtn) {
+                adminBtn.classList.toggle('hidden', !isAdm);
+                adminBtn.classList.toggle('flex', isAdm);
+            }
+
+            const assocOnlyNavs = ['nav-btn-cases', 'nav-btn-clients', 'nav-btn-deadlines', 'nav-btn-financial', 'nav-btn-benefits'];
+            assocOnlyNavs.forEach(id => {
+                const btn = document.getElementById(id);
+                if (btn) btn.classList.toggle('hidden', !isAssoc);
+            });
+
+            document.getElementById('btn-header-new-case')?.classList.toggle('hidden', !isAssoc);
+            document.getElementById('btn-header-wallet')?.classList.toggle('hidden', !isAssoc);
+            document.getElementById('non-associate-board-banner')?.classList.toggle('hidden', isAssoc);
+            document.getElementById('admin-local-warning-banner')?.classList.toggle('hidden', isFirebaseConfigured && !isDemoFallbackMode);
+
+            const perms = getEffectivePermissions(currentUser);
+            document.getElementById('btn-quick-publish-overview')?.classList.toggle('hidden', !(isAdm && perms.canPublish));
+
+            const cardName = document.getElementById('card-holder-name');
+            const cardOab = document.getElementById('card-holder-oab');
+            const cardFirm = document.getElementById('card-holder-firm');
+            if (cardName) cardName.textContent = currentUser.name || 'Associado AAB';
+            if (cardOab) cardOab.textContent = currentUser.oab || 'Inscrição OAB';
+            if (cardFirm) cardFirm.textContent = currentUser.firm || 'Sociedade de Advocacia';
+
+            syncOperatorDelegationUI();
+        }
+
+        function syncOperatorDelegationUI() {
+            const perms = getEffectivePermissions(currentUser);
+            const isMaster = isMasterAdminEmail(currentUser?.email);
+            const badge = document.getElementById('admin-operator-cap-badge');
+            if (badge) {
+                badge.textContent = isMaster
+                    ? 'Master AAB • Controle irrestrito de quadros'
+                    : 'Operador • Delegação limitada às suas permissões';
+            }
+            const map = [
+                ['auth-perm-portal', perms.portalAccess],
+                ['auth-perm-publish', perms.canPublish],
+                ['auth-perm-rooms', perms.canBookRooms],
+                ['auth-perm-benefits', perms.canUseBenefits],
+                ['auth-perm-manage', perms.canManageUsers]
+            ];
+            map.forEach(([id, allowed]) => {
+                const cb = document.getElementById(id);
+                if (!cb) return;
+                cb.disabled = !isMaster && !allowed;
+                if (!isMaster && !allowed) cb.checked = false;
+            });
+        }
+
+        function navigateTo(viewId) {
+            if (viewId === 'admin' && !hasAdminBoardAccess(currentUser)) {
+                showToast('Acesso restrito aos usuários cadastrados no Quadro Adm.', 'error');
+                return;
+            }
+            if (['cases', 'clients', 'deadlines', 'financial', 'benefits'].includes(viewId) && !hasAssociateBoardAccess(currentUser)) {
+                showToast('Para acessar esta área, seu e-mail deve estar cadastrado no Quadro Associados.', 'error');
+                return;
+            }
+
+            document.querySelectorAll('.view-section').forEach(sec => sec.classList.add('hidden'));
+            document.getElementById('view-' + viewId)?.classList.remove('hidden');
+
+            document.querySelectorAll('.nav-item').forEach(btn => {
+                const active = btn.dataset.nav === viewId;
+                if (btn.dataset.nav === 'admin') {
+                    btn.className = active
+                        ? 'nav-item w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-semibold bg-amber-400/20 text-amber-200 border border-amber-400/50 cursor-pointer mt-2'
+                        : 'nav-item w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-semibold bg-amber-500/10 text-amber-300 border border-amber-400/25 hover:bg-amber-500/20 cursor-pointer mt-2';
+                } else {
+                    btn.className = active
+                        ? 'nav-item w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-semibold bg-amber-400/15 text-amber-200 border border-amber-400/35 cursor-pointer'
+                        : 'nav-item w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-semibold text-slate-300 hover:bg-white/10 cursor-pointer';
+                }
+            });
+
+            const titles = {
+                overview: 'Visão Geral',
+                cases: 'Gestão de Processos',
+                clients: 'Clientes & CRM',
+                deadlines: 'Prazos & Agenda',
+                financial: 'Financeiro & Honorários',
+                benefits: 'Benefícios & Carteira Digital AAB',
+                admin: 'Painel do Responsável AAB'
+            };
+            const headerTitle = document.getElementById('header-title');
+            if (headerTitle) headerTitle.textContent = titles[viewId] || 'Portal AAB';
+            toggleMobileSidebar(false);
+        }
+
+        function setHeaderDate() {
+            const el = document.getElementById('header-date');
+            if (!el) return;
+            el.textContent = new Date().toLocaleDateString('pt-BR', {
+                weekday: 'long',
+                day: '2-digit',
+                month: 'long',
+                year: 'numeric'
+            });
+        }
+
+        function renderAll() {
+            renderOverview();
+            renderCasesTable();
+            renderClientsGrid();
+            renderDeadlinesList();
+            renderFinancialTable();
+            renderRoomReservations();
+            renderAdminBulletins();
+            renderAuthorizedEmailsList();
+            renderAdminMembersTable();
+            applyBenefitLinksUI();
+            if (window.lucide) window.lucide.createIcons();
+        }
+
+        function renderOverview() {
+            const activeCases = casesList.filter(c => c.status !== 'Concluído').length;
+            const pendingDeadlines = deadlinesList.filter(d => d.status !== 'Concluído').length;
+            const pendingReceivables = financialList
+                .filter(f => (f.type || 'receita') === 'receita' && f.status !== 'Pago')
+                .reduce((acc, f) => acc + (Number(f.amount) || 0), 0);
+
+            document.getElementById('kpi-active-cases').textContent = String(activeCases);
+            document.getElementById('kpi-pending-deadlines').textContent = String(pendingDeadlines);
+            document.getElementById('kpi-pending-receivables').textContent = formatCurrency(pendingReceivables);
+            document.getElementById('kpi-clients-count').textContent = String(clientsList.length);
+            document.getElementById('badge-cases-count').textContent = String(casesList.length);
+            document.getElementById('badge-deadlines-count').textContent = String(pendingDeadlines);
+
+            const bulletinsBox = document.getElementById('overview-bulletins-list');
+            if (bulletinsBox) {
+                const sorted = [...bulletinsList].sort((a, b) => (b.pinned ? 1 : 0) - (a.pinned ? 1 : 0));
+                if (!sorted.length) {
+                    bulletinsBox.innerHTML = '<p class="text-xs text-slate-400">Nenhum comunicado publicado no mural institucional.</p>';
+                } else {
+                    bulletinsBox.innerHTML = sorted.map(b => `
+                        <div class="p-4 rounded-xl border ${b.pinned ? 'border-amber-300 bg-amber-50/40' : 'border-slate-200/80 bg-slate-50/50'} space-y-1.5">
+                            <div class="flex items-center gap-2">
+                                <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-aab-navy text-white">${escapeHtml(b.category || 'Comunicado')}</span>
+                                ${b.pinned ? '<span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase bg-amber-200 text-amber-900">Fixado</span>' : ''}
+                            </div>
+                            <h4 class="font-bold text-sm text-aab-navy">${escapeHtml(b.title)}</h4>
+                            <p class="text-xs text-slate-600 leading-relaxed">${escapeHtml(b.content)}</p>
+                        </div>
+                    `).join('');
+                }
+            }
+
+            const deadlinesBox = document.getElementById('overview-deadlines-list');
+            if (deadlinesBox) {
+                const upcoming = deadlinesList
+                    .filter(d => d.status !== 'Concluído')
+                    .sort((a, b) => String(a.dueDate || '').localeCompare(String(b.dueDate || '')))
+                    .slice(0, 5);
+                if (!upcoming.length) {
+                    deadlinesBox.innerHTML = '<p class="text-xs text-slate-400">Nenhum prazo pendente na agenda.</p>';
+                } else {
+                    deadlinesBox.innerHTML = upcoming.map(d => `
+                        <div class="p-3 rounded-xl border border-slate-200/80 flex items-center justify-between gap-2">
+                            <div class="min-w-0">
+                                <p class="text-xs font-bold text-aab-navy truncate">${escapeHtml(d.title)}</p>
+                                <p class="text-[11px] text-slate-500">${escapeHtml(d.type || 'Prazo')} • ${formatDateBR(d.dueDate)}</p>
+                            </div>
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-100 text-amber-800 shrink-0">Pendente</span>
+                        </div>
+                    `).join('');
                 }
             }
         }
 
-        // DADOS EXEMPLO
         async function seedSampleData(notify = true) {
             const today = new Date().toISOString().split('T')[0];
             const sampleCases = [
-                { id: 'c1', cnj: '0812345-22.2026.8.07.0001', client: 'Grupo Vanguarda S.A.', area: 'Empresarial', court: '2ª Vara Cível • TJDFT', status: 'Ativo', value: 240000 },
-                { id: 'c2', cnj: '0004910-88.2026.5.10.0004', client: 'Construtora Horizonte Ltda', area: 'Trabalhista', court: '4ª Vara do Trabalho • TRT10', status: 'Aguardando Julgamento', value: 85000 }
+                { id: 'case_demo_1', cnj: '0712489-42.2025.8.07.0001', client: 'Construtora Horizonte Ltda.', area: 'Cível Empresarial', court: '3ª Vara Cível • TJDFT', status: 'Ativo', value: 185000 },
+                { id: 'case_demo_2', cnj: '0004912-18.2025.5.10.0004', client: 'Mariana Souza Almeida', area: 'Trabalhista', court: '4ª Vara do Trabalho • TRT-10', status: 'Aguardando Julgamento', value: 64000 }
             ];
             const sampleClients = [
-                { id: 'cl1', name: 'Grupo Vanguarda S.A.', document: '12.345.678/0001-90', phone: '(61) 3321-9000', email: 'juridico@vanguarda.com.br' },
-                { id: 'cl2', name: 'Carlos Henrique Alves', document: '123.456.789-00', phone: '(61) 99812-4411', email: 'carlos.alves@email.com' }
+                { id: 'cli_demo_1', name: 'Construtora Horizonte Ltda.', document: '12.345.678/0001-90', phone: '(61) 3322-4400', email: 'juridico@horizonte.com.br' },
+                { id: 'cli_demo_2', name: 'Mariana Souza Almeida', document: '345.678.910-11', phone: '(61) 98877-6655', email: 'mariana.almeida@email.com' }
             ];
             const sampleDeadlines = [
-                { id: 'd1', title: 'Protocolar Réplica à Contestação', type: 'Fatal', dueDate: today, cnj: '0812345-22.2026.8.07.0001', status: 'Pendente' },
-                { id: 'd2', title: 'Audiência de Instrução e Julgamento', type: 'Audiência', dueDate: today, cnj: '0004910-88.2026.5.10.0004', status: 'Pendente' }
+                { id: 'dl_demo_1', title: 'Protocolar Réplica à Contestação', type: 'Fatal', dueDate: today, cnj: '0712489-42.2025.8.07.0001', status: 'Pendente' },
+                { id: 'dl_demo_2', title: 'Audiência de Instrução e Julgamento', type: 'Audiência', dueDate: today, cnj: '0004912-18.2025.5.10.0004', status: 'Pendente' }
             ];
             const sampleFin = [
-                { id: 'f1', description: 'Honorários Contratuais Mensais', client: 'Grupo Vanguarda S.A.', demandCategory: 'Honorários Contratuais', type: 'receita', amount: 12500, dueDate: today, status: 'Pago' },
-                { id: 'f2', description: 'Honorários Sucumbenciais - Proc. 0812345', client: 'Grupo Vanguarda S.A.', demandCategory: 'Honorários Sucumbenciais', type: 'receita', amount: 18500, dueDate: today, status: 'Pendente' }
-            ];
-            const sampleBulletins = [
-                { id: 'b1', title: 'Calendário Institucional e Prerrogativas AAB', category: 'Portaria', pinned: true, content: 'A AAB reforça o plantão de defesa das prerrogativas e o atendimento nas salas de apoio.' }
+                { id: 'fin_demo_1', description: 'Honorários Contratuais - Parcela 1/3', client: 'Construtora Horizonte Ltda.', demandCategory: 'Honorários Contratuais', type: 'receita', amount: 8500, dueDate: today, status: 'Pago' },
+                { id: 'fin_demo_2', description: 'Honorários de Êxito - Acordo Homologado', client: 'Mariana Souza Almeida', demandCategory: 'Honorários de Êxito', type: 'receita', amount: 12000, dueDate: today, status: 'Pendente' }
             ];
 
-            if (!db || !isFirebaseConfigured || isDemoFallbackMode) {
-                casesList = sampleCases;
-                clientsList = sampleClients;
-                deadlinesList = sampleDeadlines;
-                financialList = sampleFin;
-                if (!bulletinsList.length) bulletinsList = sampleBulletins;
+            if (!db || !isFirebaseConfigured || isDemoFallbackMode || !currentUser?.uid) {
+                casesList = [...sampleCases, ...casesList];
+                clientsList = [...sampleClients, ...clientsList];
+                deadlinesList = [...sampleDeadlines, ...deadlinesList];
+                financialList = [...sampleFin, ...financialList];
                 saveLocalState();
                 renderAll();
-                if (notify) showToast('Dados de exemplo carregados!', 'success');
+                if (notify) showToast('Dados de exemplo carregados localmente!', 'success');
                 return;
             }
 
             try {
-                for (const c of sampleCases) await addDoc(collection(db, 'usuarios', currentUser.uid, 'processos'), c);
-                for (const cl of sampleClients) await addDoc(collection(db, 'usuarios', currentUser.uid, 'clientes'), cl);
-                for (const d of sampleDeadlines) await addDoc(collection(db, 'usuarios', currentUser.uid, 'prazos'), d);
-                for (const f of sampleFin) await addDoc(collection(db, 'usuarios', currentUser.uid, 'financeiro'), f);
-                if (notify) showToast('Dados de exemplo enviados ao Firestore!', 'success');
+                for (const c of sampleCases) {
+                    const { id, ...data } = c;
+                    await addDoc(collection(db, 'usuarios', currentUser.uid, 'processos'), { ...data, createdAt: serverTimestamp() });
+                }
+                for (const cl of sampleClients) {
+                    const { id, ...data } = cl;
+                    await addDoc(collection(db, 'usuarios', currentUser.uid, 'clientes'), { ...data, createdAt: serverTimestamp() });
+                }
+                for (const d of sampleDeadlines) {
+                    const { id, ...data } = d;
+                    await addDoc(collection(db, 'usuarios', currentUser.uid, 'prazos'), { ...data, createdAt: serverTimestamp() });
+                }
+                for (const f of sampleFin) {
+                    const { id, ...data } = f;
+                    await addDoc(collection(db, 'usuarios', currentUser.uid, 'financeiro'), { ...data, createdAt: serverTimestamp() });
+                }
+                if (notify) showToast('Dados de exemplo gravados no Firestore!', 'success');
             } catch (err) {
                 showToast('Erro ao popular dados: ' + err.message, 'error');
+            }
+        }
+
+        function parseFirebaseConfigInput(rawInput) {
+            const text = String(rawInput || '').trim();
+            if (!text) return null;
+            try {
+                return JSON.parse(text);
+            } catch (_) {
+                const start = text.indexOf('{');
+                const end = text.lastIndexOf('}');
+                if (start === -1 || end === -1 || end <= start) return null;
+                let objStr = text.slice(start, end + 1);
+                objStr = objStr.replace(/\/\/.*$/gm, '').replace(/\/\*[\s\S]*?\*\//g, '');
+                objStr = objStr.replace(/([{,]\s*)([A-Za-z0-9_]+)\s*:/g, '$1"$2":');
+                objStr = objStr.replace(/,\s*([}\]])/g, '$1');
+                return JSON.parse(objStr);
+            }
+        }
+
+        function openFirebaseSetupModal() {
+            const existing = localStorage.getItem('aab_firebase_config');
+            const ta = document.getElementById('firebase-config-json');
+            if (ta && existing && !ta.value.trim()) {
+                try {
+                    ta.value = JSON.stringify(JSON.parse(existing), null, 2);
+                } catch (_) {}
+            }
+            openModal('modal-firebase-setup');
+        }
+
+        function clearSavedFirebaseConfig() {
+            localStorage.removeItem('aab_firebase_config');
+            const ta = document.getElementById('firebase-config-json');
+            if (ta) ta.value = '';
+            showToast('Configuração salva removida.', 'info');
+        }
+
+        async function syncLocalAuthorizationsToFirestore() {
+            if (!db || !isFirebaseConfigured || isDemoFallbackMode) return;
+            loadLocalState();
+            if (!authorizedEmailsList.length) return;
+            let syncedCount = 0;
+            for (const item of authorizedEmailsList) {
+                const norm = normalizeEmail(item.email);
+                if (!norm || isMasterAdminEmail(norm)) continue;
+                try {
+                    const docId = sanitizeAuthDocId(norm);
+                    await setDoc(doc(db, 'emails_autorizados', docId), {
+                        name: item.name || norm,
+                        email: norm,
+                        oab: item.oab || '',
+                        boards: Array.isArray(item.boards) && item.boards.length ? item.boards : ['associate'],
+                        role: item.role || 'associado',
+                        promotedByAdmin: Boolean(item.promotedByAdmin),
+                        permissions: { ...defaultPermissions, ...(item.permissions || {}) },
+                        active: item.active !== false
+                    }, { merge: true });
+                    syncedCount++;
+                } catch (err) {
+                    console.warn('Falha ao migrar e-mail local para o Firestore:', norm, err);
+                }
+            }
+            if (syncedCount > 0) {
+                showToast(`${syncedCount} autorização(ões) local(is) sincronizada(s) com o Firebase!`, 'success');
             }
         }
 
@@ -3162,17 +3325,17 @@
             event.preventDefault();
             const raw = document.getElementById('firebase-config-json')?.value.trim() || '';
             try {
-                const parsed = JSON.parse(raw);
+                const parsed = parseFirebaseConfigInput(raw);
                 if (!parsed || !parsed.apiKey || !parsed.projectId) {
-                    showToast('JSON inválido: informe ao menos apiKey e projectId.', 'error');
+                    showToast('Configuração inválida: verifique se apiKey e projectId estão presentes.', 'error');
                     return;
                 }
                 localStorage.setItem('aab_firebase_config', JSON.stringify(parsed));
                 closeModal('modal-firebase-setup');
-                showToast('Configuração do Firebase salva! Conectando...', 'success');
+                showToast('Firebase conectado! Faça login com willbrasilia@gmail.com para sincronizar os dados.', 'success');
                 initFirebaseServices();
             } catch (err) {
-                showToast('Formato JSON inválido. Copie o objeto firebaseConfig corretamente.', 'error');
+                showToast('Não foi possível ler o firebaseConfig. Cole o bloco { apiKey: "...", projectId: "..." }.', 'error');
             }
         }
 
@@ -3180,18 +3343,18 @@
             loadLocalState();
             const syncIndicator = document.getElementById('auth-sync-indicator');
             const cfgBtnLabel = document.getElementById('btn-firebase-config-label');
-            let firebaseConfig = null;
+            let firebaseConfig = EMBEDDED_FIREBASE_CONFIG;
 
             try {
                 const storedCfg = localStorage.getItem('aab_firebase_config');
-                if (typeof window.__firebase_config === 'string' && window.__firebase_config.trim()) {
-                    firebaseConfig = JSON.parse(window.__firebase_config);
-                } else if (window.__firebase_config && typeof window.__firebase_config === 'object') {
+                if (!firebaseConfig && typeof window.__firebase_config === 'string' && window.__firebase_config.trim()) {
+                    firebaseConfig = parseFirebaseConfigInput(window.__firebase_config);
+                } else if (!firebaseConfig && window.__firebase_config && typeof window.__firebase_config === 'object') {
                     firebaseConfig = window.__firebase_config;
-                } else if (window.firebaseConfig && typeof window.firebaseConfig === 'object') {
+                } else if (!firebaseConfig && window.firebaseConfig && typeof window.firebaseConfig === 'object') {
                     firebaseConfig = window.firebaseConfig;
-                } else if (storedCfg) {
-                    firebaseConfig = JSON.parse(storedCfg);
+                } else if (!firebaseConfig && storedCfg) {
+                    firebaseConfig = parseFirebaseConfigInput(storedCfg);
                 }
             } catch (err) {
                 console.warn('Configuração Firebase inválida:', err);
@@ -3199,11 +3362,11 @@
 
             if (firebaseConfig && firebaseConfig.apiKey) {
                 try {
-                    app = initializeApp(firebaseConfig);
+                    app = getApps().length ? getApps()[0] : initializeApp(firebaseConfig);
                     auth = getAuth(app);
                     db = getFirestore(app);
                     isFirebaseConfigured = true;
-                    if (syncIndicator) syncIndicator.textContent = 'Firebase Cloud Ativo';
+                    if (syncIndicator) syncIndicator.textContent = `Firebase Cloud Ativo (${firebaseConfig.projectId || 'Cloud'})`;
                     if (cfgBtnLabel) cfgBtnLabel.textContent = `Firebase Conectado (${firebaseConfig.projectId || 'Cloud'})`;
 
                     onAuthStateChanged(auth, async (user) => {
@@ -3220,13 +3383,14 @@
             }
 
             isFirebaseConfigured = false;
-            if (syncIndicator) syncIndicator.textContent = 'Modo Local (Persistente no Navegador)';
+            if (syncIndicator) syncIndicator.textContent = 'Modo Local (Conecte o Firebase para nuvem)';
             showAuthScreen();
         }
 
         Object.assign(window, {
             switchAuthTab,
             handleLogin,
+            handleGoogleLogin,
             handleRegister,
             handleForgotPassword,
             focusResponsibleLogin,
@@ -3236,6 +3400,8 @@
             toggleMobileSidebar,
             openModal,
             closeModal,
+            openFirebaseSetupModal,
+            clearSavedFirebaseConfig,
             setCaseFilter,
             renderCasesTable,
             openCaseModal,
