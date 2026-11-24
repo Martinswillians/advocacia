@@ -273,7 +273,7 @@
                     <button type="button" id="nav-btn-benefits" data-nav="benefits" onclick="navigateTo('benefits')" class="nav-item w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-semibold text-slate-300 hover:bg-white/10 cursor-pointer">
                         <span class="flex items-center gap-2.5"><i data-lucide="award" class="w-4 h-4"></i>Benefícios &amp; Carteira</span>
                     </button>
-                    <button type="button" id="nav-btn-admin" data-nav="admin" onclick="navigateTo('admin')" class="nav-item hidden w-full items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-semibold bg-amber-500/15 text-amber-300 border border-amber-400/30 hover:bg-amber-500/25 cursor-pointer mt-2">
+                    <button type="button" id="nav-btn-admin" data-nav="admin" onclick="navigateTo('admin')" class="nav-item hidden items-center justify-between w-full px-3.5 py-2.5 rounded-xl text-xs font-semibold bg-amber-500/15 text-amber-300 border border-amber-400/30 hover:bg-amber-500/25 cursor-pointer mt-2" style="display: none;">
                         <span class="flex items-center gap-2.5"><i data-lucide="shield" class="w-4 h-4"></i>Painel Responsável AAB</span>
                         <span class="px-1.5 py-0.5 rounded text-[9px] font-bold bg-amber-400 text-aab-navy">ADMIN</span>
                     </button>
@@ -1346,7 +1346,7 @@
             if (Array.isArray(userObj.boards) && userObj.boards.length) {
                 return Array.from(new Set(userObj.boards.filter(b => b === 'admin' || b === 'associate')));
             }
-            if (userObj.role === 'responsavel_aab' && userObj.promotedByAdmin) return ['admin'];
+            if (userObj.role === 'responsavel_aab' && userObj.promotedByAdmin === true) return ['admin'];
             return ['associate'];
         }
 
@@ -2994,7 +2994,15 @@
         }
 
         function applyUserProfileUI() {
-            if (!currentUser) return;
+            if (!currentUser) {
+                const adminBtn = document.getElementById('nav-btn-admin');
+                if (adminBtn) {
+                    adminBtn.classList.add('hidden');
+                    adminBtn.classList.remove('flex');
+                    adminBtn.style.display = 'none';
+                }
+                return;
+            }
             const nameEl = document.getElementById('sidebar-user-name');
             const oabEl = document.getElementById('sidebar-user-oab');
             const emailEl = document.getElementById('sidebar-user-email');
@@ -3033,6 +3041,7 @@
             if (adminBtn) {
                 adminBtn.classList.toggle('hidden', !isAdm);
                 adminBtn.classList.toggle('flex', isAdm);
+                adminBtn.style.display = isAdm ? 'flex' : 'none';
             }
 
             const assocOnlyNavs = ['nav-btn-cases', 'nav-btn-clients', 'nav-btn-deadlines', 'nav-btn-financial', 'nav-btn-benefits'];
@@ -3085,6 +3094,12 @@
 
         function navigateTo(viewId) {
             if (viewId === 'admin' && !hasAdminBoardAccess(currentUser)) {
+                const adminBtn = document.getElementById('nav-btn-admin');
+                if (adminBtn) {
+                    adminBtn.classList.add('hidden');
+                    adminBtn.classList.remove('flex');
+                    adminBtn.style.display = 'none';
+                }
                 showToast('Acesso restrito aos usuários cadastrados no Quadro Adm.', 'error');
                 return;
             }
@@ -3097,11 +3112,18 @@
             document.getElementById('view-' + viewId)?.classList.remove('hidden');
 
             document.querySelectorAll('.nav-item').forEach(btn => {
+                if (btn.dataset.nav === 'admin' && !hasAdminBoardAccess(currentUser)) {
+                    btn.classList.add('hidden');
+                    btn.classList.remove('flex');
+                    btn.style.display = 'none';
+                    return;
+                }
                 const active = btn.dataset.nav === viewId;
                 if (btn.dataset.nav === 'admin') {
                     btn.className = active
                         ? 'nav-item w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-semibold bg-amber-400/20 text-amber-200 border border-amber-400/50 cursor-pointer mt-2'
                         : 'nav-item w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-semibold bg-amber-500/10 text-amber-300 border border-amber-400/25 hover:bg-amber-500/20 cursor-pointer mt-2';
+                    btn.style.display = 'flex';
                 } else {
                     btn.className = active
                         ? 'nav-item w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-semibold bg-amber-400/15 text-amber-200 border border-amber-400/35 cursor-pointer'
