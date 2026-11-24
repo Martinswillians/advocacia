@@ -1403,6 +1403,7 @@
         }
 
         async function checkEmailAuthorization(email) {
+            loadLocalState();
             const norm = normalizeEmail(email);
             if (!norm) {
                 return { authorized: false, boards: [], name: '', oab: '', permissions: { ...defaultPermissions } };
@@ -1456,6 +1457,7 @@
         }
 
         async function resolveEmailByOab(oabInput) {
+            loadLocalState();
             const clean = String(oabInput || '').trim().toLowerCase();
             if (!clean) return '';
             if (clean === '1234' || clean === 'oab 1234') return MASTER_ADMIN_EMAIL;
@@ -1486,6 +1488,7 @@
 
         async function handleLogin(event) {
             event.preventDefault();
+            loadLocalState();
             const oabVal = document.getElementById('login-oab')?.value.trim() || '';
             let emailVal = normalizeEmail(document.getElementById('login-email')?.value || '');
             const passwordVal = document.getElementById('login-password')?.value || '';
@@ -1501,11 +1504,11 @@
 
             if (!isFirebaseConfigured || !auth) {
                 const authInfo = await checkEmailAuthorization(emailVal);
-                if (!authInfo.authorized && !isMasterAdminEmail(emailVal)) {
+                const savedProfile = adminMembersList.find(m => normalizeEmail(m.email) === emailVal);
+                if (!authInfo.authorized && !isMasterAdminEmail(emailVal) && !savedProfile) {
                     showToast('E-mail não habilitado nos quadros da AAB. Cadastre-o primeiro no Painel Responsável AAB.', 'error');
                     return;
                 }
-                const savedProfile = adminMembersList.find(m => normalizeEmail(m.email) === emailVal);
                 enterDemoMode({
                     email: emailVal,
                     oab: savedProfile?.oab || authInfo.oab || oabVal || (isMasterAdminEmail(emailVal) ? 'OAB 1234' : 'OAB/DF 54.321'),
@@ -1536,6 +1539,7 @@
 
         async function handleRegister(event) {
             event.preventDefault();
+            loadLocalState();
             const name = document.getElementById('reg-name')?.value.trim() || '';
             const oab = document.getElementById('reg-oab')?.value.trim() || '';
             const firm = document.getElementById('reg-firm')?.value.trim() || 'Sociedade Individual de Advocacia';
@@ -1548,20 +1552,21 @@
             }
 
             const authInfo = await checkEmailAuthorization(email);
-            if (!authInfo.authorized) {
+            const savedProfile = adminMembersList.find(m => normalizeEmail(m.email) === email);
+            if (!authInfo.authorized && !savedProfile) {
                 showToast('Este e-mail ainda não foi habilitado em nenhum quadro pela administração da AAB.', 'error');
                 return;
             }
 
             if (!isFirebaseConfigured || !auth || !db) {
                 const isMaster = isMasterAdminEmail(email);
-                const boards = isMaster ? ['admin', 'associate'] : authInfo.boards;
-                const localUid = 'local_' + email.replace(/[^a-z0-9]/g, '_');
+                const boards = isMaster ? ['admin', 'associate'] : (authInfo.boards?.length ? authInfo.boards : (savedProfile?.boards || ['associate']));
+                const localUid = savedProfile?.uid || ('local_' + email.replace(/[^a-z0-9]/g, '_'));
                 const newMember = {
                     uid: localUid,
                     name,
                     email,
-                    oab: oab || authInfo.oab || 'OAB/DF 00.000',
+                    oab: oab || authInfo.oab || savedProfile?.oab || 'OAB/DF 00.000',
                     firm,
                     boards,
                     role: boards.includes('admin') ? 'responsavel_aab' : 'associado',
@@ -1570,7 +1575,7 @@
                     isOnline: true,
                     permissions: isMaster
                         ? { portalAccess: true, canPublish: true, canBookRooms: true, canUseBenefits: true, canManageUsers: true }
-                        : { ...defaultPermissions, ...(authInfo.permissions || {}) }
+                        : { ...defaultPermissions, ...(authInfo.permissions || {}), ...(savedProfile?.permissions || {}) }
                 };
                 adminMembersList = [
                     newMember,
@@ -1597,12 +1602,12 @@
                 }
 
                 const isMaster = isMasterAdminEmail(email);
-                const boards = isMaster ? ['admin', 'associate'] : authInfo.boards;
+                const boards = isMaster ? ['admin', 'associate'] : (authInfo.boards?.length ? authInfo.boards : (savedProfile?.boards || ['associate']));
                 const profilePayload = {
                     uid: fbUser.uid,
                     name,
                     email,
-                    oab: oab || authInfo.oab || 'OAB/DF',
+                    oab: oab || authInfo.oab || savedProfile?.oab || 'OAB/DF',
                     firm,
                     boards,
                     role: boards.includes('admin') ? 'responsavel_aab' : 'associado',
@@ -1610,7 +1615,7 @@
                     accountStatus: 'Ativo',
                     permissions: isMaster
                         ? { portalAccess: true, canPublish: true, canBookRooms: true, canUseBenefits: true, canManageUsers: true }
-                        : { ...defaultPermissions, ...(authInfo.permissions || {}) },
+                        : { ...defaultPermissions, ...(authInfo.permissions || {}), ...(savedProfile?.permissions || {}) },
                     isOnline: true,
                     lastSeenAt: serverTimestamp(),
                     createdAt: serverTimestamp()
