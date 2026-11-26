@@ -273,319 +273,319 @@
                     <button type="button" id="nav-btn-clients" data-nav="clients" onclick="navigateTo('clients')" class="nav-item w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-semibold text-slate-300 hover:bg-white/10 cursor-pointer">
                         <span class="flex items-center gap-2.5"><i data-lucide="users" class="w-4 h-4"></i>Clientes &amp; CRM</span>
                     </button>
-                    <button type="button" id="nav-btn-deadlines" data-nav="deadlines" onclick="navigateTo('deadlines')" class="nav-item w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-semibold text-slate-300 hover:bg-white/10 cursor-pointer">
-                        <span class="flex items-center gap-2.5"><i data-lucide="calendar-clock" class="w-4 h-4"></i>Prazos &amp; Agenda</span>
-                        <span id="badge-deadlines-count" class="px-2 py-0.5 rounded-full text-[10px] bg-amber-500/20 text-amber-300">0</span>
-                    </button>
-                    <button type="button" id="nav-btn-financial" data-nav="financial" onclick="navigateTo('financial')" class="nav-item w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-semibold text-slate-300 hover:bg-white/10 cursor-pointer">
-                        <span class="flex items-center gap-2.5"><i data-lucide="wallet" class="w-4 h-4"></i>Financeiro &amp; Honorários</span>
-                    </button>
-                    <button type="button" id="nav-btn-benefits" data-nav="benefits" onclick="navigateTo('benefits')" class="nav-item w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-semibold text-slate-300 hover:bg-white/10 cursor-pointer">
-                        <span class="flex items-center gap-2.5"><i data-lucide="award" class="w-4 h-4"></i>Benefícios &amp; Carteira</span>
-                    </button>
-                    <button type="button" id="nav-btn-admin" data-nav="admin" onclick="navigateTo('admin')" class="nav-item hidden items-center justify-between w-full px-3.5 py-2.5 rounded-xl text-xs font-semibold bg-amber-500/15 text-amber-300 border border-amber-400/30 hover:bg-amber-500/25 cursor-pointer mt-2" style="display: none;">
-                        <span class="flex items-center gap-2.5"><i data-lucide="shield" class="w-4 h-4"></i>Painel Responsável OAB</span>
-                        <span class="px-1.5 py-0.5 rounded text-[9px] font-bold bg-amber-400 text-aab-navy">ADMIN</span>
-                    </button>
-                </nav>
-            </div>
-
-            <div class="p-4 border-t border-white/10 space-y-2">
-                <div class="flex items-center justify-between text-[11px] px-1">
-                    <span class="flex items-center gap-1.5 text-slate-300">
-                        <span id="sync-dot" class="w-2 h-2 rounded-full bg-emerald-400"></span>
-                        <span id="sync-status-text">Sincronizado</span>
-                    </span>
-                    <span id="sync-mode-label" class="text-slate-400">Firebase</span>
-                </div>
-                <button type="button" onclick="seedSampleData(true)" class="w-full py-2 px-3 rounded-xl bg-white/5 hover:bg-white/10 text-xs font-medium text-slate-200 flex items-center justify-center gap-2 cursor-pointer">
-                    <i data-lucide="database" class="w-3.5 h-3.5"></i>
-                    <span>Popular Dados Exemplo</span>
-                </button>
-                <button type="button" onclick="handleLogout()" class="w-full py-2 px-3 rounded-xl bg-rose-500/15 hover:bg-rose-500/25 text-xs font-semibold text-rose-200 flex items-center justify-center gap-2 cursor-pointer">
-                    <i data-lucide="log-out" class="w-3.5 h-3.5"></i>
-                    <span>Sair do Portal</span>
-                </button>
-            </div>
-        </aside>
-
-        <!-- Área Principal -->
-        <div class="flex-1 flex flex-col min-w-0">
-            <!-- Cabeçalho Superior -->
-            <header class="bg-white border-b border-slate-200/80 px-4 sm:px-8 py-4 flex flex-wrap items-center justify-between gap-4 sticky top-0 z-20">
-                <div class="flex items-center gap-3">
-                    <button type="button" onclick="toggleMobileSidebar(true)" class="lg:hidden p-2 rounded-xl border border-slate-200 text-slate-700 hover:bg-slate-50">
-                        <i data-lucide="menu" class="w-5 h-5"></i>
-                    </button>
-                    <div>
-                        <h1 id="header-title" class="font-juridica text-2xl sm:text-3xl font-bold text-aab-navy">Visão Geral</h1>
-                        <p id="header-date" class="text-xs text-slate-500"></p>
-                    </div>
-                </div>
-                <div class="flex flex-wrap items-center gap-2 sm:gap-3">
-                    <button type="button" id="btn-header-webpage" onclick="navigateTo('webpage')" class="px-3.5 py-2 rounded-xl bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-200 text-xs font-semibold flex items-center gap-1.5 cursor-pointer">
-                        <i data-lucide="globe" class="w-4 h-4"></i>
-                        <span>Site Pessoal</span>
-                    </button>
-                    <button type="button" id="btn-header-new-case" onclick="openCaseModal()" class="px-3.5 py-2 rounded-xl bg-aab-navy hover:bg-aab-navyDark text-white text-xs font-semibold flex items-center gap-1.5 cursor-pointer">
-                        <i data-lucide="plus" class="w-4 h-4"></i>
-                        <span>Novo Processo</span>
-                    </button>
-                    <button type="button" onclick="openProfileModal()" class="px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold flex items-center gap-1.5 cursor-pointer">
-                        <i data-lucide="user-check" class="w-4 h-4"></i>
-                        <span>Meu Perfil</span>
-                    </button>
-                    <button type="button" id="btn-header-wallet" onclick="navigateTo('benefits')" class="px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold flex items-center gap-1.5 cursor-pointer">
-                        <i data-lucide="id-card" class="w-4 h-4"></i>
-                        <span>Carteira OAB</span>
-                    </button>
-                </div>
-            </header>
-
-            <main class="flex-1 p-4 sm:p-8 space-y-6 max-w-7xl w-full mx-auto">
-                <!-- 1. VISÃO GERAL -->
-                <section id="view-overview" class="view-section space-y-6">
-                    <div id="non-associate-board-banner" class="hidden p-4 rounded-2xl bg-amber-50 border border-amber-300 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                        <div class="text-xs text-amber-950">
-                            <p class="font-bold">Conta cadastrada exclusivamente no Quadro Adm</p>
-                            <p class="text-amber-800 mt-0.5">Para utilizar os módulos de Advogado Inscrito (processos, clientes, prazos, financeiro e carteira), o e-mail também deve ser incluído no Quadro Inscritos OAB.</p>
-                        </div>
-                        <button type="button" onclick="navigateTo('admin')" class="px-3.5 py-2 rounded-xl bg-aab-navy text-amber-300 text-xs font-semibold shrink-0 cursor-pointer">
-                            Abrir Painel Responsável OAB
-                        </button>
-                    </div>
-
-                    <div class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
-                        <div class="bg-white p-5 rounded-2xl border border-slate-200/80">
-                            <p class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Processos Ativos</p>
-                            <p id="kpi-active-cases" class="text-3xl font-bold text-aab-navy mt-1">0</p>
-                            <p class="text-xs text-slate-500 mt-1">Demandas em tramitação</p>
-                        </div>
-                        <div class="bg-white p-5 rounded-2xl border border-slate-200/80">
-                            <p class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Prazos Pendentes</p>
-                            <p id="kpi-pending-deadlines" class="text-3xl font-bold text-amber-600 mt-1">0</p>
-                            <p class="text-xs text-slate-500 mt-1">Audiências e prazos abertos</p>
-                        </div>
-                        <div class="bg-white p-5 rounded-2xl border border-slate-200/80">
-                            <p class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Honorários a Receber</p>
-                            <p id="kpi-pending-receivables" class="text-2xl sm:text-3xl font-bold text-emerald-700 mt-1">R$ 0,00</p>
-                            <p class="text-xs text-slate-500 mt-1">Contas pendentes / em aberto</p>
-                        </div>
-                        <div class="bg-white p-5 rounded-2xl border border-slate-200/80">
-                            <p class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Clientes Cadastrados</p>
-                            <p id="kpi-clients-count" class="text-3xl font-bold text-aab-navy mt-1">0</p>
-                            <p class="text-xs text-slate-500 mt-1">Base ativa do escritório</p>
-                        </div>
-                    </div>
-
-                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                        <div class="lg:col-span-2 bg-white rounded-2xl border border-slate-200/80 p-6 space-y-4">
-                            <div class="flex items-center justify-between gap-2">
-                                <div>
-                                    <h2 class="font-juridica text-2xl font-bold text-aab-navy">Mural Institucional OAB</h2>
-                                    <p class="text-xs text-slate-500">Comunicados, portarias e eventos oficiais da Ordem dos Advogados do Brasil</p>
-                                </div>
-                                <button type="button" id="btn-quick-publish-overview" onclick="navigateTo('admin')" class="hidden px-3 py-1.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-xs font-semibold cursor-pointer">
-                                    Publicar Aviso
-                                </button>
-                            </div>
-                            <div id="overview-bulletins-list" class="space-y-3"></div>
-                        </div>
-
-                        <div class="bg-white rounded-2xl border border-slate-200/80 p-6 space-y-4">
-                            <div class="flex items-center justify-between">
-                                <h2 class="font-juridica text-2xl font-bold text-aab-navy">Próximos Prazos</h2>
-                                <button type="button" onclick="navigateTo('deadlines')" class="text-xs font-semibold text-amber-700 hover:underline cursor-pointer">Ver agenda</button>
-                            </div>
-                            <div id="overview-deadlines-list" class="space-y-2.5"></div>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- 1B. PÁGINA DO SITE PESSOAL DO ADVOGADO (NOVO FORMATO + CONTATO DE CLIENTES) -->
+                <!-- 1B. GERADOR, EDITOR E VISUALIZAÇÃO DA WEBPAGE DO ADVOGADO -->
                 <section id="view-webpage" class="view-section hidden space-y-6">
-                    <!-- Barra superior do Site Pessoal -->
-                    <div class="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200/80 flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+                    <!-- Barra de Controle do Gerador de Webpage -->
+                    <div class="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200/80 flex flex-col xl:flex-row xl:items-center justify-between gap-4">
                         <div>
-                            <span class="inline-block px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-amber-100 text-amber-900">Site Pessoal do Advogado</span>
-                            <h2 class="font-juridica text-2xl sm:text-3xl font-bold text-aab-navy mt-1">Página Institucional, Áreas de Atuação &amp; Contato com Clientes</h2>
-                            <p class="text-xs text-slate-500 mt-0.5">Visualize e personalize sua página pessoal do advogado, receba mensagens de clientes e gerencie os contatos.</p>
+                            <div class="flex flex-wrap items-center gap-2">
+                                <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-amber-100 text-amber-900">Gerador de Webpage do Advogado</span>
+                                <span id="wp-status-pill" class="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-emerald-100 text-emerald-800">Site Publicado</span>
+                            </div>
+                            <h2 class="font-juridica text-2xl sm:text-3xl font-bold text-aab-navy mt-1">Cadastro, Edição e Geração de Webpage Jurídica</h2>
+                            <p id="wp-generated-url-preview" class="text-xs font-mono text-slate-500 mt-0.5 truncate"></p>
                         </div>
+
                         <div class="flex flex-wrap items-center gap-2">
-                            <button type="button" id="btn-toggle-site-editor" onclick="toggleSiteEditorDrawer()" class="px-3.5 py-2 rounded-xl bg-aab-navy hover:bg-aab-navyDark text-white text-xs font-semibold flex items-center gap-1.5 cursor-pointer">
-                                <i data-lucide="sliders" class="w-4 h-4 text-amber-300"></i>
-                                <span>Personalizar Site Pessoal</span>
+                            <button type="button" id="wp-mode-builder-btn" onclick="switchWebpageMode('builder')" class="px-3.5 py-2 rounded-xl bg-aab-navy text-white text-xs font-semibold flex items-center gap-1.5 cursor-pointer">
+                                <i data-lucide="pen-square" class="w-4 h-4 text-amber-300"></i>
+                                <span>Cadastrar / Editar Site</span>
                             </button>
-                            <button type="button" onclick="copyLawyerSiteUrl()" class="px-3.5 py-2 rounded-xl bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-200 text-xs font-semibold flex items-center gap-1.5 cursor-pointer">
+                            <button type="button" id="wp-mode-preview-btn" onclick="switchWebpageMode('preview')" class="px-3.5 py-2 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-xs font-semibold flex items-center gap-1.5 cursor-pointer">
+                                <i data-lucide="eye" class="w-4 h-4"></i>
+                                <span>Visualizar Webpage Gerada</span>
+                            </button>
+                            <button type="button" onclick="openStandaloneWebpageWindow()" class="px-3.5 py-2 rounded-xl bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-200 text-xs font-semibold flex items-center gap-1.5 cursor-pointer">
+                                <i data-lucide="external-link" class="w-4 h-4"></i>
+                                <span>Abrir Página Completa</span>
+                            </button>
+                            <button type="button" onclick="copyLawyerSiteUrl()" class="px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold flex items-center gap-1.5 cursor-pointer">
                                 <i data-lucide="link" class="w-4 h-4"></i>
                                 <span>Copiar Link</span>
                             </button>
                         </div>
                     </div>
 
-                    <!-- Gaveta / Painel de Personalização do Site Pessoal (oculto por padrão para manter a página limpa no novo formato) -->
-                    <div id="site-editor-panel" class="hidden bg-white p-6 rounded-2xl border border-amber-300 shadow-sm space-y-5">
-                        <div class="flex items-center justify-between border-b border-slate-100 pb-3">
-                            <div>
-                                <h3 class="font-juridica text-2xl font-bold text-aab-navy">Editor do Site Pessoal do Advogado</h3>
-                                <p class="text-xs text-slate-500">Altere identidade, foto, bio, áreas de atuação e canais de contato.</p>
-                            </div>
-                            <button type="button" onclick="toggleSiteEditorDrawer(false)" class="px-3 py-1.5 rounded-lg bg-slate-100 text-xs font-semibold text-slate-700 cursor-pointer">Fechar Editor</button>
-                        </div>
-
-                        <form onsubmit="handleSaveWebpageConfig(event)" class="space-y-4">
-                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <!-- MODO 1: CADASTRO E EDIÇÃO ESTRUTURADA DA WEBPAGE -->
+                    <div id="wp-builder-panel" class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                        <form onsubmit="handleSaveWebpageConfig(event)" class="lg:col-span-8 bg-white rounded-2xl border border-slate-200/80 p-6 space-y-6">
+                            <div class="border-b border-slate-100 pb-4 flex flex-wrap items-center justify-between gap-2">
                                 <div>
-                                    <label class="block text-[11px] font-bold uppercase text-slate-500 mb-1">Nome Profissional</label>
-                                    <input type="text" id="wp-edit-name" required class="w-full px-3.5 py-2 rounded-xl border border-slate-200 text-sm">
+                                    <h3 class="font-juridica text-2xl font-bold text-aab-navy">Configuração Completa da Webpage</h3>
+                                    <p class="text-xs text-slate-500">Preencha ou edite os blocos que compõem o site profissional do advogado.</p>
                                 </div>
-                                <div>
-                                    <label class="block text-[11px] font-bold uppercase text-slate-500 mb-1">Inscrição OAB</label>
-                                    <input type="text" id="wp-edit-oab" required class="w-full px-3.5 py-2 rounded-xl border border-slate-200 text-sm">
-                                </div>
-                                <div>
-                                    <label class="block text-[11px] font-bold uppercase text-slate-500 mb-1">Escritório / Sociedade</label>
-                                    <input type="text" id="wp-edit-firm" class="w-full px-3.5 py-2 rounded-xl border border-slate-200 text-sm">
-                                </div>
+                                <button type="submit" class="px-5 py-2.5 rounded-xl bg-aab-navy hover:bg-aab-navyDark text-amber-300 text-xs font-semibold cursor-pointer">
+                                    Salvar e Gerar Webpage
+                                </button>
                             </div>
 
-                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                                <div>
-                                    <label class="block text-[11px] font-bold uppercase text-slate-500 mb-1">Especialidade / Subtítulo</label>
-                                    <input type="text" id="wp-edit-specialty" placeholder="Ex: Advocacia Cível, Empresarial e Trabalhista" class="w-full px-3.5 py-2 rounded-xl border border-slate-200 text-sm">
+                            <!-- Bloco 1: Identidade e Endereço da Webpage -->
+                            <div class="space-y-3">
+                                <p class="text-[11px] font-bold uppercase tracking-wider text-amber-800">1. Identidade Profissional &amp; Slug da URL</p>
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                    <div>
+                                        <label class="block text-[11px] font-bold uppercase text-slate-500 mb-1">Nome do Advogado(a)</label>
+                                        <input type="text" id="wp-edit-name" required placeholder="Ex: Dra. Poliana Rebouças" class="w-full px-3.5 py-2 rounded-xl border border-slate-200 text-sm">
+                                    </div>
+                                    <div>
+                                        <label class="block text-[11px] font-bold uppercase text-slate-500 mb-1">Inscrição OAB</label>
+                                        <input type="text" id="wp-edit-oab" required placeholder="Ex: OAB/DF 12.345" class="w-full px-3.5 py-2 rounded-xl border border-slate-200 text-sm">
+                                    </div>
                                 </div>
-                                <div>
-                                    <label class="block text-[11px] font-bold uppercase text-slate-500 mb-1">Telefone / WhatsApp Público</label>
-                                    <input type="text" id="wp-edit-phone" placeholder="(61) 99999-9999" class="w-full px-3.5 py-2 rounded-xl border border-slate-200 text-sm">
-                                </div>
-                                <div>
-                                    <label class="block text-[11px] font-bold uppercase text-slate-500 mb-1">URL da Foto Profissional</label>
-                                    <input type="url" id="wp-edit-photo" placeholder="https://..." class="w-full px-3.5 py-2 rounded-xl border border-slate-200 text-sm">
-                                </div>
-                            </div>
-
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                                <div>
-                                    <label class="block text-[11px] font-bold uppercase text-slate-500 mb-1">Endereço de Atendimento</label>
-                                    <input type="text" id="wp-edit-address" placeholder="Quadra, Edifício, Sala, Cidade/UF" class="w-full px-3.5 py-2 rounded-xl border border-slate-200 text-sm">
-                                </div>
-                                <div>
-                                    <label class="block text-[11px] font-bold uppercase text-slate-500 mb-1">Áreas de Atuação (separadas por vírgula)</label>
-                                    <input type="text" id="wp-edit-areas" placeholder="Direito Civil, Contratos, Direito do Trabalho, Empresarial" class="w-full px-3.5 py-2 rounded-xl border border-slate-200 text-sm">
+                                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                                    <div>
+                                        <label class="block text-[11px] font-bold uppercase text-slate-500 mb-1">Escritório / Banca</label>
+                                        <input type="text" id="wp-edit-firm" placeholder="Nome do Escritório" class="w-full px-3.5 py-2 rounded-xl border border-slate-200 text-sm">
+                                    </div>
+                                    <div>
+                                        <label class="block text-[11px] font-bold uppercase text-slate-500 mb-1">Identificador na URL (slug)</label>
+                                        <input type="text" id="wp-edit-slug" placeholder="poliana-reboucas" class="w-full px-3.5 py-2 rounded-xl border border-slate-200 text-sm font-mono">
+                                    </div>
+                                    <div>
+                                        <label class="block text-[11px] font-bold uppercase text-slate-500 mb-1">Estilo Visual</label>
+                                        <select id="wp-edit-theme" class="w-full px-3 py-2 rounded-xl border border-slate-200 text-sm bg-white">
+                                            <option value="classic-navy">Clássico Marinho &amp; Ouro</option>
+                                            <option value="editorial-ivory">Editorial Marfim &amp; Carvalho</option>
+                                            <option value="modern-slate">Corporativo Grafite &amp; Âmbar</option>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
 
-                            <div>
-                                <label class="block text-[11px] font-bold uppercase text-slate-500 mb-1">Apresentação / Biografia Jurídica</label>
-                                <textarea id="wp-edit-bio" rows="3" placeholder="Descreva sua trajetória, princípios éticos e forma de atendimento..." class="w-full px-3.5 py-2 rounded-xl border border-slate-200 text-sm"></textarea>
+                            <!-- Bloco 2: Chamada Principal (Hero) e Foto -->
+                            <div class="space-y-3 pt-2 border-t border-slate-100">
+                                <p class="text-[11px] font-bold uppercase tracking-wider text-amber-800">2. Chamada Principal &amp; Apresentação</p>
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                    <div>
+                                        <label class="block text-[11px] font-bold uppercase text-slate-500 mb-1">Título de Destaque (Hero)</label>
+                                        <input type="text" id="wp-edit-headline" placeholder="Ex: Defesa jurídica estratégica com rigor técnico e ética." class="w-full px-3.5 py-2 rounded-xl border border-slate-200 text-sm">
+                                    </div>
+                                    <div>
+                                        <label class="block text-[11px] font-bold uppercase text-slate-500 mb-1">URL da Foto Profissional</label>
+                                        <input type="url" id="wp-edit-photo" placeholder="https://..." class="w-full px-3.5 py-2 rounded-xl border border-slate-200 text-sm">
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="block text-[11px] font-bold uppercase text-slate-500 mb-1">Biografia / Sobre o Escritório</label>
+                                    <textarea id="wp-edit-bio" rows="3" placeholder="Apresente a experiência, metodologia de trabalho e compromisso com o cliente..." class="w-full px-3.5 py-2 rounded-xl border border-slate-200 text-sm"></textarea>
+                                </div>
                             </div>
 
-                            <div class="flex justify-end gap-2">
-                                <button type="button" onclick="toggleSiteEditorDrawer(false)" class="px-4 py-2 rounded-xl bg-slate-100 text-slate-700 text-xs font-semibold cursor-pointer">Cancelar</button>
-                                <button type="submit" class="px-5 py-2 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-xs font-semibold cursor-pointer">Salvar Site Pessoal</button>
+                            <!-- Bloco 3: Áreas de Atuação e Diferenciais -->
+                            <div class="space-y-3 pt-2 border-t border-slate-100">
+                                <p class="text-[11px] font-bold uppercase tracking-wider text-amber-800">3. Áreas de Atuação &amp; Diferenciais</p>
+                                <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                    <div>
+                                        <label class="block text-[11px] font-bold uppercase text-slate-500 mb-1">Áreas de Atuação (separadas por vírgula)</label>
+                                        <input type="text" id="wp-edit-areas" placeholder="Direito Civil, Direito Trabalhista, Empresarial, Contratos" class="w-full px-3.5 py-2 rounded-xl border border-slate-200 text-sm">
+                                    </div>
+                                    <div>
+                                        <label class="block text-[11px] font-bold uppercase text-slate-500 mb-1">Diferenciais do Atendimento (separados por vírgula)</label>
+                                        <input type="text" id="wp-edit-highlights" placeholder="Atendimento presencial e online, Relatórios transparentes, Atuação ágil" class="w-full px-3.5 py-2 rounded-xl border border-slate-200 text-sm">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Bloco 4: Canais de Contato e Perguntas Frequentes -->
+                            <div class="space-y-3 pt-2 border-t border-slate-100">
+                                <p class="text-[11px] font-bold uppercase tracking-wider text-amber-800">4. Contato Público &amp; Perguntas Frequentes (FAQ)</p>
+                                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                                    <div>
+                                        <label class="block text-[11px] font-bold uppercase text-slate-500 mb-1">Telefone / WhatsApp</label>
+                                        <input type="text" id="wp-edit-phone" placeholder="(61) 99999-9999" class="w-full px-3.5 py-2 rounded-xl border border-slate-200 text-sm">
+                                    </div>
+                                    <div>
+                                        <label class="block text-[11px] font-bold uppercase text-slate-500 mb-1">E-mail de Atendimento</label>
+                                        <input type="email" id="wp-edit-email" placeholder="contato@escritorio.adv.br" class="w-full px-3.5 py-2 rounded-xl border border-slate-200 text-sm">
+                                    </div>
+                                    <div>
+                                        <label class="block text-[11px] font-bold uppercase text-slate-500 mb-1">Cidade / Endereço</label>
+                                        <input type="text" id="wp-edit-address" placeholder="Brasília / DF" class="w-full px-3.5 py-2 rounded-xl border border-slate-200 text-sm">
+                                    </div>
+                                </div>
+                                <div>
+                                    <label class="block text-[11px] font-bold uppercase text-slate-500 mb-1">Perguntas Frequentes (1 por linha no formato: Pergunta | Resposta)</label>
+                                    <textarea id="wp-edit-faq" rows="3" placeholder="Como funciona a primeira consulta? | Agendamos reunião online ou presencial para análise inicial do caso.&#10;Vocês atendem fora da cidade? | Sim, atuamos de forma digital e por correspondentes em todo o país." class="w-full px-3.5 py-2 rounded-xl border border-slate-200 text-sm"></textarea>
+                                </div>
+                            </div>
+
+                            <div class="flex flex-wrap items-center justify-between gap-3 pt-3 border-t border-slate-100">
+                                <label class="inline-flex items-center gap-2 text-xs font-semibold text-slate-700 cursor-pointer">
+                                    <input type="checkbox" id="wp-edit-published" checked class="rounded border-slate-300 text-amber-600">
+                                    <span>Publicar webpage para acesso direto por link</span>
+                                </label>
+                                <div class="flex gap-2">
+                                    <button type="button" onclick="switchWebpageMode('preview')" class="px-4 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-semibold cursor-pointer">
+                                        Pré-visualizar Site
+                                    </button>
+                                    <button type="submit" class="px-5 py-2.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white text-xs font-semibold cursor-pointer">
+                                        Salvar Webpage
+                                    </button>
+                                </div>
                             </div>
                         </form>
-                    </div>
 
-                    <!-- FORMATO DA PÁGINA DO SITE PESSOAL DO ADVOGADO + CONTATO COM CLIENTES -->
-                    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-                        <!-- Coluna Esquerda (7 cols): Cartão Principal, Bio, Áreas de Atuação e Mensagens Recebidas -->
-                        <div class="lg:col-span-7 space-y-6">
-                            <!-- Hero / Perfil do Advogado -->
-                            <div class="bg-aab-navy text-white rounded-2xl p-6 sm:p-8 border border-amber-400/30 shadow-sm space-y-5">
-                                <div class="flex flex-col sm:flex-row sm:items-center gap-5">
-                                    <div id="wp-hero-avatar" class="w-20 h-20 rounded-2xl bg-amber-500 text-aab-navy font-juridica text-3xl font-bold flex items-center justify-center shrink-0 overflow-hidden border-2 border-amber-300/60">
-                                        <span id="wp-hero-initials">AA</span>
-                                        <img id="wp-hero-photo" src="" alt="Foto do advogado" class="w-full h-full object-cover hidden" onerror="this.classList.add('hidden')">
-                                    </div>
-                                    <div class="space-y-1 min-w-0">
-                                        <p class="text-[10px] font-bold uppercase tracking-[0.2em] text-amber-300">Advogado(a) Regularmente Inscrito(a) • OAB</p>
-                                        <h3 id="wp-hero-name" class="font-juridica text-3xl sm:text-4xl font-bold text-white leading-tight">Dr(a). Advogado(a)</h3>
-                                        <p id="wp-hero-oab-firm" class="text-xs sm:text-sm text-amber-200 font-medium">OAB • Escritório</p>
-                                        <p id="wp-hero-specialty" class="text-xs text-slate-300">Atuação Jurídica Estratégica</p>
-                                    </div>
-                                </div>
-
-                                <p id="wp-hero-bio" class="text-xs sm:text-sm text-slate-200 leading-relaxed border-t border-white/10 pt-4">
-                                    Atuação jurídica pautada na ética profissional, rigor técnico e atendimento próximo a clientes pessoas físicas e jurídicas.
-                                </p>
-
-                                <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-1 text-xs">
-                                    <div class="p-3 rounded-xl bg-white/5 border border-white/10">
-                                        <p class="text-[10px] uppercase tracking-wider text-amber-300 font-bold">E-mail</p>
-                                        <p id="wp-hero-email" class="text-slate-200 truncate mt-0.5">—</p>
-                                    </div>
-                                    <div class="p-3 rounded-xl bg-white/5 border border-white/10">
-                                        <p class="text-[10px] uppercase tracking-wider text-amber-300 font-bold">Telefone / WhatsApp</p>
-                                        <p id="wp-hero-phone" class="text-slate-200 truncate mt-0.5">—</p>
-                                    </div>
-                                    <div class="p-3 rounded-xl bg-white/5 border border-white/10">
-                                        <p class="text-[10px] uppercase tracking-wider text-amber-300 font-bold">Endereço</p>
-                                        <p id="wp-hero-address" class="text-slate-200 truncate mt-0.5">—</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Áreas de Atuação -->
+                        <!-- Coluna Lateral: Mensagens de Clientes Recebidas -->
+                        <div class="lg:col-span-4 space-y-6">
                             <div class="bg-white rounded-2xl border border-slate-200/80 p-6 space-y-4">
-                                <div class="flex items-center justify-between">
-                                    <h3 class="font-juridica text-2xl font-bold text-aab-navy">Áreas de Atuação</h3>
-                                    <span class="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">Especialidades</span>
-                                </div>
-                                <div id="wp-areas-chips" class="flex flex-wrap gap-2"></div>
-                            </div>
-
-                            <!-- Caixa de Contatos Recebidos de Clientes -->
-                            <div class="bg-white rounded-2xl border border-slate-200/80 p-6 space-y-4">
-                                <div class="flex flex-wrap items-center justify-between gap-2">
+                                <div class="flex items-center justify-between gap-2">
                                     <div>
-                                        <h3 class="font-juridica text-2xl font-bold text-aab-navy">Mensagens de Clientes Recebidas</h3>
-                                        <p class="text-xs text-slate-500">Contatos enviados pelo formulário da página do advogado</p>
+                                        <h3 class="font-juridica text-2xl font-bold text-aab-navy">Contatos da Webpage</h3>
+                                        <p class="text-xs text-slate-500">Mensagens enviadas por clientes no site</p>
                                     </div>
-                                    <span id="wp-messages-badge" class="px-3 py-1 rounded-full text-xs font-bold bg-amber-100 text-amber-900">0 mensagens</span>
+                                    <span id="wp-messages-badge" class="px-2.5 py-1 rounded-full text-[11px] font-bold bg-amber-100 text-amber-900">0</span>
                                 </div>
-                                <div id="wp-client-messages-list" class="space-y-3"></div>
+                                <div id="wp-client-messages-list" class="space-y-3 max-h-[680px] overflow-y-auto"></div>
                             </div>
                         </div>
+                    </div>
 
-                        <!-- Coluna Direita (5 cols): Formulário de Contato Direto com o Advogado -->
-                        <div class="lg:col-span-5">
-                            <div class="bg-white rounded-2xl border border-slate-200/80 p-6 space-y-4 sticky top-24">
+                    <!-- MODO 2: VISUALIZAÇÃO DA WEBPAGE GERADA DO ADVOGADO (FORMATO DE SITE COMPLETO) -->
+                    <div id="wp-preview-panel" class="hidden space-y-6">
+                        <div id="wp-generated-site-container" class="rounded-3xl border border-slate-200 overflow-hidden shadow-lg bg-white">
+                            <!-- Barra de Navegação do Site Gerado -->
+                            <nav class="bg-aab-navy text-white px-6 py-4 flex flex-wrap items-center justify-between gap-4 border-b border-amber-400/20">
                                 <div>
-                                    <span class="text-[10px] font-bold uppercase tracking-widest text-amber-700">Atendimento &amp; Consulta</span>
-                                    <h3 class="font-juridica text-3xl font-bold text-aab-navy mt-0.5">Contato com o Advogado</h3>
-                                    <p class="text-xs text-slate-500 mt-1">Preencha os dados abaixo para registrar uma mensagem de cliente e encaminhar ao atendimento jurídico.</p>
+                                    <p id="site-nav-brand" class="font-juridica text-xl font-bold text-white">Dr(a). Advogado(a)</p>
+                                    <p id="site-nav-oab" class="text-[11px] text-amber-300 font-medium">OAB • Escritório de Advocacia</p>
                                 </div>
+                                <div class="flex flex-wrap items-center gap-4 text-xs font-medium text-slate-200">
+                                    <a href="#site-sec-sobre" class="hover:text-amber-300">Sobre</a>
+                                    <a href="#site-sec-areas" class="hover:text-amber-300">Áreas de Atuação</a>
+                                    <a href="#site-sec-faq" class="hover:text-amber-300">Dúvidas</a>
+                                    <a href="#site-sec-contato" class="px-4 py-2 rounded-xl bg-amber-500 text-aab-navy font-bold hover:bg-amber-400">Falar com o Advogado</a>
+                                </div>
+                            </nav>
 
-                                <form onsubmit="handleSubmitClientContact(event)" class="space-y-3">
-                                    <div>
-                                        <label class="block text-[11px] font-bold uppercase text-slate-500 mb-1">Nome do Cliente</label>
-                                        <input type="text" id="contact-client-name" required placeholder="Nome completo" class="w-full px-3.5 py-2 rounded-xl border border-slate-200 text-sm">
+                            <!-- Banner Principal (Hero) da Webpage -->
+                            <header id="site-hero-banner" class="bg-gradient-to-br from-aab-navy via-aab-navyDark to-slate-900 text-white px-6 sm:px-12 py-12">
+                                <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                                    <div class="lg:col-span-8 space-y-4">
+                                        <span id="site-hero-badge" class="inline-block px-3 py-1 rounded-full text-[11px] font-bold uppercase tracking-widest bg-amber-500/20 text-amber-300 border border-amber-400/30">
+                                            Advocacia &amp; Consultoria Jurídica
+                                        </span>
+                                        <h1 id="site-hero-headline" class="font-juridica text-4xl sm:text-5xl font-bold leading-tight text-white">
+                                            Defesa jurídica estratégica com rigor técnico e ética.
+                                        </h1>
+                                        <p id="site-hero-sub" class="text-sm sm:text-base text-slate-300 max-w-2xl leading-relaxed">
+                                            Atendimento jurídico personalizado para pessoas físicas e empresas.
+                                        </p>
+                                        <div class="flex flex-wrap items-center gap-3 pt-2">
+                                            <a href="#site-sec-contato" class="px-5 py-3 rounded-xl bg-amber-500 hover:bg-amber-400 text-aab-navy font-bold text-xs sm:text-sm">
+                                                Solicitar Atendimento
+                                            </a>
+                                            <button type="button" onclick="switchWebpageMode('builder')" class="px-5 py-3 rounded-xl bg-white/10 hover:bg-white/15 text-white font-semibold text-xs sm:text-sm cursor-pointer">
+                                                Editar Conteúdo do Site
+                                            </button>
+                                        </div>
                                     </div>
-                                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                                        <div>
-                                            <label class="block text-[11px] font-bold uppercase text-slate-500 mb-1">E-mail</label>
-                                            <input type="email" id="contact-client-email" required placeholder="cliente@email.com" class="w-full px-3.5 py-2 rounded-xl border border-slate-200 text-sm">
+
+                                    <div class="lg:col-span-4">
+                                        <div class="bg-white/5 border border-white/15 rounded-2xl p-6 text-center space-y-3">
+                                            <div class="w-24 h-24 mx-auto rounded-2xl bg-amber-500 text-aab-navy font-juridica text-4xl font-bold flex items-center justify-center overflow-hidden border-2 border-amber-300/70">
+                                                <span id="site-card-initials">OA</span>
+                                                <img id="site-card-photo" src="" alt="Foto profissional" class="w-full h-full object-cover hidden" onerror="this.classList.add('hidden')">
+                                            </div>
+                                            <div>
+                                                <h2 id="site-card-name" class="font-juridica text-2xl font-bold text-white">Dr(a). Advogado(a)</h2>
+                                                <p id="site-card-oab" class="text-xs text-amber-300 font-semibold">OAB</p>
+                                                <p id="site-card-firm" class="text-xs text-slate-300">Escritório</p>
+                                            </div>
+                                            <div class="text-xs text-slate-300 border-t border-white/10 pt-3 space-y-1">
+                                                <p id="site-card-phone">—</p>
+                                                <p id="site-card-email" class="truncate">—</p>
+                                                <p id="site-card-address">—</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </header>
+
+                            <!-- Corpo da Webpage Gerada -->
+                            <div class="px-6 sm:px-12 py-10 space-y-12 max-w-6xl mx-auto">
+                                <!-- Sobre & Diferenciais -->
+                                <section id="site-sec-sobre" class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                                    <div class="lg:col-span-7 space-y-3">
+                                        <p class="text-[11px] font-bold uppercase tracking-widest text-amber-700">Sobre a Atuação</p>
+                                        <h3 class="font-juridica text-3xl font-bold text-aab-navy">Trajetória, Ética e Compromisso</h3>
+                                        <p id="site-about-bio" class="text-sm text-slate-600 leading-relaxed"></p>
+                                    </div>
+                                    <div class="lg:col-span-5 bg-slate-50 rounded-2xl p-6 border border-slate-200/80 space-y-3">
+                                        <h4 class="font-bold text-sm text-aab-navy uppercase tracking-wider">Diferenciais do Escritório</h4>
+                                        <ul id="site-highlights-list" class="space-y-2 text-xs sm:text-sm text-slate-700"></ul>
+                                    </div>
+                                </section>
+
+                                <!-- Áreas de Atuação -->
+                                <section id="site-sec-areas" class="space-y-4">
+                                    <div>
+                                        <p class="text-[11px] font-bold uppercase tracking-widest text-amber-700">Especialidades Jurídicas</p>
+                                        <h3 class="font-juridica text-3xl font-bold text-aab-navy">Áreas de Atuação</h3>
+                                    </div>
+                                    <div id="site-areas-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"></div>
+                                </section>
+
+                                <!-- FAQ -->
+                                <section id="site-sec-faq" class="space-y-4">
+                                    <div>
+                                        <p class="text-[11px] font-bold uppercase tracking-widest text-amber-700">Esclarecimentos</p>
+                                        <h3 class="font-juridica text-3xl font-bold text-aab-navy">Perguntas Frequentes</h3>
+                                    </div>
+                                    <div id="site-faq-list" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+                                </section>
+
+                                <!-- Formulário de Contato do Cliente na Webpage Gerada -->
+                                <section id="site-sec-contato" class="bg-slate-50 rounded-2xl p-6 sm:p-8 border border-slate-200/80 grid grid-cols-1 lg:grid-cols-12 gap-8">
+                                    <div class="lg:col-span-5 space-y-3">
+                                        <p class="text-[11px] font-bold uppercase tracking-widest text-amber-700">Canal Direto</p>
+                                        <h3 class="font-juridica text-3xl font-bold text-aab-navy">Enviar Mensagem ao Advogado</h3>
+                                        <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                                            Envie sua mensagem diretamente pela webpage do advogado. O registro fica disponível na área de contatos do escritório.
+                                        </p>
+                                        <div class="p-4 rounded-xl bg-white border border-slate-200 text-xs space-y-1.5">
+                                            <p><strong class="text-aab-navy">Atendimento:</strong> <span id="site-contact-address">—</span></p>
+                                            <p><strong class="text-aab-navy">Telefone:</strong> <span id="site-contact-phone">—</span></p>
+                                            <p><strong class="text-aab-navy">E-mail:</strong> <span id="site-contact-email">—</span></p>
+                                        </div>
+                                    </div>
+
+                                    <form onsubmit="handleSubmitClientContact(event)" class="lg:col-span-7 bg-white p-6 rounded-2xl border border-slate-200/80 space-y-3">
+                                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                            <div>
+                                                <label class="block text-[11px] font-bold uppercase text-slate-500 mb-1">Seu Nome</label>
+                                                <input type="text" id="contact-client-name" required placeholder="Nome completo" class="w-full px-3.5 py-2 rounded-xl border border-slate-200 text-sm">
+                                            </div>
+                                            <div>
+                                                <label class="block text-[11px] font-bold uppercase text-slate-500 mb-1">Seu E-mail</label>
+                                                <input type="email" id="contact-client-email" required placeholder="cliente@email.com" class="w-full px-3.5 py-2 rounded-xl border border-slate-200 text-sm">
+                                            </div>
+                                        </div>
+                                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                                            <div>
+                                                <label class="block text-[11px] font-bold uppercase text-slate-500 mb-1">Telefone / WhatsApp</label>
+                                                <input type="text" id="contact-client-phone" placeholder="(61) 99999-9999" class="w-full px-3.5 py-2 rounded-xl border border-slate-200 text-sm">
+                                            </div>
+                                            <div>
+                                                <label class="block text-[11px] font-bold uppercase text-slate-500 mb-1">Área / Assunto</label>
+                                                <input type="text" id="contact-client-subject" required placeholder="Ex: Consulta Trabalhista, Contrato..." class="w-full px-3.5 py-2 rounded-xl border border-slate-200 text-sm">
+                                            </div>
                                         </div>
                                         <div>
-                                            <label class="block text-[11px] font-bold uppercase text-slate-500 mb-1">Telefone / WhatsApp</label>
-                                            <input type="text" id="contact-client-phone" placeholder="(61) 99999-9999" class="w-full px-3.5 py-2 rounded-xl border border-slate-200 text-sm">
+                                            <label class="block text-[11px] font-bold uppercase text-slate-500 mb-1">Mensagem</label>
+                                            <textarea id="contact-client-message" rows="3" required placeholder="Descreva sua dúvida ou demanda jurídica..." class="w-full px-3.5 py-2 rounded-xl border border-slate-200 text-sm"></textarea>
                                         </div>
-                                    </div>
-                                    <div>
-                                        <label class="block text-[11px] font-bold uppercase text-slate-500 mb-1">Área / Assunto Jurídico</label>
-                                        <input type="text" id="contact-client-subject" required placeholder="Ex: Consulta Cível, Contrato, Prazo..." class="w-full px-3.5 py-2 rounded-xl border border-slate-200 text-sm">
-                                    </div>
-                                    <div>
-                                        <label class="block text-[11px] font-bold uppercase text-slate-500 mb-1">Mensagem do Cliente</label>
-                                        <textarea id="contact-client-message" rows="4" required placeholder="Descreva brevemente a demanda ou dúvida..." class="w-full px-3.5 py-2 rounded-xl border border-slate-200 text-sm"></textarea>
-                                    </div>
-                                    <button type="submit" class="w-full py-3 rounded-xl bg-aab-navy hover:bg-aab-navyDark text-white font-semibold text-xs sm:text-sm flex items-center justify-center gap-2 cursor-pointer transition-colors">
-                                        <i data-lucide="send" class="w-4 h-4 text-amber-300"></i>
-                                        <span>Enviar Mensagem ao Advogado</span>
-                                    </button>
-                                </form>
+                                        <button type="submit" class="w-full py-3 rounded-xl bg-aab-navy hover:bg-aab-navyDark text-white font-semibold text-sm cursor-pointer">
+                                            Enviar Mensagem
+                                        </button>
+                                    </form>
+                                </section>
                             </div>
+
+                            <!-- Rodapé da Webpage Gerada -->
+                            <footer class="bg-aab-navyDark text-slate-400 px-6 py-5 text-xs flex flex-wrap items-center justify-between gap-2">
+                                <span id="site-footer-copy">Webpage Jurídica • OAB</span>
+                                <span>Publicação gerada no Portal da Ordem dos Advogados do Brasil</span>
+                            </footer>
                         </div>
                     </div>
                 </section>
@@ -1348,6 +1348,7 @@
         let caseFilter = 'Todos';
         let deadlineFilter = 'Todos';
         let financialPeriod = 'all';
+        let webpageViewMode = 'builder';
         let firestoreUnsubscribers = [];
         let heartbeatInterval = null;
 
@@ -1712,11 +1713,20 @@
                 email,
                 oab: overrides.oab || (isMaster ? 'OAB 1234' : 'OAB/DF 54.321'),
                 firm: overrides.firm || 'Escritório Inscrito OAB',
+                slug: 'advogado-oab',
+                theme: 'classic-navy',
+                headline: 'Defesa jurídica estratégica com rigor técnico e ética.',
                 specialty: 'Direito Cível, Empresarial e Administrativo',
                 phone: '(61) 99999-0000',
                 address: 'Brasília / DF',
                 bio: 'Atuação jurídica estratégica, ética e resolutiva perante os órgãos administrativos e judiciais.',
                 areas: ['Direito Civil', 'Direito Empresarial', 'Contratos'],
+                highlights: ['Atendimento presencial e digital', 'Acompanhamento claro do caso', 'Atuação preventiva e contenciosa'],
+                faq: [
+                    { q: 'Como agendar uma consulta jurídica?', a: 'Envie sua mensagem pelo formulário da webpage informando o assunto e seu contato.' },
+                    { q: 'O atendimento pode ser online?', a: 'Sim, realizamos reuniões por videoconferência com envio de documentos digitais.' }
+                ],
+                webpagePublished: true,
                 website: 'https://oab.org.br',
                 boards,
                 role: isMaster ? 'responsavel_aab' : 'associado',
@@ -1831,170 +1841,106 @@
                         renderWebpageSection();
                     }
                     renderAdminMembersTable();
-                }),
-                onSnapshot(doc(db, 'configuracoes', 'beneficios_aab'), snap => {
-                    if (snap.exists()) {
-                        benefitLinks = { ...benefitLinks, ...snap.data() };
-                        applyBenefitLinksUI();
-                    }
-                })
-            );
+        // GERADOR, CADASTRO, EDIÇÃO E VISUALIZAÇÃO DA WEBPAGE DO ADVOGADO
+        function slugifyLawyerName(name, email) {
+            const base = String(name || email || 'advogado')
+                .normalize('NFD')
+                .replace(/[\u0300-\u036f]/g, '')
+                .toLowerCase()
+                .replace(/[^a-z0-9]+/g, '-')
+                .replace(/^-+|-+$/g, '');
+            return base || 'advogado-oab';
         }
 
-        function updateSyncStatus(text, mode) {
-            const st = document.getElementById('sync-status-text');
-            const md = document.getElementById('sync-mode-label');
-            if (st) st.textContent = text;
-            if (md) md.textContent = mode;
-        }
+        function switchWebpageMode(mode) {
+            webpageViewMode = mode === 'preview' ? 'preview' : 'builder';
+            const builderPanel = document.getElementById('wp-builder-panel');
+            const previewPanel = document.getElementById('wp-preview-panel');
+            const btnBuilder = document.getElementById('wp-mode-builder-btn');
+            const btnPreview = document.getElementById('wp-mode-preview-btn');
 
-        function applyUserProfileUI() {
-            if (!currentUser) return;
-            document.getElementById('sidebar-user-name').textContent = currentUser.name || 'Advogado(a) OAB';
-            document.getElementById('sidebar-user-oab').textContent = `${currentUser.oab || 'OAB'} • ${currentUser.firm || 'Escritório'}`;
-            document.getElementById('sidebar-user-email').textContent = currentUser.email || '';
+            if (builderPanel) builderPanel.classList.toggle('hidden', webpageViewMode !== 'builder');
+            if (previewPanel) previewPanel.classList.toggle('hidden', webpageViewMode !== 'preview');
 
-            const parts = String(currentUser.name || 'OA').trim().split(/\s+/);
-            const initials = ((parts[0]?.[0] || '') + (parts[parts.length - 1]?.[0] || '')).toUpperCase() || 'OA';
-            document.getElementById('user-initials').textContent = initials;
-
-            const photoEl = document.getElementById('user-photo-img');
-            if (photoEl) {
-                if (currentUser.photoUrl) {
-                    photoEl.src = currentUser.photoUrl;
-                    photoEl.classList.remove('hidden');
-                } else {
-                    photoEl.classList.add('hidden');
-                }
+            if (btnBuilder) {
+                btnBuilder.className = webpageViewMode === 'builder'
+                    ? 'px-3.5 py-2 rounded-xl bg-aab-navy text-white text-xs font-semibold flex items-center gap-1.5 cursor-pointer'
+                    : 'px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold flex items-center gap-1.5 cursor-pointer';
             }
-
-            const isAdm = hasAdminBoardAccess(currentUser);
-            const isAssoc = hasAssociateBoardAccess(currentUser);
-
-            const boardsEl = document.getElementById('sidebar-user-boards');
-            if (boardsEl) {
-                const badges = [];
-                if (isAdm) badges.push('<span class="px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 text-[10px] font-bold">QUADRO ADM</span>');
-                if (isAssoc) badges.push('<span class="px-2 py-0.5 rounded bg-white/10 text-slate-200 text-[10px] font-bold">INSCRITO OAB</span>');
-                boardsEl.innerHTML = badges.join('');
+            if (btnPreview) {
+                btnPreview.className = webpageViewMode === 'preview'
+                    ? 'px-3.5 py-2 rounded-xl bg-amber-600 text-white text-xs font-semibold flex items-center gap-1.5 cursor-pointer'
+                    : 'px-3.5 py-2 rounded-xl bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-200 text-xs font-semibold flex items-center gap-1.5 cursor-pointer';
             }
-
-            const adminBtn = document.getElementById('nav-btn-admin');
-            if (adminBtn) {
-                adminBtn.classList.toggle('hidden', !isAdm);
-                adminBtn.classList.toggle('flex', isAdm);
-                adminBtn.style.display = isAdm ? 'flex' : 'none';
-            }
-
-            document.getElementById('non-associate-board-banner')?.classList.toggle('hidden', isAssoc);
-            document.getElementById('admin-local-warning-banner')?.classList.toggle('hidden', isFirebaseConfigured && !isDemoFallbackMode);
-
-            document.getElementById('card-holder-name').textContent = currentUser.name || 'Advogado(a) Inscrito(a) OAB';
-            document.getElementById('card-holder-oab').textContent = currentUser.oab || 'Inscrição OAB';
-            document.getElementById('card-holder-firm').textContent = currentUser.firm || 'Sociedade de Advocacia';
-        }
-
-        function navigateTo(viewId) {
-            if (viewId === 'admin' && !hasAdminBoardAccess(currentUser)) {
-                showToast('Acesso restrito aos usuários cadastrados no Quadro Adm.', 'error');
-                return;
-            }
-
-            document.querySelectorAll('.view-section').forEach(sec => sec.classList.add('hidden'));
-            document.getElementById('view-' + viewId)?.classList.remove('hidden');
-
-            document.querySelectorAll('.nav-item').forEach(btn => {
-                const active = btn.dataset.nav === viewId;
-                if (btn.dataset.nav === 'admin') {
-                    btn.className = active
-                        ? 'nav-item flex items-center justify-between w-full px-3.5 py-2.5 rounded-xl text-xs font-semibold bg-amber-400/20 text-amber-200 border border-amber-400/50 cursor-pointer mt-2'
-                        : 'nav-item flex items-center justify-between w-full px-3.5 py-2.5 rounded-xl text-xs font-semibold bg-amber-500/10 text-amber-300 border border-amber-400/25 hover:bg-amber-500/20 cursor-pointer mt-2';
-                } else {
-                    btn.className = active
-                        ? 'nav-item w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-semibold bg-amber-400/15 text-amber-200 border border-amber-400/35 cursor-pointer'
-                        : 'nav-item w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-xs font-semibold text-slate-300 hover:bg-white/10 cursor-pointer';
-                }
-            });
-
-            const titles = {
-                overview: 'Visão Geral',
-                webpage: 'Site Pessoal do Advogado',
-                cases: 'Gestão de Processos',
-                clients: 'Clientes & CRM',
-                deadlines: 'Prazos & Agenda',
-                financial: 'Financeiro & Honorários',
-                benefits: 'Benefícios & Carteira Digital OAB',
-                admin: 'Painel do Responsável OAB'
-            };
-            document.getElementById('header-title').textContent = titles[viewId] || 'Portal OAB';
-            if (viewId === 'webpage') renderWebpageSection();
-            toggleMobileSidebar(false);
-        }
-
-        function setHeaderDate() {
-            const el = document.getElementById('header-date');
-            if (!el) return;
-            el.textContent = new Date().toLocaleDateString('pt-BR', {
-                weekday: 'long',
-                day: '2-digit',
-                month: 'long',
-                year: 'numeric'
-            });
-        }
-
-        function renderAll() {
-            renderOverview();
             renderWebpageSection();
-            renderCasesTable();
-            renderClientsGrid();
-            renderDeadlinesList();
-            renderFinancialTable();
-            renderRoomReservations();
-            renderAdminBulletins();
-            renderAuthorizedEmailsList();
-            renderAdminMembersTable();
-            applyBenefitLinksUI();
-            if (window.lucide) window.lucide.createIcons();
         }
 
-        // SITE PESSOAL DO ADVOGADO + CONTATO COM CLIENTES
-        function toggleSiteEditorDrawer(forceState) {
-            const panel = document.getElementById('site-editor-panel');
-            if (!panel || !currentUser) return;
-            const next = typeof forceState === 'boolean' ? forceState : panel.classList.contains('hidden');
-            panel.classList.toggle('hidden', !next);
+        function populateWebpageBuilderInputs() {
+            if (!currentUser) return;
+            const faqText = Array.isArray(currentUser.faq) && currentUser.faq.length
+                ? currentUser.faq.map(item => `${item.q} | ${item.a}`).join('\n')
+                : 'Como funciona a primeira consulta? | Analisamos o cenário jurídico e orientamos os próximos passos.\nPosso enviar documentos online? | Sim, o atendimento pode ser feito de forma digital ou presencial.';
 
-            if (next) {
-                document.getElementById('wp-edit-name').value = currentUser.name || '';
-                document.getElementById('wp-edit-oab').value = currentUser.oab || '';
-                document.getElementById('wp-edit-firm').value = currentUser.firm || '';
-                document.getElementById('wp-edit-specialty').value = currentUser.specialty || 'Atuação Jurídica Estratégica';
-                document.getElementById('wp-edit-phone').value = currentUser.phone || '';
-                document.getElementById('wp-edit-photo').value = currentUser.photoUrl || '';
-                document.getElementById('wp-edit-address').value = currentUser.address || '';
-                document.getElementById('wp-edit-areas').value = Array.isArray(currentUser.areas) ? currentUser.areas.join(', ') : 'Direito Civil, Contratos';
-                document.getElementById('wp-edit-bio').value = currentUser.bio || '';
-            }
+            document.getElementById('wp-edit-name').value = currentUser.name || '';
+            document.getElementById('wp-edit-oab').value = currentUser.oab || '';
+            document.getElementById('wp-edit-firm').value = currentUser.firm || '';
+            document.getElementById('wp-edit-slug').value = currentUser.slug || slugifyLawyerName(currentUser.name, currentUser.email);
+            document.getElementById('wp-edit-theme').value = currentUser.theme || 'classic-navy';
+            document.getElementById('wp-edit-headline').value = currentUser.headline || 'Defesa jurídica estratégica com rigor técnico e ética.';
+            document.getElementById('wp-edit-photo').value = currentUser.photoUrl || '';
+            document.getElementById('wp-edit-bio').value = currentUser.bio || '';
+            document.getElementById('wp-edit-areas').value = Array.isArray(currentUser.areas) && currentUser.areas.length
+                ? currentUser.areas.join(', ')
+                : 'Direito Civil, Direito Trabalhista, Empresarial, Contratos';
+            document.getElementById('wp-edit-highlights').value = Array.isArray(currentUser.highlights) && currentUser.highlights.length
+                ? currentUser.highlights.join(', ')
+                : 'Atendimento presencial e online, Comunicação transparente, Estratégia processual';
+            document.getElementById('wp-edit-phone').value = currentUser.phone || '';
+            document.getElementById('wp-edit-email').value = currentUser.publicEmail || currentUser.email || '';
+            document.getElementById('wp-edit-address').value = currentUser.address || '';
+            document.getElementById('wp-edit-faq').value = faqText;
+            document.getElementById('wp-edit-published').checked = currentUser.webpagePublished !== false;
         }
 
         async function handleSaveWebpageConfig(event) {
             event.preventDefault();
             if (!currentUser) return;
+
+            const nameVal = document.getElementById('wp-edit-name').value.trim();
+            const slugVal = slugifyLawyerName(document.getElementById('wp-edit-slug').value, nameVal);
             const areasArr = String(document.getElementById('wp-edit-areas').value || '')
-                .split(',')
-                .map(s => s.trim())
-                .filter(Boolean);
+                .split(',').map(s => s.trim()).filter(Boolean);
+            const highlightsArr = String(document.getElementById('wp-edit-highlights').value || '')
+                .split(',').map(s => s.trim()).filter(Boolean);
+            const faqArr = String(document.getElementById('wp-edit-faq').value || '')
+                .split('\n')
+                .map(line => line.trim())
+                .filter(Boolean)
+                .map(line => {
+                    const parts = line.split('|');
+                    return {
+                        q: (parts[0] || 'Pergunta').trim(),
+                        a: (parts.slice(1).join('|') || 'Resposta sob consulta.').trim()
+                    };
+                });
 
             const updates = {
-                name: document.getElementById('wp-edit-name').value.trim(),
+                name: nameVal,
                 oab: document.getElementById('wp-edit-oab').value.trim(),
                 firm: document.getElementById('wp-edit-firm').value.trim(),
-                specialty: document.getElementById('wp-edit-specialty').value.trim(),
-                phone: document.getElementById('wp-edit-phone').value.trim(),
+                slug: slugVal,
+                theme: document.getElementById('wp-edit-theme').value,
+                headline: document.getElementById('wp-edit-headline').value.trim(),
                 photoUrl: document.getElementById('wp-edit-photo').value.trim(),
-                address: document.getElementById('wp-edit-address').value.trim(),
+                bio: document.getElementById('wp-edit-bio').value.trim(),
                 areas: areasArr.length ? areasArr : ['Direito Civil'],
-                bio: document.getElementById('wp-edit-bio').value.trim()
+                highlights: highlightsArr.length ? highlightsArr : ['Atendimento ético e personalizado'],
+                phone: document.getElementById('wp-edit-phone').value.trim(),
+                publicEmail: document.getElementById('wp-edit-email').value.trim(),
+                address: document.getElementById('wp-edit-address').value.trim(),
+                faq: faqArr,
+                webpagePublished: document.getElementById('wp-edit-published').checked,
+                website: `${window.location.origin}${window.location.pathname}#site=${slugVal}`
             };
 
             currentUser = { ...currentUser, ...updates };
@@ -2004,78 +1950,142 @@
             saveLocalState();
             applyUserProfileUI();
             renderWebpageSection();
-            toggleSiteEditorDrawer(false);
 
             if (db && isFirebaseConfigured && !isDemoFallbackMode && currentUser.uid) {
                 try {
                     await updateDoc(doc(db, 'usuarios', currentUser.uid), updates);
                 } catch (err) {
-                    console.warn('Erro ao salvar dados do site pessoal no Firestore:', err);
+                    console.warn('Erro ao salvar webpage no Firestore:', err);
                 }
             }
-            showToast('Site pessoal do advogado atualizado!', 'success');
+            showToast('Webpage gerada e salva com sucesso!', 'success');
+            switchWebpageMode('preview');
+        }
+
+        function getLawyerSiteUrl() {
+            const slug = currentUser?.slug || slugifyLawyerName(currentUser?.name, currentUser?.email);
+            return `${window.location.origin}${window.location.pathname}#site=${encodeURIComponent(slug)}`;
         }
 
         function copyLawyerSiteUrl() {
-            const link = `${window.location.origin}${window.location.pathname}#advogado=${encodeURIComponent(currentUser?.email || '')}`;
+            const link = getLawyerSiteUrl();
             navigator.clipboard?.writeText(link).catch(() => {});
-            showToast('Link do site pessoal copiado: ' + link, 'info');
+            showToast('Link da webpage copiado: ' + link, 'info');
+        }
+
+        function openStandaloneWebpageWindow() {
+            if (!currentUser) return;
+            const areas = Array.isArray(currentUser.areas) && currentUser.areas.length ? currentUser.areas : ['Direito Civil'];
+            const highlights = Array.isArray(currentUser.highlights) && currentUser.highlights.length ? currentUser.highlights : ['Atendimento jurídico personalizado'];
+            const faq = Array.isArray(currentUser.faq) ? currentUser.faq : [];
+            const htmlDoc = `<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>${escapeHtml(currentUser.name)} — ${escapeHtml(currentUser.oab)}</title><script src="https://cdn.tailwindcss.com"><\/script><link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet"><style>body{font-family:Inter,sans-serif}.font-juridica{font-family:"Cormorant Garamond",Georgia,serif}</style></head><body class="bg-slate-50 text-slate-900"><header class="bg-[#0b192c] text-white py-14 px-6"><div class="max-w-5xl mx-auto space-y-3"><p class="text-xs uppercase tracking-widest text-amber-300 font-bold">${escapeHtml(currentUser.oab || 'OAB')} • ${escapeHtml(currentUser.firm || 'Advocacia')}</p><h1 class="font-juridica text-4xl sm:text-5xl font-bold">${escapeHtml(currentUser.headline || currentUser.name)}</h1><p class="text-slate-300 text-sm sm:text-base max-w-2xl">${escapeHtml(currentUser.bio || '')}</p><p class="text-xs text-amber-200 pt-2">${escapeHtml(currentUser.name)} • ${escapeHtml(currentUser.phone || '')} • ${escapeHtml(currentUser.publicEmail || currentUser.email || '')} • ${escapeHtml(currentUser.address || '')}</p></div></header><main class="max-w-5xl mx-auto px-6 py-10 space-y-10"><section class="bg-white p-6 rounded-2xl border border-slate-200"><h2 class="font-juridica text-3xl font-bold text-[#0b192c] mb-4">Áreas de Atuação</h2><div class="flex flex-wrap gap-2">${areas.map(a => `<span class="px-3.5 py-1.5 rounded-xl bg-amber-50 text-[#0b192c] border border-amber-200 text-xs font-semibold">${escapeHtml(a)}</span>`).join('')}</div></section><section class="bg-white p-6 rounded-2xl border border-slate-200"><h2 class="font-juridica text-3xl font-bold text-[#0b192c] mb-3">Diferenciais</h2><ul class="list-disc pl-5 space-y-1.5 text-sm text-slate-700">${highlights.map(h => `<li>${escapeHtml(h)}</li>`).join('')}</ul></section>${faq.length ? `<section class="bg-white p-6 rounded-2xl border border-slate-200 space-y-3"><h2 class="font-juridica text-3xl font-bold text-[#0b192c]">Perguntas Frequentes</h2>${faq.map(item => `<div class="p-3.5 rounded-xl bg-slate-50"><p class="font-bold text-sm text-[#0b192c]">${escapeHtml(item.q)}</p><p class="text-xs text-slate-600 mt-1">${escapeHtml(item.a)}</p></div>`).join('')}</section>` : ''}</main></body></html>`;
+            const blob = new Blob([htmlDoc], { type: 'text/html;charset=utf-8' });
+            const blobUrl = URL.createObjectURL(blob);
+            window.open(blobUrl, '_blank', 'noopener,noreferrer');
         }
 
         function renderWebpageSection() {
             if (!currentUser) return;
-            document.getElementById('wp-hero-name').textContent = currentUser.name || 'Dr(a). Advogado(a)';
-            document.getElementById('wp-hero-oab-firm').textContent = `${currentUser.oab || 'OAB'} • ${currentUser.firm || 'Escritório de Advocacia'}`;
-            document.getElementById('wp-hero-specialty').textContent = currentUser.specialty || 'Atuação Jurídica Estratégica';
-            document.getElementById('wp-hero-bio').textContent = currentUser.bio || 'Atuação jurídica pautada na ética profissional, rigor técnico e atendimento próximo a clientes.';
-            document.getElementById('wp-hero-email').textContent = currentUser.email || '—';
-            document.getElementById('wp-hero-phone').textContent = currentUser.phone || 'Não informado';
-            document.getElementById('wp-hero-address').textContent = currentUser.address || 'Atendimento agendado';
+            populateWebpageBuilderInputs();
+
+            const slug = currentUser.slug || slugifyLawyerName(currentUser.name, currentUser.email);
+            const isPub = currentUser.webpagePublished !== false;
+
+            const statusPill = document.getElementById('wp-status-pill');
+            if (statusPill) {
+                statusPill.textContent = isPub ? 'Site Publicado' : 'Rascunho';
+                statusPill.className = isPub
+                    ? 'px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-emerald-100 text-emerald-800'
+                    : 'px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider bg-slate-200 text-slate-700';
+            }
+
+            const urlPreview = document.getElementById('wp-generated-url-preview');
+            if (urlPreview) urlPreview.textContent = `URL gerada: ${getLawyerSiteUrl()} (slug: ${slug})`;
+
+            // Atualiza visualização completa do site gerado
+            document.getElementById('site-nav-brand').textContent = currentUser.name || 'Dr(a). Advogado(a)';
+            document.getElementById('site-nav-oab').textContent = `${currentUser.oab || 'OAB'} • ${currentUser.firm || 'Escritório de Advocacia'}`;
+            document.getElementById('site-hero-headline').textContent = currentUser.headline || 'Defesa jurídica estratégica com rigor técnico e ética.';
+            document.getElementById('site-hero-sub').textContent = `${currentUser.name || 'Advogado(a)'} • ${currentUser.oab || 'OAB'}${currentUser.firm ? ' • ' + currentUser.firm : ''}`;
+
+            document.getElementById('site-card-name').textContent = currentUser.name || 'Dr(a). Advogado(a)';
+            document.getElementById('site-card-oab').textContent = currentUser.oab || 'Inscrição OAB';
+            document.getElementById('site-card-firm').textContent = currentUser.firm || 'Escritório Jurídico';
+            document.getElementById('site-card-phone').textContent = currentUser.phone || 'Telefone sob consulta';
+            document.getElementById('site-card-email').textContent = currentUser.publicEmail || currentUser.email || '—';
+            document.getElementById('site-card-address').textContent = currentUser.address || 'Atendimento presencial e online';
 
             const parts = String(currentUser.name || 'OA').trim().split(/\s+/);
             const initials = ((parts[0]?.[0] || '') + (parts[parts.length - 1]?.[0] || '')).toUpperCase() || 'OA';
-            document.getElementById('wp-hero-initials').textContent = initials;
+            document.getElementById('site-card-initials').textContent = initials;
 
-            const heroPhoto = document.getElementById('wp-hero-photo');
-            if (heroPhoto) {
+            const cardPhoto = document.getElementById('site-card-photo');
+            if (cardPhoto) {
                 if (currentUser.photoUrl) {
-                    heroPhoto.src = currentUser.photoUrl;
-                    heroPhoto.classList.remove('hidden');
+                    cardPhoto.src = currentUser.photoUrl;
+                    cardPhoto.classList.remove('hidden');
                 } else {
-                    heroPhoto.classList.add('hidden');
+                    cardPhoto.classList.add('hidden');
                 }
             }
 
-            const areas = Array.isArray(currentUser.areas) && currentUser.areas.length
-                ? currentUser.areas
-                : ['Direito Civil', 'Direito do Trabalho', 'Contratos', 'Consultoria Jurídica'];
-            document.getElementById('wp-areas-chips').innerHTML = areas.map(a => `
-                <span class="px-3.5 py-1.5 rounded-xl bg-amber-50 text-aab-navy border border-amber-200 text-xs font-semibold">${escapeHtml(a)}</span>
+            document.getElementById('site-about-bio').textContent = currentUser.bio || 'Atuação jurídica pautada na ética profissional, rigor técnico e atendimento próximo a clientes.';
+
+            const highlights = Array.isArray(currentUser.highlights) && currentUser.highlights.length
+                ? currentUser.highlights
+                : ['Atendimento presencial e online', 'Comunicação transparente', 'Estratégia processual'];
+            document.getElementById('site-highlights-list').innerHTML = highlights.map(h => `
+                <li class="flex items-start gap-2"><span class="text-amber-600 font-bold">✓</span><span>${escapeHtml(h)}</span></li>
             `).join('');
 
+            const areas = Array.isArray(currentUser.areas) && currentUser.areas.length
+                ? currentUser.areas
+                : ['Direito Civil', 'Direito do Trabalho', 'Contratos'];
+            document.getElementById('site-areas-grid').innerHTML = areas.map(a => `
+                <div class="p-4 rounded-2xl border border-slate-200/80 bg-white space-y-1">
+                    <p class="font-bold text-sm text-aab-navy">${escapeHtml(a)}</p>
+                    <p class="text-xs text-slate-500">Consultoria preventiva, pareceres e atuação contenciosa.</p>
+                </div>
+            `).join('');
+
+            const faq = Array.isArray(currentUser.faq) ? currentUser.faq : [];
+            document.getElementById('site-faq-list').innerHTML = faq.length ? faq.map(item => `
+                <div class="p-4 rounded-2xl border border-slate-200/80 bg-slate-50/70 space-y-1">
+                    <p class="font-bold text-sm text-aab-navy">${escapeHtml(item.q)}</p>
+                    <p class="text-xs text-slate-600 leading-relaxed">${escapeHtml(item.a)}</p>
+                </div>
+            `).join('') : '<p class="text-xs text-slate-400 col-span-2">Adicione perguntas frequentes no editor da webpage.</p>';
+
+            document.getElementById('site-contact-address').textContent = currentUser.address || 'Sob agendamento';
+            document.getElementById('site-contact-phone').textContent = currentUser.phone || 'Sob consulta';
+            document.getElementById('site-contact-email').textContent = currentUser.publicEmail || currentUser.email || '—';
+            document.getElementById('site-footer-copy').textContent = `${currentUser.name || 'Advogado(a)'} • ${currentUser.oab || 'OAB'}`;
+
+            // Lista de contatos de clientes recebidos
             const badgeEl = document.getElementById('wp-messages-badge');
-            if (badgeEl) badgeEl.textContent = `${clientMessagesList.length} mensagem(ns)`;
+            if (badgeEl) badgeEl.textContent = `${clientMessagesList.length}`;
 
             const msgListEl = document.getElementById('wp-client-messages-list');
             if (!msgListEl) return;
             if (!clientMessagesList.length) {
-                msgListEl.innerHTML = '<p class="text-xs text-slate-400">Nenhuma mensagem de cliente registrada ainda. Use o formulário ao lado para enviar ou receber contatos.</p>';
+                msgListEl.innerHTML = '<p class="text-xs text-slate-400">Nenhuma mensagem de cliente registrada ainda.</p>';
                 return;
             }
 
             msgListEl.innerHTML = clientMessagesList.map(m => `
                 <div class="p-4 rounded-xl border border-slate-200/80 bg-slate-50/60 space-y-1.5">
-                    <div class="flex flex-wrap items-center justify-between gap-2">
+                    <div class="flex items-start justify-between gap-2">
                         <div>
-                            <p class="text-xs font-bold text-aab-navy">${escapeHtml(m.clientName)} <span class="font-normal text-slate-500">(${escapeHtml(m.clientEmail)}${m.clientPhone ? ' • ' + escapeHtml(m.clientPhone) : ''})</span></p>
-                            <p class="text-[11px] font-semibold text-amber-800">${escapeHtml(m.subject || 'Contato Jurídico')}</p>
+                            <p class="text-xs font-bold text-aab-navy">${escapeHtml(m.clientName)}</p>
+                            <p class="text-[11px] text-slate-500">${escapeHtml(m.clientEmail)}${m.clientPhone ? ' • ' + escapeHtml(m.clientPhone) : ''}</p>
+                            <p class="text-[11px] font-semibold text-amber-800 mt-0.5">${escapeHtml(m.subject || 'Contato Jurídico')}</p>
                         </div>
-                        <span class="text-[10px] text-slate-400">${formatDateBR(m.createdAt)}</span>
+                        <span class="text-[10px] text-slate-400 shrink-0">${formatDateBR(m.createdAt)}</span>
                     </div>
                     <p class="text-xs text-slate-700 leading-relaxed">${escapeHtml(m.message)}</p>
                     <div class="flex items-center justify-end gap-2 pt-1">
                         <button type="button" onclick="promoteMessageToClient('${escapeHtml(m.id)}')" class="px-2.5 py-1 rounded-lg bg-emerald-50 hover:bg-emerald-100 text-emerald-800 text-[11px] font-semibold cursor-pointer">
-                            + Adicionar ao CRM
+                            + CRM
                         </button>
                         <button type="button" onclick="deleteClientMessage('${escapeHtml(m.id)}')" class="px-2.5 py-1 rounded-lg bg-rose-50 hover:bg-rose-100 text-rose-700 text-[11px] font-semibold cursor-pointer">
                             Excluir
@@ -2966,8 +2976,9 @@
             closeModal,
             openFirebaseSetupModal,
             clearSavedFirebaseConfig,
-            toggleSiteEditorDrawer,
+            switchWebpageMode,
             handleSaveWebpageConfig,
+            openStandaloneWebpageWindow,
             copyLawyerSiteUrl,
             handleSubmitClientContact,
             promoteMessageToClient,
